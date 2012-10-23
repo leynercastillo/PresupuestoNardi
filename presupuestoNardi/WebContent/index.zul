@@ -1,0 +1,694 @@
+<?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Formulario de Presupuesto" border="normal">
+		<grid>
+			<columns>
+				<column width="200px"></column>
+				<column width="400px"></column>
+				<column width="120px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<label value="Cliente:"></label>
+					<textbox id="txtBBPName" mold="rounded" width="350px"></textbox>
+					<label value="Vendedor:" style="Color: Blue; font-weight:bold; "></label>
+					<textbox mold="rounded" width="230px"></textbox>
+				</row>
+				<row>
+					<label value="Obra:"></label>
+					<textbox id="txtBBuildingName" mold="rounded" width="350px"></textbox>
+					<radiogroup id="nardi">
+						<radio label="Nuevo"></radio>
+					</radiogroup>
+					<radio label="Modernizacion" radiogroup="nardi"></radio>
+				</row>
+				<row>
+					<label value="Nro. Obra:"></label>
+					<textbox id="txtBBuildingNumber" mold="rounded" width="350px"></textbox>
+					<label value="Ciudad:"></label>
+					<textbox id="txtBBuildingCity" mold="rounded" width="230px"></textbox>
+				</row>
+				<row>
+					<label value="Dirección:"></label>
+					<textbox id="txtBBuildingAddress" mold="rounded" width="350px"></textbox>
+					<label value="Email:"></label>
+					<textbox id="txtBBuildingEmail" mold="rounded" width="230px"></textbox>
+				</row>
+				<row>
+					<label value="Teléfono:"></label>
+					<textbox id="txtBBuildingPhoneNumber"
+						mold="rounded" width="350px">
+					</textbox>
+					<label value="Planos de planta:"></label>
+					<radiogroup id="planosPlanta">
+						<radio label="Si"></radio>
+						<radio label="No"></radio>
+					</radiogroup>
+				</row>
+				<row>
+					<label value="Persona de contacto:"></label>
+					<textbox id="txtBBuildingContactName"
+						mold="rounded" width="350px">
+					</textbox>
+					<label value="Planos de corte:"></label>
+					<radiogroup id="planosCorte">
+						<radio label="Si"></radio>
+						<radio label="No"></radio>
+					</radiogroup>
+				</row>
+			</rows>
+		</grid>
+		<groupbox>
+			<caption label="Información General"></caption>
+			<grid>
+				<columns>
+					<column width="200px"></column>
+					<column></column>
+					<column width="200px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipo de Edificio:"></label>
+						<combobox>
+							<comboitem label="Residencial"></comboitem>
+							<comboitem label="Comercial"></comboitem>
+							<comboitem label="Empresarial"></comboitem>
+							<comboitem label="Hospital"></comboitem>
+							<comboitem label="Hotel"></comboitem>
+							<comboitem label="Industrial"></comboitem>
+						</combobox>
+						<label value="Cantidad de ascensores:"></label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label value="Tipo de Ascensor:"></label>
+						<combobox>
+							<comboitem label="Pasajero"></comboitem>
+							<comboitem label="Monta Camilla"></comboitem>
+							<comboitem label="Panoramico"></comboitem>
+							<comboitem label="Carga"></comboitem>
+							<comboitem label="Monta Carro"></comboitem>
+							<comboitem label="Monta Plato"></comboitem>
+							<comboitem label="Winche"></comboitem>
+						</combobox>
+						<label value="Embarque:"></label>
+						<combobox>
+							<comboitem label="1 Puerta"></comboitem>
+							<comboitem
+								label="2 Puertas (Doble Acceso - 180º)">
+							</comboitem>
+							<comboitem
+								label="2 Puertas (Doble Acceso - 90º)">
+							</comboitem>
+							<comboitem
+								label="2 Puertas (Doble Acceso - 270º)">
+							</comboitem>
+						</combobox>
+					</row>
+					<row>
+						<label value="Carga (Kg - Cap.):"></label>
+						<hbox>
+							<combobox>
+								<comboitem label="320 - 4"></comboitem>
+								<comboitem label="450 - 6"></comboitem>
+								<comboitem label="600 - 8"></comboitem>
+								<comboitem label="800 - 10"></comboitem>
+								<comboitem label="1000 - 13"></comboitem>
+								<comboitem label="1250 - 16"></comboitem>
+								<comboitem label="1500 - 19"></comboitem>
+								<comboitem label="2000 - 22"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+						<label value="Velocidad M/S:"></label>
+						<hbox>
+							<combobox>
+								<comboitem label="0.50"></comboitem>
+								<comboitem label="1.00"></comboitem>
+								<comboitem label="1.20"></comboitem>
+								<comboitem label="1.60"></comboitem>
+								<comboitem label="1.75"></comboitem>
+								<comboitem label="2.00"></comboitem>
+								<comboitem label="2.50"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+					</row>
+					<row>
+						<label value="Tipo de Máquina:"></label>
+						<combobox>
+							<comboitem
+								label="Con Sala De Maquina 2V">
+							</comboitem>
+							<comboitem
+								label="Con Sala De Maquina VVVF">
+							</comboitem>
+							<comboitem
+								label="Sin Sala De Maquina MRL">
+							</comboitem>
+							<comboitem label="Hidraulico"></comboitem>
+							<comboitem label="Winche"></comboitem>
+						</combobox>
+						<label value="Cantidad de motores:"></label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label value="Tipo de Corriente:"></label>
+						<combobox>
+							<comboitem label="208V"></comboitem>
+							<comboitem label="220V"></comboitem>
+							<comboitem label="308V"></comboitem>
+							<comboitem label="440V"></comboitem>
+						</combobox>
+						<label value="Frecuencia:"></label>
+						<combobox>
+							<comboitem label="60 HZ"></comboitem>
+							<comboitem label="50 HZ"></comboitem>
+						</combobox>
+					</row>
+					<row>
+						<label value="Conexiones horas máquina:"></label>
+						<combobox>
+							<comboitem label="180 HORAS (STANDARD)"></comboitem>
+							<comboitem label="240 HORAS (ALTO TRAFICO)"></comboitem>
+						</combobox>
+						<label value="Tracción de motores"></label>
+						<radiogroup>
+							<radio label="1:1"></radio>
+							<space></space>
+							<radio label="2:1"></radio>
+						</radiogroup>
+					</row>
+					<row>
+						<label value="Tipo de Maniobra:"></label>
+						<combobox>
+							<comboitem
+								label="Colectiva en Bajada Simplex (Un Boton)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Duplex (Un Boton)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Triplex (Un Boton)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Cuadruplex (Un Boton)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada y Subida Simplex (Dos Botones)">
+							</comboitem>							
+							<comboitem
+								label="Colectiva en Bajada y Subida Duplex (Dos Botones)">
+							</comboitem>							
+							<comboitem
+								label="Colectiva en Bajada y Subida Triplex (Dos Botones)">
+							</comboitem>							
+							<comboitem
+								label="Colectiva en Bajada y Subida Cuadruplex (Dos Botones)">
+							</comboitem>
+						</combobox>
+						<label value="Tensión de alumbrado:"></label>
+						<combobox>
+							<comboitem label="110V"></comboitem>
+							<comboitem label="220V"></comboitem>
+						</combobox>
+					</row>
+					<row>
+						<label value="Número de paradas:"></label>
+						<spinner></spinner>												
+						<label value="Secuencia de paradas:"></label>
+						<hbox>
+							<grid>
+								<columns>
+									<column width="100px"></column>
+									<column width="180px"></column>
+								</columns>
+								<rows>
+									<row>
+										<checkbox label="Continua"></checkbox>
+										<textbox width="150px"></textbox>
+									</row>
+								</rows>
+							</grid>
+						</hbox>
+					</row>
+					<row>
+						<space></space>
+						<space></space>
+						<space></space>
+						<hbox>
+							<grid>
+								<columns>
+									<column width="100px"></column>
+									<column width="180px"></column>
+								</columns>
+								<rows>
+									<row>
+										<checkbox label="Par"></checkbox>
+										<textbox width="150px"></textbox>
+									</row>
+								</rows>
+							</grid>
+						</hbox>
+					</row>
+					<row>
+						<space></space>
+						<space></space>
+						<space></space>
+						<hbox>
+							<grid>
+								<columns>
+									<column width="100px"></column>
+									<column width="180px"></column>
+								</columns>
+								<rows>
+									<row>
+										<checkbox label="Impar"></checkbox>
+										<textbox width="150px"></textbox>
+									</row>
+								</rows>
+							</grid>
+						</hbox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="Hueco"></caption>
+			<grid>
+				<columns>
+					<column width="200px"></column>
+					<column></column>
+					<column width="200px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Recorrido(M)"></label>
+						<spinner></spinner>
+						<label value="Sobre Recorrido (mm)"></label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label value="Ancho de Hueco (mm)"></label>
+						<spinner></spinner>
+						<label value="Fosa (mm)"></label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label value="Fondo de Hueco (mm)"></label>
+						<spinner></spinner>
+						<space></space>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="Cabina"></caption>
+			<grid>
+				<columns>
+					<column width="150px"></column>
+					<column></column>
+					<column width="150px"></column>
+					<column></column>
+					<column width="150px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Diseño 1357:"></label>
+						<combobox>
+							<comboitem label="Formica"></comboitem>
+							<comboitem label="Acero inoxidable"></comboitem>
+						</combobox>
+						<label value="Diseño P26:"></label>
+						<combobox>
+							<comboitem label="Formica - Horizontal"></comboitem>
+							<comboitem label="Formica - Vertical"></comboitem>
+							<comboitem
+								label="Acero inox. - Horizontal">
+							</comboitem>
+							<comboitem label="Acero inox. - Vertical"></comboitem>
+						</combobox>
+						<label value="Diseño especial:"></label>
+						<checkbox></checkbox>
+					</row>					
+					<row>
+						<label value="Tipo de techo:"></label>
+						<combobox>
+							<comboitem label="PL-3"></comboitem>
+							<comboitem label="PL-4"></comboitem>
+							<comboitem label="PL-6"></comboitem>
+							<comboitem label="PL-Perforado"></comboitem>
+							<comboitem label="PL-Modular"></comboitem>
+						</combobox>
+						<label value="Tipo de botonera:"></label>
+						<combobox>
+							<comboitem label="Corta"></comboitem>
+							<comboitem label="Piso a techo"></comboitem>
+							<comboitem label="Piso a techo con telf"></comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label value="Pasamano:"></label>
+						<combobox>
+							<comboitem label="Recto"></comboitem>
+							<comboitem label="Redondo"></comboitem>
+							<comboitem label="Doble pasamano redondo"></comboitem>
+						</combobox>
+						<label value="Espejo:"></label>
+						<combobox>
+							<comboitem label="Acero tipo espejo"></comboitem>
+							<comboitem label="Por cuenta del cliente"></comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label value="Acabado de piso:"></label>
+						<combobox>
+							<comboitem label="Vinil"></comboitem>
+							<comboitem label="Vulca"></comboitem>
+							<comboitem label="Granito"></comboitem>
+							<comboitem
+								label="Granito Por Cuenta Del Cliente">
+							</comboitem>
+							<comboitem label="Otros"></comboitem>
+						</combobox>
+						<label value="Ventilador:"></label>
+						<combobox>
+							<comboitem label="1 - 450 Kg"></comboitem>
+							<comboitem label="1 - 600 Kg"></comboitem>
+							<comboitem label="2 - 800 Kg"></comboitem>
+							<comboitem label="2 - 1000 Kg"></comboitem>
+							<comboitem label="2 - 1200 Kg"></comboitem>
+							<comboitem label="2 - 1500 Kg"></comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="Puerta y marcos"></caption>
+			<grid>
+				<columns>
+					<column width="150px"></column>
+					<column></column>
+					<column width="120px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Número de puertas:"></label>
+						<spinner></spinner>
+						<label value="Tipo de puerta:"></label>
+						<combobox>
+							<comboitem
+								label="Apertura telescopio izquierdo">
+							</comboitem>
+							<comboitem
+								label="Apertura telescopio derecho">
+							</comboitem>
+							<comboitem
+								label="Apertura telescopio central">
+							</comboitem>
+							<comboitem label="Apertura central"></comboitem>
+							<comboitem label="Batiente"></comboitem>
+						</combobox>
+					</row>
+					<row>
+						<label value="Sistema de puerta:"></label>
+						<combobox>
+							<comboitem label="Fermator"></comboitem>
+							<comboitem label="Selcon"></comboitem>
+						</combobox>
+						<label value="Tipo de marcos:"></label>
+						<hbox>
+							<combobox>
+								<comboitem label="Recto - 50x100"></comboitem>
+								<comboitem label="Recto - 30x150"></comboitem>
+								<comboitem label="Abierto"></comboitem>
+								<comboitem label="Oculto"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+					</row>
+					<row>
+						<label value="Entrada libre:"></label>
+						<hbox>
+							<combobox>
+								<comboitem label="700"></comboitem>
+								<comboitem label="800"></comboitem>
+								<comboitem label="900"></comboitem>
+								<comboitem label="1000"></comboitem>
+								<comboitem label="1100"></comboitem>
+								<comboitem label="1200"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+						<label value="Altura:"></label>
+						<hbox>
+							<combobox>
+								<comboitem label="2000"></comboitem>
+								<comboitem label="2100"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+					</row>
+					<row>		
+						<checkbox label="Acero Inox."></checkbox>			
+						<textbox></textbox>
+						<label value="Martillado"></label>
+						<hbox>
+							<checkbox label="Gris"></checkbox>
+							<textbox></textbox>
+							<checkbox label="Marrón"></checkbox>
+							<textbox></textbox>
+						</hbox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="Control"></caption>
+			<grid>
+				<columns>
+					<column width="200px"></column>
+					<column></column>
+					<column width="200px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipo:"></label>
+						<combobox>
+							<comboitem label="Sistel"></comboitem>
+							<comboitem label="CF Control"></comboitem>
+							<comboitem label="Relematico"></comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label value="Botonera de cabina:"></label>
+						<combobox>
+							<comboitem label="Sistel Telefonica"></comboitem>
+							<comboitem label="Boton Acero Plástico con Nomenclatura y Braille de 37mm"></comboitem>
+							<comboitem
+								label="Boton de Acero Inox. Anti-Vandalico de 30 mm">
+							</comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+					<row spans="2">
+						<label value="Botonera de Pasillo"></label>
+						<hbox>
+							<label value="Lugar:"></label>
+							<radiogroup>
+								<space></space>
+								<radio label="Pared"></radio>
+								<space></space>
+								<radio label="Marco"></radio>
+							</radiogroup>
+						</hbox>
+						<space></space>
+					</row>
+					<row spans="3">
+						<hbox>
+							<spinner width="60px"></spinner>
+							<label value="Sistel con display"></label>
+						</hbox>
+						<hbox>
+							<label value="PB:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+							<space></space>
+							<label value="Piso:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+						</hbox>
+					</row>
+					<row spans="3">
+						<hbox>
+							<spinner width="60px"></spinner>
+							<label value="Sistel con flecha"></label>
+						</hbox>
+						<hbox>
+							<label value="PB:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+							<space></space>
+							<label value="Piso:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+						</hbox>
+					</row>
+					<row spans="3">
+						<hbox>
+							<spinner width="60px"></spinner>
+							<label value="Chapa De Acero Con Boton Acero Plastico con Nomenclatura y Braille de 37mm"></label>
+						</hbox>
+						<hbox>
+							<label value="PB:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+							<space></space>
+							<label value="Piso:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+						</hbox>
+					</row>
+					<row spans="3">
+						<hbox>
+							<spinner width="60px"></spinner>
+							<label value="Chapa de acero con boton anti-vandalico De 30mm"></label>
+						</hbox>
+						<hbox>
+							<label value="PB:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+							<space></space>
+							<label value="Piso:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+						</hbox>
+					</row>
+					<row>
+						<label value="Display Cabina:"></label>
+						<combobox>
+							<comboitem label="Sistel Matriz de Punto Pequeño"></comboitem>
+							<comboitem label="Sistel Matriz de Punto Grande"></comboitem>
+							<comboitem label="Sistel Matriz de Punto Hora y Grado"></comboitem>
+							<comboitem label="Sistel LCD de 7''"></comboitem>
+							<comboitem label="Sistel LCD Azul"></comboitem>
+							<comboitem label="CF Control Matriz de Punto Rojo"></comboitem>
+							<comboitem label="CF Control Matriz de Punto Azul"></comboitem>
+							<comboitem label="CF Control LCD Azul"></comboitem>
+						</combobox>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label value="Display Piso:"></label>
+						<combobox>
+							<comboitem label="Sistel Matriz de Punto Pequeño"></comboitem>
+							<comboitem label="Sistel Matriz de Punto Grande"></comboitem>
+							<comboitem label="Sistel Matriz de Punto Hora y Grado"></comboitem>
+							<comboitem label="Sistel LCD de 7''"></comboitem>
+							<comboitem label="Sistel LCD Azul"></comboitem>
+							<comboitem label="CF Control Matriz de Punto Rojo"></comboitem>
+							<comboitem label="CF Control Matriz de Punto Azul"></comboitem>
+							<comboitem label="CF Control LCD Azul"></comboitem>
+						</combobox>
+						<radiogroup id="DsplPiso">
+							<radio label="PB"></radio>
+							<space></space>
+							<space></space>
+							<radio label="Todos los Pisos"></radio>
+						</radiogroup>
+						<radio label="Otros" radiogroup="DsplPiso"></radio>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="Adicionales"></caption>
+			<grid>
+				<rows>
+					<row>
+						<label value="Cortina Luminosa:"></label>
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
+						<label value="Limitador de carga:"></label>					
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>	
+					</row>
+					<row>
+						<label value="Sintetizador de voz:"></label>
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
+						<label value="Sistema de GOM en piso:"></label>					
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
+					</row>
+					<row>
+						<label value="Intercomunicador:"></label>						
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
+						<label value="Telefono:"></label>						
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>						
+					</row>
+					<row>
+						<label value="Sistema de acceso:" style="font-weight:bold;"></label>						
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>						
+						<label value="Llave de bombero:"></label>						
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>						
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<grid>
+				<columns>
+					<column width="100px"></column>
+					<column width="800px"></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Comentarios:" style="font-weight:bold;"></label>
+						<textbox rows="5" cols="150"></textbox>
+						<space></space>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>
