@@ -1,66 +1,105 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Formulario de Presupuesto" border="normal">
-		<grid>
-			<columns>
-				<column width="200px"></column>
-				<column width="400px"></column>
-				<column width="120px"></column>
-				<column></column>
-			</columns>
-			<rows>
-				<row>
-					<label value="Cliente:"></label>
-					<textbox id="txtBBPName" mold="rounded" width="350px"></textbox>
-					<label value="Vendedor:" style="Color: Blue; font-weight:bold; "></label>
-					<textbox mold="rounded" width="230px"></textbox>
-				</row>
-				<row>
-					<label value="Obra:"></label>
-					<textbox id="txtBBuildingName" mold="rounded" width="350px"></textbox>
-					<radiogroup id="nardi">
-						<radio label="Nuevo"></radio>
-					</radiogroup>
-					<radio label="Modernizacion" radiogroup="nardi"></radio>
-				</row>
-				<row>
-					<label value="Nro. Obra:"></label>
-					<textbox id="txtBBuildingNumber" mold="rounded" width="350px"></textbox>
-					<label value="Ciudad:"></label>
-					<textbox id="txtBBuildingCity" mold="rounded" width="230px"></textbox>
-				</row>
-				<row>
-					<label value="Dirección:"></label>
-					<textbox id="txtBBuildingAddress" mold="rounded" width="350px"></textbox>
-					<label value="Email:"></label>
-					<textbox id="txtBBuildingEmail" mold="rounded" width="230px"></textbox>
-				</row>
-				<row>
-					<label value="Teléfono:"></label>
-					<textbox id="txtBBuildingPhoneNumber"
-						mold="rounded" width="350px">
-					</textbox>
-					<label value="Planos de planta:"></label>
-					<radiogroup id="planosPlanta">
-						<radio label="Si"></radio>
-						<radio label="No"></radio>
-					</radiogroup>
-				</row>
-				<row>
-					<label value="Persona de contacto:"></label>
-					<textbox id="txtBBuildingContactName"
-						mold="rounded" width="350px">
-					</textbox>
-					<label value="Planos de corte:"></label>
-					<radiogroup id="planosCorte">
-						<radio label="Si"></radio>
-						<radio label="No"></radio>
-					</radiogroup>
-				</row>
-			</rows>
-		</grid>
+	<style src="/style/style.css"></style>
+	<window border="normal">
 		<groupbox>
-			<caption label="Información General"></caption>
+			<caption label="Formulario de Presupuesto"
+				sclass="titleFormLabel">
+			</caption>
+			<grid>
+				<columns>
+					<column width="200px"></column>
+					<column width="400px"></column>
+					<column width="120px"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<space></space>
+						<space></space>
+						<label sclass="formLabel"
+							value="Nro Presupuesto:">
+						</label>
+						<intbox width="105px"></intbox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Cliente:"></label>
+						<textbox id="txtBBPName" width="350px"></textbox>
+						<label sclass="formLabel" value="Fecha:">
+						</label>
+						<datebox disabled="true"></datebox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Obra:"></label>
+						<textbox id="txtBBuildingName" width="350px">
+						</textbox>
+						<space></space>
+						<radiogroup id="nardi">
+							<radio label="Nuevo"></radio>
+							<radio label="Modernizacion"
+								radiogroup="nardi">
+							</radio>
+						</radiogroup>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Nro. Obra:"></label>
+						<textbox id="txtBBuildingNumber"
+							width="350px">
+						</textbox>
+						<label sclass="formLabel" value="Vendedor:"
+							style="Color: Blue; font-weight:bold; ">
+						</label>
+						<textbox width="230px"></textbox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Dirección:"></label>
+						<textbox id="txtBBuildingAddress"
+							width="350px">
+						</textbox>
+						<label sclass="formLabel" value="Ciudad:"></label>
+						<textbox id="txtBBuildingCity" width="230px">
+						</textbox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Teléfono:"></label>
+						<textbox id="txtBBuildingPhoneNumber"
+							width="350px">
+						</textbox>
+						<label sclass="formLabel" value="Email:"></label>
+						<textbox id="txtBBuildingEmail" width="230px">
+						</textbox>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Persona de contacto:">
+						</label>
+						<textbox id="txtBBuildingContactName"
+							width="350px">
+						</textbox>
+						<label sclass="formLabel"
+							value="Planos de corte:">
+						</label>
+						<hbox>
+							<radiogroup id="planosCorte">
+								<radio label="Si"></radio>
+								<radio label="No"></radio>
+							</radiogroup>
+							<space></space>
+							<space></space>
+							<label sclass="formLabel"
+								value="Planos de planta:">
+							</label>
+							<radiogroup id="planosPlanta">
+								<radio label="Si"></radio>
+								<radio label="No"></radio>
+							</radiogroup>
+						</hbox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="INFORMACION GENERAL" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="200px"></column>
@@ -70,7 +109,9 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Tipo de Edificio:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Edificio:">
+						</label>
 						<combobox>
 							<comboitem label="Residencial"></comboitem>
 							<comboitem label="Comercial"></comboitem>
@@ -79,11 +120,15 @@
 							<comboitem label="Hotel"></comboitem>
 							<comboitem label="Industrial"></comboitem>
 						</combobox>
-						<label value="Cantidad de ascensores:"></label>
+						<label sclass="formLabel"
+							value="Cantidad de ascensores:">
+						</label>
 						<spinner></spinner>
 					</row>
 					<row>
-						<label value="Tipo de Ascensor:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Ascensor:">
+						</label>
 						<combobox>
 							<comboitem label="Pasajero"></comboitem>
 							<comboitem label="Monta Camilla"></comboitem>
@@ -93,7 +138,54 @@
 							<comboitem label="Monta Plato"></comboitem>
 							<comboitem label="Winche"></comboitem>
 						</combobox>
-						<label value="Embarque:"></label>
+						<label sclass="formLabel"
+							value="Cantidad de motores:">
+						</label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Carga (Kg - Cap.):">
+						</label>
+						<hbox>
+							<combobox>
+								<comboitem label="320 - 4"></comboitem>
+								<comboitem label="450 - 6"></comboitem>
+								<comboitem label="600 - 8"></comboitem>
+								<comboitem label="800 - 10"></comboitem>
+								<comboitem label="1000 - 13"></comboitem>
+								<comboitem label="1250 - 16"></comboitem>
+								<comboitem label="1500 - 19"></comboitem>
+								<comboitem label="2000 - 22"></comboitem>
+							</combobox>
+							<button label="Nuevo"></button>
+						</hbox>
+						<label sclass="formLabel"
+							value="Tracción de Motores">
+						</label>
+						<radiogroup>
+							<radio label="1:1"></radio>
+							<space></space>
+							<radio label="2:1"></radio>
+						</radiogroup>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Tipo de Máquina:">
+						</label>
+						<combobox>
+							<comboitem label="Con Sala De Maquina 2V">
+							</comboitem>
+							<comboitem
+								label="Con Sala De Maquina VVVF">
+							</comboitem>
+							<comboitem
+								label="Sin Sala De Maquina MRL">
+							</comboitem>
+							<comboitem label="Hidraulico"></comboitem>
+							<comboitem label="Winche"></comboitem>
+						</combobox>
+						<label sclass="formLabel" value="Embarque:"></label>
 						<combobox>
 							<comboitem label="1 Puerta"></comboitem>
 							<comboitem
@@ -108,21 +200,18 @@
 						</combobox>
 					</row>
 					<row>
-						<label value="Carga (Kg - Cap.):"></label>
-						<hbox>
-							<combobox>
-								<comboitem label="320 - 4"></comboitem>
-								<comboitem label="450 - 6"></comboitem>
-								<comboitem label="600 - 8"></comboitem>
-								<comboitem label="800 - 10"></comboitem>
-								<comboitem label="1000 - 13"></comboitem>
-								<comboitem label="1250 - 16"></comboitem>
-								<comboitem label="1500 - 19"></comboitem>
-								<comboitem label="2000 - 22"></comboitem>
-							</combobox>
-							<button label="Nuevo"></button>
-						</hbox>
-						<label value="Velocidad M/S:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Corriente:">
+						</label>
+						<combobox>
+							<comboitem label="208V"></comboitem>
+							<comboitem label="220V"></comboitem>
+							<comboitem label="308V"></comboitem>
+							<comboitem label="440V"></comboitem>
+						</combobox>
+						<label sclass="formLabel"
+							value="Velocidad M/S:">
+						</label>
 						<hbox>
 							<combobox>
 								<comboitem label="0.50"></comboitem>
@@ -137,88 +226,32 @@
 						</hbox>
 					</row>
 					<row>
-						<label value="Tipo de Máquina:"></label>
-						<combobox>
-							<comboitem
-								label="Con Sala De Maquina 2V">
-							</comboitem>
-							<comboitem
-								label="Con Sala De Maquina VVVF">
-							</comboitem>
-							<comboitem
-								label="Sin Sala De Maquina MRL">
-							</comboitem>
-							<comboitem label="Hidraulico"></comboitem>
-							<comboitem label="Winche"></comboitem>
-						</combobox>
-						<label value="Cantidad de motores:"></label>
-						<spinner></spinner>
-					</row>
-					<row>
-						<label value="Tipo de Corriente:"></label>
-						<combobox>
-							<comboitem label="208V"></comboitem>
-							<comboitem label="220V"></comboitem>
-							<comboitem label="308V"></comboitem>
-							<comboitem label="440V"></comboitem>
-						</combobox>
-						<label value="Frecuencia:"></label>
+						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox>
 							<comboitem label="60 HZ"></comboitem>
 							<comboitem label="50 HZ"></comboitem>
 						</combobox>
-					</row>
-					<row>
-						<label value="Conexiones horas máquina:"></label>
-						<combobox>
-							<comboitem label="180 HORAS (STANDARD)"></comboitem>
-							<comboitem label="240 HORAS (ALTO TRAFICO)"></comboitem>
-						</combobox>
-						<label value="Tracción de motores"></label>
-						<radiogroup>
-							<radio label="1:1"></radio>
-							<space></space>
-							<radio label="2:1"></radio>
-						</radiogroup>
-					</row>
-					<row>
-						<label value="Tipo de Maniobra:"></label>
-						<combobox>
-							<comboitem
-								label="Colectiva en Bajada Simplex (Un Boton)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Duplex (Un Boton)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Triplex (Un Boton)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Cuadruplex (Un Boton)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada y Subida Simplex (Dos Botones)">
-							</comboitem>							
-							<comboitem
-								label="Colectiva en Bajada y Subida Duplex (Dos Botones)">
-							</comboitem>							
-							<comboitem
-								label="Colectiva en Bajada y Subida Triplex (Dos Botones)">
-							</comboitem>							
-							<comboitem
-								label="Colectiva en Bajada y Subida Cuadruplex (Dos Botones)">
-							</comboitem>
-						</combobox>
-						<label value="Tensión de alumbrado:"></label>
+						<label sclass="formLabel"
+							value="Tensión de alumbrado:">
+						</label>
 						<combobox>
 							<comboitem label="110V"></comboitem>
 							<comboitem label="220V"></comboitem>
 						</combobox>
 					</row>
 					<row>
-						<label value="Número de paradas:"></label>
-						<spinner></spinner>												
-						<label value="Secuencia de paradas:"></label>
+						<label sclass="formLabel"
+							value="Conexiones horas máquina:">
+						</label>
+						<combobox>
+							<comboitem label="180 Horas (Standard)"></comboitem>
+							<comboitem
+								label="240 Horas (Alto Tráfico)">
+							</comboitem>
+						</combobox>
+						<label sclass="formLabel"
+							value="Secuencia de Paradas:">
+						</label>
 						<hbox>
 							<grid>
 								<columns>
@@ -235,8 +268,35 @@
 						</hbox>
 					</row>
 					<row>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel"
+							value="Tipo de Maniobra:">
+						</label>
+						<combobox>
+							<comboitem
+								label="Colectiva en Bajada Simplex (Un Botón)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Duplex (Un Botón)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Triplex (Un Botón)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada Cuadruplex (Un Botón)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada y Subida Simplex (Dos Botones)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada y Subida Duplex (Dos Botones)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada y Subida Triplex (Dos Botones)">
+							</comboitem>
+							<comboitem
+								label="Colectiva en Bajada y Subida Cuadruplex (Dos Botones)">
+							</comboitem>
+						</combobox>
 						<space></space>
 						<hbox>
 							<grid>
@@ -254,8 +314,10 @@
 						</hbox>
 					</row>
 					<row>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel"
+							value="Número de Paradas:">
+						</label>
+						<spinner></spinner>
 						<space></space>
 						<hbox>
 							<grid>
@@ -276,7 +338,7 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<caption label="Hueco"></caption>
+			<caption label="HUECO" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="200px"></column>
@@ -286,19 +348,27 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Recorrido(M)"></label>
+						<label sclass="formLabel"
+							value="Recorrido(M)">
+						</label>
 						<spinner></spinner>
-						<label value="Sobre Recorrido (mm)"></label>
-						<spinner></spinner>
-					</row>
-					<row>
-						<label value="Ancho de Hueco (mm)"></label>
-						<spinner></spinner>
-						<label value="Fosa (mm)"></label>
+						<label sclass="formLabel"
+							value="Sobre Recorrido (mm)">
+						</label>
 						<spinner></spinner>
 					</row>
 					<row>
-						<label value="Fondo de Hueco (mm)"></label>
+						<label sclass="formLabel"
+							value="Ancho de Hueco (mm)">
+						</label>
+						<spinner></spinner>
+						<label sclass="formLabel" value="Fosa (mm)"></label>
+						<spinner></spinner>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Fondo de Hueco (mm)">
+						</label>
 						<spinner></spinner>
 						<space></space>
 						<space></space>
@@ -307,24 +377,26 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<caption label="Cabina"></caption>
+			<caption label="CABINA" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="150px"></column>
 					<column></column>
 					<column width="150px"></column>
 					<column></column>
-					<column width="150px"></column>
+					<column width="110px"></column>
 					<column></column>
 				</columns>
 				<rows>
 					<row>
-						<label value="Diseño 1357:"></label>
+						<label sclass="formLabel"
+							value="Diseño 1357:">
+						</label>
 						<combobox>
 							<comboitem label="Formica"></comboitem>
-							<comboitem label="Acero inoxidable"></comboitem>
+							<comboitem label="Acero Inoxidable"></comboitem>
 						</combobox>
-						<label value="Diseño P26:"></label>
+						<label sclass="formLabel" value="Diseño P26:"></label>
 						<combobox>
 							<comboitem label="Formica - Horizontal"></comboitem>
 							<comboitem label="Formica - Vertical"></comboitem>
@@ -333,11 +405,15 @@
 							</comboitem>
 							<comboitem label="Acero inox. - Vertical"></comboitem>
 						</combobox>
-						<label value="Diseño especial:"></label>
+						<label sclass="formLabel"
+							value="Diseño Especial:">
+						</label>
 						<checkbox></checkbox>
-					</row>					
+					</row>
 					<row>
-						<label value="Tipo de techo:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Techo:">
+						</label>
 						<combobox>
 							<comboitem label="PL-3"></comboitem>
 							<comboitem label="PL-4"></comboitem>
@@ -345,42 +421,48 @@
 							<comboitem label="PL-Perforado"></comboitem>
 							<comboitem label="PL-Modular"></comboitem>
 						</combobox>
-						<label value="Tipo de botonera:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Botonera:">
+						</label>
 						<combobox>
 							<comboitem label="Corta"></comboitem>
-							<comboitem label="Piso a techo"></comboitem>
-							<comboitem label="Piso a techo con telf"></comboitem>
+							<comboitem label="Piso a Techo"></comboitem>
+							<comboitem label="Piso a Techo con Telf"></comboitem>
 						</combobox>
-						<space></space>
-						<space></space>
+						<label value="Comentario:" sclass="formLabel"></label>
+						<cell rowspan="3">
+							<textbox rows="5" cols="35"></textbox>
+						</cell>
 					</row>
 					<row>
-						<label value="Pasamano:"></label>
+						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox>
 							<comboitem label="Recto"></comboitem>
 							<comboitem label="Redondo"></comboitem>
-							<comboitem label="Doble pasamano redondo"></comboitem>
+							<comboitem label="Doble Pasamano Redondo"></comboitem>
 						</combobox>
-						<label value="Espejo:"></label>
+						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox>
-							<comboitem label="Acero tipo espejo"></comboitem>
-							<comboitem label="Por cuenta del cliente"></comboitem>
+							<comboitem label="Acero Tipo Espejo"></comboitem>
+							<comboitem label="Por Cuenta del Cliente"></comboitem>
 						</combobox>
 						<space></space>
 						<space></space>
 					</row>
 					<row>
-						<label value="Acabado de piso:"></label>
+						<label sclass="formLabel"
+							value="Acabado de Piso:">
+						</label>
 						<combobox>
 							<comboitem label="Vinil"></comboitem>
 							<comboitem label="Vulca"></comboitem>
 							<comboitem label="Granito"></comboitem>
 							<comboitem
-								label="Granito Por Cuenta Del Cliente">
+								label="Granito por Cuenta del Cliente">
 							</comboitem>
 							<comboitem label="Otros"></comboitem>
 						</combobox>
-						<label value="Ventilador:"></label>
+						<label sclass="formLabel" value="Ventilador:"></label>
 						<combobox>
 							<comboitem label="1 - 450 Kg"></comboitem>
 							<comboitem label="1 - 600 Kg"></comboitem>
@@ -396,7 +478,7 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<caption label="Puerta y marcos"></caption>
+			<caption label="PUERTAS Y MARCOS" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="150px"></column>
@@ -406,30 +488,38 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Número de puertas:"></label>
+						<label sclass="formLabel"
+							value="Número de Puertas:">
+						</label>
 						<spinner></spinner>
-						<label value="Tipo de puerta:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Puerta:">
+						</label>
 						<combobox>
 							<comboitem
-								label="Apertura telescopio izquierdo">
+								label="Apertura Telescopio Izquierdo">
 							</comboitem>
 							<comboitem
-								label="Apertura telescopio derecho">
+								label="Apertura Telescopio Derecho">
 							</comboitem>
 							<comboitem
-								label="Apertura telescopio central">
+								label="Apertura Telescopio Central">
 							</comboitem>
-							<comboitem label="Apertura central"></comboitem>
+							<comboitem label="Apertura Central"></comboitem>
 							<comboitem label="Batiente"></comboitem>
 						</combobox>
 					</row>
 					<row>
-						<label value="Sistema de puerta:"></label>
+						<label sclass="formLabel"
+							value="Sistema de Puerta:">
+						</label>
 						<combobox>
 							<comboitem label="Fermator"></comboitem>
 							<comboitem label="Selcon"></comboitem>
 						</combobox>
-						<label value="Tipo de marcos:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Marcos:">
+						</label>
 						<hbox>
 							<combobox>
 								<comboitem label="Recto - 50x100"></comboitem>
@@ -441,7 +531,9 @@
 						</hbox>
 					</row>
 					<row>
-						<label value="Entrada libre:"></label>
+						<label sclass="formLabel"
+							value="Entrada Libre:">
+						</label>
 						<hbox>
 							<combobox>
 								<comboitem label="700"></comboitem>
@@ -453,7 +545,7 @@
 							</combobox>
 							<button label="Nuevo"></button>
 						</hbox>
-						<label value="Altura:"></label>
+						<label sclass="formLabel" value="Altura:"></label>
 						<hbox>
 							<combobox>
 								<comboitem label="2000"></comboitem>
@@ -462,10 +554,10 @@
 							<button label="Nuevo"></button>
 						</hbox>
 					</row>
-					<row>		
-						<checkbox label="Acero Inox."></checkbox>			
+					<row>
+						<checkbox label="Acero Inox."></checkbox>
 						<textbox></textbox>
-						<label value="Martillado"></label>
+						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
 							<checkbox label="Gris"></checkbox>
 							<textbox></textbox>
@@ -477,7 +569,7 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<caption label="Control"></caption>
+			<caption label="CONTROL" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="200px"></column>
@@ -487,7 +579,7 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Tipo:"></label>
+						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox>
 							<comboitem label="Sistel"></comboitem>
 							<comboitem label="CF Control"></comboitem>
@@ -497,10 +589,14 @@
 						<space></space>
 					</row>
 					<row>
-						<label value="Botonera de cabina:"></label>
+						<label sclass="formLabel"
+							value="Botonera de Cabina:">
+						</label>
 						<combobox>
-							<comboitem label="Sistel Telefonica"></comboitem>
-							<comboitem label="Boton Acero Plástico con Nomenclatura y Braille de 37mm"></comboitem>
+							<comboitem label="Sistel Telefónica"></comboitem>
+							<comboitem
+								label="Boton Acero Plástico con Nomenclatura y Braille de 37mm">
+							</comboitem>
 							<comboitem
 								label="Boton de Acero Inox. Anti-Vandalico de 30 mm">
 							</comboitem>
@@ -509,9 +605,11 @@
 						<space></space>
 					</row>
 					<row spans="2">
-						<label value="Botonera de Pasillo"></label>
+						<label sclass="formLabel"
+							value="Botonera de Pasillo">
+						</label>
 						<hbox>
-							<label value="Lugar:"></label>
+							<label sclass="formLabel" value="Lugar:"></label>
 							<radiogroup>
 								<space></space>
 								<radio label="Pared"></radio>
@@ -524,29 +622,16 @@
 					<row spans="3">
 						<hbox>
 							<spinner width="60px"></spinner>
-							<label value="Sistel con display"></label>
+							<label sclass="formLabel"
+								value="Sistel con Display">
+							</label>
 						</hbox>
 						<hbox>
-							<label value="PB:"></label>
+							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 							<space></space>
-							<label value="Piso:"></label>
-							<space></space>
-							<spinner width="60px"></spinner>
-						</hbox>
-					</row>
-					<row spans="3">
-						<hbox>
-							<spinner width="60px"></spinner>
-							<label value="Sistel con flecha"></label>
-						</hbox>
-						<hbox>
-							<label value="PB:"></label>
-							<space></space>
-							<spinner width="60px"></spinner>
-							<space></space>
-							<label value="Piso:"></label>
+							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 						</hbox>
@@ -554,14 +639,16 @@
 					<row spans="3">
 						<hbox>
 							<spinner width="60px"></spinner>
-							<label value="Chapa De Acero Con Boton Acero Plastico con Nomenclatura y Braille de 37mm"></label>
+							<label sclass="formLabel"
+								value="Sistel con Flecha">
+							</label>
 						</hbox>
 						<hbox>
-							<label value="PB:"></label>
+							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 							<space></space>
-							<label value="Piso:"></label>
+							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 						</hbox>
@@ -569,43 +656,86 @@
 					<row spans="3">
 						<hbox>
 							<spinner width="60px"></spinner>
-							<label value="Chapa de acero con boton anti-vandalico De 30mm"></label>
+							<label sclass="formLabel"
+								value="Chapa de Acero con Boton Acero Plastico con Nomenclatura y Braille de 37mm">
+							</label>
 						</hbox>
 						<hbox>
-							<label value="PB:"></label>
+							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 							<space></space>
-							<label value="Piso:"></label>
+							<label sclass="formLabel" value="Piso:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+						</hbox>
+					</row>
+					<row spans="3">
+						<hbox>
+							<spinner width="60px"></spinner>
+							<label sclass="formLabel"
+								value="Chapa de Acero con Boton Anti-Vandálico De 30mm">
+							</label>
+						</hbox>
+						<hbox>
+							<label sclass="formLabel" value="PB:"></label>
+							<space></space>
+							<spinner width="60px"></spinner>
+							<space></space>
+							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner width="60px"></spinner>
 						</hbox>
 					</row>
 					<row>
-						<label value="Display Cabina:"></label>
+						<label sclass="formLabel"
+							value="Display Cabina:">
+						</label>
 						<combobox>
-							<comboitem label="Sistel Matriz de Punto Pequeño"></comboitem>
-							<comboitem label="Sistel Matriz de Punto Grande"></comboitem>
-							<comboitem label="Sistel Matriz de Punto Hora y Grado"></comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Pequeño">
+							</comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Grande">
+							</comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Hora y Grado">
+							</comboitem>
 							<comboitem label="Sistel LCD de 7''"></comboitem>
 							<comboitem label="Sistel LCD Azul"></comboitem>
-							<comboitem label="CF Control Matriz de Punto Rojo"></comboitem>
-							<comboitem label="CF Control Matriz de Punto Azul"></comboitem>
+							<comboitem
+								label="CF Control Matriz de Punto Rojo">
+							</comboitem>
+							<comboitem
+								label="CF Control Matriz de Punto Azul">
+							</comboitem>
 							<comboitem label="CF Control LCD Azul"></comboitem>
 						</combobox>
 						<space></space>
 						<space></space>
 					</row>
 					<row>
-						<label value="Display Piso:"></label>
+						<label sclass="formLabel"
+							value="Display Piso:">
+						</label>
 						<combobox>
-							<comboitem label="Sistel Matriz de Punto Pequeño"></comboitem>
-							<comboitem label="Sistel Matriz de Punto Grande"></comboitem>
-							<comboitem label="Sistel Matriz de Punto Hora y Grado"></comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Pequeño">
+							</comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Grande">
+							</comboitem>
+							<comboitem
+								label="Sistel Matriz de Punto Hora y Grado">
+							</comboitem>
 							<comboitem label="Sistel LCD de 7''"></comboitem>
 							<comboitem label="Sistel LCD Azul"></comboitem>
-							<comboitem label="CF Control Matriz de Punto Rojo"></comboitem>
-							<comboitem label="CF Control Matriz de Punto Azul"></comboitem>
+							<comboitem
+								label="CF Control Matriz de Punto Rojo">
+							</comboitem>
+							<comboitem
+								label="CF Control Matriz de Punto Azul">
+							</comboitem>
 							<comboitem label="CF Control LCD Azul"></comboitem>
 						</combobox>
 						<radiogroup id="DsplPiso">
@@ -614,62 +744,84 @@
 							<space></space>
 							<radio label="Todos los Pisos"></radio>
 						</radiogroup>
-						<radio label="Otros" radiogroup="DsplPiso"></radio>
+						<hbox>
+							<radio label="Ninguno"
+								radiogroup="DsplPiso">
+							</radio>
+							<space></space>
+							<radio label="Otros"
+								radiogroup="DsplPiso">
+							</radio>
+						</hbox>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
 		<groupbox>
-			<caption label="Adicionales"></caption>
+			<caption label="ADICIONALES" sclass="formLabel"></caption>
 			<grid>
 				<rows>
 					<row>
-						<label value="Cortina Luminosa:"></label>
+						<label sclass="formLabel"
+							value="Cortina Luminosa:">
+						</label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
 						</radiogroup>
-						<label value="Limitador de carga:"></label>					
-						<radiogroup>
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
-						</radiogroup>	
-					</row>
-					<row>
-						<label value="Sintetizador de voz:"></label>
-						<radiogroup>
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
-						</radiogroup>
-						<label value="Sistema de GOM en piso:"></label>					
+						<label sclass="formLabel"
+							value="Limitador de carga:">
+						</label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
 						</radiogroup>
 					</row>
 					<row>
-						<label value="Intercomunicador:"></label>						
+						<label sclass="formLabel"
+							value="Sintetizador de Voz:">
+						</label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
 						</radiogroup>
-						<label value="Telefono:"></label>						
+						<label sclass="formLabel"
+							value="Sistema de GOM en Piso:">
+						</label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
-						</radiogroup>						
+						</radiogroup>
 					</row>
 					<row>
-						<label value="Sistema de acceso:" style="font-weight:bold;"></label>						
+						<label sclass="formLabel"
+							value="Intercomunicador:">
+						</label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
-						</radiogroup>						
-						<label value="Llave de bombero:"></label>						
+						</radiogroup>
+						<label sclass="formLabel" value="Teléfono:"></label>
 						<radiogroup>
 							<radio label="Si"></radio>
 							<radio label="No"></radio>
-						</radiogroup>						
+						</radiogroup>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Sistema de Acceso:" style="font-weight:bold;">
+						</label>
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
+						<label sclass="formLabel"
+							value="Llave de Bombero:">
+						</label>
+						<radiogroup>
+							<radio label="Si"></radio>
+							<radio label="No"></radio>
+						</radiogroup>
 					</row>
 				</rows>
 			</grid>
@@ -682,13 +834,27 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Comentarios:" style="font-weight:bold;"></label>
-						<textbox rows="5" cols="150"></textbox>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel" value="Comentarios:"
+							style="font-weight:bold;">
+						</label>
+						<cell colspan="2">
+							<textbox rows="5" cols="150"></textbox>
+						</cell>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
+		<grid>
+			<rows>
+				<row>
+					<hbox>
+						<button label="Enviar" sclass="formLabel"></button>
+						<button label="Guardar" sclass="formLabel"></button>
+						<button label="Imprimir" sclass="formLabel"></button>
+						<button label="Cancelar" sclass="formLabel"></button>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
 	</window>
 </zk>
