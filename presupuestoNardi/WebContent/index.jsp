@@ -9,10 +9,9 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 </head>
-<body style="height: auto">	
+<body style="height: auto">
 	<%
-		request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE,
-				Boolean.TRUE);
+		request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE,Boolean.TRUE);
 	%>
 	<jsp:include page="index.zul" />
 </body>
