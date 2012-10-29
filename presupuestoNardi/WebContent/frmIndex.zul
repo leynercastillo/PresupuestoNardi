@@ -1,7 +1,7 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="/style/style.css"></style>
-	<window border="normal">
+	<window border="normal" apply="controller.FrmIndexCtrl">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
@@ -20,14 +20,14 @@
 						<label sclass="formLabel"
 							value="Nro Presupuesto:">
 						</label>
-						<intbox id="intBNro" width="105px"></intbox>
+						<intbox id="intBNumber" width="105px"></intbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Cliente:"></label>
 						<textbox id="txtBPartnerName" width="350px"></textbox>
 						<label sclass="formLabel" value="Fecha:">
 						</label>
-						<datebox disabled="dtbBDate"></datebox>
+						<datebox id="dtbBDate" disabled="true"></datebox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
@@ -61,7 +61,7 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Teléfono:"></label>
-						<textbox id="txtBPhoneNumber" width="350px">
+						<textbox id="txtBcontactPhone" width="350px">
 						</textbox>
 						<label sclass="formLabel" value="Email:"></label>
 						<textbox id="txtBEmail" width="230px"></textbox>
@@ -76,7 +76,7 @@
 							value="Planos de corte:">
 						</label>
 						<hbox>
-							<radiogroup id="radDrawingC">
+							<radiogroup id="radPlaneC">
 								<radio label="Si"></radio>
 								<radio label="No"></radio>
 							</radiogroup>
@@ -85,7 +85,7 @@
 							<label sclass="formLabel"
 								value="Planos de planta:">
 							</label>
-							<radiogroup id="radDrawingP">
+							<radiogroup id="radPlaneP">
 								<radio label="Si"></radio>
 								<radio label="No"></radio>
 							</radiogroup>
@@ -108,7 +108,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Edificio:">
 						</label>
-						<combobox id="cmbBBuildingType">
+						<combobox value="--Seleccione--" id="cmbBBuildingType">
 							<comboitem label="Residencial"></comboitem>
 							<comboitem label="Comercial"></comboitem>
 							<comboitem label="Empresarial"></comboitem>
@@ -125,7 +125,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Ascensor:">
 						</label>
-						<combobox id="cmbBElevatorType">
+						<combobox value="--Seleccione--" id="cmbBElevatorType">
 							<comboitem label="Pasajero"></comboitem>
 							<comboitem label="Monta Camilla"></comboitem>
 							<comboitem label="Panoramico"></comboitem>
@@ -144,7 +144,7 @@
 							value="Carga (Kg - Cap.):">
 						</label>
 						<hbox>
-							<combobox id="cmbBElevatorWeight">
+							<combobox value="--Seleccione--" id="cmbBElevatorCapacitance">
 								<comboitem label="320 - 4"></comboitem>
 								<comboitem label="450 - 6"></comboitem>
 								<comboitem label="600 - 8"></comboitem>
@@ -154,7 +154,7 @@
 								<comboitem label="1500 - 19"></comboitem>
 								<comboitem label="2000 - 22"></comboitem>
 							</combobox>
-							<button id="btnNewElevatorWeight"
+							<button id="btnNewElevatorCapacitance"
 								label="Nuevo">
 							</button>
 						</hbox>
@@ -171,7 +171,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Máquina:">
 						</label>
-						<combobox id="cmbBMachineType">
+						<combobox value="--Seleccione--" id="cmbBMachineType">
 							<comboitem label="Con Sala De Maquina 2V">
 							</comboitem>
 							<comboitem
@@ -184,7 +184,7 @@
 							<comboitem label="Winche"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Embarque:"></label>
-						<combobox id="cmbBEmbarque">
+						<combobox value="--Seleccione--" id="cmbBEmbarque">
 							<comboitem label="1 Puerta"></comboitem>
 							<comboitem
 								label="2 Puertas (Doble Acceso - 180º)">
@@ -201,7 +201,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Corriente:">
 						</label>
-						<combobox id="cmbBElectricityType">
+						<combobox value="--Seleccione--" id="cmbBElectricityType">
 							<comboitem label="208V"></comboitem>
 							<comboitem label="220V"></comboitem>
 							<comboitem label="308V"></comboitem>
@@ -211,7 +211,7 @@
 							value="Velocidad M/S:">
 						</label>
 						<hbox>
-							<combobox id="cmbBSpeed">
+							<combobox value="--Seleccione--" id="cmbBSpeed">
 								<comboitem label="0.50"></comboitem>
 								<comboitem label="1.00"></comboitem>
 								<comboitem label="1.20"></comboitem>
@@ -225,14 +225,14 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Frecuencia:"></label>
-						<combobox id="cmbBFrequency">
+						<combobox value="--Seleccione--" id="cmbBFrequency">
 							<comboitem label="60 HZ"></comboitem>
 							<comboitem label="50 HZ"></comboitem>
 						</combobox>
 						<label sclass="formLabel"
 							value="Tensión de alumbrado:">
 						</label>
-						<combobox id="cmbBVoltageLighting">
+						<combobox value="--Seleccione--" id="cmbBVoltageLighting">
 							<comboitem label="110V"></comboitem>
 							<comboitem label="220V"></comboitem>
 						</combobox>
@@ -241,7 +241,7 @@
 						<label sclass="formLabel"
 							value="Conexiones horas máquina:">
 						</label>
-						<combobox id="cmbBHourMachine">
+						<combobox value="--Seleccione--" id="cmbBHourMachine">
 							<comboitem label="180 Horas (Standard)"></comboitem>
 							<comboitem
 								label="240 Horas (Alto Tráfico)">
@@ -271,7 +271,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Maniobra:">
 						</label>
-						<combobox id="cmbBManeuverType">
+						<combobox value="--Seleccione--" id="cmbBManeuverType">
 							<comboitem
 								label="Colectiva en Bajada Simplex (Un Botón)">
 							</comboitem>
@@ -392,12 +392,12 @@
 						<label sclass="formLabel"
 							value="Diseño 1357:">
 						</label>
-						<combobox id="cmbBDesign1357">
+						<combobox value="--Seleccione--" id="cmbBDesign1357">
 							<comboitem label="Formica"></comboitem>
 							<comboitem label="Acero Inoxidable"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Diseño P26:"></label>
-						<combobox id="cmbBDesignP26">
+						<combobox value="--Seleccione--" id="cmbBDesignP26">
 							<comboitem label="Formica - Horizontal"></comboitem>
 							<comboitem label="Formica - Vertical"></comboitem>
 							<comboitem
@@ -414,7 +414,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Techo:">
 						</label>
-						<combobox id="cmbBRoofType">
+						<combobox value="--Seleccione--" id="cmbBRoofType">
 							<comboitem label="PL-3"></comboitem>
 							<comboitem label="PL-4"></comboitem>
 							<comboitem label="PL-6"></comboitem>
@@ -424,7 +424,7 @@
 						<label sclass="formLabel"
 							value="Tipo de Botonera:">
 						</label>
-						<combobox id="cmbBButtonType">
+						<combobox value="--Seleccione--" id="cmbBButtonType">
 							<comboitem label="Corta"></comboitem>
 							<comboitem label="Piso a Techo"></comboitem>
 							<comboitem label="Piso a Techo con Telf"></comboitem>
@@ -436,13 +436,13 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Pasamano:"></label>
-						<combobox id="cmbBRailing">
+						<combobox value="--Seleccione--" id="cmbBRailing">
 							<comboitem label="Recto"></comboitem>
 							<comboitem label="Redondo"></comboitem>
 							<comboitem label="Doble Pasamano Redondo"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Espejo:"></label>
-						<combobox id="cmbBMirror">
+						<combobox value="--Seleccione--" id="cmbBMirror">
 							<comboitem label="Acero Tipo Espejo"></comboitem>
 							<comboitem label="Por Cuenta del Cliente"></comboitem>
 						</combobox>
@@ -453,7 +453,7 @@
 						<label sclass="formLabel"
 							value="Acabado de Piso:">
 						</label>
-						<combobox id="cmbBFloorType">
+						<combobox value="--Seleccione--" id="cmbBFloorType">
 							<comboitem label="Vinil"></comboitem>
 							<comboitem label="Vulca"></comboitem>
 							<comboitem label="Granito"></comboitem>
@@ -463,7 +463,7 @@
 							<comboitem label="Otros"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Ventilador:"></label>
-						<combobox id="cmbBFan">
+						<combobox value="--Seleccione--" id="cmbBFan">
 							<comboitem label="1 - 450 Kg"></comboitem>
 							<comboitem label="1 - 600 Kg"></comboitem>
 							<comboitem label="2 - 800 Kg"></comboitem>
@@ -491,11 +491,11 @@
 						<label sclass="formLabel"
 							value="Número de Puertas:">
 						</label>
-						<spinner id="spnBDoorNumber"></spinner>
+						<spinner id="spnBDoorOfNumber"></spinner>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
 						</label>
-						<combobox id="spnBDoorType">
+						<combobox value="--Seleccione--" id="spnBDoorType">
 							<comboitem
 								label="Apertura Telescopio Izquierdo">
 							</comboitem>
@@ -513,7 +513,7 @@
 						<label sclass="formLabel"
 							value="Sistema de Puerta:">
 						</label>
-						<combobox id="spnBDoorSystem">
+						<combobox value="--Seleccione--" id="spnBDoorSystem">
 							<comboitem label="Fermator"></comboitem>
 							<comboitem label="Selcon"></comboitem>
 						</combobox>
@@ -521,7 +521,7 @@
 							value="Tipo de Marcos:">
 						</label>
 						<hbox>
-							<combobox id="cmbBDoorframeType">
+							<combobox value="--Seleccione--" id="cmbBDoorframeType">
 								<comboitem label="Recto - 50x100"></comboitem>
 								<comboitem label="Recto - 30x150"></comboitem>
 								<comboitem label="Abierto"></comboitem>
@@ -535,7 +535,7 @@
 							value="Entrada Libre:">
 						</label>
 						<hbox>
-							<combobox id="cmbBFreeAdmission">
+							<combobox value="--Seleccione--" id="cmbBFreeAdmission">
 								<comboitem label="700"></comboitem>
 								<comboitem label="800"></comboitem>
 								<comboitem label="900"></comboitem>
@@ -547,7 +547,7 @@
 						</hbox>
 						<label sclass="formLabel" value="Altura:"></label>
 						<hbox>
-							<combobox id="cmbBHeight">
+							<combobox value="--Seleccione--" id="cmbBHeight">
 								<comboitem label="2000"></comboitem>
 								<comboitem label="2100"></comboitem>
 							</combobox>
@@ -580,7 +580,7 @@
 				<rows>
 					<row>
 						<label sclass="formLabel" value="Tipo:"></label>
-						<combobox id="cmbBControlType">
+						<combobox value="--Seleccione--" id="cmbBControlType">
 							<comboitem label="Sistel"></comboitem>
 							<comboitem label="CF Control"></comboitem>
 							<comboitem label="Relematico"></comboitem>
@@ -592,7 +592,7 @@
 						<label sclass="formLabel"
 							value="Botonera de Cabina:">
 						</label>
-						<combobox id="cmbBBoothButton">
+						<combobox value="--Seleccione--" id="cmbBBoothButton">
 							<comboitem label="Sistel Telefónica"></comboitem>
 							<comboitem
 								label="Boton Acero Plástico con Nomenclatura y Braille de 37mm">
@@ -691,7 +691,7 @@
 						<label sclass="formLabel"
 							value="Display Cabina:">
 						</label>
-						<combobox id="cmbBBoothDisplay">
+						<combobox value="--Seleccione--" id="cmbBBoothDisplay">
 							<comboitem
 								label="Sistel Matriz de Punto Pequeño">
 							</comboitem>
@@ -718,7 +718,7 @@
 						<label sclass="formLabel"
 							value="Display Piso:">
 						</label>
-						<combobox id="cmbBFloorDisplay">
+						<combobox value="--Seleccione--" id="cmbBFloorDisplay">
 							<comboitem
 								label="Sistel Matriz de Punto Pequeño">
 							</comboitem>
@@ -738,7 +738,7 @@
 							</comboitem>
 							<comboitem label="CF Control LCD Azul"></comboitem>
 						</combobox>
-						<radiogroup id="radBDisplayFloor">
+						<radiogroup id="radBDisplayPlaceFloor">
 							<radio label="PB"></radio>
 							<space></space>
 							<space></space>
@@ -746,11 +746,11 @@
 						</radiogroup>
 						<hbox>
 							<radio label="Ninguno"
-								radiogroup="radBDisplayFloor">
+								radiogroup="radBDisplayPlaceFloor">
 							</radio>
 							<space></space>
 							<radio label="Otros"
-								radiogroup="radBDisplayFloor">
+								radiogroup="radBDisplayPlaceFloor">
 							</radio>
 						</hbox>
 					</row>

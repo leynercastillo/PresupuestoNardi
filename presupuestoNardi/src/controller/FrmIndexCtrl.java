@@ -1,10 +1,13 @@
 package controller;
 
+import java.util.Date;
+
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Spinner;
@@ -44,7 +47,7 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Radiogroup radBLightCurtain;
 	@Wire
-	private Radiogroup radBDisplayFloor;
+	private Radiogroup radBDisplayPlaceFloor;
 	@Wire
 	private Combobox cmbBFloorDisplay;
 	@Wire
@@ -104,7 +107,7 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Combobox spnBDoorType;
 	@Wire
-	private Spinner spnBDoorNumber;
+	private Spinner spnBDoorOfNumber;
 	@Wire
 	private Combobox cmbBFan;
 	@Wire
@@ -164,9 +167,9 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Radiogroup radBMotorTraction;
 	@Wire
-	private Button btnNewElevatorWeight;
+	private Button btnNewElevatorCapacitance;
 	@Wire
-	private Combobox cmbBElevatorWeight; 
+	private Combobox cmbBElevatorCapacitance; 
 	@Wire
 	private Spinner cmbBMotorQuantity;
 	@Wire
@@ -176,15 +179,15 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Combobox cmbBBuildingType;
 	@Wire
-	private Radiogroup radDrawingP;
+	private Radiogroup radPlaneP;
 	@Wire
-	private Radiogroup radDrawingC;
+	private Radiogroup radPlaneC;
 	@Wire
 	private Textbox txtBContactName;
 	@Wire
 	private Textbox txtBEmail;
 	@Wire
-	private Textbox txtBPhoneNumber;
+	private Textbox txtBcontactPhone;
 	@Wire
 	private Textbox txtBConstructionCity;
 	@Wire
@@ -200,5 +203,14 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Textbox txtBPartnerName;
 	@Wire
-	private Intbox intBNro;
+	private Intbox intBNumber;
+	@Wire
+	private Datebox dtbBDate;
+	
+	public void doAfterCompose(Window comp) throws Exception {
+		super.doAfterCompose(comp);
+		dtbBDate.setValue(new Date());
+	}
+
+	
 }
