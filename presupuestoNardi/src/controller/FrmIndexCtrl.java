@@ -3,6 +3,7 @@ package controller;
 import java.util.Date;
 
 import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
@@ -14,12 +15,15 @@ import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import dao.DaoBudget;
+import database.Budget;
+
 /**
- * @author leyner
+ * @author leyner.castillo
  *
  */
 public class FrmIndexCtrl extends SelectorComposer<Window> {
-	
+
 	@Wire
 	private Button btnCancel;
 	@Wire
@@ -80,7 +84,7 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	private Radiogroup radBHallButton;
 	@Wire
 	private Combobox cmbBBoothButton;
-	@Wire
+	@Wire	
 	private Combobox cmbBControlType;
 	@Wire
 	private Textbox txtBHammeredBrown;
@@ -169,7 +173,7 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Button btnNewElevatorCapacitance;
 	@Wire
-	private Combobox cmbBElevatorCapacitance; 
+	private Combobox cmbBElevatorCapacitance;
 	@Wire
 	private Spinner cmbBMotorQuantity;
 	@Wire
@@ -201,16 +205,40 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Textbox txtBConstruction;
 	@Wire
+	private Datebox dtbBDate;
+	@Wire
 	private Textbox txtBPartnerName;
 	@Wire
 	private Intbox intBNumber;
-	@Wire
-	private Datebox dtbBDate;
-	
+
+	/**
+	 *
+	 *
+	 */
+	@Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 		dtbBDate.setValue(new Date());
+		
+	}
+	
+	@Listen("onClick=#btnSave")
+	public void clickSave(){
+		Budget budget = new Budget();
+		DaoBudget daoBudget = new DaoBudget();
+		budget.setIdbudget(0);
+		budget.setPartnername("leyner");
+		budget.setConstruction("casa");
+		budget.setConstructionnumber("153-5");
+		budget.setConstructionaddress("Plaza caribe");
+		budget.setConstructioncity("Barquisimeto");
+		budget.setContactname("Jesus");
+		budget.setContactphone("0414-3534887");
+		budget.setEmail("asdf@mail.com");
+		budget.setSeller("yo mismo");
+		budget.setType(true);
+		budget.setDate(new Date());
+		daoBudget.save(budget);
 	}
 
-	
 }
