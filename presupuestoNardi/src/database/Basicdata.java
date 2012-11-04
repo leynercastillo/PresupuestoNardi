@@ -1,6 +1,6 @@
 package database;
 
-// Generated 30/10/2012 04:47:22 PM by Hibernate Tools 3.6.0
+// Generated 02/11/2012 09:47:33 PM by Hibernate Tools 3.6.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,72 +23,83 @@ public class Basicdata implements java.io.Serializable {
 	private String name;
 	private String description;
 	private boolean editable;
+	private int priority;
 	private char status;
-	private Set budgetsForVoltagelighting = new HashSet(0);
-	private Set budgetsForFrequency = new HashSet(0);
-	private Set budgetsForHourmachine = new HashSet(0);
-	private Set hammereds = new HashSet(0);
-	private Set budgetsForMirror = new HashSet(0);
-	private Set budgetsForRailing = new HashSet(0);
-	private Set budgetsForButtontype = new HashSet(0);
-	private Set budgetsForRooftype = new HashSet(0);
-	private Set budgetsForDesignp26 = new HashSet(0);
-	private Set budgetsForDesign1357 = new HashSet(0);
-	private Set budgetsForManeuvertype = new HashSet(0);
-	private Set budgetsForStopsequence = new HashSet(0);
-	private Set budgetsForSpeed = new HashSet(0);
-	private Set budgetsForFloortype = new HashSet(0);
-	private Set budgetsForDoorsystem = new HashSet(0);
-	private Set budgetsForBuildingtype = new HashSet(0);
-	private Set budgetsForDoorframetype = new HashSet(0);
-	private Set budgetsForControltype = new HashSet(0);
-	private Set budgetsForElevatortype = new HashSet(0);
-	private Set budgetsForBoothbutton = new HashSet(0);
-	private Set budgetsForElevatorcapacitance = new HashSet(0);
-	private Set budgetsForBoothdisplay = new HashSet(0);
-	private Set budgetsForMotortraction = new HashSet(0);
-	private Set budgetsForFloordisplay = new HashSet(0);
-	private Set budgetsForMachinetype = new HashSet(0);
-	private Set budgetsForEmbarque = new HashSet(0);
-	private Set budgetsForElectricitytype = new HashSet(0);
-	private Set budgetsForStatus = new HashSet(0);
-	private Set budgetsForFan = new HashSet(0);
-	private Set budgetsForDoortype = new HashSet(0);
+	private Set<Budget> budgetsForVoltagelighting = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForFrequency = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForHourmachine = new HashSet<Budget>(0);
+	private Set<Hammered> hammereds = new HashSet<Hammered>(0);
+	private Set<Budget> budgetsForMirror = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForRailing = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForButtontype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForRooftype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDesignp26 = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDesign1357 = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForManeuvertype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForStopsequence = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForSpeed = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForFloortype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDoorsystem = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForBuildingtype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDoorframetype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForControltype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForElevatortype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForBoothbutton = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForElevatorcapacitance = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForBoothdisplay = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForMotortraction = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForFloordisplay = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForMachinetype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForEmbarque = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForElectricitytype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForStatus = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForFan = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDoortype = new HashSet<Budget>(0);
 
 	public Basicdata() {
 	}
 
 	public Basicdata(int idbasic, String database, String name,
-			String description, boolean editable, char status) {
+			String description, boolean editable, int priority, char status) {
 		this.idbasic = idbasic;
 		this.database = database;
 		this.name = name;
 		this.description = description;
 		this.editable = editable;
+		this.priority = priority;
 		this.status = status;
 	}
 
 	public Basicdata(int idbasic, String database, String name,
-			String description, boolean editable, char status,
-			Set budgetsForVoltagelighting, Set budgetsForFrequency,
-			Set budgetsForHourmachine, Set hammereds, Set budgetsForMirror,
-			Set budgetsForRailing, Set budgetsForButtontype,
-			Set budgetsForRooftype, Set budgetsForDesignp26,
-			Set budgetsForDesign1357, Set budgetsForManeuvertype,
-			Set budgetsForStopsequence, Set budgetsForSpeed,
-			Set budgetsForFloortype, Set budgetsForDoorsystem,
-			Set budgetsForBuildingtype, Set budgetsForDoorframetype,
-			Set budgetsForControltype, Set budgetsForElevatortype,
-			Set budgetsForBoothbutton, Set budgetsForElevatorcapacitance,
-			Set budgetsForBoothdisplay, Set budgetsForMotortraction,
-			Set budgetsForFloordisplay, Set budgetsForMachinetype,
-			Set budgetsForEmbarque, Set budgetsForElectricitytype,
-			Set budgetsForStatus, Set budgetsForFan, Set budgetsForDoortype) {
+			String description, boolean editable, int priority, char status,
+			Set<Budget> budgetsForVoltagelighting,
+			Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourmachine,
+			Set<Hammered> hammereds, Set<Budget> budgetsForMirror,
+			Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtontype,
+			Set<Budget> budgetsForRooftype, Set<Budget> budgetsForDesignp26,
+			Set<Budget> budgetsForDesign1357,
+			Set<Budget> budgetsForManeuvertype,
+			Set<Budget> budgetsForStopsequence, Set<Budget> budgetsForSpeed,
+			Set<Budget> budgetsForFloortype, Set<Budget> budgetsForDoorsystem,
+			Set<Budget> budgetsForBuildingtype,
+			Set<Budget> budgetsForDoorframetype,
+			Set<Budget> budgetsForControltype,
+			Set<Budget> budgetsForElevatortype,
+			Set<Budget> budgetsForBoothbutton,
+			Set<Budget> budgetsForElevatorcapacitance,
+			Set<Budget> budgetsForBoothdisplay,
+			Set<Budget> budgetsForMotortraction,
+			Set<Budget> budgetsForFloordisplay,
+			Set<Budget> budgetsForMachinetype, Set<Budget> budgetsForEmbarque,
+			Set<Budget> budgetsForElectricitytype,
+			Set<Budget> budgetsForStatus, Set<Budget> budgetsForFan,
+			Set<Budget> budgetsForDoortype) {
 		this.idbasic = idbasic;
 		this.database = database;
 		this.name = name;
 		this.description = description;
 		this.editable = editable;
+		this.priority = priority;
 		this.status = status;
 		this.budgetsForVoltagelighting = budgetsForVoltagelighting;
 		this.budgetsForFrequency = budgetsForFrequency;
@@ -168,6 +179,15 @@ public class Basicdata implements java.io.Serializable {
 		this.editable = editable;
 	}
 
+	@Column(name = "priority", nullable = false)
+	public int getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
 	@Column(name = "status", nullable = false, length = 1)
 	public char getStatus() {
 		return this.status;
@@ -178,273 +198,275 @@ public class Basicdata implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByVoltagelighting")
-	public Set getBudgetsForVoltagelighting() {
+	public Set<Budget> getBudgetsForVoltagelighting() {
 		return this.budgetsForVoltagelighting;
 	}
 
-	public void setBudgetsForVoltagelighting(Set budgetsForVoltagelighting) {
+	public void setBudgetsForVoltagelighting(
+			Set<Budget> budgetsForVoltagelighting) {
 		this.budgetsForVoltagelighting = budgetsForVoltagelighting;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByFrequency")
-	public Set getBudgetsForFrequency() {
+	public Set<Budget> getBudgetsForFrequency() {
 		return this.budgetsForFrequency;
 	}
 
-	public void setBudgetsForFrequency(Set budgetsForFrequency) {
+	public void setBudgetsForFrequency(Set<Budget> budgetsForFrequency) {
 		this.budgetsForFrequency = budgetsForFrequency;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByHourmachine")
-	public Set getBudgetsForHourmachine() {
+	public Set<Budget> getBudgetsForHourmachine() {
 		return this.budgetsForHourmachine;
 	}
 
-	public void setBudgetsForHourmachine(Set budgetsForHourmachine) {
+	public void setBudgetsForHourmachine(Set<Budget> budgetsForHourmachine) {
 		this.budgetsForHourmachine = budgetsForHourmachine;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdata")
-	public Set getHammereds() {
+	public Set<Hammered> getHammereds() {
 		return this.hammereds;
 	}
 
-	public void setHammereds(Set hammereds) {
+	public void setHammereds(Set<Hammered> hammereds) {
 		this.hammereds = hammereds;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByMirror")
-	public Set getBudgetsForMirror() {
+	public Set<Budget> getBudgetsForMirror() {
 		return this.budgetsForMirror;
 	}
 
-	public void setBudgetsForMirror(Set budgetsForMirror) {
+	public void setBudgetsForMirror(Set<Budget> budgetsForMirror) {
 		this.budgetsForMirror = budgetsForMirror;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByRailing")
-	public Set getBudgetsForRailing() {
+	public Set<Budget> getBudgetsForRailing() {
 		return this.budgetsForRailing;
 	}
 
-	public void setBudgetsForRailing(Set budgetsForRailing) {
+	public void setBudgetsForRailing(Set<Budget> budgetsForRailing) {
 		this.budgetsForRailing = budgetsForRailing;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByButtontype")
-	public Set getBudgetsForButtontype() {
+	public Set<Budget> getBudgetsForButtontype() {
 		return this.budgetsForButtontype;
 	}
 
-	public void setBudgetsForButtontype(Set budgetsForButtontype) {
+	public void setBudgetsForButtontype(Set<Budget> budgetsForButtontype) {
 		this.budgetsForButtontype = budgetsForButtontype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByRooftype")
-	public Set getBudgetsForRooftype() {
+	public Set<Budget> getBudgetsForRooftype() {
 		return this.budgetsForRooftype;
 	}
 
-	public void setBudgetsForRooftype(Set budgetsForRooftype) {
+	public void setBudgetsForRooftype(Set<Budget> budgetsForRooftype) {
 		this.budgetsForRooftype = budgetsForRooftype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDesignp26")
-	public Set getBudgetsForDesignp26() {
+	public Set<Budget> getBudgetsForDesignp26() {
 		return this.budgetsForDesignp26;
 	}
 
-	public void setBudgetsForDesignp26(Set budgetsForDesignp26) {
+	public void setBudgetsForDesignp26(Set<Budget> budgetsForDesignp26) {
 		this.budgetsForDesignp26 = budgetsForDesignp26;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDesign1357")
-	public Set getBudgetsForDesign1357() {
+	public Set<Budget> getBudgetsForDesign1357() {
 		return this.budgetsForDesign1357;
 	}
 
-	public void setBudgetsForDesign1357(Set budgetsForDesign1357) {
+	public void setBudgetsForDesign1357(Set<Budget> budgetsForDesign1357) {
 		this.budgetsForDesign1357 = budgetsForDesign1357;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByManeuvertype")
-	public Set getBudgetsForManeuvertype() {
+	public Set<Budget> getBudgetsForManeuvertype() {
 		return this.budgetsForManeuvertype;
 	}
 
-	public void setBudgetsForManeuvertype(Set budgetsForManeuvertype) {
+	public void setBudgetsForManeuvertype(Set<Budget> budgetsForManeuvertype) {
 		this.budgetsForManeuvertype = budgetsForManeuvertype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByStopsequence")
-	public Set getBudgetsForStopsequence() {
+	public Set<Budget> getBudgetsForStopsequence() {
 		return this.budgetsForStopsequence;
 	}
 
-	public void setBudgetsForStopsequence(Set budgetsForStopsequence) {
+	public void setBudgetsForStopsequence(Set<Budget> budgetsForStopsequence) {
 		this.budgetsForStopsequence = budgetsForStopsequence;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataBySpeed")
-	public Set getBudgetsForSpeed() {
+	public Set<Budget> getBudgetsForSpeed() {
 		return this.budgetsForSpeed;
 	}
 
-	public void setBudgetsForSpeed(Set budgetsForSpeed) {
+	public void setBudgetsForSpeed(Set<Budget> budgetsForSpeed) {
 		this.budgetsForSpeed = budgetsForSpeed;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByFloortype")
-	public Set getBudgetsForFloortype() {
+	public Set<Budget> getBudgetsForFloortype() {
 		return this.budgetsForFloortype;
 	}
 
-	public void setBudgetsForFloortype(Set budgetsForFloortype) {
+	public void setBudgetsForFloortype(Set<Budget> budgetsForFloortype) {
 		this.budgetsForFloortype = budgetsForFloortype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoorsystem")
-	public Set getBudgetsForDoorsystem() {
+	public Set<Budget> getBudgetsForDoorsystem() {
 		return this.budgetsForDoorsystem;
 	}
 
-	public void setBudgetsForDoorsystem(Set budgetsForDoorsystem) {
+	public void setBudgetsForDoorsystem(Set<Budget> budgetsForDoorsystem) {
 		this.budgetsForDoorsystem = budgetsForDoorsystem;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBuildingtype")
-	public Set getBudgetsForBuildingtype() {
+	public Set<Budget> getBudgetsForBuildingtype() {
 		return this.budgetsForBuildingtype;
 	}
 
-	public void setBudgetsForBuildingtype(Set budgetsForBuildingtype) {
+	public void setBudgetsForBuildingtype(Set<Budget> budgetsForBuildingtype) {
 		this.budgetsForBuildingtype = budgetsForBuildingtype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoorframetype")
-	public Set getBudgetsForDoorframetype() {
+	public Set<Budget> getBudgetsForDoorframetype() {
 		return this.budgetsForDoorframetype;
 	}
 
-	public void setBudgetsForDoorframetype(Set budgetsForDoorframetype) {
+	public void setBudgetsForDoorframetype(Set<Budget> budgetsForDoorframetype) {
 		this.budgetsForDoorframetype = budgetsForDoorframetype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByControltype")
-	public Set getBudgetsForControltype() {
+	public Set<Budget> getBudgetsForControltype() {
 		return this.budgetsForControltype;
 	}
 
-	public void setBudgetsForControltype(Set budgetsForControltype) {
+	public void setBudgetsForControltype(Set<Budget> budgetsForControltype) {
 		this.budgetsForControltype = budgetsForControltype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByElevatortype")
-	public Set getBudgetsForElevatortype() {
+	public Set<Budget> getBudgetsForElevatortype() {
 		return this.budgetsForElevatortype;
 	}
 
-	public void setBudgetsForElevatortype(Set budgetsForElevatortype) {
+	public void setBudgetsForElevatortype(Set<Budget> budgetsForElevatortype) {
 		this.budgetsForElevatortype = budgetsForElevatortype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBoothbutton")
-	public Set getBudgetsForBoothbutton() {
+	public Set<Budget> getBudgetsForBoothbutton() {
 		return this.budgetsForBoothbutton;
 	}
 
-	public void setBudgetsForBoothbutton(Set budgetsForBoothbutton) {
+	public void setBudgetsForBoothbutton(Set<Budget> budgetsForBoothbutton) {
 		this.budgetsForBoothbutton = budgetsForBoothbutton;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByElevatorcapacitance")
-	public Set getBudgetsForElevatorcapacitance() {
+	public Set<Budget> getBudgetsForElevatorcapacitance() {
 		return this.budgetsForElevatorcapacitance;
 	}
 
 	public void setBudgetsForElevatorcapacitance(
-			Set budgetsForElevatorcapacitance) {
+			Set<Budget> budgetsForElevatorcapacitance) {
 		this.budgetsForElevatorcapacitance = budgetsForElevatorcapacitance;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBoothdisplay")
-	public Set getBudgetsForBoothdisplay() {
+	public Set<Budget> getBudgetsForBoothdisplay() {
 		return this.budgetsForBoothdisplay;
 	}
 
-	public void setBudgetsForBoothdisplay(Set budgetsForBoothdisplay) {
+	public void setBudgetsForBoothdisplay(Set<Budget> budgetsForBoothdisplay) {
 		this.budgetsForBoothdisplay = budgetsForBoothdisplay;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByMotortraction")
-	public Set getBudgetsForMotortraction() {
+	public Set<Budget> getBudgetsForMotortraction() {
 		return this.budgetsForMotortraction;
 	}
 
-	public void setBudgetsForMotortraction(Set budgetsForMotortraction) {
+	public void setBudgetsForMotortraction(Set<Budget> budgetsForMotortraction) {
 		this.budgetsForMotortraction = budgetsForMotortraction;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByFloordisplay")
-	public Set getBudgetsForFloordisplay() {
+	public Set<Budget> getBudgetsForFloordisplay() {
 		return this.budgetsForFloordisplay;
 	}
 
-	public void setBudgetsForFloordisplay(Set budgetsForFloordisplay) {
+	public void setBudgetsForFloordisplay(Set<Budget> budgetsForFloordisplay) {
 		this.budgetsForFloordisplay = budgetsForFloordisplay;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByMachinetype")
-	public Set getBudgetsForMachinetype() {
+	public Set<Budget> getBudgetsForMachinetype() {
 		return this.budgetsForMachinetype;
 	}
 
-	public void setBudgetsForMachinetype(Set budgetsForMachinetype) {
+	public void setBudgetsForMachinetype(Set<Budget> budgetsForMachinetype) {
 		this.budgetsForMachinetype = budgetsForMachinetype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByEmbarque")
-	public Set getBudgetsForEmbarque() {
+	public Set<Budget> getBudgetsForEmbarque() {
 		return this.budgetsForEmbarque;
 	}
 
-	public void setBudgetsForEmbarque(Set budgetsForEmbarque) {
+	public void setBudgetsForEmbarque(Set<Budget> budgetsForEmbarque) {
 		this.budgetsForEmbarque = budgetsForEmbarque;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByElectricitytype")
-	public Set getBudgetsForElectricitytype() {
+	public Set<Budget> getBudgetsForElectricitytype() {
 		return this.budgetsForElectricitytype;
 	}
 
-	public void setBudgetsForElectricitytype(Set budgetsForElectricitytype) {
+	public void setBudgetsForElectricitytype(
+			Set<Budget> budgetsForElectricitytype) {
 		this.budgetsForElectricitytype = budgetsForElectricitytype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByStatus")
-	public Set getBudgetsForStatus() {
+	public Set<Budget> getBudgetsForStatus() {
 		return this.budgetsForStatus;
 	}
 
-	public void setBudgetsForStatus(Set budgetsForStatus) {
+	public void setBudgetsForStatus(Set<Budget> budgetsForStatus) {
 		this.budgetsForStatus = budgetsForStatus;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByFan")
-	public Set getBudgetsForFan() {
+	public Set<Budget> getBudgetsForFan() {
 		return this.budgetsForFan;
 	}
 
-	public void setBudgetsForFan(Set budgetsForFan) {
+	public void setBudgetsForFan(Set<Budget> budgetsForFan) {
 		this.budgetsForFan = budgetsForFan;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoortype")
-	public Set getBudgetsForDoortype() {
+	public Set<Budget> getBudgetsForDoortype() {
 		return this.budgetsForDoortype;
 	}
 
-	public void setBudgetsForDoortype(Set budgetsForDoortype) {
+	public void setBudgetsForDoortype(Set<Budget> budgetsForDoortype) {
 		this.budgetsForDoortype = budgetsForDoortype;
 	}
 

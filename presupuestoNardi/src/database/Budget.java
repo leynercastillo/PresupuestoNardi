@@ -1,6 +1,6 @@
 package database;
 
-// Generated 30/10/2012 04:47:22 PM by Hibernate Tools 3.6.0
+// Generated 02/11/2012 09:47:33 PM by Hibernate Tools 3.6.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -91,8 +91,8 @@ public class Budget implements java.io.Serializable {
 	private Boolean firefighterkeychain;
 	private String comment;
 	private String displayplacefloor;
-	private Set hallbuttontypes = new HashSet(0);
-	private Set hammereds = new HashSet(0);
+	private Set<Hallbuttontype> hallbuttontypes = new HashSet<Hallbuttontype>(0);
+	private Set<Hammered> hammereds = new HashSet<Hammered>(0);
 
 	public Budget() {
 	}
@@ -148,8 +148,8 @@ public class Budget implements java.io.Serializable {
 			String hallbutton, Boolean lightcurtain, Boolean loadlimiter,
 			Boolean speechsynthesizer, Boolean gomsystem, Boolean intercom,
 			Boolean phone, Boolean accesssytem, Boolean firefighterkeychain,
-			String comment, String displayplacefloor, Set hallbuttontypes,
-			Set hammereds) {
+			String comment, String displayplacefloor,
+			Set<Hallbuttontype> hallbuttontypes, Set<Hammered> hammereds) {
 		this.idbudget = idbudget;
 		this.basicdataByButtontype = basicdataByButtontype;
 		this.basicdataByMachinetype = basicdataByMachinetype;
@@ -869,20 +869,20 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
-	public Set getHallbuttontypes() {
+	public Set<Hallbuttontype> getHallbuttontypes() {
 		return this.hallbuttontypes;
 	}
 
-	public void setHallbuttontypes(Set hallbuttontypes) {
+	public void setHallbuttontypes(Set<Hallbuttontype> hallbuttontypes) {
 		this.hallbuttontypes = hallbuttontypes;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
-	public Set getHammereds() {
+	public Set<Hammered> getHammereds() {
 		return this.hammereds;
 	}
 
-	public void setHammereds(Set hammereds) {
+	public void setHammereds(Set<Hammered> hammereds) {
 		this.hammereds = hammereds;
 	}
 
