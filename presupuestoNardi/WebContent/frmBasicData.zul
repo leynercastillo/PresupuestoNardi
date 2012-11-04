@@ -1,0 +1,28 @@
+<?page title="Datos Básicos" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Datos Básicos" border="normal" mode="modal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.FrmBasicDataCtrl')">
+		<grid>
+			<columns sclass="columnLabel"></columns>
+			<rows>
+				<row>
+					<label value="Nombre:"></label>
+					<textbox id="txtDBName"
+						value="@bind(vm.basicdata.name)">
+					</textbox>
+				</row>
+				<row>
+					<label value="Descripción:"></label>
+					<textbox id="txtDBDescription"
+						value="@bind(vm.basicdata.description)">
+					</textbox>
+				</row>
+				<row>
+					<button id="btnAdd" label="Añadir"></button>
+					<button id="btncancel" onClick="@command('clickAdd')" label="Cancelar"></button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

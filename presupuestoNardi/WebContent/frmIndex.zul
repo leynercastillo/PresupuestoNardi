@@ -1,7 +1,8 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="/style/style.css"></style>
-	<window border="normal" apply="controller.FrmIndexCtrl">
+	<window border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.FrmIndexCtrl')">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
@@ -111,37 +112,38 @@
 							value="Tipo de Edificio:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBBuildingType">
-							<comboitem label="Residencial"></comboitem>
-							<comboitem label="Comercial"></comboitem>
-							<comboitem label="Empresarial"></comboitem>
-							<comboitem label="Hospital"></comboitem>
-							<comboitem label="Hotel"></comboitem>
-							<comboitem label="Industrial"></comboitem>
+							id="cmbBBuildingType" model="@load(vm.listBType)"
+							selectedItem="@bind(vm.selectedBType)" readonly="true">
+							<template name="model" var="bType">
+								<comboitem label="@load(bType.name)"></comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Cantidad de ascensores:">
 						</label>
-						<spinner id="spnBElevatorQuantity"></spinner>
+						<spinner id="spnBElevatorQuantity"
+							constraint="min 0">
+						</spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Tipo de Ascensor:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBElevatorType">
-							<comboitem label="Pasajero"></comboitem>
-							<comboitem label="Monta Camilla"></comboitem>
-							<comboitem label="Panoramico"></comboitem>
-							<comboitem label="Carga"></comboitem>
-							<comboitem label="Monta Carro"></comboitem>
-							<comboitem label="Monta Plato"></comboitem>
-							<comboitem label="Winche"></comboitem>
+							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
+							selectedItem="@bind(vm.selectedElevatorType)" readonly="true">
+							<template name="model" var="elevatorType">
+								<comboitem
+									label="@load(elevatorType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Cantidad de motores:">
 						</label>
-						<spinner id="cmbBMotorQuantity"></spinner>
+						<spinner id="cmbBMotorQuantity"
+							constraint="min 0">
+						</spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
@@ -149,15 +151,14 @@
 						</label>
 						<hbox>
 							<combobox value="--Seleccione--"
-								id="cmbBElevatorCapacitance">
-								<comboitem label="320 - 4"></comboitem>
-								<comboitem label="450 - 6"></comboitem>
-								<comboitem label="600 - 8"></comboitem>
-								<comboitem label="800 - 10"></comboitem>
-								<comboitem label="1000 - 13"></comboitem>
-								<comboitem label="1250 - 16"></comboitem>
-								<comboitem label="1500 - 19"></comboitem>
-								<comboitem label="2000 - 22"></comboitem>
+								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
+								selectedItem="@bind(vm.selectedElevatorCapa)" readonly="true">
+								<template name="model"
+									var="elevatorCapa">
+									<comboitem
+										label="@load(elevatorCapa.name)">
+									</comboitem>
+								</template>
 							</combobox>
 							<button id="btnNewElevatorCapacitance"
 								label="Nuevo">
@@ -177,31 +178,23 @@
 							value="Tipo de Máquina:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBMachineType">
-							<comboitem label="Con Sala De Maquina 2V">
-							</comboitem>
-							<comboitem
-								label="Con Sala De Maquina VVVF">
-							</comboitem>
-							<comboitem
-								label="Sin Sala De Maquina MRL">
-							</comboitem>
-							<comboitem label="Hidraulico"></comboitem>
-							<comboitem label="Winche"></comboitem>
+							id="cmbBMachineType" model="@load(vm.listMachineType)"
+							selectedItem="@bind(vm.selectedMachineType)" readonly="true">
+							<template name="model" var="MachineType">
+								<comboitem
+									label="@load(MachineType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel" value="Embarque:"></label>
 						<combobox value="--Seleccione--"
-							id="cmbBEmbarque">
-							<comboitem label="1 Puerta"></comboitem>
-							<comboitem
-								label="2 Puertas (Doble Acceso - 180º)">
-							</comboitem>
-							<comboitem
-								label="2 Puertas (Doble Acceso - 90º)">
-							</comboitem>
-							<comboitem
-								label="2 Puertas (Doble Acceso - 270º)">
-							</comboitem>
+							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
+							selectedItem="@bind(vm.selectedBEmbarque)" readonly="true">
+							<template name="model" var="BEmbarque">
+								<comboitem
+									label="@load(BEmbarque.name)">
+								</comboitem>
+							</template>
 						</combobox>
 					</row>
 					<row>
@@ -209,25 +202,28 @@
 							value="Tipo de Corriente:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBElectricityType">
-							<comboitem label="208V"></comboitem>
-							<comboitem label="220V"></comboitem>
-							<comboitem label="308V"></comboitem>
-							<comboitem label="440V"></comboitem>
+							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
+							selectedItem="@bind(vm.selectedElectricityType)"
+							readonly="true">
+							<template name="model"
+								var="ElectricityType">
+								<comboitem
+									label="@load(ElectricityType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Velocidad M/S:">
 						</label>
 						<hbox>
 							<combobox value="--Seleccione--"
-								id="cmbBSpeed">
-								<comboitem label="0.50"></comboitem>
-								<comboitem label="1.00"></comboitem>
-								<comboitem label="1.20"></comboitem>
-								<comboitem label="1.60"></comboitem>
-								<comboitem label="1.75"></comboitem>
-								<comboitem label="2.00"></comboitem>
-								<comboitem label="2.50"></comboitem>
+								id="cmbBSpeed" model="@load(vm.listSpeed)"
+								selectedItem="@bind(vm.selectedSpeed)" readonly="true">
+								<template name="model" var="Speed">
+									<comboitem
+										label="@load(Speed.name)">
+									</comboitem>
+								</template>
 							</combobox>
 							<button id="btnNewSpeed" label="Nuevo"></button>
 						</hbox>
@@ -235,17 +231,27 @@
 					<row>
 						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox value="--Seleccione--"
-							id="cmbBFrequency">
-							<comboitem label="60 HZ"></comboitem>
-							<comboitem label="50 HZ"></comboitem>
+							id="cmbBFrequency" model="@load(vm.listFrequency)"
+							selectedItem="@bind(vm.selectedFrequency)" readonly="true">
+							<template name="model" var="Frequency">
+								<comboitem
+									label="@load(Frequency.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Tensión de alumbrado:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBVoltageLighting">
-							<comboitem label="110V"></comboitem>
-							<comboitem label="220V"></comboitem>
+							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
+							selectedItem="@bind(vm.selectedVoltageLighting)"
+							readonly="true">
+							<template name="model"
+								var="VoltageLighting">
+								<comboitem
+									label="@load(VoltageLighting.name)">
+								</comboitem>
+							</template>
 						</combobox>
 					</row>
 					<row>
@@ -253,11 +259,13 @@
 							value="Conexiones horas máquina:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBHourMachine">
-							<comboitem label="180 Horas (Standard)"></comboitem>
-							<comboitem
-								label="240 Horas (Alto Tráfico)">
-							</comboitem>
+							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
+							selectedItem="@bind(vm.selectedHourMachine)" readonly="true">
+							<template name="model" var="HourMachine">
+								<comboitem
+									label="@load(HourMachine.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Secuencia de Paradas:">
@@ -284,31 +292,13 @@
 							value="Tipo de Maniobra:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBManeuverType">
-							<comboitem
-								label="Colectiva en Bajada Simplex (Un Botón)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Duplex (Un Botón)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Triplex (Un Botón)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada Cuadruplex (Un Botón)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada y Subida Simplex (Dos Botones)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada y Subida Duplex (Dos Botones)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada y Subida Triplex (Dos Botones)">
-							</comboitem>
-							<comboitem
-								label="Colectiva en Bajada y Subida Cuadruplex (Dos Botones)">
-							</comboitem>
+							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
+							selectedItem="@bind(vm.selectedManeuverType)" readonly="true">
+							<template name="model" var="ManeuverType">
+								<comboitem
+									label="@load(ManeuverType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<hbox>
@@ -332,7 +322,9 @@
 						<label sclass="formLabel"
 							value="Número de Paradas:">
 						</label>
-						<spinner id="spnBStopNumber"></spinner>
+						<spinner id="spnBStopNumber"
+							constraint="min 0">
+						</spinner>
 						<space></space>
 						<hbox>
 							<grid>
@@ -368,25 +360,29 @@
 						<label sclass="formLabel"
 							value="Recorrido(M)">
 						</label>
-						<spinner id="spnBTour"></spinner>
+						<spinner id="spnBTour" constraint="min 0"></spinner>
 						<label sclass="formLabel"
 							value="Sobre Recorrido (mm)">
 						</label>
-						<spinner id="spnBOnTour"></spinner>
+						<spinner id="spnBOnTour" constraint="min 0"></spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Ancho de Hueco (mm)">
 						</label>
-						<spinner id="spnBWidthHole"></spinner>
+						<spinner id="spnBWidthHole"
+							constraint="min 0">
+						</spinner>
 						<label sclass="formLabel" value="Fosa (mm)"></label>
-						<spinner id="spnBFossa"></spinner>
+						<spinner id="spnBFossa" constraint="min 0"></spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Fondo de Hueco (mm)">
 						</label>
-						<spinner id="spnBBottomHole"></spinner>
+						<spinner id="spnBBottomHole"
+							constraint="min 0">
+						</spinner>
 						<space></space>
 						<space></space>
 					</row>
@@ -410,19 +406,25 @@
 							value="Diseño 1357:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBDesign1357">
+							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
+							selectedItem="@bind(vm.selectedDesign1357)" readonly="true">
+							<template name="model" var="Design1357">
+								<comboitem
+									label="@load(Design1357.name)">
+								</comboitem>
+							</template>
 							<comboitem label="Formica"></comboitem>
 							<comboitem label="Acero Inoxidable"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Diseño P26:"></label>
 						<combobox value="--Seleccione--"
-							id="cmbBDesignP26">
-							<comboitem label="Formica - Horizontal"></comboitem>
-							<comboitem label="Formica - Vertical"></comboitem>
-							<comboitem
-								label="Acero inox. - Horizontal">
-							</comboitem>
-							<comboitem label="Acero inox. - Vertical"></comboitem>
+							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
+							selectedItem="@bind(vm.selectedDesignP26)" readonly="true">
+							<template name="model" var="DesignP26">
+								<comboitem
+									label="@load(DesignP26.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Diseño Especial:">

@@ -1,7 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -10,21 +15,24 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import dao.DaoBasicData;
 import dao.DaoBudget;
+import database.Basicdata;
 import database.Budget;
 
 /**
  * @author leyner.castillo
  *
  */
-public class FrmIndexCtrl extends SelectorComposer<Window> {
+public class FrmIndexCtrl{
 
-	@Wire
+/*	@Wire
 	private Button btnCancel;
 	@Wire
 	private Button btnPrint;
@@ -209,36 +217,261 @@ public class FrmIndexCtrl extends SelectorComposer<Window> {
 	@Wire
 	private Textbox txtBPartnerName;
 	@Wire
-	private Intbox intBNumber;
-
-	/**
-	 *
-	 *
-	 */
-	@Override
-	public void doAfterCompose(Window comp) throws Exception {
-		super.doAfterCompose(comp);
-		dtbBDate.setValue(new Date());
+	private Intbox intBNumber;*/
+	private List<Basicdata> listBType;
+	private Basicdata selectedBType;
+	private List<Basicdata> listElevatorType;
+	private Basicdata selectedElevatorType;
+	private List<Basicdata> listElevatorCapa;
+	private Basicdata selectedElevatorCapa;
+	private List<Basicdata> listMachineType;
+	private Basicdata selectedMachineType;
+	private List<Basicdata> listBEmbarque;
+	private Basicdata selectedBEmbarque;
+	private List<Basicdata> listElectricityType;
+	private Basicdata selectedElectricityType;
+	private List<Basicdata> listSpeed;
+	private Basicdata selectedSpeed;
+	private List<Basicdata> listFrequency;
+	private Basicdata selectedFrequency;
+	private List<Basicdata> listVoltageLighting;
+	private Basicdata selectedVoltageLighting;
+	private List<Basicdata> listHourMachine;
+	private Basicdata selectedHourMachine;
+	private List<Basicdata> listManeuverType;
+	private Basicdata selectedManeuverType;
+	private List<Basicdata> listDesign1357;
+	private Basicdata selectedDesign1357;
+	private List<Basicdata> listDesignP26;
+	private Basicdata selectedDesignP26;
 		
+	public List<Basicdata> getListDesignP26() {
+		return listDesignP26;
+	}
+
+	public void setListDesignP26(List<Basicdata> listDesignP26) {
+		this.listDesignP26 = listDesignP26;
+	}
+
+	public Basicdata getSelectedDesignP26() {
+		return selectedDesignP26;
+	}
+
+	public void setSelectedDesignP26(Basicdata selectedDesignP26) {
+		this.selectedDesignP26 = selectedDesignP26;
+	}
+
+	public List<Basicdata> getListDesign1357() {
+		return listDesign1357;
+	}
+
+	public void setListDesign1357(List<Basicdata> listDesign1357) {
+		this.listDesign1357 = listDesign1357;
+	}
+
+	public Basicdata getSelectedDesign1357() {
+		return selectedDesign1357;
+	}
+
+	public void setSelectedDesign1357(Basicdata selectedDesign1357) {
+		this.selectedDesign1357 = selectedDesign1357;
+	}
+
+	public List<Basicdata> getListManeuverType() {
+		return listManeuverType;
+	}
+
+	public void setListManeuverType(List<Basicdata> listManeuverType) {
+		this.listManeuverType = listManeuverType;
+	}
+
+	public Basicdata getSelectedManeuverType() {
+		return selectedManeuverType;
+	}
+
+	public void setSelectedManeuverType(Basicdata selectedManeuverType) {
+		this.selectedManeuverType = selectedManeuverType;
+	}
+
+	public List<Basicdata> getListHourMachine() {
+		return listHourMachine;
+	}
+
+	public void setListHourMachine(List<Basicdata> listHourMachine) {
+		this.listHourMachine = listHourMachine;
+	}
+
+	public Basicdata getSelectedHourMachine() {
+		return selectedHourMachine;
+	}
+
+	public void setSelectedHourMachine(Basicdata selectedHourMachine) {
+		this.selectedHourMachine = selectedHourMachine;
+	}
+
+	public List<Basicdata> getListVoltageLighting() {
+		return listVoltageLighting;
+	}
+
+	public void setListVoltageLighting(List<Basicdata> listVoltageLighting) {
+		this.listVoltageLighting = listVoltageLighting;
+	}
+
+	public Basicdata getSelectedVoltageLighting() {
+		return selectedVoltageLighting;
+	}
+
+	public void setSelectedVoltageLighting(Basicdata selectedVoltageLighting) {
+		this.selectedVoltageLighting = selectedVoltageLighting;
+	}
+
+	public List<Basicdata> getListFrequency() {
+		return listFrequency;
+	}
+
+	public void setListFrequency(List<Basicdata> listFrequency) {
+		this.listFrequency = listFrequency;
+	}
+
+	public Basicdata getSelectedFrequency() {
+		return selectedFrequency;
+	}
+
+	public void setSelectedFrequency(Basicdata selectedFrequency) {
+		this.selectedFrequency = selectedFrequency;
+	}
+
+	public List<Basicdata> getListSpeed() {
+		return listSpeed;
+	}
+
+	public void setListSpeed(List<Basicdata> listSpeed) {
+		this.listSpeed = listSpeed;
+	}
+
+	public Basicdata getSelectedSpeed() {
+		return selectedSpeed;
+	}
+
+	public void setSelectedSpeed(Basicdata selectedSpeed) {
+		this.selectedSpeed = selectedSpeed;
+	}
+
+	public List<Basicdata> getListElectricityType() {
+		return listElectricityType;
+	}
+
+	public void setListElectricityType(List<Basicdata> listElectricityType) {
+		this.listElectricityType = listElectricityType;
+	}
+
+	public Basicdata getSelectedElectricityType() {
+		return selectedElectricityType;
+	}
+
+	public void setSelectedElectricityType(Basicdata selectedElectricityType) {
+		this.selectedElectricityType = selectedElectricityType;
+	}
+
+	public List<Basicdata> getListBEmbarque() {
+		return listBEmbarque;
+	}
+
+	public void setListBEmbarque(List<Basicdata> listBEmbarque) {
+		this.listBEmbarque = listBEmbarque;
+	}
+
+	public Basicdata getSelectedBEmbarque() {
+		return selectedBEmbarque;
+	}
+
+	public void setSelectedBEmbarque(Basicdata selectedBEmbarque) {
+		this.selectedBEmbarque = selectedBEmbarque;
+	}
+
+	public List<Basicdata> getListMachineType() {
+		return listMachineType;
+	}
+
+	public void setListMachineType(List<Basicdata> listMachineType) {
+		this.listMachineType = listMachineType;
+	}
+
+	public Basicdata getSelectedMachineType() {
+		return selectedMachineType;
+	}
+
+	public void setSelectedMachineType(Basicdata selectedMachineType) {
+		this.selectedMachineType = selectedMachineType;
+	}
+
+	public List<Basicdata> getListElevatorCapa() {
+		return listElevatorCapa;
+	}
+
+	public void setListElevatorCapa(List<Basicdata> listElevatorCapa) {
+		this.listElevatorCapa = listElevatorCapa;
+	}
+
+	public Basicdata getSelectedElevatorCapa() {
+		return selectedElevatorCapa;
+	}
+
+	public void setSelectedElevatorCapa(Basicdata selectedElevatorCapa) {
+		this.selectedElevatorCapa = selectedElevatorCapa;
+	}
+
+	public List<Basicdata> getListElevatorType() {
+		return listElevatorType;
+	}
+
+	public void setListElevatorType(List<Basicdata> listElevatorType) {
+		this.listElevatorType = listElevatorType;
+	}
+
+	public Basicdata getSelectedElevatorType() {
+		return selectedElevatorType;
+	}
+
+	public void setSelectedElevatorType(Basicdata selectedElevatorType) {
+		this.selectedElevatorType = selectedElevatorType;
+	}
+
+	public Basicdata getSelectedBType() {
+		return selectedBType;
+	}
+
+	public void setSelectedBType(Basicdata selectedBType) {
+		this.selectedBType = selectedBType;
 	}
 	
-	@Listen("onClick=#btnSave")
-	public void clickSave(){
-		Budget budget = new Budget();
-		DaoBudget daoBudget = new DaoBudget();
-		budget.setIdbudget(0);
-		budget.setPartnername("leyner");
-		budget.setConstruction("casa");
-		budget.setConstructionnumber("153-5");
-		budget.setConstructionaddress("Plaza caribe");
-		budget.setConstructioncity("Barquisimeto");
-		budget.setContactname("Jesus");
-		budget.setContactphone("0414-3534887");
-		budget.setEmail("asdf@mail.com");
-		budget.setSeller("yo mismo");
-		budget.setType(true);
-		budget.setDate(new Date());
-		daoBudget.save(budget);
+	public List<Basicdata> getListBType() {
+		return listBType;
 	}
 
+	public void setListBType(List<Basicdata> listBType) {
+		this.listBType = listBType;
+	}
+
+	@Init
+	public void init(){
+		DaoBasicData daoBasicData = new DaoBasicData();
+		listBType = daoBasicData.findByDescription("BUDGET", "BUILDING TYPE");
+		listElevatorType = daoBasicData.findByDescription("BUDGET", "ELEVATOR TYPE");
+		listElevatorCapa = daoBasicData.findByDescription("BUDGET", "ELEVATOR CAPACITANCE");
+		listMachineType = daoBasicData.findByDescription("BUDGET", "MACHINE TYPE");
+		listBEmbarque = daoBasicData.findByDescription("BUDGET", "BUILDING EMBARQUE");
+		listElectricityType = daoBasicData.findByDescription("BUDGET", "ELECTRICITY TYPE");
+		listSpeed = daoBasicData.findByDescription("BUDGET", "SPEED");
+		listFrequency = daoBasicData.findByDescription("BUDGET", "FREQUENCY");
+		listVoltageLighting = daoBasicData.findByDescription("BUDGET", "VOLTAGE LIGHTING");
+		listHourMachine = daoBasicData.findByDescription("BUDGET", "HOUR MACHINE");
+		listManeuverType = daoBasicData.findByDescription("BUDGET", "MANEUVER TYPE");
+		listDesign1357 = daoBasicData.findByDescription("BUDGET", "DESIGN 1357");
+		listDesignP26 = daoBasicData.findByDescription("BUDGET", "DESIGN P26");
+	}
+	
+	@Command
+	public void clickBuildinType(){
+	}
 }
