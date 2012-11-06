@@ -8,22 +8,9 @@ import java.util.regex.Pattern;
 /**
  * @author Leyner
  * @since 18/10/2012
- * @version 0.1 Update 19/10/12
+ * @version 0.2 Update 05/11/12
  */
 public class Validate {
-
-	/**
-	 * @param string
-	 * @return <b>True</b> Si <i>string</i> no esta vacio. <br>
-	 *         <b>False</b> Si <i>string</i> esta vacio.
-	 */
-	public boolean noEmpty(String string){
-		String string2 = string.replace(" +", " ").trim();
-		if(!string2.isEmpty())
-			return true;
-		else
-			return false;
-	}
 
 	/**
 	 * @param email
