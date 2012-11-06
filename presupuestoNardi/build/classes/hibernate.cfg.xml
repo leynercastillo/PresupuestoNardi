@@ -20,8 +20,8 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
         <mapping class="database.Basicdata" />
-        <mapping class="database.Hallbuttontype" />
         <mapping class="database.Budget" />
+        <mapping class="database.Hallbuttontype" />
         <mapping class="database.Hammered" />
     </session-factory>
 </hibernate-configuration>
