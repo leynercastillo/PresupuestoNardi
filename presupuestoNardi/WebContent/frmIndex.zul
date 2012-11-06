@@ -32,8 +32,9 @@
 						</textbox>
 						<label sclass="formLabel" value="Fecha:">
 						</label>
-						<datebox id="dtbBDate" value="@load(vm.budget.date)"
-							disabled="true" format="dd/MM/yyyy" width="110px">
+						<datebox id="dtbBDate"
+							value="@load(vm.budget.date)" disabled="true" format="dd/MM/yyyy"
+							width="110px">
 						</datebox>
 					</row>
 					<row>
@@ -42,9 +43,14 @@
 							value="@bind(vm.budget.construction)">
 						</textbox>
 						<space></space>
-						<radiogroup id="radBType">
-							<radio label="Nuevo" checked="true"></radio>
-							<radio label="Modernizacion"></radio>
+						<radiogroup id="radBType"
+							selectedItem="@save(vm.budget.type)">
+							<radio value="true" label="Nuevo"
+								checked="true">
+							</radio>
+							<radio value="false"
+								label="Modernizacion">
+							</radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -90,16 +96,20 @@
 							value="Planos de corte:">
 						</label>
 						<hbox>
-							<radiogroup id="radPlaneC">
-								<radio label="Si" checked="true"></radio>
-								<radio label="No"></radio>
+							<radiogroup id="radPlaneC"
+								selectedItem="@save(vm.budget.planec)">
+								<radio value="true" label="Si"
+									checked="true">
+								</radio>
+								<radio value="false" label="No"></radio>
 							</radiogroup>
 							<space></space>
 							<space></space>
 							<label sclass="formLabel"
 								value="Planos de planta:">
 							</label>
-							<radiogroup id="radPlaneP">
+							<radiogroup id="radPlaneP"
+								selectedItem="@save(vm.budget.planep)">
 								<radio label="Si" checked="true"></radio>
 								<radio label="No"></radio>
 							</radiogroup>
@@ -124,7 +134,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBuildingType" model="@load(vm.listBType)"
-							selectedItem="@bind(vm.selectedBType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByBuildingtype)"
+							readonly="true">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
 							</template>
@@ -133,7 +144,7 @@
 							value="Cantidad de ascensores:">
 						</label>
 						<spinner id="spnBElevatorQuantity"
-							constraint="min 0">
+							constraint="min 0" value="@bind(vm.budget.elevatorquantity)">
 						</spinner>
 					</row>
 					<row>
@@ -142,7 +153,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
-							selectedItem="@bind(vm.selectedElevatorType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByElevatortype)"
+							readonly="true">
 							<template name="model" var="elevatorType">
 								<comboitem
 									label="@load(elevatorType.name)">
@@ -153,7 +165,7 @@
 							value="Cantidad de motores:">
 						</label>
 						<spinner id="cmbBMotorQuantity"
-							constraint="min 0">
+							constraint="min 0" value="@bind(vm.budget.motorquantity)">
 						</spinner>
 					</row>
 					<row>
@@ -163,7 +175,8 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
-								selectedItem="@bind(vm.selectedElevatorCapa)" readonly="true">
+								selectedItem="@bind(vm.budget.basicdataByElevatorcapacitance)"
+								readonly="true">
 								<template name="model"
 									var="elevatorCapa">
 									<comboitem
@@ -178,10 +191,11 @@
 						<label sclass="formLabel"
 							value="Tracción de Motores">
 						</label>
-						<radiogroup id="radBMotorTraction">
-							<radio label="1:1"></radio>
+						<radiogroup id="radBMotorTraction"
+							selectedItem="@bind(vm.budget.motortraction)">
+							<radio value="1:1" label="1:1"></radio>
 							<space></space>
-							<radio label="2:1"></radio>
+							<radio value="2:1" label="2:1"></radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -190,7 +204,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBMachineType" model="@load(vm.listMachineType)"
-							selectedItem="@bind(vm.selectedMachineType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByMachinetype)"
+							readonly="true">
 							<template name="model" var="MachineType">
 								<comboitem
 									label="@load(MachineType.name)">
@@ -200,7 +215,8 @@
 						<label sclass="formLabel" value="Embarque:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
-							selectedItem="@bind(vm.selectedBEmbarque)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByEmbarque)"
+							readonly="true">
 							<template name="model" var="BEmbarque">
 								<comboitem
 									label="@load(BEmbarque.name)">
@@ -214,7 +230,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
-							selectedItem="@bind(vm.selectedElectricityType)"
+							selectedItem="@bind(vm.budget.basicdataByElectricitytype)"
 							readonly="true">
 							<template name="model"
 								var="ElectricityType">
@@ -229,7 +245,8 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBSpeed" model="@load(vm.listSpeed)"
-								selectedItem="@bind(vm.selectedSpeed)" readonly="true">
+								selectedItem="@bind(vm.budget.basicdataBySpeed)"
+								readonly="true">
 								<template name="model" var="Speed">
 									<comboitem
 										label="@load(Speed.name)">
@@ -243,7 +260,8 @@
 						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBFrequency" model="@load(vm.listFrequency)"
-							selectedItem="@bind(vm.selectedFrequency)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByFrequency)"
+							readonly="true">
 							<template name="model" var="Frequency">
 								<comboitem
 									label="@load(Frequency.name)">
@@ -255,7 +273,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
-							selectedItem="@bind(vm.selectedVoltageLighting)"
+							selectedItem="@bind(vm.budget.basicdataByVoltagelighting)"
 							readonly="true">
 							<template name="model"
 								var="VoltageLighting">
@@ -271,7 +289,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
-							selectedItem="@bind(vm.selectedHourMachine)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByHourmachine)"
+							readonly="true">
 							<template name="model" var="HourMachine">
 								<comboitem
 									label="@load(HourMachine.name)">
@@ -308,7 +327,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
-							selectedItem="@bind(vm.selectedManeuverType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByManeuvertype)"
+							readonly="true">
 							<template name="model" var="ManeuverType">
 								<comboitem
 									label="@load(ManeuverType.name)">
@@ -428,19 +448,19 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
-							selectedItem="@bind(vm.selectedDesign1357)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByDesign1357)"
+							readonly="true">
 							<template name="model" var="Design1357">
 								<comboitem
 									label="@load(Design1357.name)">
 								</comboitem>
 							</template>
-							<comboitem label="Formica"></comboitem>
-							<comboitem label="Acero Inoxidable"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Diseño P26:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
-							selectedItem="@bind(vm.selectedDesignP26)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByDesignp26)"
+							readonly="true">
 							<template name="model" var="DesignP26">
 								<comboitem
 									label="@load(DesignP26.name)">
@@ -460,7 +480,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBRoofType" model="@load(vm.listRoofType)"
-							selectedItem="@bind(vm.selectedRoofType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByRooftype)"
+							readonly="true">
 							<template name="model" var="RoofType">
 								<comboitem
 									label="@load(RoofType.name)">
@@ -472,7 +493,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBButtonType" model="@load(vm.listButtonType)"
-							selectedItem="@bind(vm.selectedButtonType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByButtontype)"
+							readonly="true">
 							<template name="model" var="ButtonType">
 								<comboitem
 									label="@load(ButtonType.name)">
@@ -490,7 +512,8 @@
 						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBRailing" model="@load(vm.listRailing)"
-							selectedItem="@bind(vm.selectedRailing)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByRailing)"
+							readonly="true">
 							<template name="model" var="Railing">
 								<comboitem
 									label="@load(Railing.name)">
@@ -500,7 +523,8 @@
 						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox value="--Seleccione--" id="cmbBMirror"
 							model="@load(vm.listMirror)"
-							selectedItem="@bind(vm.selectedMirror)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByMirror)"
+							readonly="true">
 							<template name="model" var="Mirror">
 								<comboitem label="@load(Mirror.name)">
 								</comboitem>
@@ -515,24 +539,18 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBFloorType" model="@load(vm.listFloorType)"
-							selectedItem="@bind(vm.selectedFloorType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByFloortype)"
+							readonly="true">
 							<template name="model" var="FloorType">
 								<comboitem
 									label="@load(FloorType.name)">
 								</comboitem>
 							</template>
-							<comboitem label="Vinil"></comboitem>
-							<comboitem label="Vulca"></comboitem>
-							<comboitem label="Granito"></comboitem>
-							<comboitem
-								label="Granito por Cuenta del Cliente">
-							</comboitem>
-							<comboitem label="Otros"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Ventilador:"></label>
 						<combobox value="--Seleccione--" id="cmbBFan"
-							model="@load(vm.listFan)" selectedItem="@bind(vm.selectedFan)"
-							readonly="true">
+							model="@load(vm.listFan)"
+							selectedItem="@bind(vm.budget.basicdataByFan)" readonly="true">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
 								</comboitem>
@@ -566,7 +584,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="spnBDoorType" model="@load(vm.listDoorType)"
-							selectedItem="@bind(vm.selectedDoorType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByDoortype)"
+							readonly="true">
 							<template name="model" var="DoorType">
 								<comboitem
 									label="@load(DoorType.name)">
@@ -580,14 +599,13 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
-							selectedItem="@bind(vm.selectedDoorSystem)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByDoorsystem)"
+							readonly="true">
 							<template name="model" var="DoorSystem">
 								<comboitem
 									label="@load(DoorSystem.name)">
 								</comboitem>
 							</template>
-							<comboitem label="Fermator"></comboitem>
-							<comboitem label="Selcon"></comboitem>
 						</combobox>
 						<label sclass="formLabel"
 							value="Tipo de Marcos:">
@@ -595,7 +613,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
-								selectedItem="@bind(vm.selectedDoorframeType)"
+								selectedItem="@bind(vm.budget.basicdataByDoorframetype)"
 								readonly="true">
 								<template name="model"
 									var="DoorframeType">
@@ -614,7 +632,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
-								selectedItem="@bind(vm.selectedFreeAdmission)"
+								selectedItem="@bind(vm.budget.basicdataByFreeadmission)"
 								readonly="true">
 								<template name="model"
 									var="FreeAdmission">
@@ -631,7 +649,8 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBHeight" model="@load(vm.listHeight)"
-								selectedItem="@bind(vm.selectedHeight)" readonly="true">
+								selectedItem="@bind(vm.budget.basicdataByHeight)"
+								readonly="true">
 								<template name="model" var="Height">
 									<comboitem
 										label="@load(Height.name)">
@@ -683,7 +702,8 @@
 						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBControlType" model="@load(vm.listControlType)"
-							selectedItem="@bind(vm.selectedControlType)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByControltype)"
+							readonly="true">
 							<template name="model" var="ControlType">
 								<comboitem
 									label="@load(ControlType.name)">
@@ -699,7 +719,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
-							selectedItem="@bind(vm.selectedBoothButton)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByBoothbutton)"
+							readonly="true">
 							<template name="model" var="BoothButton">
 								<comboitem
 									label="@load(BoothButton.name)">
@@ -822,7 +843,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
-							selectedItem="@bind(vm.selectedBoothDisplay)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByBoothdisplay)"
+							readonly="true">
 							<template name="model" var="BoothDisplay">
 								<comboitem
 									label="@load(BoothDisplay.name)">
@@ -838,7 +860,8 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
-							selectedItem="@bind(vm.selectedFloorDisplay)" readonly="true">
+							selectedItem="@bind(vm.budget.basicdataByFloordisplay)"
+							readonly="true">
 							<template name="model" var="FloorDisplay">
 								<comboitem
 									label="@load(FloorDisplay.name)">
@@ -961,7 +984,7 @@
 							sclass="formLabel">
 						</button>
 						<button id="btnSave" label="Guardar"
-							sclass="formLabel">
+							sclass="formLabel" onClick="@command('save')">
 						</button>
 						<button id="btnPrint" label="Imprimir"
 							sclass="formLabel">
