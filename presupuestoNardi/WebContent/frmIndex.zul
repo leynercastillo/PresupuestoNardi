@@ -21,66 +21,77 @@
 						<label sclass="formLabel"
 							value="Nro Presupuesto:">
 						</label>
-						<intbox id="intBNumber" width="105px"></intbox>
+						<intbox id="intBNumber" width="105px"
+							disabled="true" value="@load(vm.budget.number)">
+						</intbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Cliente:"></label>
-						<textbox id="txtBPartnerName" width="350px"></textbox>
+						<textbox id="txtBPartnerName" width="350px"
+							value="@bind(vm.budget.partnername)">
+						</textbox>
 						<label sclass="formLabel" value="Fecha:">
 						</label>
-						<datebox id="dtbBDate" disabled="true"
-							format="dd/MM/yyyy">
+						<datebox id="dtbBDate" value="@load(vm.budget.date)"
+							disabled="true" format="dd/MM/yyyy" width="110px">
 						</datebox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
-						<textbox id="txtBConstruction" width="350px">
+						<textbox id="txtBConstruction" width="350px"
+							value="@bind(vm.budget.construction)">
 						</textbox>
 						<space></space>
 						<radiogroup id="radBType">
-							<radio label="Nuevo"></radio>
+							<radio label="Nuevo" checked="true"></radio>
 							<radio label="Modernizacion"></radio>
 						</radiogroup>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Nro. Obra:"></label>
 						<textbox id="txtBConstructionNumber"
-							width="350px">
+							width="350px" value="@bind(vm.budget.constructionnumber)">
 						</textbox>
 						<label sclass="formLabel" value="Vendedor:"
 							style="Color: Blue; font-weight:bold; ">
 						</label>
-						<textbox id="txtBSeller" width="230px"></textbox>
+						<textbox id="txtBSeller" width="230px"
+							value="@bind(vm.budget.seller)">
+						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Dirección:"></label>
 						<textbox id="txtBConstructionAddress"
-							width="350px">
+							width="350px" value="@bind(vm.budget.constructionaddress)">
 						</textbox>
 						<label sclass="formLabel" value="Ciudad:"></label>
-						<textbox id="txtBConstructionCity"
-							width="230px">
+						<textbox id="txtBConstructionCity" width="230px"
+							value="@bind(vm.budget.constructioncity)">
 						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Teléfono:"></label>
-						<textbox id="txtBcontactPhone" width="350px">
+						<textbox id="txtBcontactPhone" width="350px"
+							value="@bind(vm.budget.contactphone)">
 						</textbox>
 						<label sclass="formLabel" value="Email:"></label>
-						<textbox id="txtBEmail" width="230px"></textbox>
+						<textbox id="txtBEmail" width="230px"
+							value="@bind(vm.budget.email)">
+						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Persona de contacto:">
 						</label>
-						<textbox id="txtBContactName" width="350px">
+						<textbox id="txtBContactName" width="350px"
+							value="@bind(vm.budget.contactname)">
 						</textbox>
 						<label sclass="formLabel"
 							value="Planos de corte:">
 						</label>
 						<hbox>
 							<radiogroup id="radPlaneC">
-								<radio label="Si"></radio>
+								<radio label="Si" checked="true"></radio>
 								<radio label="No"></radio>
 							</radiogroup>
 							<space></space>
@@ -89,7 +100,7 @@
 								value="Planos de planta:">
 							</label>
 							<radiogroup id="radPlaneP">
-								<radio label="Si"></radio>
+								<radio label="Si" checked="true"></radio>
 								<radio label="No"></radio>
 							</radiogroup>
 						</hbox>
@@ -279,9 +290,13 @@
 								<rows>
 									<row>
 										<checkbox
-											id="chbxBStopSequenceContinuous" label="Continua">
+											id="chbxBStopSequenceContinuous" label="Continua"
+											onClick="@command('clickToEnableToDisable', Component=txtStopSequenceContinuous)">
 										</checkbox>
-										<textbox width="150px"></textbox>
+										<textbox
+											id="txtStopSequenceContinuous" width="150px"
+											disabled="true">
+										</textbox>
 									</row>
 								</rows>
 							</grid>
@@ -310,9 +325,12 @@
 								<rows>
 									<row>
 										<checkbox
-											id="chbxBStopSequencePar" label="Par">
+											id="chbxBStopSequencePar" label="Par"
+											onClick="@command('clickToEnableToDisable', Component=txtStopSequencePar)">
 										</checkbox>
-										<textbox width="150px"></textbox>
+										<textbox id="txtStopSequencePar"
+											width="150px" disabled="true">
+										</textbox>
 									</row>
 								</rows>
 							</grid>
@@ -335,9 +353,12 @@
 								<rows>
 									<row>
 										<checkbox
-											id="chbxBStopSequenceOdd" label="Impar">
+											id="chbxBStopSequenceOdd" label="Impar"
+											onClick="@command('clickToEnableToDisable', Component=txtStopSequenceOdd)">
 										</checkbox>
-										<textbox width="150px"></textbox>
+										<textbox id="txtStopSequenceOdd"
+											width="150px" disabled="true">
+										</textbox>
 									</row>
 								</rows>
 							</grid>
@@ -429,49 +450,61 @@
 						<label sclass="formLabel"
 							value="Diseño Especial:">
 						</label>
-						<checkbox id="chbxBDesignSpecial"></checkbox>
+						<checkbox id="chbxBDesignSpecial"
+							onClick="@command('clickToEnableToDisable', Component=txtBDesignSpecialComment)">
+						</checkbox>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Tipo de Techo:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBRoofType">
-							<comboitem label="PL-3"></comboitem>
-							<comboitem label="PL-4"></comboitem>
-							<comboitem label="PL-6"></comboitem>
-							<comboitem label="PL-Perforado"></comboitem>
-							<comboitem label="PL-Modular"></comboitem>
+							id="cmbBRoofType" model="@load(vm.listRoofType)"
+							selectedItem="@bind(vm.selectedRoofType)" readonly="true">
+							<template name="model" var="RoofType">
+								<comboitem
+									label="@load(RoofType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel"
 							value="Tipo de Botonera:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBButtonType">
-							<comboitem label="Corta"></comboitem>
-							<comboitem label="Piso a Techo"></comboitem>
-							<comboitem label="Piso a Techo con Telf"></comboitem>
+							id="cmbBButtonType" model="@load(vm.listButtonType)"
+							selectedItem="@bind(vm.selectedButtonType)" readonly="true">
+							<template name="model" var="ButtonType">
+								<comboitem
+									label="@load(ButtonType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label value="Comentario:" sclass="formLabel"></label>
 						<cell rowspan="3">
 							<textbox id="txtBDesignSpecialComment"
-								rows="5" cols="35">
+								rows="5" cols="35" disabled="true">
 							</textbox>
 						</cell>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox value="--Seleccione--"
-							id="cmbBRailing">
-							<comboitem label="Recto"></comboitem>
-							<comboitem label="Redondo"></comboitem>
-							<comboitem label="Doble Pasamano Redondo"></comboitem>
+							id="cmbBRailing" model="@load(vm.listRailing)"
+							selectedItem="@bind(vm.selectedRailing)" readonly="true">
+							<template name="model" var="Railing">
+								<comboitem
+									label="@load(Railing.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<label sclass="formLabel" value="Espejo:"></label>
-						<combobox value="--Seleccione--"
-							id="cmbBMirror">
-							<comboitem label="Acero Tipo Espejo"></comboitem>
-							<comboitem label="Por Cuenta del Cliente"></comboitem>
+						<combobox value="--Seleccione--" id="cmbBMirror"
+							model="@load(vm.listMirror)"
+							selectedItem="@bind(vm.selectedMirror)" readonly="true">
+							<template name="model" var="Mirror">
+								<comboitem label="@load(Mirror.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<space></space>
@@ -481,7 +514,13 @@
 							value="Acabado de Piso:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBFloorType">
+							id="cmbBFloorType" model="@load(vm.listFloorType)"
+							selectedItem="@bind(vm.selectedFloorType)" readonly="true">
+							<template name="model" var="FloorType">
+								<comboitem
+									label="@load(FloorType.name)">
+								</comboitem>
+							</template>
 							<comboitem label="Vinil"></comboitem>
 							<comboitem label="Vulca"></comboitem>
 							<comboitem label="Granito"></comboitem>
@@ -491,13 +530,13 @@
 							<comboitem label="Otros"></comboitem>
 						</combobox>
 						<label sclass="formLabel" value="Ventilador:"></label>
-						<combobox value="--Seleccione--" id="cmbBFan">
-							<comboitem label="1 - 450 Kg"></comboitem>
-							<comboitem label="1 - 600 Kg"></comboitem>
-							<comboitem label="2 - 800 Kg"></comboitem>
-							<comboitem label="2 - 1000 Kg"></comboitem>
-							<comboitem label="2 - 1200 Kg"></comboitem>
-							<comboitem label="2 - 1500 Kg"></comboitem>
+						<combobox value="--Seleccione--" id="cmbBFan"
+							model="@load(vm.listFan)" selectedItem="@bind(vm.selectedFan)"
+							readonly="true">
+							<template name="model" var="Fan">
+								<comboitem label="@load(Fan.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<space></space>
@@ -519,23 +558,20 @@
 						<label sclass="formLabel"
 							value="Número de Puertas:">
 						</label>
-						<spinner id="spnBDoorOfNumber"></spinner>
+						<spinner id="spnBDoorOfNumber"
+							constraint="min 0">
+						</spinner>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="spnBDoorType">
-							<comboitem
-								label="Apertura Telescopio Izquierdo">
-							</comboitem>
-							<comboitem
-								label="Apertura Telescopio Derecho">
-							</comboitem>
-							<comboitem
-								label="Apertura Telescopio Central">
-							</comboitem>
-							<comboitem label="Apertura Central"></comboitem>
-							<comboitem label="Batiente"></comboitem>
+							id="spnBDoorType" model="@load(vm.listDoorType)"
+							selectedItem="@bind(vm.selectedDoorType)" readonly="true">
+							<template name="model" var="DoorType">
+								<comboitem
+									label="@load(DoorType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 					</row>
 					<row>
@@ -543,7 +579,13 @@
 							value="Sistema de Puerta:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="spnBDoorSystem">
+							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
+							selectedItem="@bind(vm.selectedDoorSystem)" readonly="true">
+							<template name="model" var="DoorSystem">
+								<comboitem
+									label="@load(DoorSystem.name)">
+								</comboitem>
+							</template>
 							<comboitem label="Fermator"></comboitem>
 							<comboitem label="Selcon"></comboitem>
 						</combobox>
@@ -552,11 +594,15 @@
 						</label>
 						<hbox>
 							<combobox value="--Seleccione--"
-								id="cmbBDoorframeType">
-								<comboitem label="Recto - 50x100"></comboitem>
-								<comboitem label="Recto - 30x150"></comboitem>
-								<comboitem label="Abierto"></comboitem>
-								<comboitem label="Oculto"></comboitem>
+								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
+								selectedItem="@bind(vm.selectedDoorframeType)"
+								readonly="true">
+								<template name="model"
+									var="DoorframeType">
+									<comboitem
+										label="@load(DoorframeType.name)">
+									</comboitem>
+								</template>
 							</combobox>
 							<button label="Nuevo"></button>
 						</hbox>
@@ -567,13 +613,15 @@
 						</label>
 						<hbox>
 							<combobox value="--Seleccione--"
-								id="cmbBFreeAdmission">
-								<comboitem label="700"></comboitem>
-								<comboitem label="800"></comboitem>
-								<comboitem label="900"></comboitem>
-								<comboitem label="1000"></comboitem>
-								<comboitem label="1100"></comboitem>
-								<comboitem label="1200"></comboitem>
+								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
+								selectedItem="@bind(vm.selectedFreeAdmission)"
+								readonly="true">
+								<template name="model"
+									var="FreeAdmission">
+									<comboitem
+										label="@load(FreeAdmission.name)">
+									</comboitem>
+								</template>
 							</combobox>
 							<button id="btnNewFreeAdmission"
 								label="Nuevo">
@@ -582,26 +630,40 @@
 						<label sclass="formLabel" value="Altura:"></label>
 						<hbox>
 							<combobox value="--Seleccione--"
-								id="cmbBHeight">
-								<comboitem label="2000"></comboitem>
-								<comboitem label="2100"></comboitem>
+								id="cmbBHeight" model="@load(vm.listHeight)"
+								selectedItem="@bind(vm.selectedHeight)" readonly="true">
+								<template name="model" var="Height">
+									<comboitem
+										label="@load(Height.name)">
+									</comboitem>
+								</template>
 							</combobox>
 							<button id="btnNewHeight" label="Nuevo"></button>
 						</hbox>
 					</row>
 					<row>
 						<checkbox id="chbxBStainlessSteel"
-							label="Acero Inox.">
+							label="Acero Inox."
+							onClick="@command('clickToEnableToDisable', Component=txtBStainlessSteel)">
 						</checkbox>
-						<textbox id="txtBStainlessSteel"></textbox>
+						<textbox id="txtBStainlessSteel"
+							disabled="true">
+						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
 							<checkbox id="chbxBHammeredGray"
-								label="Gris">
+								label="Gris"
+								onClick="@command('clickToEnableToDisable', Component=txtBHammeredGray)">
 							</checkbox>
-							<textbox id="txtBHammeredGray"></textbox>
-							<checkbox label="Marrón"></checkbox>
-							<textbox id="txtBHammeredBrown"></textbox>
+							<textbox id="txtBHammeredGray"
+								disabled="true">
+							</textbox>
+							<checkbox label="Marrón"
+								onClick="@command('clickToEnableToDisable', Component=txtBHammeredBrown)">
+							</checkbox>
+							<textbox id="txtBHammeredBrown"
+								disabled="true">
+							</textbox>
 						</hbox>
 					</row>
 				</rows>
@@ -620,10 +682,13 @@
 					<row>
 						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox value="--Seleccione--"
-							id="cmbBControlType">
-							<comboitem label="Sistel"></comboitem>
-							<comboitem label="CF Control"></comboitem>
-							<comboitem label="Relematico"></comboitem>
+							id="cmbBControlType" model="@load(vm.listControlType)"
+							selectedItem="@bind(vm.selectedControlType)" readonly="true">
+							<template name="model" var="ControlType">
+								<comboitem
+									label="@load(ControlType.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<space></space>
@@ -633,14 +698,13 @@
 							value="Botonera de Cabina:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBBoothButton">
-							<comboitem label="Sistel Telefónica"></comboitem>
-							<comboitem
-								label="Boton Acero Plástico con Nomenclatura y Braille de 37mm">
-							</comboitem>
-							<comboitem
-								label="Boton de Acero Inox. Anti-Vandalico de 30 mm">
-							</comboitem>
+							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
+							selectedItem="@bind(vm.selectedBoothButton)" readonly="true">
+							<template name="model" var="BoothButton">
+								<comboitem
+									label="@load(BoothButton.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<space></space>
@@ -663,7 +727,7 @@
 					<row spans="3">
 						<hbox>
 							<spinner id="spnBSistelWDisplay"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 							<label sclass="formLabel"
 								value="Sistel con Display">
@@ -673,20 +737,20 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBSistelWDisplayPB"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 							<space></space>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 						</hbox>
 					</row>
 					<row spans="3">
 						<hbox>
-							<spinner id="spnBSistelWArrow"
-								width="60px">
+							<spinner id="spnBSistelWArrow" width="60px"
+								constraint="min 0">
 							</spinner>
 							<label sclass="formLabel"
 								value="Sistel con Flecha">
@@ -696,19 +760,21 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBSistelWArrowPB"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 							<space></space>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBSistelWArrowFloor"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 						</hbox>
 					</row>
 					<row spans="3">
 						<hbox>
-							<spinner id="spnBBraile37" width="60px"></spinner>
+							<spinner id="spnBBraile37" width="60px"
+								constraint="min 0">
+							</spinner>
 							<label sclass="formLabel"
 								value="Chapa de Acero con Boton Acero Plastico con Nomenclatura y Braille de 37mm">
 							</label>
@@ -716,19 +782,21 @@
 						<hbox>
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
-							<spinner id="spnBBraile37PB" width="60px"></spinner>
+							<spinner id="spnBBraile37PB" width="60px"
+								constraint="min 0">
+							</spinner>
 							<space></space>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
-							<spinner id="spnBBraile37Floor"
-								width="60px">
+							<spinner id="spnBBraile37Floor" width="60px"
+								constraint="min 0">
 							</spinner>
 						</hbox>
 					</row>
 					<row spans="3">
 						<hbox>
-							<spinner id="spnBAntivandalism"
-								width="60px">
+							<spinner id="spnBAntivandalism" width="60px"
+								constraint="min 0">
 							</spinner>
 							<label sclass="formLabel"
 								value="Chapa de Acero con Boton Anti-Vandálico De 30mm">
@@ -738,13 +806,13 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBAntivandalismPB"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 							<space></space>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBAntivandalismFloor"
-								width="60px">
+								width="60px" constraint="min 0">
 							</spinner>
 						</hbox>
 					</row>
@@ -753,25 +821,13 @@
 							value="Display Cabina:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBBoothDisplay">
-							<comboitem
-								label="Sistel Matriz de Punto Pequeño">
-							</comboitem>
-							<comboitem
-								label="Sistel Matriz de Punto Grande">
-							</comboitem>
-							<comboitem
-								label="Sistel Matriz de Punto Hora y Grado">
-							</comboitem>
-							<comboitem label="Sistel LCD de 7''"></comboitem>
-							<comboitem label="Sistel LCD Azul"></comboitem>
-							<comboitem
-								label="CF Control Matriz de Punto Rojo">
-							</comboitem>
-							<comboitem
-								label="CF Control Matriz de Punto Azul">
-							</comboitem>
-							<comboitem label="CF Control LCD Azul"></comboitem>
+							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
+							selectedItem="@bind(vm.selectedBoothDisplay)" readonly="true">
+							<template name="model" var="BoothDisplay">
+								<comboitem
+									label="@load(BoothDisplay.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<space></space>
 						<space></space>
@@ -781,25 +837,13 @@
 							value="Display Piso:">
 						</label>
 						<combobox value="--Seleccione--"
-							id="cmbBFloorDisplay">
-							<comboitem
-								label="Sistel Matriz de Punto Pequeño">
-							</comboitem>
-							<comboitem
-								label="Sistel Matriz de Punto Grande">
-							</comboitem>
-							<comboitem
-								label="Sistel Matriz de Punto Hora y Grado">
-							</comboitem>
-							<comboitem label="Sistel LCD de 7''"></comboitem>
-							<comboitem label="Sistel LCD Azul"></comboitem>
-							<comboitem
-								label="CF Control Matriz de Punto Rojo">
-							</comboitem>
-							<comboitem
-								label="CF Control Matriz de Punto Azul">
-							</comboitem>
-							<comboitem label="CF Control LCD Azul"></comboitem>
+							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
+							selectedItem="@bind(vm.selectedFloorDisplay)" readonly="true">
+							<template name="model" var="FloorDisplay">
+								<comboitem
+									label="@load(FloorDisplay.name)">
+								</comboitem>
+							</template>
 						</combobox>
 						<radiogroup id="radBDisplayPlaceFloor">
 							<radio label="PB"></radio>
