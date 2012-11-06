@@ -1,6 +1,6 @@
 package database;
 
-// Generated 02/11/2012 09:47:33 PM by Hibernate Tools 3.6.0
+// Generated 06/11/2012 05:01:41 PM by Hibernate Tools 3.6.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -43,12 +43,13 @@ public class Budget implements java.io.Serializable {
 	private Basicdata basicdataByElevatorcapacitance;
 	private Basicdata basicdataByRooftype;
 	private Basicdata basicdataByFan;
+	private Basicdata basicdataByHeight;
 	private Basicdata basicdataBySpeed;
 	private Basicdata basicdataByEmbarque;
+	private Basicdata basicdataByFreeadmission;
 	private Basicdata basicdataByControltype;
 	private Basicdata basicdataByDesignp26;
 	private Basicdata basicdataByElevatortype;
-	private Basicdata basicdataByMotortraction;
 	private Basicdata basicdataByBoothbutton;
 	private Basicdata basicdataByDoorsystem;
 	private Basicdata basicdataByHourmachine;
@@ -69,6 +70,7 @@ public class Budget implements java.io.Serializable {
 	private boolean type;
 	private Integer elevatorquantity;
 	private Integer motorquantity;
+	private String motortraction;
 	private Integer stopnumber;
 	private Integer tour;
 	private Integer ontour;
@@ -78,8 +80,6 @@ public class Budget implements java.io.Serializable {
 	private Boolean designspecial;
 	private String designspecialcomment;
 	private Integer doorofnumber;
-	private String height;
-	private String freeadmission;
 	private String hallbutton;
 	private Boolean lightcurtain;
 	private Boolean loadlimiter;
@@ -129,10 +129,10 @@ public class Budget implements java.io.Serializable {
 			Basicdata basicdataByDesign1357,
 			Basicdata basicdataByElevatorcapacitance,
 			Basicdata basicdataByRooftype, Basicdata basicdataByFan,
-			Basicdata basicdataBySpeed, Basicdata basicdataByEmbarque,
+			Basicdata basicdataByHeight, Basicdata basicdataBySpeed,
+			Basicdata basicdataByEmbarque, Basicdata basicdataByFreeadmission,
 			Basicdata basicdataByControltype, Basicdata basicdataByDesignp26,
 			Basicdata basicdataByElevatortype,
-			Basicdata basicdataByMotortraction,
 			Basicdata basicdataByBoothbutton, Basicdata basicdataByDoorsystem,
 			Basicdata basicdataByHourmachine,
 			Basicdata basicdataByDoorframetype, int number, Date date,
@@ -141,10 +141,10 @@ public class Budget implements java.io.Serializable {
 			String contactphone, String email, String contactname,
 			Boolean planep, Boolean planec, boolean type,
 			Integer elevatorquantity, Integer motorquantity,
-			Integer stopnumber, Integer tour, Integer ontour,
-			Integer widthhole, Integer fossa, Integer bottomhole,
-			Boolean designspecial, String designspecialcomment,
-			Integer doorofnumber, String height, String freeadmission,
+			String motortraction, Integer stopnumber, Integer tour,
+			Integer ontour, Integer widthhole, Integer fossa,
+			Integer bottomhole, Boolean designspecial,
+			String designspecialcomment, Integer doorofnumber,
 			String hallbutton, Boolean lightcurtain, Boolean loadlimiter,
 			Boolean speechsynthesizer, Boolean gomsystem, Boolean intercom,
 			Boolean phone, Boolean accesssytem, Boolean firefighterkeychain,
@@ -170,12 +170,13 @@ public class Budget implements java.io.Serializable {
 		this.basicdataByElevatorcapacitance = basicdataByElevatorcapacitance;
 		this.basicdataByRooftype = basicdataByRooftype;
 		this.basicdataByFan = basicdataByFan;
+		this.basicdataByHeight = basicdataByHeight;
 		this.basicdataBySpeed = basicdataBySpeed;
 		this.basicdataByEmbarque = basicdataByEmbarque;
+		this.basicdataByFreeadmission = basicdataByFreeadmission;
 		this.basicdataByControltype = basicdataByControltype;
 		this.basicdataByDesignp26 = basicdataByDesignp26;
 		this.basicdataByElevatortype = basicdataByElevatortype;
-		this.basicdataByMotortraction = basicdataByMotortraction;
 		this.basicdataByBoothbutton = basicdataByBoothbutton;
 		this.basicdataByDoorsystem = basicdataByDoorsystem;
 		this.basicdataByHourmachine = basicdataByHourmachine;
@@ -196,6 +197,7 @@ public class Budget implements java.io.Serializable {
 		this.type = type;
 		this.elevatorquantity = elevatorquantity;
 		this.motorquantity = motorquantity;
+		this.motortraction = motortraction;
 		this.stopnumber = stopnumber;
 		this.tour = tour;
 		this.ontour = ontour;
@@ -205,8 +207,6 @@ public class Budget implements java.io.Serializable {
 		this.designspecial = designspecial;
 		this.designspecialcomment = designspecialcomment;
 		this.doorofnumber = doorofnumber;
-		this.height = height;
-		this.freeadmission = freeadmission;
 		this.hallbutton = hallbutton;
 		this.lightcurtain = lightcurtain;
 		this.loadlimiter = loadlimiter;
@@ -426,6 +426,16 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "height")
+	public Basicdata getBasicdataByHeight() {
+		return this.basicdataByHeight;
+	}
+
+	public void setBasicdataByHeight(Basicdata basicdataByHeight) {
+		this.basicdataByHeight = basicdataByHeight;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "speed")
 	public Basicdata getBasicdataBySpeed() {
 		return this.basicdataBySpeed;
@@ -443,6 +453,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByEmbarque(Basicdata basicdataByEmbarque) {
 		this.basicdataByEmbarque = basicdataByEmbarque;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "freeadmission")
+	public Basicdata getBasicdataByFreeadmission() {
+		return this.basicdataByFreeadmission;
+	}
+
+	public void setBasicdataByFreeadmission(Basicdata basicdataByFreeadmission) {
+		this.basicdataByFreeadmission = basicdataByFreeadmission;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -473,16 +493,6 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByElevatortype(Basicdata basicdataByElevatortype) {
 		this.basicdataByElevatortype = basicdataByElevatortype;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "motortraction")
-	public Basicdata getBasicdataByMotortraction() {
-		return this.basicdataByMotortraction;
-	}
-
-	public void setBasicdataByMotortraction(Basicdata basicdataByMotortraction) {
-		this.basicdataByMotortraction = basicdataByMotortraction;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -670,6 +680,15 @@ public class Budget implements java.io.Serializable {
 		this.motorquantity = motorquantity;
 	}
 
+	@Column(name = "motortraction", length = 10)
+	public String getMotortraction() {
+		return this.motortraction;
+	}
+
+	public void setMotortraction(String motortraction) {
+		this.motortraction = motortraction;
+	}
+
 	@Column(name = "stopnumber")
 	public Integer getStopnumber() {
 		return this.stopnumber;
@@ -749,24 +768,6 @@ public class Budget implements java.io.Serializable {
 
 	public void setDoorofnumber(Integer doorofnumber) {
 		this.doorofnumber = doorofnumber;
-	}
-
-	@Column(name = "height", length = 50)
-	public String getHeight() {
-		return this.height;
-	}
-
-	public void setHeight(String height) {
-		this.height = height;
-	}
-
-	@Column(name = "freeadmission", length = 50)
-	public String getFreeadmission() {
-		return this.freeadmission;
-	}
-
-	public void setFreeadmission(String freeadmission) {
-		this.freeadmission = freeadmission;
 	}
 
 	@Column(name = "hallbutton", length = 100)
