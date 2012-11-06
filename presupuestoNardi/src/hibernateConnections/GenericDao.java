@@ -1,8 +1,12 @@
 package hibernateConnections;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 public class GenericDao<Model> {
 	
@@ -69,5 +73,18 @@ public class GenericDao<Model> {
 		transaction.commit();		
 		currentSession().close();
 		return model;
+	}
+	
+	public List<Model> list(Class c){
+		Transaction transaction = currentSession().beginTransaction();
+		Criteria criteria = currentSession().createCriteria(c);
+		return criteria.list();
+	}
+	
+	public List<Model> listActive(Class c){
+		Transaction transaction = currentSession().beginTransaction();
+		Criteria criteria = currentSession().createCriteria(c);
+		criteria.add(Restrictions.eq("status", 'A'));
+		return criteria.list();
 	}
 }
