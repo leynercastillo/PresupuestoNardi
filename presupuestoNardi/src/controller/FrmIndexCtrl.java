@@ -10,6 +10,7 @@ import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicData;
@@ -24,62 +25,43 @@ import database.Budget;
 public class FrmIndexCtrl {
 
 	private List<Basicdata> listBType;
-	private Basicdata selectedBType;
 	private List<Basicdata> listElevatorType;
-	private Basicdata selectedElevatorType;
 	private List<Basicdata> listElevatorCapa;
-	private Basicdata selectedElevatorCapa;
 	private List<Basicdata> listMachineType;
-	private Basicdata selectedMachineType;
 	private List<Basicdata> listBEmbarque;
-	private Basicdata selectedBEmbarque;
 	private List<Basicdata> listElectricityType;
-	private Basicdata selectedElectricityType;
 	private List<Basicdata> listSpeed;
-	private Basicdata selectedSpeed;
 	private List<Basicdata> listFrequency;
-	private Basicdata selectedFrequency;
 	private List<Basicdata> listVoltageLighting;
-	private Basicdata selectedVoltageLighting;
 	private List<Basicdata> listHourMachine;
-	private Basicdata selectedHourMachine;
 	private List<Basicdata> listManeuverType;
-	private Basicdata selectedManeuverType;
 	private List<Basicdata> listDesign1357;
-	private Basicdata selectedDesign1357;
 	private List<Basicdata> listDesignP26;
-	private Basicdata selectedDesignP26;
 	private List<Basicdata> listRoofType;
-	private Basicdata selectedRoofType;
 	private List<Basicdata> listButtonType;
-	private Basicdata selectedButtonType;
 	private List<Basicdata> listRailing;
-	private Basicdata selectedRailing;
 	private List<Basicdata> listMirror;
-	private Basicdata selectedMirror;
 	private List<Basicdata> listFloorType;
-	private Basicdata selectedFloorType;
 	private List<Basicdata> listFan;
-	private Basicdata selectedFan;
 	private List<Basicdata> listDoorType;
-	private Basicdata selectedDoorType;
 	private List<Basicdata> listDoorSystem;
-	private Basicdata selectedDoorSystem;
 	private List<Basicdata> listDoorframeType;
-	private Basicdata selectedDoorframeType;
 	private List<Basicdata> listFreeAdmission;
-	private Basicdata selectedFreeAdmission;
 	private List<Basicdata> listHeight;
-	private Basicdata selectedHeight;
 	private List<Basicdata> listControlType;
-	private Basicdata selectedControlType;
 	private List<Basicdata> listBoothButton;
-	private Basicdata selectedBoothButton;
 	private List<Basicdata> listBoothDisplay;
-	private Basicdata selectedBoothDisplay;
 	private List<Basicdata> listFloorDisplay;
-	private Basicdata selectedFloorDisplay;
+	private List<Basicdata> listMotorTraction;
 	private Budget budget;
+
+	public List<Basicdata> getListMotorTraction() {
+		return listMotorTraction;
+	}
+
+	public void setListMotorTraction(List<Basicdata> listMotorTraction) {
+		this.listMotorTraction = listMotorTraction;
+	}
 
 	public Budget getBudget() {
 		return budget;
@@ -97,28 +79,12 @@ public class FrmIndexCtrl {
 		this.listFloorDisplay = listFloorDisplay;
 	}
 
-	public Basicdata getSelectedFloorDisplay() {
-		return selectedFloorDisplay;
-	}
-
-	public void setSelectedFloorDisplay(Basicdata selectedFloorDisplay) {
-		this.selectedFloorDisplay = selectedFloorDisplay;
-	}
-
 	public List<Basicdata> getListBoothDisplay() {
 		return listBoothDisplay;
 	}
 
 	public void setListBoothDisplay(List<Basicdata> listBoothDisplay) {
 		this.listBoothDisplay = listBoothDisplay;
-	}
-
-	public Basicdata getSelectedBoothDisplay() {
-		return selectedBoothDisplay;
-	}
-
-	public void setSelectedBoothDisplay(Basicdata selectedBoothDisplay) {
-		this.selectedBoothDisplay = selectedBoothDisplay;
 	}
 
 	public List<Basicdata> getListBoothButton() {
@@ -129,28 +95,12 @@ public class FrmIndexCtrl {
 		this.listBoothButton = listBoothButton;
 	}
 
-	public Basicdata getSelectedBoothButton() {
-		return selectedBoothButton;
-	}
-
-	public void setSelectedBoothButton(Basicdata selectedBoothButton) {
-		this.selectedBoothButton = selectedBoothButton;
-	}
-
 	public List<Basicdata> getListControlType() {
 		return listControlType;
 	}
 
 	public void setListControlType(List<Basicdata> listControlType) {
 		this.listControlType = listControlType;
-	}
-
-	public Basicdata getSelectedControlType() {
-		return selectedControlType;
-	}
-
-	public void setSelectedControlType(Basicdata selectedControlType) {
-		this.selectedControlType = selectedControlType;
 	}
 
 	public List<Basicdata> getListHeight() {
@@ -161,28 +111,12 @@ public class FrmIndexCtrl {
 		this.listHeight = listHeight;
 	}
 
-	public Basicdata getSelectedHeight() {
-		return selectedHeight;
-	}
-
-	public void setSelectedHeight(Basicdata selectedHeight) {
-		this.selectedHeight = selectedHeight;
-	}
-
 	public List<Basicdata> getListFreeAdmission() {
 		return listFreeAdmission;
 	}
 
 	public void setListFreeAdmission(List<Basicdata> listFreeAdmission) {
 		this.listFreeAdmission = listFreeAdmission;
-	}
-
-	public Basicdata getSelectedFreeAdmission() {
-		return selectedFreeAdmission;
-	}
-
-	public void setSelectedFreeAdmission(Basicdata selectedFreeAdmission) {
-		this.selectedFreeAdmission = selectedFreeAdmission;
 	}
 
 	public List<Basicdata> getListDoorframeType() {
@@ -193,28 +127,12 @@ public class FrmIndexCtrl {
 		this.listDoorframeType = listDoorframeType;
 	}
 
-	public Basicdata getSelectedDoorframeType() {
-		return selectedDoorframeType;
-	}
-
-	public void setSelectedDoorframeType(Basicdata selectedDoorframeType) {
-		this.selectedDoorframeType = selectedDoorframeType;
-	}
-
 	public List<Basicdata> getListDoorSystem() {
 		return listDoorSystem;
 	}
 
 	public void setListDoorSystem(List<Basicdata> listDoorSystem) {
 		this.listDoorSystem = listDoorSystem;
-	}
-
-	public Basicdata getSelectedDoorSystem() {
-		return selectedDoorSystem;
-	}
-
-	public void setSelectedDoorSystem(Basicdata selectedDoorSystem) {
-		this.selectedDoorSystem = selectedDoorSystem;
 	}
 
 	public List<Basicdata> getListDoorType() {
@@ -225,28 +143,12 @@ public class FrmIndexCtrl {
 		this.listDoorType = listDoorType;
 	}
 
-	public Basicdata getSelectedDoorType() {
-		return selectedDoorType;
-	}
-
-	public void setSelectedDoorType(Basicdata selectedDoorType) {
-		this.selectedDoorType = selectedDoorType;
-	}
-
 	public List<Basicdata> getListFan() {
 		return listFan;
 	}
 
 	public void setListFan(List<Basicdata> listFan) {
 		this.listFan = listFan;
-	}
-
-	public Basicdata getSelectedFan() {
-		return selectedFan;
-	}
-
-	public void setSelectedFan(Basicdata selectedFan) {
-		this.selectedFan = selectedFan;
 	}
 
 	public List<Basicdata> getListFloorType() {
@@ -257,28 +159,12 @@ public class FrmIndexCtrl {
 		this.listFloorType = listFloorType;
 	}
 
-	public Basicdata getSelectedFloorType() {
-		return selectedFloorType;
-	}
-
-	public void setSelectedFloorType(Basicdata selectedFloorType) {
-		this.selectedFloorType = selectedFloorType;
-	}
-
 	public List<Basicdata> getListMirror() {
 		return listMirror;
 	}
 
 	public void setListMirror(List<Basicdata> listMirror) {
 		this.listMirror = listMirror;
-	}
-
-	public Basicdata getSelectedMirror() {
-		return selectedMirror;
-	}
-
-	public void setSelectedMirror(Basicdata selectedMirror) {
-		this.selectedMirror = selectedMirror;
 	}
 
 	public List<Basicdata> getListRailing() {
@@ -289,28 +175,12 @@ public class FrmIndexCtrl {
 		this.listRailing = listRailing;
 	}
 
-	public Basicdata getSelectedRailing() {
-		return selectedRailing;
-	}
-
-	public void setSelectedRailing(Basicdata selectedRailing) {
-		this.selectedRailing = selectedRailing;
-	}
-
 	public List<Basicdata> getListButtonType() {
 		return listButtonType;
 	}
 
 	public void setListButtonType(List<Basicdata> listButtonType) {
 		this.listButtonType = listButtonType;
-	}
-
-	public Basicdata getSelectedButtonType() {
-		return selectedButtonType;
-	}
-
-	public void setSelectedButtonType(Basicdata selectedButtonType) {
-		this.selectedButtonType = selectedButtonType;
 	}
 
 	public List<Basicdata> getListRoofType() {
@@ -321,28 +191,12 @@ public class FrmIndexCtrl {
 		this.listRoofType = listRoofType;
 	}
 
-	public Basicdata getSelectedRoofType() {
-		return selectedRoofType;
-	}
-
-	public void setSelectedRoofType(Basicdata selectedRoofType) {
-		this.selectedRoofType = selectedRoofType;
-	}
-
 	public List<Basicdata> getListDesignP26() {
 		return listDesignP26;
 	}
 
 	public void setListDesignP26(List<Basicdata> listDesignP26) {
 		this.listDesignP26 = listDesignP26;
-	}
-
-	public Basicdata getSelectedDesignP26() {
-		return selectedDesignP26;
-	}
-
-	public void setSelectedDesignP26(Basicdata selectedDesignP26) {
-		this.selectedDesignP26 = selectedDesignP26;
 	}
 
 	public List<Basicdata> getListDesign1357() {
@@ -353,28 +207,12 @@ public class FrmIndexCtrl {
 		this.listDesign1357 = listDesign1357;
 	}
 
-	public Basicdata getSelectedDesign1357() {
-		return selectedDesign1357;
-	}
-
-	public void setSelectedDesign1357(Basicdata selectedDesign1357) {
-		this.selectedDesign1357 = selectedDesign1357;
-	}
-
 	public List<Basicdata> getListManeuverType() {
 		return listManeuverType;
 	}
 
 	public void setListManeuverType(List<Basicdata> listManeuverType) {
 		this.listManeuverType = listManeuverType;
-	}
-
-	public Basicdata getSelectedManeuverType() {
-		return selectedManeuverType;
-	}
-
-	public void setSelectedManeuverType(Basicdata selectedManeuverType) {
-		this.selectedManeuverType = selectedManeuverType;
 	}
 
 	public List<Basicdata> getListHourMachine() {
@@ -385,28 +223,12 @@ public class FrmIndexCtrl {
 		this.listHourMachine = listHourMachine;
 	}
 
-	public Basicdata getSelectedHourMachine() {
-		return selectedHourMachine;
-	}
-
-	public void setSelectedHourMachine(Basicdata selectedHourMachine) {
-		this.selectedHourMachine = selectedHourMachine;
-	}
-
 	public List<Basicdata> getListVoltageLighting() {
 		return listVoltageLighting;
 	}
 
 	public void setListVoltageLighting(List<Basicdata> listVoltageLighting) {
 		this.listVoltageLighting = listVoltageLighting;
-	}
-
-	public Basicdata getSelectedVoltageLighting() {
-		return selectedVoltageLighting;
-	}
-
-	public void setSelectedVoltageLighting(Basicdata selectedVoltageLighting) {
-		this.selectedVoltageLighting = selectedVoltageLighting;
 	}
 
 	public List<Basicdata> getListFrequency() {
@@ -417,28 +239,12 @@ public class FrmIndexCtrl {
 		this.listFrequency = listFrequency;
 	}
 
-	public Basicdata getSelectedFrequency() {
-		return selectedFrequency;
-	}
-
-	public void setSelectedFrequency(Basicdata selectedFrequency) {
-		this.selectedFrequency = selectedFrequency;
-	}
-
 	public List<Basicdata> getListSpeed() {
 		return listSpeed;
 	}
 
 	public void setListSpeed(List<Basicdata> listSpeed) {
 		this.listSpeed = listSpeed;
-	}
-
-	public Basicdata getSelectedSpeed() {
-		return selectedSpeed;
-	}
-
-	public void setSelectedSpeed(Basicdata selectedSpeed) {
-		this.selectedSpeed = selectedSpeed;
 	}
 
 	public List<Basicdata> getListElectricityType() {
@@ -449,28 +255,12 @@ public class FrmIndexCtrl {
 		this.listElectricityType = listElectricityType;
 	}
 
-	public Basicdata getSelectedElectricityType() {
-		return selectedElectricityType;
-	}
-
-	public void setSelectedElectricityType(Basicdata selectedElectricityType) {
-		this.selectedElectricityType = selectedElectricityType;
-	}
-
 	public List<Basicdata> getListBEmbarque() {
 		return listBEmbarque;
 	}
 
 	public void setListBEmbarque(List<Basicdata> listBEmbarque) {
 		this.listBEmbarque = listBEmbarque;
-	}
-
-	public Basicdata getSelectedBEmbarque() {
-		return selectedBEmbarque;
-	}
-
-	public void setSelectedBEmbarque(Basicdata selectedBEmbarque) {
-		this.selectedBEmbarque = selectedBEmbarque;
 	}
 
 	public List<Basicdata> getListMachineType() {
@@ -481,14 +271,6 @@ public class FrmIndexCtrl {
 		this.listMachineType = listMachineType;
 	}
 
-	public Basicdata getSelectedMachineType() {
-		return selectedMachineType;
-	}
-
-	public void setSelectedMachineType(Basicdata selectedMachineType) {
-		this.selectedMachineType = selectedMachineType;
-	}
-
 	public List<Basicdata> getListElevatorCapa() {
 		return listElevatorCapa;
 	}
@@ -497,36 +279,12 @@ public class FrmIndexCtrl {
 		this.listElevatorCapa = listElevatorCapa;
 	}
 
-	public Basicdata getSelectedElevatorCapa() {
-		return selectedElevatorCapa;
-	}
-
-	public void setSelectedElevatorCapa(Basicdata selectedElevatorCapa) {
-		this.selectedElevatorCapa = selectedElevatorCapa;
-	}
-
 	public List<Basicdata> getListElevatorType() {
 		return listElevatorType;
 	}
 
 	public void setListElevatorType(List<Basicdata> listElevatorType) {
 		this.listElevatorType = listElevatorType;
-	}
-
-	public Basicdata getSelectedElevatorType() {
-		return selectedElevatorType;
-	}
-
-	public void setSelectedElevatorType(Basicdata selectedElevatorType) {
-		this.selectedElevatorType = selectedElevatorType;
-	}
-
-	public Basicdata getSelectedBType() {
-		return selectedBType;
-	}
-
-	public void setSelectedBType(Basicdata selectedBType) {
-		this.selectedBType = selectedBType;
 	}
 
 	public List<Basicdata> getListBType() {
@@ -582,6 +340,7 @@ public class FrmIndexCtrl {
 		listBoothButton = daoBasicData.findByDescription("BUDGET","BOOTH BUTTON");
 		listBoothDisplay = daoBasicData.findByDescription("BUDGET","BOOTH DISPLAY");
 		listFloorDisplay = daoBasicData.findByDescription("BUDGET","FLOOR DISPLAY");
+		listMotorTraction = daoBasicData.findByDescription("BUDGET","MOTOR TRACTION");
 	}
 
 	@Command
@@ -591,10 +350,12 @@ public class FrmIndexCtrl {
 		else
 			element.setDisabled(true);
 	}
-	
-	/*@Command
+
+	@Command
 	public void save(){
-		Validate validate = new Validate();
-		if (budget.getPartnername().isEmpty())
-	}*/
+		DaoBudget daoBudget = new DaoBudget();
+		System.out.println(budget);
+		daoBudget.save(budget);
+		Messagebox.show("Guardado");
+	}
 }
