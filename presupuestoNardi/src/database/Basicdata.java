@@ -1,6 +1,6 @@
 package database;
 
-// Generated 06/11/2012 05:01:41 PM by Hibernate Tools 3.6.0
+// Generated 07/11/2012 04:41:55 PM by Hibernate Tools 3.6.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,14 +21,15 @@ public class Basicdata implements java.io.Serializable {
 	private int idbasic;
 	private String database;
 	private String name;
-	private String description;
+	private String field;
 	private boolean editable;
 	private int priority;
 	private char status;
 	private Set<Budget> budgetsForVoltagelighting = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFrequency = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForHourmachine = new HashSet<Budget>(0);
-	private Set<Hammered> hammereds = new HashSet<Hammered>(0);
+	private Set<Databasicmanytomany> databasicmanytomanies = new HashSet<Databasicmanytomany>(
+			0);
 	private Set<Budget> budgetsForMirror = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForRailing = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForButtontype = new HashSet<Budget>(0);
@@ -38,16 +39,16 @@ public class Basicdata implements java.io.Serializable {
 	private Set<Budget> budgetsForDesign1357 = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForManeuvertype = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFreeadmission = new HashSet<Budget>(0);
-	private Set<Budget> budgetsForStopsequence = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForSpeed = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFloortype = new HashSet<Budget>(0);
+	private Set<Hallbuttontype> hallbuttontypes = new HashSet<Hallbuttontype>(0);
 	private Set<Budget> budgetsForDoorsystem = new HashSet<Budget>(0);
-	private Set<Budget> budgetsForDoorframetype = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForBuildingtype = new HashSet<Budget>(0);
-	private Set<Budget> budgetsForControltype = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForDoorframetype = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForElevatortype = new HashSet<Budget>(0);
-	private Set<Budget> budgetsForBoothbutton = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForControltype = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForElevatorcapacitance = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForBoothbutton = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForBoothdisplay = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFloordisplay = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForMachinetype = new HashSet<Budget>(0);
@@ -60,35 +61,37 @@ public class Basicdata implements java.io.Serializable {
 	public Basicdata() {
 	}
 
-	public Basicdata(int idbasic, String database, String name,
-			String description, boolean editable, int priority, char status) {
+	public Basicdata(int idbasic, String database, String name, String field,
+			boolean editable, int priority, char status) {
 		this.idbasic = idbasic;
 		this.database = database;
 		this.name = name;
-		this.description = description;
+		this.field = field;
 		this.editable = editable;
 		this.priority = priority;
 		this.status = status;
 	}
 
-	public Basicdata(int idbasic, String database, String name,
-			String description, boolean editable, int priority, char status,
+	public Basicdata(int idbasic, String database, String name, String field,
+			boolean editable, int priority, char status,
 			Set<Budget> budgetsForVoltagelighting,
 			Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourmachine,
-			Set<Hammered> hammereds, Set<Budget> budgetsForMirror,
-			Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtontype,
-			Set<Budget> budgetsForRooftype, Set<Budget> budgetsForHeight,
-			Set<Budget> budgetsForDesignp26, Set<Budget> budgetsForDesign1357,
+			Set<Databasicmanytomany> databasicmanytomanies,
+			Set<Budget> budgetsForMirror, Set<Budget> budgetsForRailing,
+			Set<Budget> budgetsForButtontype, Set<Budget> budgetsForRooftype,
+			Set<Budget> budgetsForHeight, Set<Budget> budgetsForDesignp26,
+			Set<Budget> budgetsForDesign1357,
 			Set<Budget> budgetsForManeuvertype,
-			Set<Budget> budgetsForFreeadmission,
-			Set<Budget> budgetsForStopsequence, Set<Budget> budgetsForSpeed,
-			Set<Budget> budgetsForFloortype, Set<Budget> budgetsForDoorsystem,
-			Set<Budget> budgetsForDoorframetype,
+			Set<Budget> budgetsForFreeadmission, Set<Budget> budgetsForSpeed,
+			Set<Budget> budgetsForFloortype,
+			Set<Hallbuttontype> hallbuttontypes,
+			Set<Budget> budgetsForDoorsystem,
 			Set<Budget> budgetsForBuildingtype,
-			Set<Budget> budgetsForControltype,
+			Set<Budget> budgetsForDoorframetype,
 			Set<Budget> budgetsForElevatortype,
-			Set<Budget> budgetsForBoothbutton,
+			Set<Budget> budgetsForControltype,
 			Set<Budget> budgetsForElevatorcapacitance,
+			Set<Budget> budgetsForBoothbutton,
 			Set<Budget> budgetsForBoothdisplay,
 			Set<Budget> budgetsForFloordisplay,
 			Set<Budget> budgetsForMachinetype, Set<Budget> budgetsForEmbarque,
@@ -98,14 +101,14 @@ public class Basicdata implements java.io.Serializable {
 		this.idbasic = idbasic;
 		this.database = database;
 		this.name = name;
-		this.description = description;
+		this.field = field;
 		this.editable = editable;
 		this.priority = priority;
 		this.status = status;
 		this.budgetsForVoltagelighting = budgetsForVoltagelighting;
 		this.budgetsForFrequency = budgetsForFrequency;
 		this.budgetsForHourmachine = budgetsForHourmachine;
-		this.hammereds = hammereds;
+		this.databasicmanytomanies = databasicmanytomanies;
 		this.budgetsForMirror = budgetsForMirror;
 		this.budgetsForRailing = budgetsForRailing;
 		this.budgetsForButtontype = budgetsForButtontype;
@@ -115,16 +118,16 @@ public class Basicdata implements java.io.Serializable {
 		this.budgetsForDesign1357 = budgetsForDesign1357;
 		this.budgetsForManeuvertype = budgetsForManeuvertype;
 		this.budgetsForFreeadmission = budgetsForFreeadmission;
-		this.budgetsForStopsequence = budgetsForStopsequence;
 		this.budgetsForSpeed = budgetsForSpeed;
 		this.budgetsForFloortype = budgetsForFloortype;
+		this.hallbuttontypes = hallbuttontypes;
 		this.budgetsForDoorsystem = budgetsForDoorsystem;
-		this.budgetsForDoorframetype = budgetsForDoorframetype;
 		this.budgetsForBuildingtype = budgetsForBuildingtype;
-		this.budgetsForControltype = budgetsForControltype;
+		this.budgetsForDoorframetype = budgetsForDoorframetype;
 		this.budgetsForElevatortype = budgetsForElevatortype;
-		this.budgetsForBoothbutton = budgetsForBoothbutton;
+		this.budgetsForControltype = budgetsForControltype;
 		this.budgetsForElevatorcapacitance = budgetsForElevatorcapacitance;
+		this.budgetsForBoothbutton = budgetsForBoothbutton;
 		this.budgetsForBoothdisplay = budgetsForBoothdisplay;
 		this.budgetsForFloordisplay = budgetsForFloordisplay;
 		this.budgetsForMachinetype = budgetsForMachinetype;
@@ -163,13 +166,13 @@ public class Basicdata implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "description", nullable = false, length = 300)
-	public String getDescription() {
-		return this.description;
+	@Column(name = "field", nullable = false, length = 300)
+	public String getField() {
+		return this.field;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setField(String field) {
+		this.field = field;
 	}
 
 	@Column(name = "editable", nullable = false)
@@ -228,12 +231,13 @@ public class Basicdata implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdata")
-	public Set<Hammered> getHammereds() {
-		return this.hammereds;
+	public Set<Databasicmanytomany> getDatabasicmanytomanies() {
+		return this.databasicmanytomanies;
 	}
 
-	public void setHammereds(Set<Hammered> hammereds) {
-		this.hammereds = hammereds;
+	public void setDatabasicmanytomanies(
+			Set<Databasicmanytomany> databasicmanytomanies) {
+		this.databasicmanytomanies = databasicmanytomanies;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByMirror")
@@ -317,15 +321,6 @@ public class Basicdata implements java.io.Serializable {
 		this.budgetsForFreeadmission = budgetsForFreeadmission;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByStopsequence")
-	public Set<Budget> getBudgetsForStopsequence() {
-		return this.budgetsForStopsequence;
-	}
-
-	public void setBudgetsForStopsequence(Set<Budget> budgetsForStopsequence) {
-		this.budgetsForStopsequence = budgetsForStopsequence;
-	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataBySpeed")
 	public Set<Budget> getBudgetsForSpeed() {
 		return this.budgetsForSpeed;
@@ -344,6 +339,15 @@ public class Basicdata implements java.io.Serializable {
 		this.budgetsForFloortype = budgetsForFloortype;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdata")
+	public Set<Hallbuttontype> getHallbuttontypes() {
+		return this.hallbuttontypes;
+	}
+
+	public void setHallbuttontypes(Set<Hallbuttontype> hallbuttontypes) {
+		this.hallbuttontypes = hallbuttontypes;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoorsystem")
 	public Set<Budget> getBudgetsForDoorsystem() {
 		return this.budgetsForDoorsystem;
@@ -351,15 +355,6 @@ public class Basicdata implements java.io.Serializable {
 
 	public void setBudgetsForDoorsystem(Set<Budget> budgetsForDoorsystem) {
 		this.budgetsForDoorsystem = budgetsForDoorsystem;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoorframetype")
-	public Set<Budget> getBudgetsForDoorframetype() {
-		return this.budgetsForDoorframetype;
-	}
-
-	public void setBudgetsForDoorframetype(Set<Budget> budgetsForDoorframetype) {
-		this.budgetsForDoorframetype = budgetsForDoorframetype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBuildingtype")
@@ -371,13 +366,13 @@ public class Basicdata implements java.io.Serializable {
 		this.budgetsForBuildingtype = budgetsForBuildingtype;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByControltype")
-	public Set<Budget> getBudgetsForControltype() {
-		return this.budgetsForControltype;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByDoorframetype")
+	public Set<Budget> getBudgetsForDoorframetype() {
+		return this.budgetsForDoorframetype;
 	}
 
-	public void setBudgetsForControltype(Set<Budget> budgetsForControltype) {
-		this.budgetsForControltype = budgetsForControltype;
+	public void setBudgetsForDoorframetype(Set<Budget> budgetsForDoorframetype) {
+		this.budgetsForDoorframetype = budgetsForDoorframetype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByElevatortype")
@@ -389,13 +384,13 @@ public class Basicdata implements java.io.Serializable {
 		this.budgetsForElevatortype = budgetsForElevatortype;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBoothbutton")
-	public Set<Budget> getBudgetsForBoothbutton() {
-		return this.budgetsForBoothbutton;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByControltype")
+	public Set<Budget> getBudgetsForControltype() {
+		return this.budgetsForControltype;
 	}
 
-	public void setBudgetsForBoothbutton(Set<Budget> budgetsForBoothbutton) {
-		this.budgetsForBoothbutton = budgetsForBoothbutton;
+	public void setBudgetsForControltype(Set<Budget> budgetsForControltype) {
+		this.budgetsForControltype = budgetsForControltype;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByElevatorcapacitance")
@@ -406,6 +401,15 @@ public class Basicdata implements java.io.Serializable {
 	public void setBudgetsForElevatorcapacitance(
 			Set<Budget> budgetsForElevatorcapacitance) {
 		this.budgetsForElevatorcapacitance = budgetsForElevatorcapacitance;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBoothbutton")
+	public Set<Budget> getBudgetsForBoothbutton() {
+		return this.budgetsForBoothbutton;
+	}
+
+	public void setBudgetsForBoothbutton(Set<Budget> budgetsForBoothbutton) {
+		this.budgetsForBoothbutton = budgetsForBoothbutton;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicdataByBoothdisplay")

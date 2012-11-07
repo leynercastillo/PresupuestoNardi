@@ -1,6 +1,6 @@
 package database;
 
-// Generated 06/11/2012 05:01:41 PM by Hibernate Tools 3.6.0
+// Generated 07/11/2012 04:41:55 PM by Hibernate Tools 3.6.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +32,6 @@ public class Budget implements java.io.Serializable {
 	private Basicdata basicdataByMirror;
 	private Basicdata basicdataByFloordisplay;
 	private Basicdata basicdataByVoltagelighting;
-	private Basicdata basicdataByStopsequence;
 	private Basicdata basicdataByElectricitytype;
 	private Basicdata basicdataByRailing;
 	private Basicdata basicdataByStatus;
@@ -92,7 +91,8 @@ public class Budget implements java.io.Serializable {
 	private String comment;
 	private String displayplacefloor;
 	private Set<Hallbuttontype> hallbuttontypes = new HashSet<Hallbuttontype>(0);
-	private Set<Hammered> hammereds = new HashSet<Hammered>(0);
+	private Set<Databasicmanytomany> databasicmanytomanies = new HashSet<Databasicmanytomany>(
+			0);
 
 	public Budget() {
 	}
@@ -122,7 +122,6 @@ public class Budget implements java.io.Serializable {
 			Basicdata basicdataByManeuvertype, Basicdata basicdataByFrequency,
 			Basicdata basicdataByMirror, Basicdata basicdataByFloordisplay,
 			Basicdata basicdataByVoltagelighting,
-			Basicdata basicdataByStopsequence,
 			Basicdata basicdataByElectricitytype, Basicdata basicdataByRailing,
 			Basicdata basicdataByStatus, Basicdata basicdataByDoortype,
 			Basicdata basicdataByFloortype, Basicdata basicdataByBuildingtype,
@@ -149,7 +148,8 @@ public class Budget implements java.io.Serializable {
 			Boolean speechsynthesizer, Boolean gomsystem, Boolean intercom,
 			Boolean phone, Boolean accesssytem, Boolean firefighterkeychain,
 			String comment, String displayplacefloor,
-			Set<Hallbuttontype> hallbuttontypes, Set<Hammered> hammereds) {
+			Set<Hallbuttontype> hallbuttontypes,
+			Set<Databasicmanytomany> databasicmanytomanies) {
 		this.idbudget = idbudget;
 		this.basicdataByButtontype = basicdataByButtontype;
 		this.basicdataByMachinetype = basicdataByMachinetype;
@@ -159,7 +159,6 @@ public class Budget implements java.io.Serializable {
 		this.basicdataByMirror = basicdataByMirror;
 		this.basicdataByFloordisplay = basicdataByFloordisplay;
 		this.basicdataByVoltagelighting = basicdataByVoltagelighting;
-		this.basicdataByStopsequence = basicdataByStopsequence;
 		this.basicdataByElectricitytype = basicdataByElectricitytype;
 		this.basicdataByRailing = basicdataByRailing;
 		this.basicdataByStatus = basicdataByStatus;
@@ -219,7 +218,7 @@ public class Budget implements java.io.Serializable {
 		this.comment = comment;
 		this.displayplacefloor = displayplacefloor;
 		this.hallbuttontypes = hallbuttontypes;
-		this.hammereds = hammereds;
+		this.databasicmanytomanies = databasicmanytomanies;
 	}
 
 	@Id
@@ -311,16 +310,6 @@ public class Budget implements java.io.Serializable {
 	public void setBasicdataByVoltagelighting(
 			Basicdata basicdataByVoltagelighting) {
 		this.basicdataByVoltagelighting = basicdataByVoltagelighting;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "stopsequence")
-	public Basicdata getBasicdataByStopsequence() {
-		return this.basicdataByStopsequence;
-	}
-
-	public void setBasicdataByStopsequence(Basicdata basicdataByStopsequence) {
-		this.basicdataByStopsequence = basicdataByStopsequence;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -879,12 +868,13 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
-	public Set<Hammered> getHammereds() {
-		return this.hammereds;
+	public Set<Databasicmanytomany> getDatabasicmanytomanies() {
+		return this.databasicmanytomanies;
 	}
 
-	public void setHammereds(Set<Hammered> hammereds) {
-		this.hammereds = hammereds;
+	public void setDatabasicmanytomanies(
+			Set<Databasicmanytomany> databasicmanytomanies) {
+		this.databasicmanytomanies = databasicmanytomanies;
 	}
 
 }

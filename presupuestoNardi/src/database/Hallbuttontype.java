@@ -1,6 +1,6 @@
 package database;
 
-// Generated 06/11/2012 05:01:41 PM by Hibernate Tools 3.6.0
+// Generated 07/11/2012 04:41:55 PM by Hibernate Tools 3.6.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +19,7 @@ public class Hallbuttontype implements java.io.Serializable {
 
 	private int idhallbuttontype;
 	private Budget budget;
+	private Basicdata basicdata;
 	private int quantitybuttonpb;
 	private int quantitybuttonfloor;
 	private int totalbuttons;
@@ -27,9 +28,11 @@ public class Hallbuttontype implements java.io.Serializable {
 	}
 
 	public Hallbuttontype(int idhallbuttontype, Budget budget,
-			int quantitybuttonpb, int quantitybuttonfloor, int totalbuttons) {
+			Basicdata basicdata, int quantitybuttonpb, int quantitybuttonfloor,
+			int totalbuttons) {
 		this.idhallbuttontype = idhallbuttontype;
 		this.budget = budget;
+		this.basicdata = basicdata;
 		this.quantitybuttonpb = quantitybuttonpb;
 		this.quantitybuttonfloor = quantitybuttonfloor;
 		this.totalbuttons = totalbuttons;
@@ -53,6 +56,16 @@ public class Hallbuttontype implements java.io.Serializable {
 
 	public void setBudget(Budget budget) {
 		this.budget = budget;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idbasic", nullable = false)
+	public Basicdata getBasicdata() {
+		return this.basicdata;
+	}
+
+	public void setBasicdata(Basicdata basicdata) {
+		this.basicdata = basicdata;
 	}
 
 	@Column(name = "quantitybuttonpb", nullable = false)
