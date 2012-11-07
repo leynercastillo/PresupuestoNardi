@@ -360,8 +360,8 @@
 						<label sclass="formLabel"
 							value="Número de Paradas:">
 						</label>
-						<spinner id="spnBStopNumber"
-							constraint="min 0">
+						<spinner id="spnBStopNumber" constraint="min 0"
+							value="@bind(vm.budget.stopnumber)">
 						</spinner>
 						<space></space>
 						<hbox>
@@ -401,28 +401,34 @@
 						<label sclass="formLabel"
 							value="Recorrido(M)">
 						</label>
-						<spinner id="spnBTour" constraint="min 0"></spinner>
+						<spinner id="spnBTour" constraint="min 0"
+							value="@bind(vm.budget.tour)">
+						</spinner>
 						<label sclass="formLabel"
 							value="Sobre Recorrido (mm)">
 						</label>
-						<spinner id="spnBOnTour" constraint="min 0"></spinner>
+						<spinner id="spnBOnTour" constraint="min 0"
+							value="@bind(vm.budget.ontour)">
+						</spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Ancho de Hueco (mm)">
 						</label>
-						<spinner id="spnBWidthHole"
-							constraint="min 0">
+						<spinner id="spnBWidthHole" constraint="min 0"
+							value="@bind(vm.budget.widthhole)">
 						</spinner>
 						<label sclass="formLabel" value="Fosa (mm)"></label>
-						<spinner id="spnBFossa" constraint="min 0"></spinner>
+						<spinner id="spnBFossa" constraint="min 0"
+							value="@bind(vm.budget.fossa)">
+						</spinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Fondo de Hueco (mm)">
 						</label>
-						<spinner id="spnBBottomHole"
-							constraint="min 0">
+						<spinner id="spnBBottomHole" constraint="min 0"
+							value="@bind(vm.budget.bottomhole)">
 						</spinner>
 						<space></space>
 						<space></space>
@@ -471,7 +477,8 @@
 							value="Diseño Especial:">
 						</label>
 						<checkbox id="chbxBDesignSpecial"
-							onClick="@command('clickToEnableToDisable', Component=txtBDesignSpecialComment)">
+							onClick="@command('clickToEnableToDisable', Component=txtBDesignSpecialComment)"
+							value="@bind(vm.budget.designspecial)">
 						</checkbox>
 					</row>
 					<row>
@@ -504,7 +511,8 @@
 						<label value="Comentario:" sclass="formLabel"></label>
 						<cell rowspan="3">
 							<textbox id="txtBDesignSpecialComment"
-								rows="5" cols="35" disabled="true">
+								rows="5" cols="35" disabled="true"
+								value="@bind(vm.budget.designspecialcomment)">
 							</textbox>
 						</cell>
 					</row>
@@ -577,7 +585,7 @@
 							value="Número de Puertas:">
 						</label>
 						<spinner id="spnBDoorOfNumber"
-							constraint="min 0">
+							constraint="min 0" value="@bind(vm.budget.doorofnumber)">
 						</spinner>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
@@ -677,7 +685,8 @@
 							<textbox id="txtBHammeredGray"
 								disabled="true">
 							</textbox>
-							<checkbox label="Marrón"
+							<checkbox id="chbxBHammeredBrown"
+								label="Marrón"
 								onClick="@command('clickToEnableToDisable', Component=txtBHammeredBrown)">
 							</checkbox>
 							<textbox id="txtBHammeredBrown"
@@ -736,16 +745,17 @@
 						</label>
 						<hbox>
 							<label sclass="formLabel" value="Lugar:"></label>
-							<radiogroup id="radBHallButton">
+							<radiogroup id="radBHallButton"
+								selectedItem="@bind(vm.budget.hallbutton)">
 								<space></space>
-								<radio label="Pared"></radio>
+								<radio value="Pared" label="Pared"></radio>
 								<space></space>
-								<radio label="Marco"></radio>
+								<radio value="Marco" label="Marco"></radio>
 							</radiogroup>
 						</hbox>
 						<space></space>
 					</row>
-					<row spans="3">
+					<row spans="2">
 						<hbox>
 							<spinner id="spnBSistelWDisplay"
 								width="60px" constraint="min 0">
@@ -760,7 +770,8 @@
 							<spinner id="spnBSistelWDisplayPB"
 								width="60px" constraint="min 0">
 							</spinner>
-							<space></space>
+						</hbox>
+						<hbox>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
@@ -768,7 +779,7 @@
 							</spinner>
 						</hbox>
 					</row>
-					<row spans="3">
+					<row spans="2">
 						<hbox>
 							<spinner id="spnBSistelWArrow" width="60px"
 								constraint="min 0">
@@ -783,7 +794,8 @@
 							<spinner id="spnBSistelWArrowPB"
 								width="60px" constraint="min 0">
 							</spinner>
-							<space></space>
+						</hbox>
+						<hbox>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBSistelWArrowFloor"
@@ -791,7 +803,7 @@
 							</spinner>
 						</hbox>
 					</row>
-					<row spans="3">
+					<row spans="2">
 						<hbox>
 							<spinner id="spnBBraile37" width="60px"
 								constraint="min 0">
@@ -807,6 +819,8 @@
 								constraint="min 0">
 							</spinner>
 							<space></space>
+						</hbox>
+						<hbox>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBBraile37Floor" width="60px"
@@ -814,7 +828,7 @@
 							</spinner>
 						</hbox>
 					</row>
-					<row spans="3">
+					<row spans="2">
 						<hbox>
 							<spinner id="spnBAntivandalism" width="60px"
 								constraint="min 0">
@@ -830,6 +844,8 @@
 								width="60px" constraint="min 0">
 							</spinner>
 							<space></space>
+						</hbox>
+						<hbox>
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBAntivandalismFloor"
@@ -868,18 +884,21 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<radiogroup id="radBDisplayPlaceFloor">
-							<radio label="PB"></radio>
+						<radiogroup id="radBDisplayPlaceFloor"
+							selectedItem="@bind(vm.budget.displayplacefloor)">
+							<radio value="PB" label="PB"></radio>
 							<space></space>
 							<space></space>
-							<radio label="Todos los Pisos"></radio>
+							<radio value="Todos los pisos"
+								label="Todos los Pisos">
+							</radio>
 						</radiogroup>
 						<hbox>
-							<radio label="Ninguno"
+							<radio label="Ninguno" value="Ninguno"
 								radiogroup="radBDisplayPlaceFloor">
 							</radio>
 							<space></space>
-							<radio label="Otros"
+							<radio label="Otros" value="Otros"
 								radiogroup="radBDisplayPlaceFloor">
 							</radio>
 						</hbox>
@@ -895,62 +914,70 @@
 						<label sclass="formLabel"
 							value="Cortina Luminosa:">
 						</label>
-						<radiogroup id="radBLightCurtain">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBLightCurtain"
+							selectedItem="@bind(vm.budget.lightcurtain)">
+							<radio value="true" label="Si"></radio>
+							<radio false="false" label="No"></radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Limitador de carga:">
 						</label>
-						<radiogroup id="radBLoadLimiter">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBLoadLimiter"
+							selectedItem="@bind(vm.budget.loadlimiter)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Sintetizador de Voz:">
 						</label>
-						<radiogroup id="radBSpeechSynthesizer">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBSpeechSynthesizer"
+							selectedItem="@bind(vm.budget.speechsynthesizer)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Sistema de GOM en Piso:">
 						</label>
-						<radiogroup id="radBGomSystem">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBGomSystem"
+							selectedItem="@bind(vm.budget.gomsystem)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Intercomunicador:">
 						</label>
-						<radiogroup id="radBIntercom">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBIntercom"
+							selectedItem="@bind(vm.budget.intercom)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 						<label sclass="formLabel" value="Teléfono:"></label>
-						<radiogroup id="radBPhone">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBPhone"
+							selectedItem="@bind(vm.budget.phone)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Sistema de Acceso:" style="font-weight:bold;">
 						</label>
-						<radiogroup id="radBAccessSytem">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBAccessSytem"
+							selectedItem="@bind(vm.budget.accesssytem)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Llave de Bombero:">
 						</label>
-						<radiogroup id="radBFirefighterKeychain">
-							<radio label="Si"></radio>
-							<radio label="No"></radio>
+						<radiogroup id="radBFirefighterKeychain"
+							selectedItem="@bind(vm.budget.firefighterkeychain)">
+							<radio value="true" label="Si"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 					</row>
 				</rows>
@@ -969,7 +996,7 @@
 						</label>
 						<cell colspan="2">
 							<textbox id="txtBComment" rows="5"
-								cols="150">
+								cols="150" value="@bind(vm.budget.comment)">
 							</textbox>
 						</cell>
 					</row>

@@ -33,8 +33,6 @@ public class FrmBasicDataCtrl {
 	@Init
 	public void init() {
 		basicdata = new Basicdata();
-		basicdata.setDescription("sdf");
-		basicdata.setName("asdf");
 	}
 
 	@NotifyChange("basicdata")
