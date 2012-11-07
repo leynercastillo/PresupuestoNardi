@@ -22,6 +22,6 @@
         <mapping class="database.Basicdata" />
         <mapping class="database.Budget" />
         <mapping class="database.Hallbuttontype" />
-        <mapping class="database.Hammered" />
+        <mapping class="database.Databasicmanytomany" />
     </session-factory>
 </hibernate-configuration>
