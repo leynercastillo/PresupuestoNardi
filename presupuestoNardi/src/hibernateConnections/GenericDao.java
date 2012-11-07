@@ -2,11 +2,14 @@ package hibernateConnections;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.zkoss.util.logging.Log;
 
 public class GenericDao<Model> {
 	
@@ -34,37 +37,48 @@ public class GenericDao<Model> {
 	}
 
 	public void save(Model model){
-		Transaction transaction = currentSession().beginTransaction();
+		Transaction transaction = null;
 		try {
+			transaction = currentSession().beginTransaction();
 			currentSession().save(model);
 			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
+		} catch (HibernateException e) {
+			try {
+				transaction.rollback();
+			} catch (RuntimeException e2) {
+				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
+			}
 		}
-		currentSession().close();
 	}
 	
 	public void update(Model model){
-		Transaction transaction = currentSession().beginTransaction();
+		Transaction transaction = null;
 		try {
+			transaction = currentSession().beginTransaction();
 			currentSession().update(model);
 			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
+		} catch (HibernateException e) {
+			try {
+				transaction.rollback();
+			} catch (RuntimeException e2) {
+				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
+			}
 		}
-		
-		currentSession().close();
 	}
 	
 	public void delete(Model model){
-		Transaction transaction = currentSession().beginTransaction();
+		Transaction transaction = null;
 		try {
+			transaction = currentSession().beginTransaction();
 			currentSession().delete(model);
 			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
+		} catch (HibernateException e) {
+			try {
+				transaction.rollback();
+			} catch (RuntimeException e2) {
+				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
+			}
 		}
-		currentSession().close();
 	}
 	
 	public Model findById(Long id){
