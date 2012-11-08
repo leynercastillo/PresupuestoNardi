@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Parameter;
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
@@ -28,43 +36,7 @@ import database.Hallbuttontype;
  */
 public class FrmIndexCtrl {
 
-	@Wire
-	private Checkbox chbxBStopSequenceContinuous, 
-			chbxBStopSequencePar,
-			chbxBStopSequenceOdd, 
-			chbxBStainlessSteel, 
-			chbxBHammeredGray,
-			chbxBHammeredBrown;
-	@Wire
-	private Textbox txtStopSequenceContinuous, 
-			txtStopSequencePar,
-			txtStopSequenceOdd, 
-			txtBStainlessSteel, 
-			txtBHammeredGray,
-			txtBHammeredBrown,
-			txtBPartnerName,
-			txtBConstruction,
-			txtBConstructionNumber,
-			txtBSeller,
-			txtBConstructionAddress,
-			txtBConstructionCity,
-			txtBcontactPhone,
-			txtBEmail,
-			txtBContactName;
-	@Wire
-	private Spinner spnBSistelWDisplay, 
-			spnBSistelWDisplayPB,
-			spnBSistelWDisplayFloor, 
-			spnBSistelWArrow, 
-			spnBSistelWArrowPB,
-			spnBSistelWArrowFloor, 
-			spnBBraile37, 
-			spnBBraile37PB,
-			spnBBraile37Floor, 
-			spnBAntivandalism, 
-			spnBAntivandalismPB,
-			spnBAntivandalismFloor;
-
+		
 	private List<Basicdata> listBType;
 	private List<Basicdata> listElevatorType;
 	private List<Basicdata> listElevatorCapa;
@@ -94,9 +66,226 @@ public class FrmIndexCtrl {
 	private List<Basicdata> listBoothDisplay;
 	private List<Basicdata> listFloorDisplay;
 	private List<Basicdata> listMotorTraction;
+	private Boolean stopSequenceContinuous;
+	private Boolean stopSequencePar;
+	private Boolean	stopSequenceOdd;
+	private Boolean stainlessSteel;
+	private Boolean hammeredGray;
+	private Boolean hammeredBrown;
+	private String txtStopSequenceContinuous;
+	private String txtStopSequencePar;
+	private String txtStopSequenceOdd;
+	private String txtBStainlessSteel;
+	private String txtBHammeredBrown;
+	private String txtBHammeredGray;
+	private Integer sistelWDisplay;
+	private Integer sistelWDisplayFloor;
+	private Integer sistelWDisplayPB;
+	private Integer sistelWArrow;
+	private Integer sistelWArrowFloor;
+	private Integer sistelWArrowPB;
+	private Integer braile37;
+	private Integer braile37Floor;
+	private Integer braile37PB;
+	private Integer antivandalism;
+	private Integer antivandalismFloor;
+	private Integer antivandalismPB;
 	private Databasicmanytomany databasicmanytomany;
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
+	
+	public Boolean getStopSequenceContinuous() {
+		return stopSequenceContinuous;
+	}
+
+	public void setStopSequenceContinuous(Boolean stopSequenceContinuous) {
+		this.stopSequenceContinuous = stopSequenceContinuous;
+	}
+
+	public Boolean getStopSequencePar() {
+		return stopSequencePar;
+	}
+
+	public void setStopSequencePar(Boolean stopSequencePar) {
+		this.stopSequencePar = stopSequencePar;
+	}
+
+	public Boolean getStopSequenceOdd() {
+		return stopSequenceOdd;
+	}
+
+	public void setStopSequenceOdd(Boolean stopSequenceOdd) {
+		this.stopSequenceOdd = stopSequenceOdd;
+	}
+
+	public Boolean getStainlessSteel() {
+		return stainlessSteel;
+	}
+
+	public void setStainlessSteel(Boolean stainlessSteel) {
+		this.stainlessSteel = stainlessSteel;
+	}
+
+	public Boolean getHammeredGray() {
+		return hammeredGray;
+	}
+
+	public void setHammeredGray(Boolean hammeredGray) {
+		this.hammeredGray = hammeredGray;
+	}
+
+	public Boolean getHammeredBrown() {
+		return hammeredBrown;
+	}
+
+	public void setHammeredBrown(Boolean hammeredBrown) {
+		this.hammeredBrown = hammeredBrown;
+	}
+
+	public Integer getSistelWDisplay() {
+		return sistelWDisplay;
+	}
+
+	public void setSistelWDisplay(Integer sistelWDisplay) {
+		this.sistelWDisplay = sistelWDisplay;
+	}
+
+	public Integer getSistelWDisplayFloor() {
+		return sistelWDisplayFloor;
+	}
+
+	public void setSistelWDisplayFloor(Integer sistelWDisplayFloor) {
+		this.sistelWDisplayFloor = sistelWDisplayFloor;
+	}
+
+	public Integer getSistelWDisplayPB() {
+		return sistelWDisplayPB;
+	}
+
+	public void setSistelWDisplayPB(Integer sistelWDisplayPB) {
+		this.sistelWDisplayPB = sistelWDisplayPB;
+	}
+
+	public Integer getSistelWArrow() {
+		return sistelWArrow;
+	}
+
+	public void setSistelWArrow(Integer sistelWArrow) {
+		this.sistelWArrow = sistelWArrow;
+	}
+
+	public Integer getSistelWArrowFloor() {
+		return sistelWArrowFloor;
+	}
+
+	public void setSistelWArrowFloor(Integer sistelWArrowFloor) {
+		this.sistelWArrowFloor = sistelWArrowFloor;
+	}
+
+	public Integer getSistelWArrowPB() {
+		return sistelWArrowPB;
+	}
+
+	public void setSistelWArrowPB(Integer sistelWArrowPB) {
+		this.sistelWArrowPB = sistelWArrowPB;
+	}
+
+	public Integer getBraile37() {
+		return braile37;
+	}
+
+	public void setBraile37(Integer braile37) {
+		this.braile37 = braile37;
+	}
+
+	public Integer getBraile37Floor() {
+		return braile37Floor;
+	}
+
+	public void setBraile37Floor(Integer braile37Floor) {
+		this.braile37Floor = braile37Floor;
+	}
+
+	public Integer getBraile37PB() {
+		return braile37PB;
+	}
+
+	public void setBraile37PB(Integer braile37pb) {
+		braile37PB = braile37pb;
+	}
+
+	public Integer getAntivandalism() {
+		return antivandalism;
+	}
+
+	public void setAntivandalism(Integer antivandalism) {
+		this.antivandalism = antivandalism;
+	}
+
+	public Integer getAntivandalismFloor() {
+		return antivandalismFloor;
+	}
+
+	public void setAntivandalismFloor(Integer antivandalismFloor) {
+		this.antivandalismFloor = antivandalismFloor;
+	}
+
+	public Integer getAntivandalismPB() {
+		return antivandalismPB;
+	}
+
+	public void setAntivandalismPB(Integer antivandalismPB) {
+		this.antivandalismPB = antivandalismPB;
+	}
+
+	public String getTxtStopSequenceOdd() {
+		return txtStopSequenceOdd;
+	}
+
+	public void setTxtStopSequenceOdd(String txtStopSequenceOdd) {
+		this.txtStopSequenceOdd = txtStopSequenceOdd;
+	}
+
+	public String getTxtBStainlessSteel() {
+		return txtBStainlessSteel;
+	}
+
+	public void setTxtBStainlessSteel(String txtBStainlessSteel) {
+		this.txtBStainlessSteel = txtBStainlessSteel;
+	}
+
+	public String getTxtBHammeredBrown() {
+		return txtBHammeredBrown;
+	}
+
+	public void setTxtBHammeredBrown(String txtBHammeredBrown) {
+		this.txtBHammeredBrown = txtBHammeredBrown;
+	}
+
+	public String getTxtBHammeredGray() {
+		return txtBHammeredGray;
+	}
+
+	public void setTxtBHammeredGray(String txtBHammeredGray) {
+		this.txtBHammeredGray = txtBHammeredGray;
+	}
+
+	public String getTxtStopSequencePar() {
+		return txtStopSequencePar;
+	}
+
+	public void setTxtStopSequencePar(String txtStopSequencePar) {
+		this.txtStopSequencePar = txtStopSequencePar;
+	}
+
+	public String getTxtStopSequenceContinuous() {
+		return txtStopSequenceContinuous;
+	}
+
+	public void setTxtStopSequenceContinuous(String txtStopSequenceContinuous) {
+		this.txtStopSequenceContinuous = txtStopSequenceContinuous;
+	}
+
 	public Budget getBudget() {
 		return budget;
 	}
@@ -394,69 +583,69 @@ public class FrmIndexCtrl {
 
 	@Command
 	public void clickToEnableToDisable(
-			@BindingParam("Component") InputElement element) {
+			@BindingParam("component") InputElement element) {
 		if (element.isDisabled())
 			element.setDisabled(false);
 		else
 			element.setDisabled(true);
 	}
 
-	public void addDatabasicmanytomany(Checkbox chbx, Textbox txt, String str,
+	public void addDatabasicmanytomany(Boolean checked, String txt, String str,
 			String str2, List<Databasicmanytomany> list, DaoBasicData daoBasicData) {
-		if (chbx.isChecked()) {
+		if (checked != null && checked) {
 			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txt.getValue());
+			databasicmanytomany.setDescription(txt);
 			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET",str2,str));
 			databasicmanytomany.setBudget(budget);
 			list.add(databasicmanytomany);
 		}
 	}
 	
-	public void addHallButtonType(Spinner spnTotal, Spinner spn1, Spinner spn2, List<Hallbuttontype> list){
-		if (!spnTotal.getValue().equals(0)) {
+	public void addHallButtonType(Integer total, Integer intFloor, Integer intPB, List<Hallbuttontype> list){
+		if (total != null && !total.equals(0)) {
 			hallbuttontype = new Hallbuttontype();
 			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(spn1.getValue());
-			hallbuttontype.setQuantitybuttonpb(spn2.getValue());
-			hallbuttontype.setTotalbuttons(spnTotal.getValue());
+			hallbuttontype.setQuantitybuttonfloor(intFloor);
+			hallbuttontype.setQuantitybuttonpb(intPB);
+			hallbuttontype.setTotalbuttons(total);
 			list.add(hallbuttontype);
 		}
 	}
 	
-	public void validate(){
-		txtBPartnerName.setConstraint("no empty: No puede estar vacío.");
-		txtBConstruction.setConstraint("no empty: No puede estar vacío.");
-		txtBConstructionNumber.setConstraint("no empty: No puede estar vacío.");
-		txtBSeller.setConstraint("no empty: No puede estar vacío.");
-		txtBConstructionAddress.setConstraint("no empty: No puede estar vacío.");
-		txtBConstructionCity.setConstraint("no empty: No puede estar vacío.");
-		txtBcontactPhone.setConstraint("no empty: No puede estar vacío.");
-		txtBEmail.setConstraint(".+@.+/.[a-z]+: Ingrese una dirección valida");
-		txtBContactName.setConstraint("no empty: No puede estar vacío.");
+	public Validator getNoEmpty() {
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				Component component = (Component)ctx.getBindContext().getValidatorArg("component");
+				String string = (String)ctx.getProperty().getValue();
+				if (string.isEmpty()) {
+					throw new WrongValueException(component, "No puede estar vacio.");
+				}
+			}
+		};
 	}
 
+	@NotifyChange
 	@Command
 	public void save() {
-		validate();
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
 		List<Hallbuttontype> listHallbuttontype = new ArrayList<Hallbuttontype>();
 		DaoBudget daoBudget = new DaoBudget();
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoDataBasicManyToMany daoDataBasicManyToMany = new DaoDataBasicManyToMany();
 		daoBudget.save(budget);
-		addDatabasicmanytomany(chbxBStopSequenceContinuous, txtStopSequenceContinuous, "CONTINUA","STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBStopSequenceOdd, txtStopSequenceOdd, "IMPAR", "STOP SEQUENCE",listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBStopSequencePar, txtStopSequencePar, "PAR", "STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBStainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBStainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBHammeredBrown, txtBHammeredBrown, "MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(chbxBHammeredGray, txtBHammeredGray, "MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stopSequenceContinuous, txtStopSequenceContinuous, "CONTINUA","STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stopSequenceOdd, txtStopSequenceOdd, "IMPAR", "STOP SEQUENCE",listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stopSequencePar, txtStopSequencePar, "PAR", "STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(hammeredBrown, txtBHammeredBrown, "MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(hammeredGray, txtBHammeredGray, "MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
 		for (Databasicmanytomany databasic : listDatabasicmanytomany)
 			daoDataBasicManyToMany.save(databasic);
-		addHallButtonType(spnBSistelWDisplay, spnBSistelWDisplayFloor, spnBSistelWDisplayPB, listHallbuttontype);
-		addHallButtonType(spnBSistelWArrow, spnBSistelWArrowFloor, spnBSistelWArrowPB, listHallbuttontype);
-		addHallButtonType(spnBBraile37, spnBBraile37Floor, spnBBraile37PB, listHallbuttontype);
-		addHallButtonType(spnBAntivandalism, spnBAntivandalismFloor, spnBAntivandalismPB, listHallbuttontype);
+		addHallButtonType(sistelWDisplay, sistelWDisplayFloor, sistelWDisplayPB, listHallbuttontype);
+		addHallButtonType(sistelWArrow, sistelWArrowFloor, sistelWArrowPB, listHallbuttontype);
+		addHallButtonType(braile37, braile37Floor, braile37PB, listHallbuttontype);
+		addHallButtonType(antivandalism, antivandalismFloor, antivandalismPB, listHallbuttontype);
 		Messagebox.show("Guardado");
 	}
 }
