@@ -1,13 +1,9 @@
 package controller;
 
-import general.Validate;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -33,19 +29,42 @@ import database.Hallbuttontype;
 public class FrmIndexCtrl {
 
 	@Wire
-	private Checkbox chbxBStopSequenceContinuous, chbxBStopSequencePar,
-			chbxBStopSequenceOdd, chbxBStainlessSteel, chbxBHammeredGray,
+	private Checkbox chbxBStopSequenceContinuous, 
+			chbxBStopSequencePar,
+			chbxBStopSequenceOdd, 
+			chbxBStainlessSteel, 
+			chbxBHammeredGray,
 			chbxBHammeredBrown;
 	@Wire
-	private Textbox txtStopSequenceContinuous, txtStopSequencePar,
-			txtStopSequenceOdd, txtBStainlessSteel, txtBHammeredGray,
-			txtBHammeredBrown;
+	private Textbox txtStopSequenceContinuous, 
+			txtStopSequencePar,
+			txtStopSequenceOdd, 
+			txtBStainlessSteel, 
+			txtBHammeredGray,
+			txtBHammeredBrown,
+			txtBPartnerName,
+			txtBConstruction,
+			txtBConstructionNumber,
+			txtBSeller,
+			txtBConstructionAddress,
+			txtBConstructionCity,
+			txtBcontactPhone,
+			txtBEmail,
+			txtBContactName;
 	@Wire
-	private Spinner spnBSistelWDisplay, spnBSistelWDisplayPB, spnBSistelWDisplayFloor,
-			spnBSistelWArrow, spnBSistelWArrowPB, spnBSistelWArrowFloor,
-			spnBBraile37, spnBBraile37PB, spnBBraile37Floor,
-			spnBAntivandalism, spnBAntivandalismPB, spnBAntivandalismFloor;
-	
+	private Spinner spnBSistelWDisplay, 
+			spnBSistelWDisplayPB,
+			spnBSistelWDisplayFloor, 
+			spnBSistelWArrow, 
+			spnBSistelWArrowPB,
+			spnBSistelWArrowFloor, 
+			spnBBraile37, 
+			spnBBraile37PB,
+			spnBBraile37Floor, 
+			spnBAntivandalism, 
+			spnBAntivandalismPB,
+			spnBAntivandalismFloor;
+
 	private List<Basicdata> listBType;
 	private List<Basicdata> listElevatorType;
 	private List<Basicdata> listElevatorCapa;
@@ -78,7 +97,6 @@ public class FrmIndexCtrl {
 	private Databasicmanytomany databasicmanytomany;
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
-
 	public Budget getBudget() {
 		return budget;
 	}
@@ -320,8 +338,8 @@ public class FrmIndexCtrl {
 	}
 
 	/**
-	 * Metodo que inicializa la pantalla frmIndex. Se ejecuta antes de
-	 * finalizar la carga del archivo DOM que muestra el navegador.
+	 * Metodo que inicializa la pantalla frmIndex. Se ejecuta antes de finalizar
+	 * la carga del archivo DOM que muestra el navegador.
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
@@ -383,90 +401,62 @@ public class FrmIndexCtrl {
 			element.setDisabled(true);
 	}
 
+	public void addDatabasicmanytomany(Checkbox chbx, Textbox txt, String str,
+			String str2, List<Databasicmanytomany> list, DaoBasicData daoBasicData) {
+		if (chbx.isChecked()) {
+			databasicmanytomany = new Databasicmanytomany();
+			databasicmanytomany.setDescription(txt.getValue());
+			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET",str2,str));
+			databasicmanytomany.setBudget(budget);
+			list.add(databasicmanytomany);
+		}
+	}
+	
+	public void addHallButtonType(Spinner spnTotal, Spinner spn1, Spinner spn2, List<Hallbuttontype> list){
+		if (!spnTotal.getValue().equals(0)) {
+			hallbuttontype = new Hallbuttontype();
+			hallbuttontype.setBudget(budget);
+			hallbuttontype.setQuantitybuttonfloor(spn1.getValue());
+			hallbuttontype.setQuantitybuttonpb(spn2.getValue());
+			hallbuttontype.setTotalbuttons(spnTotal.getValue());
+			list.add(hallbuttontype);
+		}
+	}
+	
+	public void validate(){
+		txtBPartnerName.setConstraint("no empty: No puede estar vacío.");
+		txtBConstruction.setConstraint("no empty: No puede estar vacío.");
+		txtBConstructionNumber.setConstraint("no empty: No puede estar vacío.");
+		txtBSeller.setConstraint("no empty: No puede estar vacío.");
+		txtBConstructionAddress.setConstraint("no empty: No puede estar vacío.");
+		txtBConstructionCity.setConstraint("no empty: No puede estar vacío.");
+		txtBcontactPhone.setConstraint("no empty: No puede estar vacío.");
+		txtBEmail.setConstraint(".+@.+/.[a-z]+: Ingrese una dirección valida");
+		txtBContactName.setConstraint("no empty: No puede estar vacío.");
+	}
+
 	@Command
 	public void save() {
+		validate();
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
 		List<Hallbuttontype> listHallbuttontype = new ArrayList<Hallbuttontype>();
 		DaoBudget daoBudget = new DaoBudget();
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoDataBasicManyToMany daoDataBasicManyToMany = new DaoDataBasicManyToMany();
 		daoBudget.save(budget);
-		if (chbxBStopSequenceContinuous.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtStopSequenceContinuous.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","STOP SEQUENCE","CONTINUA"));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
-		if (chbxBStopSequenceOdd.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtStopSequenceOdd.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","STOP SEQUENCE","IMPAR"));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
-		if (chbxBStopSequencePar.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtStopSequencePar.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","STOP SEQUENCE","PAR"));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
-		if (chbxBStainlessSteel.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtBStainlessSteel.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","DOOR FRAME","ACERO INOX."));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
-		if (chbxBHammeredBrown.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtBHammeredBrown.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","DOOR FRAME","MARTILLADO MARRON"));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
-		if (chbxBHammeredGray.isChecked()){
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txtBHammeredGray.getValue());
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET","DOOR FRAME","MARTILLADO GRIS"));
-			databasicmanytomany.setBudget(budget);
-			listDatabasicmanytomany.add(databasicmanytomany);
-		}
+		addDatabasicmanytomany(chbxBStopSequenceContinuous, txtStopSequenceContinuous, "CONTINUA","STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBStopSequenceOdd, txtStopSequenceOdd, "IMPAR", "STOP SEQUENCE",listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBStopSequencePar, txtStopSequencePar, "PAR", "STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBStainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBStainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBHammeredBrown, txtBHammeredBrown, "MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(chbxBHammeredGray, txtBHammeredGray, "MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
 		for (Databasicmanytomany databasic : listDatabasicmanytomany)
 			daoDataBasicManyToMany.save(databasic);
-		if (!spnBSistelWDisplay.getValue().equals(0)){
-			hallbuttontype = new Hallbuttontype();
-			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(spnBSistelWDisplayFloor.getValue());
-			hallbuttontype.setQuantitybuttonpb(spnBSistelWDisplayPB.getValue());
-			hallbuttontype.setTotalbuttons(spnBSistelWDisplay.getValue());
-			listHallbuttontype.add(hallbuttontype);
-		}
-		if (!spnBSistelWArrow.getValue().equals(0)){
-			hallbuttontype = new Hallbuttontype();
-			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(spnBSistelWArrowFloor.getValue());
-			hallbuttontype.setQuantitybuttonpb(spnBSistelWArrowPB.getValue());
-			hallbuttontype.setTotalbuttons(spnBSistelWArrow.getValue());
-			listHallbuttontype.add(hallbuttontype);
-		}
-		if (!spnBBraile37.getValue().equals(0)){
-			hallbuttontype = new Hallbuttontype();
-			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(spnBBraile37Floor.getValue());
-			hallbuttontype.setQuantitybuttonpb(spnBBraile37PB.getValue());
-			hallbuttontype.setTotalbuttons(spnBBraile37.getValue());
-			listHallbuttontype.add(hallbuttontype);
-		}
-		if (!spnBAntivandalism.getValue().equals(0)){
-			hallbuttontype = new Hallbuttontype();
-			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(spnBAntivandalismFloor.getValue());
-			hallbuttontype.setQuantitybuttonpb(spnBAntivandalismPB.getValue());
-			hallbuttontype.setTotalbuttons(spnBAntivandalism.getValue());
-			listHallbuttontype.add(hallbuttontype);
-		}
+		addHallButtonType(spnBSistelWDisplay, spnBSistelWDisplayFloor, spnBSistelWDisplayPB, listHallbuttontype);
+		addHallButtonType(spnBSistelWArrow, spnBSistelWArrowFloor, spnBSistelWArrowPB, listHallbuttontype);
+		addHallButtonType(spnBBraile37, spnBBraile37Floor, spnBBraile37PB, listHallbuttontype);
+		addHallButtonType(spnBAntivandalism, spnBAntivandalismFloor, spnBAntivandalismPB, listHallbuttontype);
 		Messagebox.show("Guardado");
 	}
 }

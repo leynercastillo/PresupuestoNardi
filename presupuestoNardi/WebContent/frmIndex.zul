@@ -917,7 +917,7 @@
 						<radiogroup id="radBLightCurtain"
 							selectedItem="@bind(vm.budget.lightcurtain)">
 							<radio value="true" label="Si"></radio>
-							<radio false="false" label="No"></radio>
+							<radio value="false" label="No"></radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Limitador de carga:">
