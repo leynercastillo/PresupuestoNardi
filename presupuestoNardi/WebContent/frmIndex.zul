@@ -28,7 +28,7 @@
 					<row>
 						<label sclass="formLabel" value="Cliente:"></label>
 						<textbox id="txtBPartnerName" width="350px"
-							value="@save(vm.budget.partnername, before='save') @validator(vm.noEmpty, component=txtBPartnerName)">
+							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)">
 						</textbox>
 						<label sclass="formLabel" value="Fecha:">
 						</label>
@@ -40,7 +40,7 @@
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
 						<textbox id="txtBConstruction" width="350px"
-							value="@bind(vm.budget.construction) @validator(vm.noEmpty, component=txtBPartnerName)">
+							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)">
 						</textbox>
 						<space></space>
 						<radiogroup id="radBType"
@@ -56,33 +56,34 @@
 					<row>
 						<label sclass="formLabel" value="Nro. Obra:"></label>
 						<textbox id="txtBConstructionNumber"
-							width="350px" value="@bind(vm.budget.constructionnumber)">
+							width="350px"
+							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)">
 						</textbox>
 						<label sclass="formLabel" value="Vendedor:"
 							style="Color: Blue; font-weight:bold; ">
 						</label>
 						<textbox id="txtBSeller" width="230px"
-							value="@bind(vm.budget.seller)">
+							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)">
 						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Dirección:"></label>
 						<textbox id="txtBConstructionAddress"
-							width="350px" value="@bind(vm.budget.constructionaddress)">
+							width="350px" value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)">
 						</textbox>
 						<label sclass="formLabel" value="Ciudad:"></label>
 						<textbox id="txtBConstructionCity" width="230px"
-							value="@bind(vm.budget.constructioncity)">
+							value="@save(vm.budget.constructioncity, before = 'save') @load(vm.budget.constructioncity) @validator(vm.noEmpty, component = txtBConstructionCity)">
 						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Teléfono:"></label>
 						<textbox id="txtBcontactPhone" width="350px"
-							value="@bind(vm.budget.contactphone)">
+							value="@save(vm.budget.contactphone, before = 'save') @load(vm.budget.contactphone) @validator(vm.noEmpty, component = txtBcontactPhone)">
 						</textbox>
 						<label sclass="formLabel" value="Email:"></label>
 						<textbox id="txtBEmail" width="230px"
-							value="@bind(vm.budget.email)">
+							value="@save(vm.budget.email, before = 'save') @load(vm.budget.email) @validator(vm.noEmail, component = txtBEmail)">
 						</textbox>
 					</row>
 					<row>
@@ -90,7 +91,7 @@
 							value="Persona de contacto:">
 						</label>
 						<textbox id="txtBContactName" width="350px"
-							value="@bind(vm.budget.contactname)">
+							value="@save(vm.budget.contactname, before = 'save') @load(vm.budget.contactname) @validator(vm.noEmpty, component = txtBContactName)">
 						</textbox>
 						<label sclass="formLabel"
 							value="Planos de corte:">

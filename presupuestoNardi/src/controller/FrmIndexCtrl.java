@@ -25,6 +25,7 @@ import org.zkoss.zul.impl.InputElement;
 import dao.DaoBasicData;
 import dao.DaoBudget;
 import dao.DaoDataBasicManyToMany;
+import dao.DaoHallbuttontype;
 import database.Basicdata;
 import database.Budget;
 import database.Databasicmanytomany;
@@ -36,7 +37,6 @@ import database.Hallbuttontype;
  */
 public class FrmIndexCtrl {
 
-		
 	private List<Basicdata> listBType;
 	private List<Basicdata> listElevatorType;
 	private List<Basicdata> listElevatorCapa;
@@ -68,7 +68,7 @@ public class FrmIndexCtrl {
 	private List<Basicdata> listMotorTraction;
 	private Boolean stopSequenceContinuous;
 	private Boolean stopSequencePar;
-	private Boolean	stopSequenceOdd;
+	private Boolean stopSequenceOdd;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
@@ -93,7 +93,7 @@ public class FrmIndexCtrl {
 	private Databasicmanytomany databasicmanytomany;
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
-	
+
 	public Boolean getStopSequenceContinuous() {
 		return stopSequenceContinuous;
 	}
@@ -591,17 +591,20 @@ public class FrmIndexCtrl {
 	}
 
 	public void addDatabasicmanytomany(Boolean checked, String txt, String str,
-			String str2, List<Databasicmanytomany> list, DaoBasicData daoBasicData) {
+			String str2, List<Databasicmanytomany> list,
+			DaoBasicData daoBasicData) {
 		if (checked != null && checked) {
 			databasicmanytomany = new Databasicmanytomany();
 			databasicmanytomany.setDescription(txt);
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET",str2,str));
+			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET",
+					str2, str));
 			databasicmanytomany.setBudget(budget);
 			list.add(databasicmanytomany);
 		}
 	}
-	
-	public void addHallButtonType(Integer total, Integer intFloor, Integer intPB, List<Hallbuttontype> list){
+
+	public void addHallButtonType(Integer total, Integer intFloor,
+			Integer intPB, List<Hallbuttontype> list) {
 		if (total != null && !total.equals(0)) {
 			hallbuttontype = new Hallbuttontype();
 			hallbuttontype.setBudget(budget);
@@ -611,41 +614,86 @@ public class FrmIndexCtrl {
 			list.add(hallbuttontype);
 		}
 	}
-	
+
 	public Validator getNoEmpty() {
 		return new AbstractValidator() {
 			@Override
 			public void validate(ValidationContext ctx) {
-				Component component = (Component)ctx.getBindContext().getValidatorArg("component");
-				String string = (String)ctx.getProperty().getValue();
+				Component component = (Component) ctx.getBindContext()
+						.getValidatorArg("component");
+				String string = (String) ctx.getProperty().getValue();
 				if (string.isEmpty()) {
-					throw new WrongValueException(component, "No puede estar vacio.");
+					throw new WrongValueException(component,
+							"Ingrese un dato valido.");
 				}
 			}
 		};
 	}
 
-	@NotifyChange
+	public Validator getNoEmail() {
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				Component component = (Component) ctx.getBindContext()
+						.getValidatorArg("component");
+				String string = (String) ctx.getProperty().getValue();
+				if (string.isEmpty() || !string.matches(".+@.+\\.[a-z]+")) {
+					throw new WrongValueException(component,
+							"Ingrese una direccion de correo valida.");
+				}
+			}
+		};
+	}
+
+	@NotifyChange({"*"})
 	@Command
 	public void save() {
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
 		List<Hallbuttontype> listHallbuttontype = new ArrayList<Hallbuttontype>();
 		DaoBudget daoBudget = new DaoBudget();
 		DaoBasicData daoBasicData = new DaoBasicData();
+		DaoHallbuttontype daoHallbuttontype = new DaoHallbuttontype();
 		DaoDataBasicManyToMany daoDataBasicManyToMany = new DaoDataBasicManyToMany();
-		daoBudget.save(budget);
-		addDatabasicmanytomany(stopSequenceContinuous, txtStopSequenceContinuous, "CONTINUA","STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stopSequenceOdd, txtStopSequenceOdd, "IMPAR", "STOP SEQUENCE",listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stopSequencePar, txtStopSequencePar, "PAR", "STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stainlessSteel, txtBStainlessSteel, "ACERO INOX", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(hammeredBrown, txtBHammeredBrown, "MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(hammeredGray, txtBHammeredGray, "MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany, daoBasicData);
-		for (Databasicmanytomany databasic : listDatabasicmanytomany)
-			daoDataBasicManyToMany.save(databasic);
-		addHallButtonType(sistelWDisplay, sistelWDisplayFloor, sistelWDisplayPB, listHallbuttontype);
-		addHallButtonType(sistelWArrow, sistelWArrowFloor, sistelWArrowPB, listHallbuttontype);
-		addHallButtonType(braile37, braile37Floor, braile37PB, listHallbuttontype);
-		addHallButtonType(antivandalism, antivandalismFloor, antivandalismPB, listHallbuttontype);
-		Messagebox.show("Guardado");
+		if (daoBudget.save(budget)) {
+			Messagebox.show("Fallo 1", "Error", Messagebox.OK, Messagebox.ERROR);
+			return;
+		}
+		addDatabasicmanytomany(stopSequenceContinuous,
+				txtStopSequenceContinuous, "CONTINUA", "STOP SEQUENCE",
+				listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stopSequenceOdd, txtStopSequenceOdd, "IMPAR",
+				"STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stopSequencePar, txtStopSequencePar, "PAR",
+				"STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
+		addDatabasicmanytomany(stainlessSteel, txtBStainlessSteel,
+				"ACERO INOX", "DOOR FRAME", listDatabasicmanytomany,
+				daoBasicData);
+		addDatabasicmanytomany(hammeredBrown, txtBHammeredBrown,
+				"MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany,
+				daoBasicData);
+		addDatabasicmanytomany(hammeredGray, txtBHammeredGray,
+				"MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany,
+				daoBasicData);
+		for (Databasicmanytomany databasic : listDatabasicmanytomany) {
+			if (!daoDataBasicManyToMany.save(databasic)) {
+				Messagebox.show("Fallo 2", "Error", Messagebox.OK,
+						Messagebox.ERROR);
+				return;
+			}
+		}
+		addHallButtonType(sistelWDisplay, sistelWDisplayFloor,
+				sistelWDisplayPB, listHallbuttontype);
+		addHallButtonType(sistelWArrow, sistelWArrowFloor, sistelWArrowPB,
+				listHallbuttontype);
+		addHallButtonType(braile37, braile37Floor, braile37PB,
+				listHallbuttontype);
+		addHallButtonType(antivandalism, antivandalismFloor, antivandalismPB,
+				listHallbuttontype);
+		for (Hallbuttontype hallbuttontype : listHallbuttontype) {
+			if (!daoHallbuttontype.save(hallbuttontype))
+				Messagebox.show("Fallo 3");
+			return;
+		}
+		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK, Messagebox.INFORMATION);
 	}
 }
