@@ -581,6 +581,11 @@ public class FrmIndexCtrl {
 				.listByField("BUDGET", "MOTOR TRACTION");
 	}
 
+	/**
+	 * Metodo que habilita e inhabilita un componente con un click
+	 * 
+	 * @param element
+	 */
 	@Command
 	public void clickToEnableToDisable(
 			@BindingParam("component") InputElement element) {
@@ -615,6 +620,11 @@ public class FrmIndexCtrl {
 		}
 	}
 
+	/**
+	 * Metodo que valida que un componente ZK no este vacio.
+	 * 
+	 * @return {@link Validator}
+	 */
 	public Validator getNoEmpty() {
 		return new AbstractValidator() {
 			@Override
@@ -630,8 +640,21 @@ public class FrmIndexCtrl {
 		};
 	}
 
+	/**
+	 * Metodo que valida que un string sea un Email valido. Solo aplica para
+	 * componentes ZK
+	 * 
+	 * @return {@link Validator}
+	 */
 	public Validator getNoEmail() {
 		return new AbstractValidator() {
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.zkoss.bind.Validator#validate(org.zkoss.bind.ValidationContext
+			 * )
+			 */
 			@Override
 			public void validate(ValidationContext ctx) {
 				Component component = (Component) ctx.getBindContext()
@@ -644,8 +667,13 @@ public class FrmIndexCtrl {
 			}
 		};
 	}
+	
+	@NotifyChange({"budget"})
+	public void cleanForm(){
+		budget = new Budget();
+	}
 
-	@NotifyChange({"*"})
+	@NotifyChange({"budget", "*"})
 	@Command
 	public void save() {
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
@@ -654,8 +682,9 @@ public class FrmIndexCtrl {
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoHallbuttontype daoHallbuttontype = new DaoHallbuttontype();
 		DaoDataBasicManyToMany daoDataBasicManyToMany = new DaoDataBasicManyToMany();
-		if (daoBudget.save(budget)) {
-			Messagebox.show("Fallo 1", "Error", Messagebox.OK, Messagebox.ERROR);
+		if (!daoBudget.save(budget)) {
+			Messagebox.show("Fallo Guardado Budget", "Error", Messagebox.OK,
+					Messagebox.ERROR);
 			return;
 		}
 		addDatabasicmanytomany(stopSequenceContinuous,
@@ -676,8 +705,8 @@ public class FrmIndexCtrl {
 				daoBasicData);
 		for (Databasicmanytomany databasic : listDatabasicmanytomany) {
 			if (!daoDataBasicManyToMany.save(databasic)) {
-				Messagebox.show("Fallo 2", "Error", Messagebox.OK,
-						Messagebox.ERROR);
+				Messagebox.show("Fallo Guardado Databasicmanytomany", "Error",
+						Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
 		}
@@ -691,9 +720,12 @@ public class FrmIndexCtrl {
 				listHallbuttontype);
 		for (Hallbuttontype hallbuttontype : listHallbuttontype) {
 			if (!daoHallbuttontype.save(hallbuttontype))
-				Messagebox.show("Fallo 3");
+				Messagebox.show("Fallo Guardado daoHallbuttontype", "Error",
+						Messagebox.OK, Messagebox.ERROR);
 			return;
 		}
-		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK, Messagebox.INFORMATION);
+		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
+				Messagebox.INFORMATION);
+		cleanForm();
 	}
 }

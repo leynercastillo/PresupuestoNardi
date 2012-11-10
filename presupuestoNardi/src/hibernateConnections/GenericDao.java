@@ -42,10 +42,12 @@ public class GenericDao<Model> {
 			transaction = currentSession().beginTransaction();
 			currentSession().save(model);
 			transaction.commit();
+			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
 			try {
 				transaction.rollback();
+				currentSession().close();
 				return false;
 			} catch (RuntimeException e2) {
 				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
@@ -60,10 +62,12 @@ public class GenericDao<Model> {
 			transaction = currentSession().beginTransaction();
 			currentSession().update(model);
 			transaction.commit();
+			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
 			try {
 				transaction.rollback();
+				currentSession().close();
 				return false;
 			} catch (RuntimeException e2) {
 				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
@@ -78,10 +82,12 @@ public class GenericDao<Model> {
 			transaction = currentSession().beginTransaction();
 			currentSession().delete(model);
 			transaction.commit();
+			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
 			try {
 				transaction.rollback();
+				currentSession().close();
 				return false;
 			} catch (RuntimeException e2) {
 				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
