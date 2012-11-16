@@ -93,6 +93,15 @@ public class FrmIndexCtrl {
 	private Databasicmanytomany databasicmanytomany;
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
+	private int budgetNumber;
+
+	public int getBudgetNumber() {
+		return budgetNumber;
+	}
+
+	public void setBudgetNumber(int budgetNumber) {
+		this.budgetNumber = budgetNumber;
+	}
 
 	public Boolean getStopSequenceContinuous() {
 		return stopSequenceContinuous;
@@ -532,18 +541,28 @@ public class FrmIndexCtrl {
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
+	@NotifyChange({"*"})
 	@Init
 	public void init() {
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
-		int budgetSizes = daoBudget.list(Budget.class).size();
-		if (budgetSizes == 0)
-			budget.setNumber(1);
+		if (daoBudget.list(Budget.class).isEmpty())
+			budgetNumber = 1;
 		else
-			budget.setNumber(daoBudget.list(Budget.class)
-					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
+			budgetNumber = daoBudget.list(Budget.class).get(daoBudget.list(Budget.class).size() - 1).getNumber()+1;;
 		budget.setDate(new Date());
+		budget.setType(true);
+		budget.setPlanec(false);
+		budget.setPlanep(false);
+		budget.setLightcurtain(false);
+		budget.setLoadlimiter(false);
+		budget.setSpeechsynthesizer(false);
+		budget.setGomsystem(false);
+		budget.setIntercom(false);
+		budget.setPhone(false);
+		budget.setAccesssytem(false);
+		budget.setFirefighterkeychain(false);
 		listBType = daoBasicData.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicData.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicData.listByField("BUDGET",
@@ -648,13 +667,6 @@ public class FrmIndexCtrl {
 	 */
 	public Validator getNoEmail() {
 		return new AbstractValidator() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.zkoss.bind.Validator#validate(org.zkoss.bind.ValidationContext
-			 * )
-			 */
 			@Override
 			public void validate(ValidationContext ctx) {
 				Component component = (Component) ctx.getBindContext()
@@ -667,13 +679,48 @@ public class FrmIndexCtrl {
 			}
 		};
 	}
-	
-	@NotifyChange({"budget"})
-	public void cleanForm(){
+
+	@NotifyChange({ "*" })
+	public void cleanForm() {
 		budget = new Budget();
+		stopSequenceContinuous = new Boolean(false);
+		stopSequencePar = new Boolean(false);
+		stopSequenceOdd = new Boolean(false);
+		stainlessSteel = new Boolean(false);
+		hammeredGray = new Boolean(false);
+		hammeredBrown = new Boolean(false);
+		txtStopSequenceContinuous = new String();
+		txtStopSequencePar = new String();
+		txtStopSequenceOdd = new String();
+		txtBStainlessSteel = new String();
+		txtBHammeredBrown = new String();
+		txtBHammeredGray = new String();
+		sistelWDisplay = new Integer(0);
+		sistelWDisplayFloor = new Integer(0);
+		sistelWDisplayPB = new Integer(0);
+		sistelWArrow = new Integer(0);
+		sistelWArrowFloor = new Integer(0);
+		sistelWArrowPB = new Integer(0);
+		braile37 = new Integer(0);
+		braile37Floor = new Integer(0);
+		braile37PB = new Integer(0);
+		antivandalism = new Integer(0);
+		antivandalismFloor = new Integer(0);
+		antivandalismPB = new Integer(0);
+		databasicmanytomany = new Databasicmanytomany();
+		hallbuttontype = new Hallbuttontype();
+		DaoBudget daoBudget = new DaoBudget();
+		budget.setDate(new Date());
+		budget.setType(false);
+		int number = daoBudget.list(Budget.class)
+				.get(daoBudget.list(Budget.class).size() - 1).getNumber()+1;
+		if (number == 0)
+			budgetNumber = 1;
+		else
+			budgetNumber = number;
 	}
 
-	@NotifyChange({"budget", "*"})
+	@NotifyChange({"*"})
 	@Command
 	public void save() {
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
