@@ -22,7 +22,7 @@
 							value="Nro Presupuesto:">
 						</label>
 						<intbox id="intBNumber" width="105px"
-							disabled="true" value="@load(vm.budget.number)">
+							disabled="true" value="@load(vm.budgetNumber)">
 						</intbox>
 					</row>
 					<row>
@@ -44,12 +44,12 @@
 						</textbox>
 						<space></space>
 						<radiogroup id="radBType"
-							selectedItem="@save(vm.budget.type)">
-							<radio value="true" label="Nuevo"
-								checked="true">
+							selectedItem="@save(vm.budget.type) @validator(vm.noEmpty, component = txtBConstructionNumber)">
+							<radio label="Nuevo" value="true"
+								checked="@load(vm.budget.type ? 'true':'false')">
 							</radio>
-							<radio value="false"
-								label="Modernizacion">
+							<radio label="Modernizacion" value="false"
+								checked="@load(vm.budget.type ? 'false':'true')">
 							</radio>
 						</radiogroup>
 					</row>
@@ -69,7 +69,8 @@
 					<row>
 						<label sclass="formLabel" value="Dirección:"></label>
 						<textbox id="txtBConstructionAddress"
-							width="350px" value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)">
+							width="350px"
+							value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)">
 						</textbox>
 						<label sclass="formLabel" value="Ciudad:"></label>
 						<textbox id="txtBConstructionCity" width="230px"
@@ -100,9 +101,11 @@
 							<radiogroup id="radPlaneC"
 								selectedItem="@save(vm.budget.planec)">
 								<radio value="true" label="Si"
-									checked="true">
+									checked="@load(vm.budget.planec ? 'true':'false')">
 								</radio>
-								<radio value="false" label="No"></radio>
+								<radio value="false" label="No"
+									checked="@load(vm.budget.planec ? 'false':'true')">
+								</radio>
 							</radiogroup>
 							<space></space>
 							<space></space>
@@ -111,8 +114,12 @@
 							</label>
 							<radiogroup id="radPlaneP"
 								selectedItem="@save(vm.budget.planep)">
-								<radio label="Si" checked="true"></radio>
-								<radio label="No"></radio>
+								<radio value="true" label="Si"
+									checked="@load(vm.budget.planep ? 'true':'false')">
+								</radio>
+								<radio value="false" label="No"
+									checked="@load(vm.budget.planep ? 'false':'true')">
+								</radio>
 							</radiogroup>
 						</hbox>
 					</row>
@@ -135,7 +142,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBuildingType" model="@load(vm.listBType)"
-							selectedItem="@bind(vm.budget.basicdataByBuildingtype)"
+							selectedItem="@save(vm.budget.basicdataByBuildingtype)"
 							readonly="true">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
@@ -154,7 +161,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
-							selectedItem="@bind(vm.budget.basicdataByElevatortype)"
+							selectedItem="@save(vm.budget.basicdataByElevatortype)"
 							readonly="true">
 							<template name="model" var="elevatorType">
 								<comboitem
@@ -176,7 +183,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
-								selectedItem="@bind(vm.budget.basicdataByElevatorcapacitance)"
+								selectedItem="@save(vm.budget.basicdataByElevatorcapacitance)"
 								readonly="true">
 								<template name="model"
 									var="elevatorCapa">
@@ -193,10 +200,14 @@
 							value="Tracción de Motores">
 						</label>
 						<radiogroup id="radBMotorTraction"
-							selectedItem="@bind(vm.budget.motortraction)">
-							<radio value="1:1" label="1:1"></radio>
+							selectedItem="@save(vm.budget.motortraction)">
+							<radio value="1:1" label="1:1">
+								<!-- checked="@load(vm.budget.motortraction='1:1' ? 'true':'false')" -->
+							</radio>
 							<space></space>
-							<radio value="2:1" label="2:1"></radio>
+							<radio value="2:1" label="2:1">
+								<!-- checked="@load(vm.budget.motortraction='2:1' ? 'true':'false')" -->
+							</radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -205,7 +216,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBMachineType" model="@load(vm.listMachineType)"
-							selectedItem="@bind(vm.budget.basicdataByMachinetype)"
+							selectedItem="@save(vm.budget.basicdataByMachinetype)"
 							readonly="true">
 							<template name="model" var="MachineType">
 								<comboitem
@@ -216,7 +227,7 @@
 						<label sclass="formLabel" value="Embarque:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
-							selectedItem="@bind(vm.budget.basicdataByEmbarque)"
+							selectedItem="@save(vm.budget.basicdataByEmbarque)"
 							readonly="true">
 							<template name="model" var="BEmbarque">
 								<comboitem
@@ -231,7 +242,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
-							selectedItem="@bind(vm.budget.basicdataByElectricitytype)"
+							selectedItem="@save(vm.budget.basicdataByElectricitytype)"
 							readonly="true">
 							<template name="model"
 								var="ElectricityType">
@@ -246,7 +257,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBSpeed" model="@load(vm.listSpeed)"
-								selectedItem="@bind(vm.budget.basicdataBySpeed)"
+								selectedItem="@save(vm.budget.basicdataBySpeed)"
 								readonly="true">
 								<template name="model" var="Speed">
 									<comboitem
@@ -261,7 +272,7 @@
 						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBFrequency" model="@load(vm.listFrequency)"
-							selectedItem="@bind(vm.budget.basicdataByFrequency)"
+							selectedItem="@save(vm.budget.basicdataByFrequency)"
 							readonly="true">
 							<template name="model" var="Frequency">
 								<comboitem
@@ -274,7 +285,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
-							selectedItem="@bind(vm.budget.basicdataByVoltagelighting)"
+							selectedItem="@save(vm.budget.basicdataByVoltagelighting)"
 							readonly="true">
 							<template name="model"
 								var="VoltageLighting">
@@ -290,7 +301,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
-							selectedItem="@bind(vm.budget.basicdataByHourmachine)"
+							selectedItem="@save(vm.budget.basicdataByHourmachine)"
 							readonly="true">
 							<template name="model" var="HourMachine">
 								<comboitem
@@ -329,7 +340,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
-							selectedItem="@bind(vm.budget.basicdataByManeuvertype)"
+							selectedItem="@save(vm.budget.basicdataByManeuvertype)"
 							readonly="true">
 							<template name="model" var="ManeuverType">
 								<comboitem
@@ -460,7 +471,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
-							selectedItem="@bind(vm.budget.basicdataByDesign1357)"
+							selectedItem="@save(vm.budget.basicdataByDesign1357)"
 							readonly="true">
 							<template name="model" var="Design1357">
 								<comboitem
@@ -471,7 +482,7 @@
 						<label sclass="formLabel" value="Diseño P26:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
-							selectedItem="@bind(vm.budget.basicdataByDesignp26)"
+							selectedItem="@save(vm.budget.basicdataByDesignp26)"
 							readonly="true">
 							<template name="model" var="DesignP26">
 								<comboitem
@@ -493,7 +504,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBRoofType" model="@load(vm.listRoofType)"
-							selectedItem="@bind(vm.budget.basicdataByRooftype)"
+							selectedItem="@save(vm.budget.basicdataByRooftype)"
 							readonly="true">
 							<template name="model" var="RoofType">
 								<comboitem
@@ -506,7 +517,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBButtonType" model="@load(vm.listButtonType)"
-							selectedItem="@bind(vm.budget.basicdataByButtontype)"
+							selectedItem="@save(vm.budget.basicdataByButtontype)"
 							readonly="true">
 							<template name="model" var="ButtonType">
 								<comboitem
@@ -526,7 +537,7 @@
 						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBRailing" model="@load(vm.listRailing)"
-							selectedItem="@bind(vm.budget.basicdataByRailing)"
+							selectedItem="@save(vm.budget.basicdataByRailing)"
 							readonly="true">
 							<template name="model" var="Railing">
 								<comboitem
@@ -537,7 +548,7 @@
 						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox value="--Seleccione--" id="cmbBMirror"
 							model="@load(vm.listMirror)"
-							selectedItem="@bind(vm.budget.basicdataByMirror)"
+							selectedItem="@save(vm.budget.basicdataByMirror)"
 							readonly="true">
 							<template name="model" var="Mirror">
 								<comboitem label="@load(Mirror.name)">
@@ -553,7 +564,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBFloorType" model="@load(vm.listFloorType)"
-							selectedItem="@bind(vm.budget.basicdataByFloortype)"
+							selectedItem="@save(vm.budget.basicdataByFloortype)"
 							readonly="true">
 							<template name="model" var="FloorType">
 								<comboitem
@@ -564,7 +575,7 @@
 						<label sclass="formLabel" value="Ventilador:"></label>
 						<combobox value="--Seleccione--" id="cmbBFan"
 							model="@load(vm.listFan)"
-							selectedItem="@bind(vm.budget.basicdataByFan)" readonly="true">
+							selectedItem="@save(vm.budget.basicdataByFan)" readonly="true">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
 								</comboitem>
@@ -598,7 +609,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="spnBDoorType" model="@load(vm.listDoorType)"
-							selectedItem="@bind(vm.budget.basicdataByDoortype)"
+							selectedItem="@save(vm.budget.basicdataByDoortype)"
 							readonly="true">
 							<template name="model" var="DoorType">
 								<comboitem
@@ -613,7 +624,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
-							selectedItem="@bind(vm.budget.basicdataByDoorsystem)"
+							selectedItem="@save(vm.budget.basicdataByDoorsystem)"
 							readonly="true">
 							<template name="model" var="DoorSystem">
 								<comboitem
@@ -627,7 +638,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
-								selectedItem="@bind(vm.budget.basicdataByDoorframetype)"
+								selectedItem="@save(vm.budget.basicdataByDoorframetype)"
 								readonly="true">
 								<template name="model"
 									var="DoorframeType">
@@ -646,7 +657,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
-								selectedItem="@bind(vm.budget.basicdataByFreeadmission)"
+								selectedItem="@save(vm.budget.basicdataByFreeadmission)"
 								readonly="true">
 								<template name="model"
 									var="FreeAdmission">
@@ -663,7 +674,7 @@
 						<hbox>
 							<combobox value="--Seleccione--"
 								id="cmbBHeight" model="@load(vm.listHeight)"
-								selectedItem="@bind(vm.budget.basicdataByHeight)"
+								selectedItem="@save(vm.budget.basicdataByHeight)"
 								readonly="true">
 								<template name="model" var="Height">
 									<comboitem
@@ -720,7 +731,7 @@
 						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox value="--Seleccione--"
 							id="cmbBControlType" model="@load(vm.listControlType)"
-							selectedItem="@bind(vm.budget.basicdataByControltype)"
+							selectedItem="@save(vm.budget.basicdataByControltype)"
 							readonly="true">
 							<template name="model" var="ControlType">
 								<comboitem
@@ -737,7 +748,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
-							selectedItem="@bind(vm.budget.basicdataByBoothbutton)"
+							selectedItem="@save(vm.budget.basicdataByBoothbutton)"
 							readonly="true">
 							<template name="model" var="BoothButton">
 								<comboitem
@@ -755,11 +766,15 @@
 						<hbox>
 							<label sclass="formLabel" value="Lugar:"></label>
 							<radiogroup id="radBHallButton"
-								selectedItem="@bind(vm.budget.hallbutton)">
+								selectedItem="@save(vm.budget.hallbutton)">
 								<space></space>
-								<radio value="Pared" label="Pared"></radio>
+								<radio value="Pared" label="Pared">
+									<!-- checked="@load(vm.budget.hallbutton='Pared' ? 'true':'false')" -->
+								</radio>
 								<space></space>
-								<radio value="Marco" label="Marco"></radio>
+								<radio value="Marco" label="Marco">
+									<!-- checked="@load(vm.budget.hallbutton='Marco' ? 'true':'false')" -->
+								</radio>
 							</radiogroup>
 						</hbox>
 						<space></space>
@@ -875,7 +890,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
-							selectedItem="@bind(vm.budget.basicdataByBoothdisplay)"
+							selectedItem="@save(vm.budget.basicdataByBoothdisplay)"
 							readonly="true">
 							<template name="model" var="BoothDisplay">
 								<comboitem
@@ -892,7 +907,7 @@
 						</label>
 						<combobox value="--Seleccione--"
 							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
-							selectedItem="@bind(vm.budget.basicdataByFloordisplay)"
+							selectedItem="@save(vm.budget.basicdataByFloordisplay)"
 							readonly="true">
 							<template name="model" var="FloorDisplay">
 								<comboitem
@@ -901,21 +916,26 @@
 							</template>
 						</combobox>
 						<radiogroup id="radBDisplayPlaceFloor"
-							selectedItem="@bind(vm.budget.displayplacefloor)">
-							<radio value="PB" label="PB"></radio>
+							selectedItem="@save(vm.budget.displayplacefloor)">
+							<radio value="PB" label="PB">
+								<!-- checked="@load(vm.budget.displayplacefloor='PB' ? 'true':'false')" -->
+							</radio>
 							<space></space>
 							<space></space>
 							<radio value="Todos los pisos"
 								label="Todos los Pisos">
+								<!-- checked="@load(vm.budget.displayplacefloor='Todos los Pisos' ? 'true':'false')" -->
 							</radio>
 						</radiogroup>
 						<hbox>
 							<radio label="Ninguno" value="Ninguno"
 								radiogroup="radBDisplayPlaceFloor">
+								<!-- checked="@load(vm.budget.displayplacefloor='Ninguno' ? 'true':'false')" -->
 							</radio>
 							<space></space>
 							<radio label="Otros" value="Otros"
 								radiogroup="radBDisplayPlaceFloor">
+								<!-- checked="@load(vm.budget.displayplacefloor='Otros' ? 'true':'false')" -->
 							</radio>
 						</hbox>
 					</row>
@@ -931,17 +951,25 @@
 							value="Cortina Luminosa:">
 						</label>
 						<radiogroup id="radBLightCurtain"
-							selectedItem="@bind(vm.budget.lightcurtain)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.lightcurtain)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.lightcurtain? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.lightcurtain? 'false':'true')">
+							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Limitador de carga:">
 						</label>
 						<radiogroup id="radBLoadLimiter"
-							selectedItem="@bind(vm.budget.loadlimiter)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.loadlimiter)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.loadlimiter ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.loadlimiter ? 'false':'true')">
+							</radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -949,17 +977,25 @@
 							value="Sintetizador de Voz:">
 						</label>
 						<radiogroup id="radBSpeechSynthesizer"
-							selectedItem="@bind(vm.budget.speechsynthesizer)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.speechsynthesizer)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.speechsynthesizer ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.speechsynthesizer ? 'false':'true')">
+							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Sistema de GOM en Piso:">
 						</label>
 						<radiogroup id="radBGomSystem"
-							selectedItem="@bind(vm.budget.gomsystem)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.gomsystem)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.gomsystem ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.gomsystem ? 'false':'true')">
+							</radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -967,15 +1003,23 @@
 							value="Intercomunicador:">
 						</label>
 						<radiogroup id="radBIntercom"
-							selectedItem="@bind(vm.budget.intercom)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.intercom)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.intercom ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.intercom ? 'false':'true')">
+							</radio>
 						</radiogroup>
 						<label sclass="formLabel" value="Teléfono:"></label>
 						<radiogroup id="radBPhone"
-							selectedItem="@bind(vm.budget.phone)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.phone)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.phone ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.phone ? 'false':'true')">
+							</radio>
 						</radiogroup>
 					</row>
 					<row>
@@ -983,17 +1027,25 @@
 							value="Sistema de Acceso:" style="font-weight:bold;">
 						</label>
 						<radiogroup id="radBAccessSytem"
-							selectedItem="@bind(vm.budget.accesssytem)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.accesssytem)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.accesssytem ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.accesssytem ? 'false':'true')">
+							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
 							value="Llave de Bombero:">
 						</label>
 						<radiogroup id="radBFirefighterKeychain"
-							selectedItem="@bind(vm.budget.firefighterkeychain)">
-							<radio value="true" label="Si"></radio>
-							<radio value="false" label="No"></radio>
+							selectedItem="@save(vm.budget.firefighterkeychain)">
+							<radio value="true" label="Si"
+								checked="@load(vm.budget.firefighterkeychain ? 'true':'false')">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.budget.firefighterkeychain ? 'false':'true')">
+							</radio>
 						</radiogroup>
 					</row>
 				</rows>
