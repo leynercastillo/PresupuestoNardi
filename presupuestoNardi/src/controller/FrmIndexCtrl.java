@@ -36,7 +36,8 @@ import database.Hallbuttontype;
  * 
  */
 public class FrmIndexCtrl {
-
+	private String seleccione = new String("--Seleccione--");
+	private static final String vacio = new String(" "); 
 	private List<Basicdata> listBType;
 	private List<Basicdata> listElevatorType;
 	private List<Basicdata> listElevatorCapa;
@@ -94,6 +95,14 @@ public class FrmIndexCtrl {
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
 	private int budgetNumber;
+
+	public String getSeleccione() {
+		return seleccione;
+	}
+
+	public void setSeleccione(String seleccione) {
+		this.seleccione = seleccione;
+	}
 
 	public int getBudgetNumber() {
 		return budgetNumber;
@@ -563,6 +572,9 @@ public class FrmIndexCtrl {
 		budget.setPhone(false);
 		budget.setAccesssytem(false);
 		budget.setFirefighterkeychain(false);
+		budget.setMotortraction(vacio);
+		budget.setHallbutton(vacio);
+		budget.setDisplayplacefloor(vacio);
 		listBType = daoBasicData.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicData.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicData.listByField("BUDGET",
@@ -679,7 +691,7 @@ public class FrmIndexCtrl {
 			}
 		};
 	}
-
+/*
 	@NotifyChange({ "*" })
 	public void cleanForm() {
 		budget = new Budget();
@@ -718,7 +730,7 @@ public class FrmIndexCtrl {
 			budgetNumber = 1;
 		else
 			budgetNumber = number;
-	}
+	}*/
 
 	@NotifyChange({"*"})
 	@Command
@@ -773,6 +785,6 @@ public class FrmIndexCtrl {
 		}
 		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
 				Messagebox.INFORMATION);
-		cleanForm();
+		init();
 	}
 }
