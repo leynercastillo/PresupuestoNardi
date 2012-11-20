@@ -1,8 +1,14 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
+	<script type="text/javascript">
+		function addInteger() {
+			zk.Widget.$(jq('$spnBSistelWDisplay')).setValue(zk.Widget.$(jq('$spnBSistelWDisplayFloor')).getValue() + zk.Widget.$(jq('$spnBSistelWDisplayPB')).getValue());
+		}
+	</script>	
 	<style src="/style/style.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.FrmIndexCtrl')">
+		viewModel="@id('vm') @init('controller.FrmIndexCtrl')"
+		xmlns:w="http://www.zkoss.org/2005/zk/client">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
@@ -546,8 +552,8 @@
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Espejo:"></label>
-						<combobox value="@load(vm.seleccione)" id="cmbBMirror"
-							model="@load(vm.listMirror)"
+						<combobox value="@load(vm.seleccione)"
+							id="cmbBMirror" model="@load(vm.listMirror)"
 							selectedItem="@save(vm.budget.basicdataByMirror)"
 							readonly="true">
 							<template name="model" var="Mirror">
@@ -573,8 +579,8 @@
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Ventilador:"></label>
-						<combobox value="@load(vm.seleccione)" id="cmbBFan"
-							model="@load(vm.listFan)"
+						<combobox value="@load(vm.seleccione)"
+							id="cmbBFan" model="@load(vm.listFan)"
 							selectedItem="@save(vm.budget.basicdataByFan)" readonly="true">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
@@ -782,8 +788,8 @@
 					<row spans="2">
 						<hbox>
 							<spinner id="spnBSistelWDisplay"
-								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplay)">
+								width="60px" constraint="min 0" value="@bind(vm.sistelWDisplay)"
+								disabled="true">
 							</spinner>
 							<label sclass="formLabel"
 								value="Sistel con Display">
@@ -794,7 +800,8 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayPB)">
+								value="@bind(vm.sistelWDisplayPB)"
+								w:onChanging="addInteger()">
 							</spinner>
 						</hbox>
 						<hbox>
@@ -802,14 +809,15 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayFloor)">
+								w:onChanging="addInteger()">
 							</spinner>
 						</hbox>
 					</row>
 					<row spans="2">
 						<hbox>
 							<spinner id="spnBSistelWArrow" width="60px"
-								constraint="min 0" value="@bind(vm.sistelWArrow)">
+								constraint="min 0" value="@bind(vm.sistelWArrow)"
+								disabled="true">
 							</spinner>
 							<label sclass="formLabel"
 								value="Sistel con Flecha">
@@ -835,7 +843,7 @@
 					<row spans="2">
 						<hbox>
 							<spinner id="spnBBraile37" width="60px"
-								constraint="min 0" value="@bind(vm.braile37)">
+								constraint="min 0" value="@bind(vm.braile37)" disabled="true">
 							</spinner>
 							<label sclass="formLabel"
 								value="Chapa de Acero con Boton Acero Plastico con Nomenclatura y Braille de 37mm">
@@ -860,7 +868,8 @@
 					<row spans="2">
 						<hbox>
 							<spinner id="spnBAntivandalism" width="60px"
-								constraint="min 0" value="@bind(vm.antivandalism)">
+								constraint="min 0" value="@bind(vm.antivandalism)"
+								disabled="true">
 							</spinner>
 							<label sclass="formLabel"
 								value="Chapa de Acero con Boton Anti-Vandálico De 30mm">

@@ -610,6 +610,14 @@ public class FrmIndexCtrl {
 		listFloorDisplay = daoBasicData.listByField("BUDGET", "FLOOR DISPLAY");
 		listMotorTraction = daoBasicData
 				.listByField("BUDGET", "MOTOR TRACTION");
+		sistelWDisplayPB = new Integer(0);
+		sistelWDisplayFloor = new Integer(0);
+	}
+
+	@NotifyChange({"sistelWDisplay","sistelWDisplayPB","sistelWDisplayFloor"})
+	@Command
+	public void addInteger(){
+		sistelWDisplay = sistelWDisplayPB + sistelWDisplayFloor;
 	}
 
 	/**
@@ -691,46 +699,6 @@ public class FrmIndexCtrl {
 			}
 		};
 	}
-/*
-	@NotifyChange({ "*" })
-	public void cleanForm() {
-		budget = new Budget();
-		stopSequenceContinuous = new Boolean(false);
-		stopSequencePar = new Boolean(false);
-		stopSequenceOdd = new Boolean(false);
-		stainlessSteel = new Boolean(false);
-		hammeredGray = new Boolean(false);
-		hammeredBrown = new Boolean(false);
-		txtStopSequenceContinuous = new String();
-		txtStopSequencePar = new String();
-		txtStopSequenceOdd = new String();
-		txtBStainlessSteel = new String();
-		txtBHammeredBrown = new String();
-		txtBHammeredGray = new String();
-		sistelWDisplay = new Integer(0);
-		sistelWDisplayFloor = new Integer(0);
-		sistelWDisplayPB = new Integer(0);
-		sistelWArrow = new Integer(0);
-		sistelWArrowFloor = new Integer(0);
-		sistelWArrowPB = new Integer(0);
-		braile37 = new Integer(0);
-		braile37Floor = new Integer(0);
-		braile37PB = new Integer(0);
-		antivandalism = new Integer(0);
-		antivandalismFloor = new Integer(0);
-		antivandalismPB = new Integer(0);
-		databasicmanytomany = new Databasicmanytomany();
-		hallbuttontype = new Hallbuttontype();
-		DaoBudget daoBudget = new DaoBudget();
-		budget.setDate(new Date());
-		budget.setType(false);
-		int number = daoBudget.list(Budget.class)
-				.get(daoBudget.list(Budget.class).size() - 1).getNumber()+1;
-		if (number == 0)
-			budgetNumber = 1;
-		else
-			budgetNumber = number;
-	}*/
 
 	@NotifyChange({"*"})
 	@Command
