@@ -7,14 +7,21 @@ import java.util.List;
 import org.hibernate.annotations.Parameter;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.InputEvent;
+import org.zkoss.zk.ui.select.Selectors;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Checkbox;
@@ -613,12 +620,21 @@ public class FrmIndexCtrl {
 		sistelWDisplayPB = new Integer(0);
 		sistelWDisplayFloor = new Integer(0);
 	}
-
-	@NotifyChange({"sistelWDisplay","sistelWDisplayPB","sistelWDisplayFloor"})
+	
+	@AfterCompose
+    public void afterCompose(@ContextParam(ContextType.VIEW) Component view){
+        Selectors.wireEventListeners(view, this);
+    }
+ 
+    @Listen("onChanging=#spnBSistelWDisplayPB")
+    public void submit(InputEvent event){
+        Messagebox.show(event.getValue());
+    }
+/*
 	@Command
-	public void addInteger(){
-		sistelWDisplay = sistelWDisplayPB + sistelWDisplayFloor;
-	}
+	public void updateSpn(@BindingParam("val") InputEvent event, @ContextParam){
+		Messagebox.show(event.getValue()+" lo impreso");
+	}*/
 
 	/**
 	 * Metodo que habilita e inhabilita un componente con un click

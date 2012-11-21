@@ -1,14 +1,8 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<script type="text/javascript">
-		function addInteger() {
-			zk.Widget.$(jq('$spnBSistelWDisplay')).setValue(zk.Widget.$(jq('$spnBSistelWDisplayFloor')).getValue() + zk.Widget.$(jq('$spnBSistelWDisplayPB')).getValue());
-		}
-	</script>	
 	<style src="/style/style.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.FrmIndexCtrl')"
-		xmlns:w="http://www.zkoss.org/2005/zk/client">
+		viewModel="@id('vm') @init('controller.FrmIndexCtrl')">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
@@ -800,8 +794,7 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayPB)"
-								w:onChanging="addInteger()">
+								value="@bind(vm.sistelWDisplayPB)">
 							</spinner>
 						</hbox>
 						<hbox>
@@ -809,7 +802,7 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
 								width="60px" constraint="min 0"
-								w:onChanging="addInteger()">
+								value="@bind(vm.sistelWDisplayFloor)">
 							</spinner>
 						</hbox>
 					</row>
