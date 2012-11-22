@@ -43,8 +43,10 @@ import database.Hallbuttontype;
  * 
  */
 public class FrmIndexCtrl {
+
 	private String seleccione = new String("--Seleccione--");
-	private static final String vacio = new String(" "); 
+	private static final String vacio = new String(" ");
+
 	private List<Basicdata> listBType;
 	private List<Basicdata> listElevatorType;
 	private List<Basicdata> listElevatorCapa;
@@ -86,16 +88,12 @@ public class FrmIndexCtrl {
 	private String txtBStainlessSteel;
 	private String txtBHammeredBrown;
 	private String txtBHammeredGray;
-	private Integer sistelWDisplay;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
-	private Integer sistelWArrow;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
-	private Integer braile37;
 	private Integer braile37Floor;
 	private Integer braile37PB;
-	private Integer antivandalism;
 	private Integer antivandalismFloor;
 	private Integer antivandalismPB;
 	private Databasicmanytomany databasicmanytomany;
@@ -167,14 +165,6 @@ public class FrmIndexCtrl {
 		this.hammeredBrown = hammeredBrown;
 	}
 
-	public Integer getSistelWDisplay() {
-		return sistelWDisplay;
-	}
-
-	public void setSistelWDisplay(Integer sistelWDisplay) {
-		this.sistelWDisplay = sistelWDisplay;
-	}
-
 	public Integer getSistelWDisplayFloor() {
 		return sistelWDisplayFloor;
 	}
@@ -189,14 +179,6 @@ public class FrmIndexCtrl {
 
 	public void setSistelWDisplayPB(Integer sistelWDisplayPB) {
 		this.sistelWDisplayPB = sistelWDisplayPB;
-	}
-
-	public Integer getSistelWArrow() {
-		return sistelWArrow;
-	}
-
-	public void setSistelWArrow(Integer sistelWArrow) {
-		this.sistelWArrow = sistelWArrow;
 	}
 
 	public Integer getSistelWArrowFloor() {
@@ -215,14 +197,6 @@ public class FrmIndexCtrl {
 		this.sistelWArrowPB = sistelWArrowPB;
 	}
 
-	public Integer getBraile37() {
-		return braile37;
-	}
-
-	public void setBraile37(Integer braile37) {
-		this.braile37 = braile37;
-	}
-
 	public Integer getBraile37Floor() {
 		return braile37Floor;
 	}
@@ -237,14 +211,6 @@ public class FrmIndexCtrl {
 
 	public void setBraile37PB(Integer braile37pb) {
 		braile37PB = braile37pb;
-	}
-
-	public Integer getAntivandalism() {
-		return antivandalism;
-	}
-
-	public void setAntivandalism(Integer antivandalism) {
-		this.antivandalism = antivandalism;
 	}
 
 	public Integer getAntivandalismFloor() {
@@ -579,6 +545,13 @@ public class FrmIndexCtrl {
 		budget.setPhone(false);
 		budget.setAccesssytem(false);
 		budget.setFirefighterkeychain(false);
+		budget.setDesignspecial(false);
+		stopSequenceContinuous = false;
+		stopSequencePar = false;
+		stopSequenceOdd = false;
+		stainlessSteel = false;
+		hammeredGray = false;
+		hammeredBrown = false;
 		budget.setMotortraction(vacio);
 		budget.setHallbutton(vacio);
 		budget.setDisplayplacefloor(vacio);
@@ -619,22 +592,13 @@ public class FrmIndexCtrl {
 				.listByField("BUDGET", "MOTOR TRACTION");
 		sistelWDisplayPB = new Integer(0);
 		sistelWDisplayFloor = new Integer(0);
+		sistelWArrowPB = new Integer(0);
+		sistelWArrowFloor = new Integer(0);
+		braile37PB = new Integer(0);
+		braile37Floor = new Integer(0);
+		antivandalismPB = new Integer(0);
+		antivandalismFloor = new Integer(0);
 	}
-	
-	@AfterCompose
-    public void afterCompose(@ContextParam(ContextType.VIEW) Component view){
-        Selectors.wireEventListeners(view, this);
-    }
- 
-    @Listen("onChanging=#spnBSistelWDisplayPB")
-    public void submit(InputEvent event){
-        Messagebox.show(event.getValue());
-    }
-/*
-	@Command
-	public void updateSpn(@BindingParam("val") InputEvent event, @ContextParam){
-		Messagebox.show(event.getValue()+" lo impreso");
-	}*/
 
 	/**
 	 * Metodo que habilita e inhabilita un componente con un click
@@ -753,13 +717,13 @@ public class FrmIndexCtrl {
 				return;
 			}
 		}
-		addHallButtonType(sistelWDisplay, sistelWDisplayFloor,
+		addHallButtonType(sistelWDisplayFloor + sistelWDisplayPB, sistelWDisplayFloor,
 				sistelWDisplayPB, listHallbuttontype);
-		addHallButtonType(sistelWArrow, sistelWArrowFloor, sistelWArrowPB,
+		addHallButtonType(sistelWArrowFloor + sistelWArrowPB, sistelWArrowFloor, sistelWArrowPB,
 				listHallbuttontype);
-		addHallButtonType(braile37, braile37Floor, braile37PB,
+		addHallButtonType(braile37Floor + braile37PB, braile37Floor, braile37PB,
 				listHallbuttontype);
-		addHallButtonType(antivandalism, antivandalismFloor, antivandalismPB,
+		addHallButtonType(antivandalismFloor + antivandalismPB, antivandalismFloor, antivandalismPB,
 				listHallbuttontype);
 		for (Hallbuttontype hallbuttontype : listHallbuttontype) {
 			if (!daoHallbuttontype.save(hallbuttontype))
