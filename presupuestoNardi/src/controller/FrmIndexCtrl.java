@@ -600,20 +600,6 @@ public class FrmIndexCtrl {
 		antivandalismFloor = new Integer(0);
 	}
 
-	/**
-	 * Metodo que habilita e inhabilita un componente con un click
-	 * 
-	 * @param element
-	 */
-	@Command
-	public void clickToEnableToDisable(
-			@BindingParam("component") InputElement element) {
-		if (element.isDisabled())
-			element.setDisabled(false);
-		else
-			element.setDisabled(true);
-	}
-
 	public void addDatabasicmanytomany(Boolean checked, String txt, String str,
 			String str2, List<Databasicmanytomany> list,
 			DaoBasicData daoBasicData) {
