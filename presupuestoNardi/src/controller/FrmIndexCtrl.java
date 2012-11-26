@@ -4,30 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.annotations.Parameter;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.InputEvent;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Listen;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Spinner;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicData;
 import dao.DaoBudget;
@@ -523,7 +508,7 @@ public class FrmIndexCtrl {
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
-	@NotifyChange({"*"})
+	@NotifyChange({ "*" })
 	@Init
 	public void init() {
 		DaoBasicData daoBasicData = new DaoBasicData();
@@ -532,7 +517,9 @@ public class FrmIndexCtrl {
 		if (daoBudget.list(Budget.class).isEmpty())
 			budgetNumber = 1;
 		else
-			budgetNumber = daoBudget.list(Budget.class).get(daoBudget.list(Budget.class).size() - 1).getNumber()+1;;
+			budgetNumber = daoBudget.list(Budget.class)
+					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1;
+		;
 		budget.setDate(new Date());
 		budget.setType(true);
 		budget.setPlanec(false);
@@ -546,15 +533,22 @@ public class FrmIndexCtrl {
 		budget.setAccesssytem(false);
 		budget.setFirefighterkeychain(false);
 		budget.setDesignspecial(false);
+		budget.setMotortraction(vacio);
+		budget.setHallbutton(vacio);
+		budget.setDisplayplacefloor(vacio);
+		budget.setBasicdataByStatus(daoBasicData.findByName("BUDGET", "STATUS", "A"));
+		txtStopSequenceContinuous = new String();
+		txtStopSequencePar = new String();
+		txtStopSequenceOdd = new String();
+		txtBStainlessSteel = new String();
+		txtBHammeredGray = new String();
+		txtBHammeredBrown = new String();
 		stopSequenceContinuous = false;
 		stopSequencePar = false;
 		stopSequenceOdd = false;
 		stainlessSteel = false;
 		hammeredGray = false;
 		hammeredBrown = false;
-		budget.setMotortraction(vacio);
-		budget.setHallbutton(vacio);
-		budget.setDisplayplacefloor(vacio);
 		listBType = daoBasicData.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicData.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicData.listByField("BUDGET",
@@ -614,11 +608,14 @@ public class FrmIndexCtrl {
 	}
 
 	public void addHallButtonType(Integer total, Integer intFloor,
-			Integer intPB, List<Hallbuttontype> list) {
+			Integer intPB, List<Hallbuttontype> list,
+			DaoBasicData daoBasicData, String name) {
 		if (total != null && !total.equals(0)) {
 			hallbuttontype = new Hallbuttontype();
 			hallbuttontype.setBudget(budget);
 			hallbuttontype.setQuantitybuttonfloor(intFloor);
+			hallbuttontype.setBasicdata(daoBasicData.findByName("BUDGET",
+					"HALL BUTTON TYPE", name));
 			hallbuttontype.setQuantitybuttonpb(intPB);
 			hallbuttontype.setTotalbuttons(total);
 			list.add(hallbuttontype);
@@ -658,7 +655,7 @@ public class FrmIndexCtrl {
 				Component component = (Component) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = (String) ctx.getProperty().getValue();
-				if (string.isEmpty() || !string.matches(".+@.+\\.[a-z]+")) {
+				if (string.isEmpty() || !string.matches(".+@.+\\.[a-zA-Z]+")) {
 					throw new WrongValueException(component,
 							"Ingrese una direccion de correo valida.");
 				}
@@ -666,7 +663,7 @@ public class FrmIndexCtrl {
 		};
 	}
 
-	@NotifyChange({"*"})
+	@NotifyChange({ "*" })
 	@Command
 	public void save() {
 		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
@@ -688,7 +685,7 @@ public class FrmIndexCtrl {
 		addDatabasicmanytomany(stopSequencePar, txtStopSequencePar, "PAR",
 				"STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
 		addDatabasicmanytomany(stainlessSteel, txtBStainlessSteel,
-				"ACERO INOX", "DOOR FRAME", listDatabasicmanytomany,
+				"ACERO INOX.", "DOOR FRAME", listDatabasicmanytomany,
 				daoBasicData);
 		addDatabasicmanytomany(hammeredBrown, txtBHammeredBrown,
 				"MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany,
@@ -703,19 +700,24 @@ public class FrmIndexCtrl {
 				return;
 			}
 		}
-		addHallButtonType(sistelWDisplayFloor + sistelWDisplayPB, sistelWDisplayFloor,
-				sistelWDisplayPB, listHallbuttontype);
-		addHallButtonType(sistelWArrowFloor + sistelWArrowPB, sistelWArrowFloor, sistelWArrowPB,
-				listHallbuttontype);
-		addHallButtonType(braile37Floor + braile37PB, braile37Floor, braile37PB,
-				listHallbuttontype);
-		addHallButtonType(antivandalismFloor + antivandalismPB, antivandalismFloor, antivandalismPB,
-				listHallbuttontype);
+		addHallButtonType(sistelWDisplayFloor + sistelWDisplayPB,
+				sistelWDisplayFloor, sistelWDisplayPB, listHallbuttontype,
+				daoBasicData, "SISTEL CON DISPLAY");
+		addHallButtonType(sistelWArrowFloor + sistelWArrowPB,
+				sistelWArrowFloor, sistelWArrowPB, listHallbuttontype,
+				daoBasicData, "SISTEL CON FLECHA");
+		addHallButtonType(braile37Floor + braile37PB, braile37Floor,
+				braile37PB, listHallbuttontype, daoBasicData,
+				"CHAPA DE ACERO CON BOTON ACERO PLASTICO CON NOMENCLATURA Y BRAILLE DE 37mm");
+		addHallButtonType(antivandalismFloor + antivandalismPB,
+				antivandalismFloor, antivandalismPB, listHallbuttontype,
+				daoBasicData, "CHAPA DE ACERO CON BOTON ANTI-VANDALICO DE 30mm");
 		for (Hallbuttontype hallbuttontype : listHallbuttontype) {
-			if (!daoHallbuttontype.save(hallbuttontype))
+			if (!daoHallbuttontype.save(hallbuttontype)){
 				Messagebox.show("Fallo Guardado daoHallbuttontype", "Error",
 						Messagebox.OK, Messagebox.ERROR);
-			return;
+				return;
+			}
 		}
 		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
 				Messagebox.INFORMATION);

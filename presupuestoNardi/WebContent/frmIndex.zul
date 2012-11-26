@@ -362,7 +362,8 @@
 											checked="@bind(vm.stopSequencePar)">
 										</checkbox>
 										<textbox id="txtStopSequencePar"
-											width="150px" disabled="@load(vm.stopSequencePar ? 'false':'true')"
+											width="150px"
+											disabled="@load(vm.stopSequencePar ? 'false':'true')"
 											value="@bind(vm.txtStopSequencePar)">
 										</textbox>
 									</row>
@@ -391,7 +392,8 @@
 											checked="@bind(vm.stopSequenceOdd)">
 										</checkbox>
 										<textbox id="txtStopSequenceOdd"
-											width="150px" disabled="@load(vm.stopSequenceOdd ? 'false':'true')"
+											width="150px"
+											disabled="@load(vm.stopSequenceOdd ? 'false':'true')"
 											value="@bind(vm.txtStopSequenceOdd)">
 										</textbox>
 									</row>
@@ -525,7 +527,8 @@
 						<label value="Comentario:" sclass="formLabel"></label>
 						<cell rowspan="3">
 							<textbox id="txtBDesignSpecialComment"
-								rows="5" cols="35" disabled="@load(vm.budget.designspecial ? 'false':'true')"
+								rows="5" cols="35"
+								disabled="@load(vm.budget.designspecial ? 'false':'true')"
 								value="@bind(vm.budget.designspecialcomment)">
 							</textbox>
 						</cell>
@@ -684,27 +687,27 @@
 					</row>
 					<row>
 						<checkbox id="chbxBStainlessSteel"
-							label="Acero Inox."
-							checked="@bind(vm.stainlessSteel)">
+							label="Acero Inox." checked="@bind(vm.stainlessSteel)">
 						</checkbox>
 						<textbox id="txtBStainlessSteel"
-							disabled="@load(vm.stainlessSteel ? 'false': 'true')">
+							disabled="@load(vm.stainlessSteel ? 'false': 'true')"
+							value="@bind(vm.txtBStainlessSteel)">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
 							<checkbox id="chbxBHammeredGray"
-								label="Gris"
-								checked="@bind(vm.hammeredGray)">
+								label="Gris" checked="@bind(vm.hammeredGray)">
 							</checkbox>
 							<textbox id="txtBHammeredGray"
-								disabled="@load(vm.hammeredGray ? 'false':'true')">
+								disabled="@load(vm.hammeredGray ? 'false':'true')"
+								value="@bind(vm.txtBHammeredGray)">
 							</textbox>
 							<checkbox id="chbxBHammeredBrown"
-								label="Marrón"
-								checked="@bind(vm.hammeredBrown)">
+								label="Marrón" checked="@bind(vm.hammeredBrown)">
 							</checkbox>
 							<textbox id="txtBHammeredBrown"
-								disabled="@load(vm.hammeredBrown ? 'false':'true')">
+								disabled="@load(vm.hammeredBrown ? 'false':'true')"
+								value="@bind(vm.txtBHammeredBrown)">
 							</textbox>
 						</hbox>
 					</row>
@@ -890,13 +893,13 @@
 						</combobox>
 						<radiogroup id="radBDisplayPlaceFloor"
 							selectedItem="@save(vm.budget.displayplacefloor)">
-							<radio value="PB" label="PB"
+							<radio label="PB" value="PB"
 								checked="@load(vm.budget.displayplacefloor eq 'PB' ? 'true':'false')">
 							</radio>
 							<space></space>
-							<radio value="Todos los pisos"
-								label="Todos los Pisos"
-								checked="@load(vm.budget.displayplacefloor eq 'Todos los Pisos' ? 'true':'false')">
+							<radio label="Todos los Pisos"
+								value="Todos los pisos"
+								checked="@load(vm.budget.displayplacefloor eq 'Todos los pisos' ? 'true':'false')">
 							</radio>
 						</radiogroup>
 						<hbox>
