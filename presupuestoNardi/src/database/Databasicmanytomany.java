@@ -1,13 +1,16 @@
 package database;
 
-// Generated 07/11/2012 04:41:55 PM by Hibernate Tools 3.6.0
+// Generated 24/11/2012 10:42:56 PM by Hibernate Tools 3.6.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -41,6 +44,8 @@ public class Databasicmanytomany implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="dbmanytomany_seq")
+	@SequenceGenerator(name="dbmanytomany_seq", sequenceName="databasicmanytomany_iddatabasicmanytomany_seq")
 	@Column(name = "iddatabasicmanytomany", unique = true, nullable = false)
 	public int getIddatabasicmanytomany() {
 		return this.iddatabasicmanytomany;

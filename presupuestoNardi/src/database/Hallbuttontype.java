@@ -1,13 +1,16 @@
 package database;
 
-// Generated 07/11/2012 04:41:55 PM by Hibernate Tools 3.6.0
+// Generated 24/11/2012 10:42:56 PM by Hibernate Tools 3.6.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +42,8 @@ public class Hallbuttontype implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="hallbuttontype_seq")
+	@SequenceGenerator(name="hallbuttontype_seq", sequenceName="hallbuttontype_idhallbuttontype_seq")
 	@Column(name = "idhallbuttontype", unique = true, nullable = false)
 	public int getIdhallbuttontype() {
 		return this.idhallbuttontype;
