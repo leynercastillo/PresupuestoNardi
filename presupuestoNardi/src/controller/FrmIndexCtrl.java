@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +11,12 @@ import java.util.List;
 
 import javax.swing.JApplet;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -19,6 +24,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.Transaction;
+import org.omg.CORBA.Request;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.Command;
@@ -739,4 +745,12 @@ public class FrmIndexCtrl {
 		init();
 	}
 	
+	@Command
+	public void report() throws ClassNotFoundException, SQLException, JRException{
+		Class.forName("org.postgresql.Driver");
+		Connection conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/nardi","postgres", "leyner.18654277");
+		JasperReport jasperReport = JasperCompileManager.compileReport("test1.jrxml");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conexion);
+		JasperExportManager.exportReportToPdfFile(jasperPrint, "/report/zkbook.pdf");
+	}
 }

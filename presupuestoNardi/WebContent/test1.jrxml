@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test1" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d978080f-fff6-4b0d-9dc1-535668a8996f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     budget."number" AS budget_number,
+     budget."partnername" AS budget_partnername,
+     budget."seller" AS budget_seller,
+     budget."constructioncity" AS budget_constructioncity,
+     budget."email" AS budget_email,
+     budget."date" AS budget_date
+FROM
+     "public"."budget" budget]]>
+	</queryString>
+	<field name="budget_number" class="java.lang.Integer"/>
+	<field name="budget_partnername" class="java.lang.String"/>
+	<field name="budget_seller" class="java.lang.String"/>
+	<field name="budget_constructioncity" class="java.lang.String"/>
+	<field name="budget_email" class="java.lang.String"/>
+	<field name="budget_date" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="65611ed7-9233-4f36-a9b6-2655c5add48b" x="0" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[budget_number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bca5c5f4-6d0e-46b1-86bb-989dd1e6b659" x="100" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[budget_partnername]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ff87c2eb-5d76-4307-9d8e-ecbf84b5df84" x="200" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[budget_seller]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d7d2aa98-d4de-4e71-84df-e45ce31ddb29" x="300" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[budget_constructioncity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="58689a0e-6a14-4a01-b1d2-d2b9f2fa0c94" x="400" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[budget_email]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="378fc065-b094-46f2-a696-a7356d0c8e75" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{budget_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c1b4b6f-d5e5-4da6-8da6-531fc2f4b0b0" x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{budget_partnername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b06aaf6e-41a2-40dd-a8fb-55f92bccf25a" x="200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{budget_seller}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d7564e14-9104-475e-9106-656d0858f6b4" x="300" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{budget_constructioncity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3bf026d2-0a7d-41ba-9134-fafe634a5e4f" x="400" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{budget_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
