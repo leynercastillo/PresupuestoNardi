@@ -18,18 +18,45 @@
 					<row>
 						<space></space>
 						<space></space>
+						<space></space>
+						<div align="right">
+							<button label="Buscar" mold="trendy"
+								onClick="@command('search')">
+							</button>
+						</div>
+					</row>
+					<row>
+						<space></space>
+						<space></space>
 						<label sclass="formLabel"
 							value="Nro Presupuesto:">
 						</label>
-						<intbox id="intBNumber" width="105px"
-							disabled="true" value="@load(vm.budgetNumber)">
-						</intbox>
+						<combobox id="intBNumber" width="110px"
+							buttonVisible="false"
+							disabled="@load(vm.disabledAll ? 'false':'true')"
+							value="@load(vm.budgetNumber)" autocomplete="true"
+							onFocus="@command('loadBudgetField', field='number')"
+							model="@load(vm.listBNumber)" autodrop="true">
+							<template name="model" var="Budget">
+								<comboitem
+									label="@load(Budget.number)">
+								</comboitem>
+							</template>
+						</combobox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Cliente:"></label>
-						<textbox id="txtBPartnerName" width="350px"
-							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)">
-						</textbox>
+						<combobox id="txtBPartnerName" width="355px"
+							buttonVisible="false"
+							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)"
+							onFocus="@command('loadBudgetField', field='partnername')" autocomplete="true"
+							model="@load(vm.listBNumber)" autodrop="true">
+							<template name="model" var="Budget">
+								<comboitem
+									label="@load(Budget.partnername)">
+								</comboitem>
+							</template>
+						</combobox>
 						<label sclass="formLabel" value="Fecha:">
 						</label>
 						<datebox id="dtbBDate"
@@ -39,52 +66,81 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
-						<textbox id="txtBConstruction" width="350px"
-							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)">
-						</textbox>
+						<combobox id="txtBConstruction" width="355px"
+							buttonVisible="false"
+							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)"
+							onFocus="@command('loadBudgetField', field='construction')" autocomplete="true"
+							model="@load(vm.listBNumber)" autodrop="true">
+							<template name="model" var="Budget">
+								<comboitem
+									label="@load(Budget.construction)">
+								</comboitem>
+							</template>
+						</combobox>
 						<space></space>
 						<radiogroup id="radBType"
 							selectedItem="@save(vm.budget.type) @validator(vm.noEmpty, component = txtBConstructionNumber)">
 							<radio label="Nuevo" value="true"
-								checked="@load(vm.budget.type ? 'true':'false')">
+								checked="@load(vm.budget.type ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio label="Modernizacion" value="false"
-								checked="@load(vm.budget.type ? 'false':'true')">
+								checked="@load(vm.budget.type ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Nro. Obra:"></label>
-						<textbox id="txtBConstructionNumber"
-							width="350px"
-							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)">
-						</textbox>
+						<combobox id="txtBConstructionNumber"
+							buttonVisible="false" width="355px"
+							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)"
+							onFocus="@command('loadBudgetField', field='constructionnumber')" autocomplete="true"
+							model="@load(vm.listBNumber)" autodrop="true">
+							<template name="model" var="Budget">
+								<comboitem
+									label="@load(Budget.constructionnumber)">
+								</comboitem>
+							</template>
+						</combobox>
 						<label sclass="formLabel" value="Vendedor:"
 							style="Color: Blue; font-weight:bold; ">
 						</label>
-						<textbox id="txtBSeller" width="230px"
-							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)">
-						</textbox>
+						<combobox id="txtBSeller" width="235px"
+							buttonVisible="false"
+							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)"
+							onFocus="@command('loadBudgetField', field='seller')" autocomplete="true"
+							model="@load(vm.listBNumber)" autodrop="true">
+							<template name="model" var="Budget">
+								<comboitem
+									label="@load(Budget.seller)">
+								</comboitem>
+							</template>
+						</combobox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Dirección:"></label>
 						<textbox id="txtBConstructionAddress"
 							width="350px"
-							value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)">
+							value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)"
+							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel" value="Ciudad:"></label>
 						<textbox id="txtBConstructionCity" width="230px"
-							value="@save(vm.budget.constructioncity, before = 'save') @load(vm.budget.constructioncity) @validator(vm.noEmpty, component = txtBConstructionCity)">
+							value="@save(vm.budget.constructioncity, before = 'save') @load(vm.budget.constructioncity) @validator(vm.noEmpty, component = txtBConstructionCity)"
+							disabled="@load(vm.disabledAll)">
 						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Teléfono:"></label>
 						<textbox id="txtBcontactPhone" width="350px"
-							value="@save(vm.budget.contactphone, before = 'save') @load(vm.budget.contactphone) @validator(vm.noEmpty, component = txtBcontactPhone)">
+							value="@save(vm.budget.contactphone, before = 'save') @load(vm.budget.contactphone) @validator(vm.noEmpty, component = txtBcontactPhone)"
+							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel" value="Email:"></label>
 						<textbox id="txtBEmail" width="230px"
-							value="@save(vm.budget.email, before = 'save') @load(vm.budget.email) @validator(vm.noEmail, component = txtBEmail)">
+							value="@save(vm.budget.email, before = 'save') @load(vm.budget.email) @validator(vm.noEmail, component = txtBEmail)"
+							disabled="@load(vm.disabledAll)">
 						</textbox>
 					</row>
 					<row>
@@ -92,7 +148,8 @@
 							value="Persona de contacto:">
 						</label>
 						<textbox id="txtBContactName" width="350px"
-							value="@save(vm.budget.contactname, before = 'save') @load(vm.budget.contactname) @validator(vm.noEmpty, component = txtBContactName)">
+							value="@save(vm.budget.contactname, before = 'save') @load(vm.budget.contactname) @validator(vm.noEmpty, component = txtBContactName)"
+							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel"
 							value="Planos de corte:">
@@ -101,10 +158,12 @@
 							<radiogroup id="radPlaneC"
 								selectedItem="@save(vm.budget.planec)">
 								<radio value="true" label="Si"
-									checked="@load(vm.budget.planec ? 'true':'false')">
+									checked="@load(vm.budget.planec ? 'true':'false')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 								<radio value="false" label="No"
-									checked="@load(vm.budget.planec ? 'false':'true')">
+									checked="@load(vm.budget.planec ? 'false':'true')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 							</radiogroup>
 							<space></space>
@@ -115,10 +174,12 @@
 							<radiogroup id="radPlaneP"
 								selectedItem="@save(vm.budget.planep)">
 								<radio value="true" label="Si"
-									checked="@load(vm.budget.planep ? 'true':'false')">
+									checked="@load(vm.budget.planep ? 'true':'false')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 								<radio value="false" label="No"
-									checked="@load(vm.budget.planep ? 'false':'true')">
+									checked="@load(vm.budget.planep ? 'false':'true')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 							</radiogroup>
 						</hbox>
@@ -143,7 +204,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBuildingType" model="@load(vm.listBType)"
 							selectedItem="@save(vm.budget.basicdataByBuildingtype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
 							</template>
@@ -152,7 +213,8 @@
 							value="Cantidad de ascensores:">
 						</label>
 						<spinner id="spnBElevatorQuantity"
-							constraint="min 0" value="@bind(vm.budget.elevatorquantity)">
+							constraint="min 0" value="@bind(vm.budget.elevatorquantity)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 					</row>
 					<row>
@@ -162,7 +224,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
 							selectedItem="@save(vm.budget.basicdataByElevatortype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="elevatorType">
 								<comboitem
 									label="@load(elevatorType.name)">
@@ -173,7 +235,8 @@
 							value="Cantidad de motores:">
 						</label>
 						<spinner id="cmbBMotorQuantity"
-							constraint="min 0" value="@bind(vm.budget.motorquantity)">
+							constraint="min 0" value="@bind(vm.budget.motorquantity)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 					</row>
 					<row>
@@ -184,7 +247,7 @@
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
 								selectedItem="@save(vm.budget.basicdataByElevatorcapacitance)"
-								readonly="true">
+								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="elevatorCapa">
 									<comboitem
@@ -193,7 +256,7 @@
 								</template>
 							</combobox>
 							<button id="btnNewElevatorCapacitance"
-								label="Nuevo">
+								label="Nuevo" disabled="@load(vm.disabledAll)">
 							</button>
 						</hbox>
 						<label sclass="formLabel"
@@ -202,11 +265,13 @@
 						<radiogroup id="radBMotorTraction"
 							selectedItem="@save(vm.budget.motortraction)">
 							<radio value="1:1" label="1:1"
-								checked="@load(vm.budget.motortraction eq '1:1' ? 'true':'false')">
+								checked="@load(vm.budget.motortraction eq '1:1' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<space></space>
 							<radio value="2:1" label="2:1"
-								checked="@load(vm.budget.motortraction eq '2:1' ? 'true':'false')">
+								checked="@load(vm.budget.motortraction eq '2:1' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
@@ -217,7 +282,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBMachineType" model="@load(vm.listMachineType)"
 							selectedItem="@save(vm.budget.basicdataByMachinetype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="MachineType">
 								<comboitem
 									label="@load(MachineType.name)">
@@ -228,7 +293,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
 							selectedItem="@save(vm.budget.basicdataByEmbarque)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BEmbarque">
 								<comboitem
 									label="@load(BEmbarque.name)">
@@ -243,7 +308,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
 							selectedItem="@save(vm.budget.basicdataByElectricitytype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="ElectricityType">
 								<comboitem
@@ -257,15 +322,17 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBSpeed" model="@load(vm.listSpeed)"
-								selectedItem="@save(vm.budget.basicdataBySpeed)"
-								readonly="true">
+								selectedItem="@save(vm.budget.basicdataBySpeed)" readonly="true"
+								disabled="@load(vm.disabledAll)">
 								<template name="model" var="Speed">
 									<comboitem
 										label="@load(Speed.name)">
 									</comboitem>
 								</template>
 							</combobox>
-							<button id="btnNewSpeed" label="Nuevo"></button>
+							<button id="btnNewSpeed" label="Nuevo"
+								disabled="@load(vm.disabledAll)">
+							</button>
 						</hbox>
 					</row>
 					<row>
@@ -273,7 +340,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFrequency" model="@load(vm.listFrequency)"
 							selectedItem="@save(vm.budget.basicdataByFrequency)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Frequency">
 								<comboitem
 									label="@load(Frequency.name)">
@@ -286,7 +353,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
 							selectedItem="@save(vm.budget.basicdataByVoltagelighting)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="VoltageLighting">
 								<comboitem
@@ -302,7 +369,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
 							selectedItem="@save(vm.budget.basicdataByHourmachine)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="HourMachine">
 								<comboitem
 									label="@load(HourMachine.name)">
@@ -322,7 +389,8 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequenceContinuous" label="Continua"
-											checked="@bind(vm.stopSequenceContinuous)">
+											checked="@bind(vm.stopSequenceContinuous)"
+											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox
 											id="txtStopSequenceContinuous" width="150px"
@@ -341,7 +409,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
 							selectedItem="@save(vm.budget.basicdataByManeuvertype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ManeuverType">
 								<comboitem
 									label="@load(ManeuverType.name)">
@@ -359,7 +427,8 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequencePar" label="Par"
-											checked="@bind(vm.stopSequencePar)">
+											checked="@bind(vm.stopSequencePar)"
+											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox id="txtStopSequencePar"
 											width="150px"
@@ -376,7 +445,8 @@
 							value="Número de Paradas:">
 						</label>
 						<spinner id="spnBStopNumber" constraint="min 0"
-							value="@bind(vm.budget.stopnumber)">
+							value="@bind(vm.budget.stopnumber)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 						<space></space>
 						<hbox>
@@ -389,7 +459,8 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequenceOdd" label="Impar"
-											checked="@bind(vm.stopSequenceOdd)">
+											checked="@bind(vm.stopSequenceOdd)"
+											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox id="txtStopSequenceOdd"
 											width="150px"
@@ -419,13 +490,14 @@
 							value="Recorrido(M)">
 						</label>
 						<spinner id="spnBTour" constraint="min 0"
-							value="@bind(vm.budget.tour)">
+							value="@bind(vm.budget.tour)" disabled="@load(vm.disabledAll)">
 						</spinner>
 						<label sclass="formLabel"
 							value="Sobre Recorrido (mm)">
 						</label>
 						<spinner id="spnBOnTour" constraint="min 0"
-							value="@bind(vm.budget.ontour)">
+							value="@bind(vm.budget.ontour)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 					</row>
 					<row>
@@ -433,11 +505,13 @@
 							value="Ancho de Hueco (mm)">
 						</label>
 						<spinner id="spnBWidthHole" constraint="min 0"
-							value="@bind(vm.budget.widthhole)">
+							value="@bind(vm.budget.widthhole)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 						<label sclass="formLabel" value="Fosa (mm)"></label>
 						<spinner id="spnBFossa" constraint="min 0"
-							value="@bind(vm.budget.fossa)">
+							value="@bind(vm.budget.fossa)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 					</row>
 					<row>
@@ -445,7 +519,8 @@
 							value="Fondo de Hueco (mm)">
 						</label>
 						<spinner id="spnBBottomHole" constraint="min 0"
-							value="@bind(vm.budget.bottomhole)">
+							value="@bind(vm.budget.bottomhole)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 						<space></space>
 						<space></space>
@@ -472,7 +547,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
 							selectedItem="@save(vm.budget.basicdataByDesign1357)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Design1357">
 								<comboitem
 									label="@load(Design1357.name)">
@@ -483,7 +558,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
 							selectedItem="@save(vm.budget.basicdataByDesignp26)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DesignP26">
 								<comboitem
 									label="@load(DesignP26.name)">
@@ -494,7 +569,8 @@
 							value="Diseño Especial:">
 						</label>
 						<checkbox id="chbxBDesignSpecial"
-							checked="@bind(vm.budget.designspecial)">
+							checked="@bind(vm.budget.designspecial)"
+							disabled="@load(vm.disabledAll)">
 						</checkbox>
 					</row>
 					<row>
@@ -504,7 +580,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBRoofType" model="@load(vm.listRoofType)"
 							selectedItem="@save(vm.budget.basicdataByRooftype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="RoofType">
 								<comboitem
 									label="@load(RoofType.name)">
@@ -517,7 +593,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBButtonType" model="@load(vm.listButtonType)"
 							selectedItem="@save(vm.budget.basicdataByButtontype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ButtonType">
 								<comboitem
 									label="@load(ButtonType.name)">
@@ -538,7 +614,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBRailing" model="@load(vm.listRailing)"
 							selectedItem="@save(vm.budget.basicdataByRailing)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Railing">
 								<comboitem
 									label="@load(Railing.name)">
@@ -548,8 +624,8 @@
 						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBMirror" model="@load(vm.listMirror)"
-							selectedItem="@save(vm.budget.basicdataByMirror)"
-							readonly="true">
+							selectedItem="@save(vm.budget.basicdataByMirror)" readonly="true"
+							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Mirror">
 								<comboitem label="@load(Mirror.name)">
 								</comboitem>
@@ -565,7 +641,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFloorType" model="@load(vm.listFloorType)"
 							selectedItem="@save(vm.budget.basicdataByFloortype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorType">
 								<comboitem
 									label="@load(FloorType.name)">
@@ -575,7 +651,8 @@
 						<label sclass="formLabel" value="Ventilador:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFan" model="@load(vm.listFan)"
-							selectedItem="@save(vm.budget.basicdataByFan)" readonly="true">
+							selectedItem="@save(vm.budget.basicdataByFan)" readonly="true"
+							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
 								</comboitem>
@@ -602,7 +679,8 @@
 							value="Número de Puertas:">
 						</label>
 						<spinner id="spnBDoorOfNumber"
-							constraint="min 0" value="@bind(vm.budget.doorofnumber)">
+							constraint="min 0" value="@bind(vm.budget.doorofnumber)"
+							disabled="@load(vm.disabledAll)">
 						</spinner>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
@@ -610,7 +688,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="spnBDoorType" model="@load(vm.listDoorType)"
 							selectedItem="@save(vm.budget.basicdataByDoortype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorType">
 								<comboitem
 									label="@load(DoorType.name)">
@@ -625,7 +703,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
 							selectedItem="@save(vm.budget.basicdataByDoorsystem)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorSystem">
 								<comboitem
 									label="@load(DoorSystem.name)">
@@ -639,7 +717,7 @@
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
 								selectedItem="@save(vm.budget.basicdataByDoorframetype)"
-								readonly="true">
+								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="DoorframeType">
 									<comboitem
@@ -658,7 +736,7 @@
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
 								selectedItem="@save(vm.budget.basicdataByFreeadmission)"
-								readonly="true">
+								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="FreeAdmission">
 									<comboitem
@@ -675,7 +753,7 @@
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBHeight" model="@load(vm.listHeight)"
 								selectedItem="@save(vm.budget.basicdataByHeight)"
-								readonly="true">
+								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model" var="Height">
 									<comboitem
 										label="@load(Height.name)">
@@ -687,7 +765,8 @@
 					</row>
 					<row>
 						<checkbox id="chbxBStainlessSteel"
-							label="Acero Inox." checked="@bind(vm.stainlessSteel)">
+							label="Acero Inox." checked="@bind(vm.stainlessSteel)"
+							disabled="@load(vm.disabledAll)">
 						</checkbox>
 						<textbox id="txtBStainlessSteel"
 							disabled="@load(vm.stainlessSteel ? 'false': 'true')"
@@ -696,14 +775,16 @@
 						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
 							<checkbox id="chbxBHammeredGray"
-								label="Gris" checked="@bind(vm.hammeredGray)">
+								label="Gris" checked="@bind(vm.hammeredGray)"
+								disabled="@load(vm.disabledAll)">
 							</checkbox>
 							<textbox id="txtBHammeredGray"
 								disabled="@load(vm.hammeredGray ? 'false':'true')"
 								value="@bind(vm.txtBHammeredGray)">
 							</textbox>
 							<checkbox id="chbxBHammeredBrown"
-								label="Marrón" checked="@bind(vm.hammeredBrown)">
+								label="Marrón" checked="@bind(vm.hammeredBrown)"
+								disabled="@load(vm.disabledAll)">
 							</checkbox>
 							<textbox id="txtBHammeredBrown"
 								disabled="@load(vm.hammeredBrown ? 'false':'true')"
@@ -729,7 +810,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBControlType" model="@load(vm.listControlType)"
 							selectedItem="@save(vm.budget.basicdataByControltype)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ControlType">
 								<comboitem
 									label="@load(ControlType.name)">
@@ -746,7 +827,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
 							selectedItem="@save(vm.budget.basicdataByBoothbutton)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothButton">
 								<comboitem
 									label="@load(BoothButton.name)">
@@ -766,11 +847,13 @@
 								selectedItem="@save(vm.budget.hallbutton)">
 								<space></space>
 								<radio value="Pared" label="Pared"
-									checked="@load(vm.budget.hallbutton eq 'Pared' ? 'true':'false')">
+									checked="@load(vm.budget.hallbutton eq 'Pared' ? 'true':'false')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 								<space></space>
 								<radio value="Marco" label="Marco"
-									checked="@load(vm.budget.hallbutton eq 'Marco' ? 'true':'false')">
+									checked="@load(vm.budget.hallbutton eq 'Marco' ? 'true':'false')"
+									disabled="@load(vm.disabledAll)">
 								</radio>
 							</radiogroup>
 						</hbox>
@@ -785,7 +868,8 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayPB)">
+								value="@bind(vm.sistelWDisplayPB)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 						<hbox>
@@ -793,7 +877,8 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayFloor)">
+								value="@bind(vm.sistelWDisplayFloor)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 					</row>
@@ -805,8 +890,8 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBSistelWArrowPB"
-								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWArrowPB)">
+								width="60px" constraint="min 0" value="@bind(vm.sistelWArrowPB)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 						<hbox>
@@ -814,7 +899,8 @@
 							<space></space>
 							<spinner id="spnBSistelWArrowFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWArrowFloor)">
+								value="@bind(vm.sistelWArrowFloor)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 					</row>
@@ -826,7 +912,8 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBBraile37PB" width="60px"
-								constraint="min 0" value="@bind(vm.braile37PB)">
+								constraint="min 0" value="@bind(vm.braile37PB)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 							<space></space>
 						</hbox>
@@ -834,7 +921,8 @@
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBBraile37Floor" width="60px"
-								constraint="min 0" value="@bind(vm.braile37Floor)">
+								constraint="min 0" value="@bind(vm.braile37Floor)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 					</row>
@@ -847,7 +935,8 @@
 							<space></space>
 							<spinner id="spnBAntivandalismPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.antivandalismPB)">
+								value="@bind(vm.antivandalismPB)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 							<space></space>
 						</hbox>
@@ -856,7 +945,8 @@
 							<space></space>
 							<spinner id="spnBAntivandalismFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.antivandalismFloor)">
+								value="@bind(vm.antivandalismFloor)"
+								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
 					</row>
@@ -867,7 +957,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
 							selectedItem="@save(vm.budget.basicdataByBoothdisplay)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothDisplay">
 								<comboitem
 									label="@load(BoothDisplay.name)">
@@ -884,7 +974,7 @@
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
 							selectedItem="@save(vm.budget.basicdataByFloordisplay)"
-							readonly="true">
+							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorDisplay">
 								<comboitem
 									label="@load(FloorDisplay.name)">
@@ -894,23 +984,27 @@
 						<radiogroup id="radBDisplayPlaceFloor"
 							selectedItem="@save(vm.budget.displayplacefloor)">
 							<radio label="PB" value="PB"
-								checked="@load(vm.budget.displayplacefloor eq 'PB' ? 'true':'false')">
+								checked="@load(vm.budget.displayplacefloor eq 'PB' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<space></space>
 							<radio label="Todos los Pisos"
 								value="Todos los pisos"
-								checked="@load(vm.budget.displayplacefloor eq 'Todos los pisos' ? 'true':'false')">
+								checked="@load(vm.budget.displayplacefloor eq 'Todos los pisos' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 						<hbox>
 							<radio label="Ninguno" value="Ninguno"
 								radiogroup="radBDisplayPlaceFloor"
-								checked="@load(vm.budget.displayplacefloor eq 'Ninguno' ? 'true':'false')">
+								checked="@load(vm.budget.displayplacefloor eq 'Ninguno' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<space></space>
 							<radio label="Otros" value="Otros"
 								radiogroup="radBDisplayPlaceFloor"
-								checked="@load(vm.budget.displayplacefloor eq 'Otros' ? 'true':'false')">
+								checked="@load(vm.budget.displayplacefloor eq 'Otros' ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</hbox>
 					</row>
@@ -928,10 +1022,12 @@
 						<radiogroup id="radBLightCurtain"
 							selectedItem="@save(vm.budget.lightcurtain)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.lightcurtain? 'true':'false')">
+								checked="@load(vm.budget.lightcurtain? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.lightcurtain? 'false':'true')">
+								checked="@load(vm.budget.lightcurtain? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -940,10 +1036,12 @@
 						<radiogroup id="radBLoadLimiter"
 							selectedItem="@save(vm.budget.loadlimiter)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.loadlimiter ? 'true':'false')">
+								checked="@load(vm.budget.loadlimiter ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.loadlimiter ? 'false':'true')">
+								checked="@load(vm.budget.loadlimiter ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
@@ -954,10 +1052,12 @@
 						<radiogroup id="radBSpeechSynthesizer"
 							selectedItem="@save(vm.budget.speechsynthesizer)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.speechsynthesizer ? 'true':'false')">
+								checked="@load(vm.budget.speechsynthesizer ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.speechsynthesizer ? 'false':'true')">
+								checked="@load(vm.budget.speechsynthesizer ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -966,10 +1066,12 @@
 						<radiogroup id="radBGomSystem"
 							selectedItem="@save(vm.budget.gomsystem)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.gomsystem ? 'true':'false')">
+								checked="@load(vm.budget.gomsystem ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.gomsystem ? 'false':'true')">
+								checked="@load(vm.budget.gomsystem ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
@@ -980,20 +1082,24 @@
 						<radiogroup id="radBIntercom"
 							selectedItem="@save(vm.budget.intercom)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.intercom ? 'true':'false')">
+								checked="@load(vm.budget.intercom ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.intercom ? 'false':'true')">
+								checked="@load(vm.budget.intercom ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel" value="Teléfono:"></label>
 						<radiogroup id="radBPhone"
 							selectedItem="@save(vm.budget.phone)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.phone ? 'true':'false')">
+								checked="@load(vm.budget.phone ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.phone ? 'false':'true')">
+								checked="@load(vm.budget.phone ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
@@ -1004,10 +1110,12 @@
 						<radiogroup id="radBAccessSytem"
 							selectedItem="@save(vm.budget.accesssytem)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.accesssytem ? 'true':'false')">
+								checked="@load(vm.budget.accesssytem ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.accesssytem ? 'false':'true')">
+								checked="@load(vm.budget.accesssytem ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -1016,10 +1124,12 @@
 						<radiogroup id="radBFirefighterKeychain"
 							selectedItem="@save(vm.budget.firefighterkeychain)">
 							<radio value="true" label="Si"
-								checked="@load(vm.budget.firefighterkeychain ? 'true':'false')">
+								checked="@load(vm.budget.firefighterkeychain ? 'true':'false')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 							<radio value="false" label="No"
-								checked="@load(vm.budget.firefighterkeychain ? 'false':'true')">
+								checked="@load(vm.budget.firefighterkeychain ? 'false':'true')"
+								disabled="@load(vm.disabledAll)">
 							</radio>
 						</radiogroup>
 					</row>
@@ -1039,7 +1149,8 @@
 						</label>
 						<cell colspan="2">
 							<textbox id="txtBComment" rows="5"
-								cols="150" value="@bind(vm.budget.comment)">
+								cols="150" value="@bind(vm.budget.comment)"
+								disabled="@load(vm.disabledAll)">
 							</textbox>
 						</cell>
 					</row>
@@ -1050,17 +1161,16 @@
 			<rows>
 				<row>
 					<hbox>
-						<button id="btnSend" label="Enviar"
-							sclass="formLabel">
-						</button>
 						<button id="btnSave" label="Guardar"
-							sclass="formLabel" onClick="@command('save')">
+							sclass="formLabel" onClick="@command('save')"
+							disabled="@load(vm.disabledAll)">
 						</button>
 						<button id="btnPrint" label="Imprimir"
-							sclass="formLabel" onClick="@command('report')">
+							sclass="formLabel" onClick="@command('report')"
+							disabled="@load(vm.disabledAll)">
 						</button>
 						<button id="btnCancel" label="Cancelar"
-							sclass="formLabel">
+							sclass="formLabel" onClick="@command('restartForm')">
 						</button>
 					</hbox>
 				</row>
