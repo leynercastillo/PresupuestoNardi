@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,24 +7,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JApplet;
-
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.hibernate.Transaction;
-import org.omg.CORBA.Request;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -82,12 +72,14 @@ public class FrmIndexCtrl {
 	private List<Basicdata> listBoothDisplay;
 	private List<Basicdata> listFloorDisplay;
 	private List<Basicdata> listMotorTraction;
+	private List<Budget> listBNumber;
 	private Boolean stopSequenceContinuous;
 	private Boolean stopSequencePar;
 	private Boolean stopSequenceOdd;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
+	private Boolean disabledAll;
 	private String txtStopSequenceContinuous;
 	private String txtStopSequencePar;
 	private String txtStopSequenceOdd;
@@ -105,7 +97,31 @@ public class FrmIndexCtrl {
 	private Databasicmanytomany databasicmanytomany;
 	private Hallbuttontype hallbuttontype;
 	private Budget budget;
-	private int budgetNumber;
+	private Integer budgetNumber;
+
+	public List<Budget> getListBNumber() {
+		return listBNumber;
+	}
+
+	public void setListBNumber(List<Budget> listBNumber) {
+		this.listBNumber = listBNumber;
+	}
+
+	public Integer getBudgetNumber() {
+		return budgetNumber;
+	}
+
+	public void setBudgetNumber(Integer budgetNumber) {
+		this.budgetNumber = budgetNumber;
+	}
+
+	public Boolean getDisabledAll() {
+		return disabledAll;
+	}
+
+	public void setDisabledAll(Boolean disabledAll) {
+		this.disabledAll = disabledAll;
+	}
 
 	public String getSeleccione() {
 		return seleccione;
@@ -113,14 +129,6 @@ public class FrmIndexCtrl {
 
 	public void setSeleccione(String seleccione) {
 		this.seleccione = seleccione;
-	}
-
-	public int getBudgetNumber() {
-		return budgetNumber;
-	}
-
-	public void setBudgetNumber(int budgetNumber) {
-		this.budgetNumber = budgetNumber;
 	}
 
 	public Boolean getStopSequenceContinuous() {
@@ -529,9 +537,15 @@ public class FrmIndexCtrl {
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
-	@NotifyChange({ "*" })
+	
 	@Init
-	public void init() {
+	public void init(){
+		restartForm();
+	}
+	
+	@NotifyChange({"*","budgetNumber"})
+	@Command
+	public void restartForm() {
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
@@ -540,7 +554,7 @@ public class FrmIndexCtrl {
 		else
 			budgetNumber = daoBudget.list(Budget.class)
 					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1;
-		;
+		disabledAll = false;
 		budget.setDate(new Date());
 		budget.setType(true);
 		budget.setPlanec(false);
@@ -605,6 +619,7 @@ public class FrmIndexCtrl {
 		listFloorDisplay = daoBasicData.listByField("BUDGET", "FLOOR DISPLAY");
 		listMotorTraction = daoBasicData
 				.listByField("BUDGET", "MOTOR TRACTION");
+		listBNumber = new ArrayList<Budget>();
 		sistelWDisplayPB = new Integer(0);
 		sistelWDisplayFloor = new Integer(0);
 		sistelWArrowPB = new Integer(0);
@@ -742,15 +757,21 @@ public class FrmIndexCtrl {
 		}
 		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
 				Messagebox.INFORMATION);
-		init();
+		restartForm();
 	}
 	
+	@NotifyChange({"disabledAll","budgetNumber","budget"})
 	@Command
-	public void report() throws ClassNotFoundException, SQLException, JRException{
-		Class.forName("org.postgresql.Driver");
-		Connection conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/nardi","postgres", "leyner.18654277");
-		JasperReport jasperReport = JasperCompileManager.compileReport("test1.jrxml");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conexion);
-		JasperExportManager.exportReportToPdfFile(jasperPrint, "/report/zkbook.pdf");
+	public void search(){
+		restartForm();
+		budgetNumber = null;
+		disabledAll = true;
+	}
+
+	@NotifyChange({"listBNumber"})
+	@Command
+	public void loadBudgetField(@BindingParam("field") String field){
+		DaoBudget daoBudget = new DaoBudget();
+		listBNumber = daoBudget.listOrderBudgetNumber(field);
 	}
 }
