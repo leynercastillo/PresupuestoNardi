@@ -19,4 +19,18 @@ public class DaoBudget extends GenericDao<Budget> {
 		criteria.addOrder(Order.asc(field));
 		return criteria.list();
 	}
+	
+	public List<Budget> findByString(String field, String value) {
+		Transaction transaction = currentSession().beginTransaction();
+		Criteria criteria = currentSession().createCriteria(Budget.class);
+		criteria.add(Restrictions.eq(field, value));
+		return criteria.list();
+	}
+
+	public List<Budget> findByInteger(String field, Integer value) {
+		Transaction transaction = currentSession().beginTransaction();
+		Criteria criteria = currentSession().createCriteria(Budget.class);
+		criteria.add(Restrictions.eq(field, value));
+		return criteria.list();
+	}
 }
