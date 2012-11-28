@@ -40,7 +40,7 @@ public class GenericDao<Model> {
 		Transaction transaction = null;
 		try {
 			transaction = currentSession().beginTransaction();
-			currentSession().save(model);
+			currentSession().saveOrUpdate(model);
 			transaction.commit();
 			currentSession().close();
 			return true;
@@ -55,27 +55,7 @@ public class GenericDao<Model> {
 			}
 		}
 	}
-	
-	public Boolean update(Model model){
-		Transaction transaction = null;
-		try {
-			transaction = currentSession().beginTransaction();
-			currentSession().update(model);
-			transaction.commit();
-			currentSession().close();
-			return true;
-		} catch (HibernateException e) {
-			try {
-				transaction.rollback();
-				currentSession().close();
-				return false;
-			} catch (RuntimeException e2) {
-				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
-				return false;
-			}
-		}
-	}
-	
+
 	public Boolean delete(Model model){
 		Transaction transaction = null;
 		try {
