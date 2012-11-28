@@ -1,18 +1,8 @@
 package controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -27,12 +17,8 @@ import org.zkoss.zk.ui.WrongValueException;
 
 import dao.DaoBasicData;
 import dao.DaoBudget;
-import dao.DaoDataBasicManyToMany;
-import dao.DaoHallbuttontype;
 import database.Basicdata;
 import database.Budget;
-import database.Databasicmanytomany;
-import database.Hallbuttontype;
 
 /**
  * @author leyner.castillo
@@ -94,8 +80,6 @@ public class FrmIndexCtrl {
 	private Integer braile37PB;
 	private Integer antivandalismFloor;
 	private Integer antivandalismPB;
-	private Databasicmanytomany databasicmanytomany;
-	private Hallbuttontype hallbuttontype;
 	private Budget budget;
 	private Integer budgetNumber;
 
@@ -571,19 +555,13 @@ public class FrmIndexCtrl {
 		budget.setMotortraction(vacio);
 		budget.setHallbutton(vacio);
 		budget.setDisplayplacefloor(vacio);
-		budget.setBasicdataByStatus(daoBasicData.findByName("BUDGET", "STATUS", "A"));
-		txtStopSequenceContinuous = new String();
-		txtStopSequencePar = new String();
-		txtStopSequenceOdd = new String();
-		txtBStainlessSteel = new String();
-		txtBHammeredGray = new String();
-		txtBHammeredBrown = new String();
-		stopSequenceContinuous = false;
-		stopSequencePar = false;
-		stopSequenceOdd = false;
-		stainlessSteel = false;
-		hammeredGray = false;
-		hammeredBrown = false;
+		budget.setStatus('A');
+		budget.setStopsequencecontinuous(false);
+		budget.setStopsequenceeven(false);
+		budget.setStopsequenceodd(false);
+		budget.setDoorframestainless(false);
+		budget.setDoorframebrown(false);
+		budget.setDoorframegray(false);
 		listBType = daoBasicData.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicData.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicData.listByField("BUDGET",
@@ -620,42 +598,14 @@ public class FrmIndexCtrl {
 		listMotorTraction = daoBasicData
 				.listByField("BUDGET", "MOTOR TRACTION");
 		listBNumber = new ArrayList<Budget>();
-		sistelWDisplayPB = new Integer(0);
-		sistelWDisplayFloor = new Integer(0);
-		sistelWArrowPB = new Integer(0);
-		sistelWArrowFloor = new Integer(0);
-		braile37PB = new Integer(0);
-		braile37Floor = new Integer(0);
-		antivandalismPB = new Integer(0);
-		antivandalismFloor = new Integer(0);
-	}
-
-	public void addDatabasicmanytomany(Boolean checked, String txt, String str,
-			String str2, List<Databasicmanytomany> list,
-			DaoBasicData daoBasicData) {
-		if (checked != null && checked) {
-			databasicmanytomany = new Databasicmanytomany();
-			databasicmanytomany.setDescription(txt);
-			databasicmanytomany.setBasicdata(daoBasicData.findByName("BUDGET",
-					str2, str));
-			databasicmanytomany.setBudget(budget);
-			list.add(databasicmanytomany);
-		}
-	}
-
-	public void addHallButtonType(Integer total, Integer intFloor,
-			Integer intPB, List<Hallbuttontype> list,
-			DaoBasicData daoBasicData, String name) {
-		if (total != null && !total.equals(0)) {
-			hallbuttontype = new Hallbuttontype();
-			hallbuttontype.setBudget(budget);
-			hallbuttontype.setQuantitybuttonfloor(intFloor);
-			hallbuttontype.setBasicdata(daoBasicData.findByName("BUDGET",
-					"HALL BUTTON TYPE", name));
-			hallbuttontype.setQuantitybuttonpb(intPB);
-			hallbuttontype.setTotalbuttons(total);
-			list.add(hallbuttontype);
-		}
+		budget.setSistelwarrowfloor(0);
+		budget.setSistelwdisplaypb(0);
+		budget.setSistelwdisplayfloor(0);
+		budget.setSistelwarrowpb(0);
+		budget.setBraile37floor(0);
+		budget.setBraile37pb(0);
+		budget.setAntivandalismfloor(0);
+		budget.setAntivandalismpb(0);
 	}
 
 	/**
@@ -702,58 +652,11 @@ public class FrmIndexCtrl {
 	@NotifyChange({ "*" })
 	@Command
 	public void save() {
-		List<Databasicmanytomany> listDatabasicmanytomany = new ArrayList<Databasicmanytomany>();
-		List<Hallbuttontype> listHallbuttontype = new ArrayList<Hallbuttontype>();
-		DaoBudget daoBudget = new DaoBudget();
-		DaoBasicData daoBasicData = new DaoBasicData();
-		DaoHallbuttontype daoHallbuttontype = new DaoHallbuttontype();
-		DaoDataBasicManyToMany daoDataBasicManyToMany = new DaoDataBasicManyToMany();
+		DaoBudget daoBudget = new DaoBudget();		
 		if (!daoBudget.save(budget)) {
 			Messagebox.show("Fallo Guardado Budget", "Error", Messagebox.OK,
 					Messagebox.ERROR);
 			return;
-		}
-		addDatabasicmanytomany(stopSequenceContinuous,
-				txtStopSequenceContinuous, "CONTINUA", "STOP SEQUENCE",
-				listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stopSequenceOdd, txtStopSequenceOdd, "IMPAR",
-				"STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stopSequencePar, txtStopSequencePar, "PAR",
-				"STOP SEQUENCE", listDatabasicmanytomany, daoBasicData);
-		addDatabasicmanytomany(stainlessSteel, txtBStainlessSteel,
-				"ACERO INOX.", "DOOR FRAME", listDatabasicmanytomany,
-				daoBasicData);
-		addDatabasicmanytomany(hammeredBrown, txtBHammeredBrown,
-				"MARTILLADO MARRON", "DOOR FRAME", listDatabasicmanytomany,
-				daoBasicData);
-		addDatabasicmanytomany(hammeredGray, txtBHammeredGray,
-				"MARTILLADO GRIS", "DOOR FRAME", listDatabasicmanytomany,
-				daoBasicData);
-		for (Databasicmanytomany databasic : listDatabasicmanytomany) {
-			if (!daoDataBasicManyToMany.save(databasic)) {
-				Messagebox.show("Fallo Guardado Databasicmanytomany", "Error",
-						Messagebox.OK, Messagebox.ERROR);
-				return;
-			}
-		}
-		addHallButtonType(sistelWDisplayFloor + sistelWDisplayPB,
-				sistelWDisplayFloor, sistelWDisplayPB, listHallbuttontype,
-				daoBasicData, "SISTEL CON DISPLAY");
-		addHallButtonType(sistelWArrowFloor + sistelWArrowPB,
-				sistelWArrowFloor, sistelWArrowPB, listHallbuttontype,
-				daoBasicData, "SISTEL CON FLECHA");
-		addHallButtonType(braile37Floor + braile37PB, braile37Floor,
-				braile37PB, listHallbuttontype, daoBasicData,
-				"CHAPA DE ACERO CON BOTON ACERO PLASTICO CON NOMENCLATURA Y BRAILLE DE 37mm");
-		addHallButtonType(antivandalismFloor + antivandalismPB,
-				antivandalismFloor, antivandalismPB, listHallbuttontype,
-				daoBasicData, "CHAPA DE ACERO CON BOTON ANTI-VANDALICO DE 30mm");
-		for (Hallbuttontype hallbuttontype : listHallbuttontype) {
-			if (!daoHallbuttontype.save(hallbuttontype)){
-				Messagebox.show("Fallo Guardado daoHallbuttontype", "Error",
-						Messagebox.OK, Messagebox.ERROR);
-				return;
-			}
 		}
 		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
 				Messagebox.INFORMATION);
@@ -774,4 +677,29 @@ public class FrmIndexCtrl {
 		DaoBudget daoBudget = new DaoBudget();
 		listBNumber = daoBudget.listOrderBudgetNumber(field);
 	}
+
+	@NotifyChange("*")
+	@Command
+	public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value){		
+		DaoBudget daoBudget = new DaoBudget();
+		List<Budget> listBudget = daoBudget.findByString(field, value);		
+		if (listBudget.size() == 1){
+			budget = listBudget.get(0);
+			budgetNumber = budget.getNumber();
+			disabledAll = false;
+		}
+	}
+
+	@NotifyChange("*")
+	@Command
+	public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value){
+		DaoBudget daoBudget = new DaoBudget();
+		Integer budgetId = Integer.parseInt(value);
+		List<Budget> listBudget = daoBudget.findByInteger(field, budgetId);		
+		if (listBudget.size() == 1){
+			budget = listBudget.get(0);
+			budgetNumber = budget.getNumber();
+			disabledAll = false;
+		}
+	} 
 }
