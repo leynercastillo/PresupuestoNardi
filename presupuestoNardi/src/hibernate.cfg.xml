@@ -21,7 +21,5 @@
         <property name="show_sql">true</property>
         <mapping class="database.Basicdata" />
         <mapping class="database.Budget" />
-        <mapping class="database.Hallbuttontype" />
-        <mapping class="database.Databasicmanytomany" />
     </session-factory>
 </hibernate-configuration>
