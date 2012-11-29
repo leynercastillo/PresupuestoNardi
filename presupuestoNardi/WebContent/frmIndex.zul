@@ -1,6 +1,6 @@
 <?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<style src="/style/style.css"></style>
+	<style src="/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.FrmIndexCtrl')">
 		<groupbox>
@@ -21,7 +21,7 @@
 						<space></space>
 						<div align="right">
 							<button label="Buscar" mold="trendy"
-								onClick="@command('search')">
+								id="search" onClick="@command('search')">
 							</button>
 						</div>
 					</row>
@@ -35,8 +35,8 @@
 							buttonVisible="false"
 							disabled="@load(vm.disabledAll ? 'false':'true')"
 							value="@load(vm.budgetNumber)" autocomplete="true"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='number')"
-							model="@load(vm.listBNumber)" autodrop="@load(vm.disabledAll)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='number')"
+							model="@load(vm.listBudget)" autodrop="@load(vm.disabledAll)"
 							onChange="@command(vm.disabledAll ? 'searchBudgetId':'', field='number', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
@@ -50,8 +50,8 @@
 						<combobox id="txtBPartnerName" width="355px"
 							buttonVisible="false"
 							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='partnername')"
-							autocomplete="true" model="@load(vm.listBNumber)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='partnername')"
+							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
 							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='partnername', val=self.value)">
 							<template name="model" var="Budget">
@@ -72,8 +72,8 @@
 						<combobox id="txtBConstruction" width="355px"
 							buttonVisible="false"
 							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='construction')"
-							autocomplete="true" model="@load(vm.listBNumber)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='construction')"
+							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
 							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='construction', val=self.value)">
 							<template name="model" var="Budget">
@@ -100,8 +100,8 @@
 						<combobox id="txtBConstructionNumber"
 							buttonVisible="false" width="355px"
 							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='constructionnumber')"
-							autocomplete="true" model="@load(vm.listBNumber)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='constructionnumber')"
+							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
 							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='constructionnumber', val=self.value)">
 							<template name="model" var="Budget">
@@ -116,10 +116,10 @@
 						<combobox id="txtBSeller" width="235px"
 							buttonVisible="false"
 							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='seller')"
-							autocomplete="true" model="@load(vm.listBNumber)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='seller')"
+							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
-							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='constructionnumber', val=self.value)">
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='seller', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.seller)">
@@ -1186,5 +1186,34 @@
 				</row>
 			</rows>
 		</grid>
+		<window visible="@load(vm.windowsVisible)"
+			mode="@load(vm.windowsMode)" height="400px" border="normal"
+			closable="true">
+			<listbox model="@load(vm.listBudget)">
+				<listhead>
+					<listheader label="Nro Pedido" hflex="min"></listheader>
+					<listheader label="Cliente" hflex="min"></listheader>
+					<listheader label="Fecha" hflex="min"></listheader>
+					<listheader label="Ciudad" hflex="min"></listheader>
+					<listheader label="Vendedor" hflex="min"></listheader>
+				</listhead>
+				<template name="model" var="budget">
+					<listitem>
+						<listcell label="@load(budget.number)"></listcell>
+						<listcell label="@load(budget.partnername)"></listcell>
+						<listcell label="@load(budget.date) @format()"></listcell>
+						<listcell
+							label="@load(budget.constructioncity)">
+						</listcell>
+						<listcell label="@load(budget.seller)"></listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<div align="right">
+				<button label="Cancel"
+					onClick="@command('closeWindow')">
+				</button>
+			</div>
+		</window>
 	</window>
 </zk>
