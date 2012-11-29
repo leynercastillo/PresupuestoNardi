@@ -13,7 +13,7 @@ import hibernateConnections.GenericDao;
 
 public class DaoBudget extends GenericDao<Budget> {
 
-	public List<Budget> listOrderBudgetNumber(String field) {
+	public List<Budget> listOrderBudgetbyField(String field) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(Budget.class);
 		criteria.addOrder(Order.asc(field));
