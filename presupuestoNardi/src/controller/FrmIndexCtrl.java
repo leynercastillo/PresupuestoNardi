@@ -58,7 +58,7 @@ public class FrmIndexCtrl {
 	private List<Basicdata> listBoothDisplay;
 	private List<Basicdata> listFloorDisplay;
 	private List<Basicdata> listMotorTraction;
-	private List<Budget> listBNumber;
+	private List<Budget> listBudget;
 	private Boolean stopSequenceContinuous;
 	private Boolean stopSequencePar;
 	private Boolean stopSequenceOdd;
@@ -66,12 +66,14 @@ public class FrmIndexCtrl {
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
 	private Boolean disabledAll;
+	private Boolean windowsVisible;
 	private String txtStopSequenceContinuous;
 	private String txtStopSequencePar;
 	private String txtStopSequenceOdd;
 	private String txtBStainlessSteel;
 	private String txtBHammeredBrown;
 	private String txtBHammeredGray;
+	private String windowsMode;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
@@ -83,12 +85,28 @@ public class FrmIndexCtrl {
 	private Budget budget;
 	private Integer budgetNumber;
 
-	public List<Budget> getListBNumber() {
-		return listBNumber;
+	public String getWindowsMode() {
+		return windowsMode;
 	}
 
-	public void setListBNumber(List<Budget> listBNumber) {
-		this.listBNumber = listBNumber;
+	public void setWindowsMode(String windowsMode) {
+		this.windowsMode = windowsMode;
+	}
+
+	public Boolean getWindowsVisible() {
+		return windowsVisible;
+	}
+
+	public void setWindowsVisible(Boolean windowsVisible) {
+		this.windowsVisible = windowsVisible;
+	}
+
+	public List<Budget> getListBudget() {
+		return listBudget;
+	}
+
+	public void setListBudget(List<Budget> listBudget) {
+		this.listBudget = listBudget;
 	}
 
 	public Integer getBudgetNumber() {
@@ -532,6 +550,8 @@ public class FrmIndexCtrl {
 	public void restartForm() {
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoBudget daoBudget = new DaoBudget();
+		windowsVisible = false;
+		windowsMode = "overlapped";
 		budget = new Budget();
 		if (daoBudget.list(Budget.class).isEmpty())
 			budgetNumber = 1;
@@ -597,7 +617,7 @@ public class FrmIndexCtrl {
 		listFloorDisplay = daoBasicData.listByField("BUDGET", "FLOOR DISPLAY");
 		listMotorTraction = daoBasicData
 				.listByField("BUDGET", "MOTOR TRACTION");
-		listBNumber = new ArrayList<Budget>();
+		listBudget = new ArrayList<Budget>();
 		budget.setSistelwarrowfloor(0);
 		budget.setSistelwdisplaypb(0);
 		budget.setSistelwdisplayfloor(0);
@@ -671,22 +691,29 @@ public class FrmIndexCtrl {
 		disabledAll = true;
 	}
 
-	@NotifyChange({"listBNumber"})
+	@NotifyChange({"listBudget"})
 	@Command
-	public void loadBudgetField(@BindingParam("field") String field){
+	public void loadBudgetByField(@BindingParam("field") String field){
 		DaoBudget daoBudget = new DaoBudget();
-		listBNumber = daoBudget.listOrderBudgetNumber(field);
+		listBudget = daoBudget.listOrderBudgetbyField(field);
 	}
 
 	@NotifyChange("*")
 	@Command
 	public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value){		
 		DaoBudget daoBudget = new DaoBudget();
-		List<Budget> listBudget = daoBudget.findByString(field, value);		
-		if (listBudget.size() == 1){
-			budget = listBudget.get(0);
+		List<Budget> listBudget2 = daoBudget.findByString(field, value);
+		int listSize = listBudget2.size();
+		if (listSize == 1){
+			budget = listBudget2.get(0);
 			budgetNumber = budget.getNumber();
 			disabledAll = false;
+		} else  if (listSize == 0){
+			Messagebox.show("Ningún registro coincide");			
+		} else {
+			windowsMode = "highlighted";
+			windowsVisible = true;
+			listBudget = listBudget2;
 		}
 	}
 
@@ -695,11 +722,16 @@ public class FrmIndexCtrl {
 	public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value){
 		DaoBudget daoBudget = new DaoBudget();
 		Integer budgetId = Integer.parseInt(value);
-		List<Budget> listBudget = daoBudget.findByInteger(field, budgetId);		
-		if (listBudget.size() == 1){
-			budget = listBudget.get(0);
-			budgetNumber = budget.getNumber();
-			disabledAll = false;
-		}
-	} 
+		List<Budget> listBudget2 = daoBudget.findByInteger(field, budgetId);		
+		budget = listBudget2.get(0);
+		budgetNumber = budget.getNumber();
+		disabledAll = false;
+	}
+
+	@NotifyChange({"windowsMode","windowsVisible"})
+	@Command
+	public void closeWindow(){
+		windowsMode = "overlapped";
+		windowsVisible = false;
+	}
 }
