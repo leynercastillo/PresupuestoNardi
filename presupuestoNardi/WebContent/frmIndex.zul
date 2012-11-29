@@ -35,8 +35,9 @@
 							buttonVisible="false"
 							disabled="@load(vm.disabledAll ? 'false':'true')"
 							value="@load(vm.budgetNumber)" autocomplete="true"
-							onFocus="@command('loadBudgetField', field='number')"
-							model="@load(vm.listBNumber)" autodrop="true">
+							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='number')"
+							model="@load(vm.listBNumber)" autodrop="@load(vm.disabledAll)"
+							onChange="@command(vm.disabledAll ? 'searchBudgetId':'', field='number', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.number)">
@@ -49,8 +50,10 @@
 						<combobox id="txtBPartnerName" width="355px"
 							buttonVisible="false"
 							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)"
-							onFocus="@command('loadBudgetField', field='partnername')" autocomplete="true"
-							model="@load(vm.listBNumber)" autodrop="true">
+							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='partnername')"
+							autocomplete="true" model="@load(vm.listBNumber)"
+							autodrop="@load(vm.disabledAll)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='partnername', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.partnername)">
@@ -69,8 +72,10 @@
 						<combobox id="txtBConstruction" width="355px"
 							buttonVisible="false"
 							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)"
-							onFocus="@command('loadBudgetField', field='construction')" autocomplete="true"
-							model="@load(vm.listBNumber)" autodrop="true">
+							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='construction')"
+							autocomplete="true" model="@load(vm.listBNumber)"
+							autodrop="@load(vm.disabledAll)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='construction', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.construction)">
@@ -95,8 +100,10 @@
 						<combobox id="txtBConstructionNumber"
 							buttonVisible="false" width="355px"
 							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)"
-							onFocus="@command('loadBudgetField', field='constructionnumber')" autocomplete="true"
-							model="@load(vm.listBNumber)" autodrop="true">
+							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='constructionnumber')"
+							autocomplete="true" model="@load(vm.listBNumber)"
+							autodrop="@load(vm.disabledAll)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='constructionnumber', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.constructionnumber)">
@@ -109,8 +116,10 @@
 						<combobox id="txtBSeller" width="235px"
 							buttonVisible="false"
 							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)"
-							onFocus="@command('loadBudgetField', field='seller')" autocomplete="true"
-							model="@load(vm.listBNumber)" autodrop="true">
+							onFocus="@command(vm.disabledAll ? 'loadBudgetField':'', field='seller')"
+							autocomplete="true" model="@load(vm.listBNumber)"
+							autodrop="@load(vm.disabledAll)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='constructionnumber', val=self.value)">
 							<template name="model" var="Budget">
 								<comboitem
 									label="@load(Budget.seller)">
@@ -203,7 +212,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBuildingType" model="@load(vm.listBType)"
-							selectedItem="@save(vm.budget.basicdataByBuildingtype)"
+							selectedItem="@bind(vm.budget.basicdataByBuildingtype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
@@ -223,7 +232,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
-							selectedItem="@save(vm.budget.basicdataByElevatortype)"
+							selectedItem="@bind(vm.budget.basicdataByElevatortype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="elevatorType">
 								<comboitem
@@ -246,7 +255,7 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
-								selectedItem="@save(vm.budget.basicdataByElevatorcapacitance)"
+								selectedItem="@bind(vm.budget.basicdataByElevatorcapacitance)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="elevatorCapa">
@@ -281,7 +290,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBMachineType" model="@load(vm.listMachineType)"
-							selectedItem="@save(vm.budget.basicdataByMachinetype)"
+							selectedItem="@bind(vm.budget.basicdataByMachinetype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="MachineType">
 								<comboitem
@@ -292,7 +301,7 @@
 						<label sclass="formLabel" value="Embarque:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
-							selectedItem="@save(vm.budget.basicdataByEmbarque)"
+							selectedItem="@bind(vm.budget.basicdataByEmbarque)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BEmbarque">
 								<comboitem
@@ -307,7 +316,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
-							selectedItem="@save(vm.budget.basicdataByElectricitytype)"
+							selectedItem="@bind(vm.budget.basicdataByElectricitytype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="ElectricityType">
@@ -322,7 +331,7 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBSpeed" model="@load(vm.listSpeed)"
-								selectedItem="@save(vm.budget.basicdataBySpeed)" readonly="true"
+								selectedItem="@bind(vm.budget.basicdataBySpeed)" readonly="true"
 								disabled="@load(vm.disabledAll)">
 								<template name="model" var="Speed">
 									<comboitem
@@ -339,7 +348,7 @@
 						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFrequency" model="@load(vm.listFrequency)"
-							selectedItem="@save(vm.budget.basicdataByFrequency)"
+							selectedItem="@bind(vm.budget.basicdataByFrequency)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Frequency">
 								<comboitem
@@ -352,7 +361,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
-							selectedItem="@save(vm.budget.basicdataByVoltagelighting)"
+							selectedItem="@bind(vm.budget.basicdataByVoltagelighting)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="VoltageLighting">
@@ -368,7 +377,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
-							selectedItem="@save(vm.budget.basicdataByHourmachine)"
+							selectedItem="@bind(vm.budget.basicdataByHourmachine)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="HourMachine">
 								<comboitem
@@ -389,13 +398,13 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequenceContinuous" label="Continua"
-											checked="@bind(vm.stopSequenceContinuous)"
+											checked="@bind(vm.budget.stopsequencecontinuous)"
 											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox
 											id="txtStopSequenceContinuous" width="150px"
-											disabled="@load(vm.stopSequenceContinuous ? 'false':'true')"
-											value="@bind(vm.txtStopSequenceContinuous)">
+											disabled="@load(vm.budget.stopsequencecontinuous ? 'false':'true')"
+											value="@bind(vm.budget.stopsequencecontinuousq)">
 										</textbox>
 									</row>
 								</rows>
@@ -408,7 +417,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
-							selectedItem="@save(vm.budget.basicdataByManeuvertype)"
+							selectedItem="@bind(vm.budget.basicdataByManeuvertype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ManeuverType">
 								<comboitem
@@ -427,13 +436,13 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequencePar" label="Par"
-											checked="@bind(vm.stopSequencePar)"
+											checked="@bind(vm.budget.stopsequenceeven)"
 											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox id="txtStopSequencePar"
 											width="150px"
-											disabled="@load(vm.stopSequencePar ? 'false':'true')"
-											value="@bind(vm.txtStopSequencePar)">
+											disabled="@load(vm.budget.stopsequenceeven ? 'false':'true')"
+											value="@bind(vm.budget.stopsequenceevenq)">
 										</textbox>
 									</row>
 								</rows>
@@ -459,13 +468,13 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequenceOdd" label="Impar"
-											checked="@bind(vm.stopSequenceOdd)"
+											checked="@bind(vm.budget.stopsequenceodd)"
 											disabled="@load(vm.disabledAll)">
 										</checkbox>
 										<textbox id="txtStopSequenceOdd"
 											width="150px"
-											disabled="@load(vm.stopSequenceOdd ? 'false':'true')"
-											value="@bind(vm.txtStopSequenceOdd)">
+											disabled="@load(vm.budget.stopsequenceodd ? 'false':'true')"
+											value="@bind(vm.budget.stopsequenceoddq)">
 										</textbox>
 									</row>
 								</rows>
@@ -546,7 +555,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
-							selectedItem="@save(vm.budget.basicdataByDesign1357)"
+							selectedItem="@bind(vm.budget.basicdataByDesign1357)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Design1357">
 								<comboitem
@@ -557,7 +566,7 @@
 						<label sclass="formLabel" value="Diseño P26:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
-							selectedItem="@save(vm.budget.basicdataByDesignp26)"
+							selectedItem="@bind(vm.budget.basicdataByDesignp26)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DesignP26">
 								<comboitem
@@ -579,7 +588,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBRoofType" model="@load(vm.listRoofType)"
-							selectedItem="@save(vm.budget.basicdataByRooftype)"
+							selectedItem="@bind(vm.budget.basicdataByRooftype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="RoofType">
 								<comboitem
@@ -592,7 +601,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBButtonType" model="@load(vm.listButtonType)"
-							selectedItem="@save(vm.budget.basicdataByButtontype)"
+							selectedItem="@bind(vm.budget.basicdataByButtontype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ButtonType">
 								<comboitem
@@ -613,7 +622,7 @@
 						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBRailing" model="@load(vm.listRailing)"
-							selectedItem="@save(vm.budget.basicdataByRailing)"
+							selectedItem="@bind(vm.budget.basicdataByRailing)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Railing">
 								<comboitem
@@ -624,7 +633,7 @@
 						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBMirror" model="@load(vm.listMirror)"
-							selectedItem="@save(vm.budget.basicdataByMirror)" readonly="true"
+							selectedItem="@bind(vm.budget.basicdataByMirror)" readonly="true"
 							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Mirror">
 								<comboitem label="@load(Mirror.name)">
@@ -640,7 +649,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFloorType" model="@load(vm.listFloorType)"
-							selectedItem="@save(vm.budget.basicdataByFloortype)"
+							selectedItem="@bind(vm.budget.basicdataByFloortype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorType">
 								<comboitem
@@ -651,7 +660,7 @@
 						<label sclass="formLabel" value="Ventilador:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFan" model="@load(vm.listFan)"
-							selectedItem="@save(vm.budget.basicdataByFan)" readonly="true"
+							selectedItem="@bind(vm.budget.basicdataByFan)" readonly="true"
 							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
@@ -687,7 +696,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="spnBDoorType" model="@load(vm.listDoorType)"
-							selectedItem="@save(vm.budget.basicdataByDoortype)"
+							selectedItem="@bind(vm.budget.basicdataByDoortype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorType">
 								<comboitem
@@ -702,7 +711,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
-							selectedItem="@save(vm.budget.basicdataByDoorsystem)"
+							selectedItem="@bind(vm.budget.basicdataByDoorsystem)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorSystem">
 								<comboitem
@@ -716,7 +725,7 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
-								selectedItem="@save(vm.budget.basicdataByDoorframetype)"
+								selectedItem="@bind(vm.budget.basicdataByDoorframetype)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="DoorframeType">
@@ -735,7 +744,7 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
-								selectedItem="@save(vm.budget.basicdataByFreeadmission)"
+								selectedItem="@bind(vm.budget.basicdataByFreeadmission)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="FreeAdmission">
@@ -752,7 +761,7 @@
 						<hbox>
 							<combobox value="@load(vm.seleccione)"
 								id="cmbBHeight" model="@load(vm.listHeight)"
-								selectedItem="@save(vm.budget.basicdataByHeight)"
+								selectedItem="@bind(vm.budget.basicdataByHeight)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model" var="Height">
 									<comboitem
@@ -765,30 +774,30 @@
 					</row>
 					<row>
 						<checkbox id="chbxBStainlessSteel"
-							label="Acero Inox." checked="@bind(vm.stainlessSteel)"
+							label="Acero Inox." checked="@bind(vm.budget.doorframestainless)"
 							disabled="@load(vm.disabledAll)">
 						</checkbox>
 						<textbox id="txtBStainlessSteel"
-							disabled="@load(vm.stainlessSteel ? 'false': 'true')"
-							value="@bind(vm.txtBStainlessSteel)">
+							disabled="@load(vm.budget.doorframestainless ? 'false': 'true')"
+							value="@bind(vm.budget.doorframestainlessdescrip)">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
 							<checkbox id="chbxBHammeredGray"
-								label="Gris" checked="@bind(vm.hammeredGray)"
+								label="Gris" checked="@bind(vm.budget.doorframegray)"
 								disabled="@load(vm.disabledAll)">
 							</checkbox>
 							<textbox id="txtBHammeredGray"
-								disabled="@load(vm.hammeredGray ? 'false':'true')"
-								value="@bind(vm.txtBHammeredGray)">
+								disabled="@load(vm.budget.doorframegray ? 'false':'true')"
+								value="@bind(vm.budget.doorframegraydescrip)">
 							</textbox>
 							<checkbox id="chbxBHammeredBrown"
-								label="Marrón" checked="@bind(vm.hammeredBrown)"
+								label="Marrón" checked="@bind(vm.budget.doorframebrown)"
 								disabled="@load(vm.disabledAll)">
 							</checkbox>
 							<textbox id="txtBHammeredBrown"
-								disabled="@load(vm.hammeredBrown ? 'false':'true')"
-								value="@bind(vm.txtBHammeredBrown)">
+								disabled="@load(vm.budget.doorframebrown ? 'false':'true')"
+								value="@bind(vm.budget.doorframebrowndescrip)">
 							</textbox>
 						</hbox>
 					</row>
@@ -809,7 +818,7 @@
 						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBControlType" model="@load(vm.listControlType)"
-							selectedItem="@save(vm.budget.basicdataByControltype)"
+							selectedItem="@bind(vm.budget.basicdataByControltype)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ControlType">
 								<comboitem
@@ -826,7 +835,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
-							selectedItem="@save(vm.budget.basicdataByBoothbutton)"
+							selectedItem="@bind(vm.budget.basicdataByBoothbutton)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothButton">
 								<comboitem
@@ -868,7 +877,7 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayPB)"
+								value="@bind(vm.budget.sistelwdisplaypb)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -877,7 +886,7 @@
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWDisplayFloor)"
+								value="@bind(vm.budget.sistelwdisplayfloor)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -890,7 +899,8 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBSistelWArrowPB"
-								width="60px" constraint="min 0" value="@bind(vm.sistelWArrowPB)"
+								width="60px" constraint="min 0"
+								value="@bind(vm.budget.sistelwarrowpb)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -899,7 +909,7 @@
 							<space></space>
 							<spinner id="spnBSistelWArrowFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.sistelWArrowFloor)"
+								value="@bind(vm.budget.sistelwarrowfloor)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -912,7 +922,7 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBBraile37PB" width="60px"
-								constraint="min 0" value="@bind(vm.braile37PB)"
+								constraint="min 0" value="@bind(vm.budget.braile37pb)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 							<space></space>
@@ -921,7 +931,7 @@
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBBraile37Floor" width="60px"
-								constraint="min 0" value="@bind(vm.braile37Floor)"
+								constraint="min 0" value="@bind(vm.budget.braile37floor)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -935,7 +945,7 @@
 							<space></space>
 							<spinner id="spnBAntivandalismPB"
 								width="60px" constraint="min 0"
-								value="@bind(vm.antivandalismPB)"
+								value="@bind(vm.budget.antivandalismpb)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 							<space></space>
@@ -945,7 +955,7 @@
 							<space></space>
 							<spinner id="spnBAntivandalismFloor"
 								width="60px" constraint="min 0"
-								value="@bind(vm.antivandalismFloor)"
+								value="@bind(vm.budget.antivandalismfloor)"
 								disabled="@load(vm.disabledAll)">
 							</spinner>
 						</hbox>
@@ -956,7 +966,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
-							selectedItem="@save(vm.budget.basicdataByBoothdisplay)"
+							selectedItem="@bind(vm.budget.basicdataByBoothdisplay)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothDisplay">
 								<comboitem
@@ -973,7 +983,7 @@
 						</label>
 						<combobox value="@load(vm.seleccione)"
 							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
-							selectedItem="@save(vm.budget.basicdataByFloordisplay)"
+							selectedItem="@bind(vm.budget.basicdataByFloordisplay)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorDisplay">
 								<comboitem

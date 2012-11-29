@@ -1,10 +1,8 @@
 package database;
 
-// Generated 24/11/2012 10:42:56 PM by Hibernate Tools 3.6.0
+// Generated 28/11/2012 02:48:07 PM by Hibernate Tools 3.6.0
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,7 +37,6 @@ public class Budget implements java.io.Serializable {
 	private Basicdata basicdataByVoltagelighting;
 	private Basicdata basicdataByElectricitytype;
 	private Basicdata basicdataByRailing;
-	private Basicdata basicdataByStatus;
 	private Basicdata basicdataByDoortype;
 	private Basicdata basicdataByFloortype;
 	private Basicdata basicdataByBuildingtype;
@@ -96,9 +92,27 @@ public class Budget implements java.io.Serializable {
 	private Boolean firefighterkeychain;
 	private String comment;
 	private String displayplacefloor;
-	private Set<Hallbuttontype> hallbuttontypes = new HashSet<Hallbuttontype>(0);
-	private Set<Databasicmanytomany> databasicmanytomanies = new HashSet<Databasicmanytomany>(
-			0);
+	private Boolean stopsequencecontinuous;
+	private String stopsequencecontinuousq;
+	private Boolean stopsequenceeven;
+	private String stopsequenceevenq;
+	private Boolean stopsequenceodd;
+	private String stopsequenceoddq;
+	private Boolean doorframegray;
+	private String doorframegraydescrip;
+	private Boolean doorframebrown;
+	private String doorframebrowndescrip;
+	private Boolean doorframestainless;
+	private String doorframestainlessdescrip;
+	private Integer sistelwdisplaypb;
+	private Integer sistelwdisplayfloor;
+	private Integer sistelwarrowpb;
+	private Integer sistelwarrowfloor;
+	private Integer braile37pb;
+	private Integer braile37floor;
+	private Integer antivandalismpb;
+	private Integer antivandalismfloor;
+	private char status;
 
 	public Budget() {
 	}
@@ -106,7 +120,8 @@ public class Budget implements java.io.Serializable {
 	public Budget(int idbudget, int number, Date date, String partnername,
 			String construction, String constructionnumber, String seller,
 			String constructionaddress, String constructioncity,
-			String contactphone, String email, String contactname, boolean type) {
+			String contactphone, String email, String contactname,
+			boolean type, Integer braile37pb, Integer antivandalismfloor, char status) {
 		this.idbudget = idbudget;
 		this.number = number;
 		this.date = date;
@@ -120,6 +135,9 @@ public class Budget implements java.io.Serializable {
 		this.email = email;
 		this.contactname = contactname;
 		this.type = type;
+		this.braile37pb = braile37pb;
+		this.antivandalismfloor = antivandalismfloor;
+		this.status = status;
 	}
 
 	public Budget(int idbudget, Basicdata basicdataByButtontype,
@@ -129,9 +147,8 @@ public class Budget implements java.io.Serializable {
 			Basicdata basicdataByMirror, Basicdata basicdataByFloordisplay,
 			Basicdata basicdataByVoltagelighting,
 			Basicdata basicdataByElectricitytype, Basicdata basicdataByRailing,
-			Basicdata basicdataByStatus, Basicdata basicdataByDoortype,
-			Basicdata basicdataByFloortype, Basicdata basicdataByBuildingtype,
-			Basicdata basicdataByDesign1357,
+			Basicdata basicdataByDoortype, Basicdata basicdataByFloortype,
+			Basicdata basicdataByBuildingtype, Basicdata basicdataByDesign1357,
 			Basicdata basicdataByElevatorcapacitance,
 			Basicdata basicdataByRooftype, Basicdata basicdataByFan,
 			Basicdata basicdataByHeight, Basicdata basicdataBySpeed,
@@ -154,8 +171,16 @@ public class Budget implements java.io.Serializable {
 			Boolean speechsynthesizer, Boolean gomsystem, Boolean intercom,
 			Boolean phone, Boolean accesssytem, Boolean firefighterkeychain,
 			String comment, String displayplacefloor,
-			Set<Hallbuttontype> hallbuttontypes,
-			Set<Databasicmanytomany> databasicmanytomanies) {
+			Boolean stopsequencecontinuous, String stopsequencecontinuousq,
+			Boolean stopsequenceeven, String stopsequenceevenq,
+			Boolean stopsequenceodd, String stopsequenceoddq,
+			Boolean doorframegray, String doorframegraydescrip,
+			Boolean doorframebrown, String doorframebrowndescrip,
+			Boolean doorframestainless, String doorframestainlessdescrip,
+			Integer sistelwdisplaypb, Integer sistelwdisplayfloor,
+			Integer sistelwarrowpb, Integer sistelwarrowfloor, Integer braile37pb,
+			Integer braile37floor, Integer antivandalismpb,
+			Integer antivandalismfloor, char status) {
 		this.idbudget = idbudget;
 		this.basicdataByButtontype = basicdataByButtontype;
 		this.basicdataByMachinetype = basicdataByMachinetype;
@@ -167,7 +192,6 @@ public class Budget implements java.io.Serializable {
 		this.basicdataByVoltagelighting = basicdataByVoltagelighting;
 		this.basicdataByElectricitytype = basicdataByElectricitytype;
 		this.basicdataByRailing = basicdataByRailing;
-		this.basicdataByStatus = basicdataByStatus;
 		this.basicdataByDoortype = basicdataByDoortype;
 		this.basicdataByFloortype = basicdataByFloortype;
 		this.basicdataByBuildingtype = basicdataByBuildingtype;
@@ -223,8 +247,27 @@ public class Budget implements java.io.Serializable {
 		this.firefighterkeychain = firefighterkeychain;
 		this.comment = comment;
 		this.displayplacefloor = displayplacefloor;
-		this.hallbuttontypes = hallbuttontypes;
-		this.databasicmanytomanies = databasicmanytomanies;
+		this.stopsequencecontinuous = stopsequencecontinuous;
+		this.stopsequencecontinuousq = stopsequencecontinuousq;
+		this.stopsequenceeven = stopsequenceeven;
+		this.stopsequenceevenq = stopsequenceevenq;
+		this.stopsequenceodd = stopsequenceodd;
+		this.stopsequenceoddq = stopsequenceoddq;
+		this.doorframegray = doorframegray;
+		this.doorframegraydescrip = doorframegraydescrip;
+		this.doorframebrown = doorframebrown;
+		this.doorframebrowndescrip = doorframebrowndescrip;
+		this.doorframestainless = doorframestainless;
+		this.doorframestainlessdescrip = doorframestainlessdescrip;
+		this.sistelwdisplaypb = sistelwdisplaypb;
+		this.sistelwdisplayfloor = sistelwdisplayfloor;
+		this.sistelwarrowpb = sistelwarrowpb;
+		this.sistelwarrowfloor = sistelwarrowfloor;
+		this.braile37pb = braile37pb;
+		this.braile37floor = braile37floor;
+		this.antivandalismpb = antivandalismpb;
+		this.antivandalismfloor = antivandalismfloor;
+		this.status = status;
 	}
 
 	/**
@@ -347,16 +390,6 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByRailing(Basicdata basicdataByRailing) {
 		this.basicdataByRailing = basicdataByRailing;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "status")
-	public Basicdata getBasicdataByStatus() {
-		return this.basicdataByStatus;
-	}
-
-	public void setBasicdataByStatus(Basicdata basicdataByStatus) {
-		this.basicdataByStatus = basicdataByStatus;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -881,23 +914,193 @@ public class Budget implements java.io.Serializable {
 		this.displayplacefloor = displayplacefloor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
-	public Set<Hallbuttontype> getHallbuttontypes() {
-		return this.hallbuttontypes;
+	@Column(name = "stopsequencecontinuous")
+	public Boolean getStopsequencecontinuous() {
+		return this.stopsequencecontinuous;
 	}
 
-	public void setHallbuttontypes(Set<Hallbuttontype> hallbuttontypes) {
-		this.hallbuttontypes = hallbuttontypes;
+	public void setStopsequencecontinuous(Boolean stopsequencecontinuous) {
+		this.stopsequencecontinuous = stopsequencecontinuous;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
-	public Set<Databasicmanytomany> getDatabasicmanytomanies() {
-		return this.databasicmanytomanies;
+	@Column(name = "stopsequencecontinuousq", length = 50)
+	public String getStopsequencecontinuousq() {
+		return this.stopsequencecontinuousq;
 	}
 
-	public void setDatabasicmanytomanies(
-			Set<Databasicmanytomany> databasicmanytomanies) {
-		this.databasicmanytomanies = databasicmanytomanies;
+	public void setStopsequencecontinuousq(String stopsequencecontinuousq) {
+		this.stopsequencecontinuousq = stopsequencecontinuousq;
+	}
+
+	@Column(name = "stopsequenceeven")
+	public Boolean getStopsequenceeven() {
+		return this.stopsequenceeven;
+	}
+
+	public void setStopsequenceeven(Boolean stopsequenceeven) {
+		this.stopsequenceeven = stopsequenceeven;
+	}
+
+	@Column(name = "stopsequenceevenq", length = 50)
+	public String getStopsequenceevenq() {
+		return this.stopsequenceevenq;
+	}
+
+	public void setStopsequenceevenq(String stopsequenceevenq) {
+		this.stopsequenceevenq = stopsequenceevenq;
+	}
+
+	@Column(name = "stopsequenceodd")
+	public Boolean getStopsequenceodd() {
+		return this.stopsequenceodd;
+	}
+
+	public void setStopsequenceodd(Boolean stopsequenceodd) {
+		this.stopsequenceodd = stopsequenceodd;
+	}
+
+	@Column(name = "stopsequenceoddq", length = 50)
+	public String getStopsequenceoddq() {
+		return this.stopsequenceoddq;
+	}
+
+	public void setStopsequenceoddq(String stopsequenceoddq) {
+		this.stopsequenceoddq = stopsequenceoddq;
+	}
+
+	@Column(name = "doorframegray")
+	public Boolean getDoorframegray() {
+		return this.doorframegray;
+	}
+
+	public void setDoorframegray(Boolean doorframegray) {
+		this.doorframegray = doorframegray;
+	}
+
+	@Column(name = "doorframegraydescrip", length = 50)
+	public String getDoorframegraydescrip() {
+		return this.doorframegraydescrip;
+	}
+
+	public void setDoorframegraydescrip(String doorframegraydescrip) {
+		this.doorframegraydescrip = doorframegraydescrip;
+	}
+
+	@Column(name = "doorframebrown")
+	public Boolean getDoorframebrown() {
+		return this.doorframebrown;
+	}
+
+	public void setDoorframebrown(Boolean doorframebrown) {
+		this.doorframebrown = doorframebrown;
+	}
+
+	@Column(name = "doorframebrowndescrip", length = 50)
+	public String getDoorframebrowndescrip() {
+		return this.doorframebrowndescrip;
+	}
+
+	public void setDoorframebrowndescrip(String doorframebrowndescrip) {
+		this.doorframebrowndescrip = doorframebrowndescrip;
+	}
+
+	@Column(name = "doorframestainless")
+	public Boolean getDoorframestainless() {
+		return this.doorframestainless;
+	}
+
+	public void setDoorframestainless(Boolean doorframestainless) {
+		this.doorframestainless = doorframestainless;
+	}
+
+	@Column(name = "doorframestainlessdescrip", length = 50)
+	public String getDoorframestainlessdescrip() {
+		return this.doorframestainlessdescrip;
+	}
+
+	public void setDoorframestainlessdescrip(String doorframestainlessdescrip) {
+		this.doorframestainlessdescrip = doorframestainlessdescrip;
+	}
+
+	@Column(name = "sistelwdisplaypb")
+	public Integer getSistelwdisplaypb() {
+		return this.sistelwdisplaypb;
+	}
+
+	public void setSistelwdisplaypb(Integer sistelwdisplaypb) {
+		this.sistelwdisplaypb = sistelwdisplaypb;
+	}
+
+	@Column(name = "sistelwdisplayfloor")
+	public Integer getSistelwdisplayfloor() {
+		return this.sistelwdisplayfloor;
+	}
+
+	public void setSistelwdisplayfloor(Integer sistelwdisplayfloor) {
+		this.sistelwdisplayfloor = sistelwdisplayfloor;
+	}
+
+	@Column(name = "sistelwarrowpb")
+	public Integer getSistelwarrowpb() {
+		return this.sistelwarrowpb;
+	}
+
+	public void setSistelwarrowpb(Integer sistelwarrowpb) {
+		this.sistelwarrowpb = sistelwarrowpb;
+	}
+
+	@Column(name = "sistelwarrowfloor")
+	public Integer getSistelwarrowfloor() {
+		return this.sistelwarrowfloor;
+	}
+
+	public void setSistelwarrowfloor(Integer sistelwarrowfloor) {
+		this.sistelwarrowfloor = sistelwarrowfloor;
+	}
+
+	@Column(name = "braile37pb", nullable = false)
+	public Integer getBraile37pb() {
+		return this.braile37pb;
+	}
+
+	public void setBraile37pb(Integer braile37pb) {
+		this.braile37pb = braile37pb;
+	}
+
+	@Column(name = "braile37floor")
+	public Integer getBraile37floor() {
+		return this.braile37floor;
+	}
+
+	public void setBraile37floor(Integer braile37floor) {
+		this.braile37floor = braile37floor;
+	}
+
+	@Column(name = "antivandalismpb")
+	public Integer getAntivandalismpb() {
+		return this.antivandalismpb;
+	}
+
+	public void setAntivandalismpb(Integer antivandalismpb) {
+		this.antivandalismpb = antivandalismpb;
+	}
+
+	@Column(name = "antivandalismfloor", nullable = false)
+	public Integer getAntivandalismfloor() {
+		return this.antivandalismfloor;
+	}
+
+	public void setAntivandalismfloor(Integer antivandalismfloor) {
+		this.antivandalismfloor = antivandalismfloor;
+	}
+
+	@Column(name = "status", nullable = false, length = 1)
+	public char getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(char status) {
+		this.status = status;
 	}
 
 }
