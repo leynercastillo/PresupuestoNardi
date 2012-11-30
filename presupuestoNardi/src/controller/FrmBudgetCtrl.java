@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
@@ -29,9 +30,10 @@ import database.Budget;
  * @author leyner.castillo
  * 
  */
-public class FrmIndexCtrl {
+public class FrmBudgetCtrl {
 
 	private String seleccione = new String("--Seleccione--");
+	private String title = new String("Presupuesto Nardi");
 	private static final String vacio = new String(" ");
 
 	private List<Basicdata> listBType;
@@ -87,6 +89,14 @@ public class FrmIndexCtrl {
 	private Integer antivandalismPB;
 	private Budget budget;
 	private Integer budgetNumber;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public List<Budget> getListBudget() {
 		return listBudget;
@@ -720,5 +730,12 @@ public class FrmIndexCtrl {
 		this.budget = budget;
 		disabledAll = false;
 		budgetNumber = budget.getNumber();
+	}
+
+	@Command
+	public void close(){
+		Map map = new HashMap();
+		map.put("page", "");
+		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 }

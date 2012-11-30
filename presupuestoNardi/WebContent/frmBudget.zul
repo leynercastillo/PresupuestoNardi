@@ -2,7 +2,8 @@
 <zk>
 	<style src="/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.FrmIndexCtrl')">
+		viewModel="@id('vm') @init('controller.FrmBudgetCtrl')"
+		title="@load(vm.title)" closable="true" onClose="@command('close')">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
