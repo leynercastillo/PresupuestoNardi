@@ -2,18 +2,23 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Window;
 
 import dao.DaoBasicData;
 import dao.DaoBudget;
@@ -66,14 +71,12 @@ public class FrmIndexCtrl {
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
 	private Boolean disabledAll;
-	private Boolean windowsVisible;
 	private String txtStopSequenceContinuous;
 	private String txtStopSequencePar;
 	private String txtStopSequenceOdd;
 	private String txtBStainlessSteel;
 	private String txtBHammeredBrown;
 	private String txtBHammeredGray;
-	private String windowsMode;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
@@ -84,22 +87,6 @@ public class FrmIndexCtrl {
 	private Integer antivandalismPB;
 	private Budget budget;
 	private Integer budgetNumber;
-
-	public String getWindowsMode() {
-		return windowsMode;
-	}
-
-	public void setWindowsMode(String windowsMode) {
-		this.windowsMode = windowsMode;
-	}
-
-	public Boolean getWindowsVisible() {
-		return windowsVisible;
-	}
-
-	public void setWindowsVisible(Boolean windowsVisible) {
-		this.windowsVisible = windowsVisible;
-	}
 
 	public List<Budget> getListBudget() {
 		return listBudget;
@@ -545,13 +532,11 @@ public class FrmIndexCtrl {
 		restartForm();
 	}
 	
-	@NotifyChange({"*","budgetNumber"})
+	@NotifyChange("*")
 	@Command
 	public void restartForm() {
 		DaoBasicData daoBasicData = new DaoBasicData();
 		DaoBudget daoBudget = new DaoBudget();
-		windowsVisible = false;
-		windowsMode = "overlapped";
 		budget = new Budget();
 		if (daoBudget.list(Budget.class).isEmpty())
 			budgetNumber = 1;
@@ -709,10 +694,11 @@ public class FrmIndexCtrl {
 			budgetNumber = budget.getNumber();
 			disabledAll = false;
 		} else  if (listSize == 0){
-			Messagebox.show("Ningún registro coincide");			
+			Messagebox.show("Ningun registro coincide");			
 		} else {
-			windowsMode = "highlighted";
-			windowsVisible = true;
+			Map map = new HashMap();
+			map.put("listBudget", listBudget2);
+			Window win = (Window)Executions.createComponents("frmWindowBudgets.zul", null, map);
 			listBudget = listBudget2;
 		}
 	}
@@ -728,10 +714,11 @@ public class FrmIndexCtrl {
 		disabledAll = false;
 	}
 
-	@NotifyChange({"windowsMode","windowsVisible"})
-	@Command
-	public void closeWindow(){
-		windowsMode = "overlapped";
-		windowsVisible = false;
+	@NotifyChange({"budget","disabledAll","budgetNumber"})
+	@GlobalCommand
+	public void selectedBudget(@BindingParam("Budget") Budget budget){
+		this.budget = budget;
+		disabledAll = false;
+		budgetNumber = budget.getNumber();
 	}
 }
