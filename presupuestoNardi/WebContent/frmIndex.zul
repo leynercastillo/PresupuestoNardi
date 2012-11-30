@@ -1186,34 +1186,5 @@
 				</row>
 			</rows>
 		</grid>
-		<window visible="@load(vm.windowsVisible)"
-			mode="@load(vm.windowsMode)" height="400px" border="normal"
-			closable="true">
-			<listbox model="@load(vm.listBudget)">
-				<listhead>
-					<listheader label="Nro Pedido" hflex="min"></listheader>
-					<listheader label="Cliente" hflex="min"></listheader>
-					<listheader label="Fecha" hflex="min"></listheader>
-					<listheader label="Ciudad" hflex="min"></listheader>
-					<listheader label="Vendedor" hflex="min"></listheader>
-				</listhead>
-				<template name="model" var="budget">
-					<listitem>
-						<listcell label="@load(budget.number)"></listcell>
-						<listcell label="@load(budget.partnername)"></listcell>
-						<listcell label="@load(budget.date) @format()"></listcell>
-						<listcell
-							label="@load(budget.constructioncity)">
-						</listcell>
-						<listcell label="@load(budget.seller)"></listcell>
-					</listitem>
-				</template>
-			</listbox>
-			<div align="right">
-				<button label="Cancel"
-					onClick="@command('closeWindow')">
-				</button>
-			</div>
-		</window>
 	</window>
 </zk>
