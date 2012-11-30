@@ -23,10 +23,10 @@
 					<jsp:include page="frmMenu.zul"></jsp:include>
 				</div>
 				<div class="section-main">
-					<jsp:include page="frmIndex.zul" />
+					<jsp:include page="index.zul" />
 				</div>
 			</div>
 		</z:window>
-	</z:page>	
+	</z:page>
 </body>
 </html>
