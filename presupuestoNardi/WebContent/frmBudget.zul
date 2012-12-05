@@ -1,9 +1,8 @@
-<?page title="Auto Generated index.zul" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.FrmBudgetCtrl')"
-		title="@load(vm.title)" closable="true" onClose="@command('close')">
+		title="Presupuesto" closable="true" onClose="@command('close')">
 		<groupbox>
 			<caption label="Formulario de Presupuesto"
 				sclass="titleFormLabel">
@@ -48,9 +47,8 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Cliente:"></label>
-						<combobox id="txtBPartnerName" width="355px"
-							buttonVisible="false"
-							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = txtBPartnerName)"
+						<combobox width="355px" buttonVisible="false"
+							value="@save(vm.budget.partnername, before = 'save') @load(vm.budget.partnername) @validator(vm.noEmpty, component = self)"
 							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='partnername')"
 							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
@@ -70,9 +68,8 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
-						<combobox id="txtBConstruction" width="355px"
-							buttonVisible="false"
-							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = txtBConstruction)"
+						<combobox width="355px" buttonVisible="false"
+							value="@save(vm.budget.construction, before = 'save') @load(vm.budget.construction) @validator(vm.noEmpty, component = self)"
 							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='construction')"
 							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
@@ -85,7 +82,7 @@
 						</combobox>
 						<space></space>
 						<radiogroup id="radBType"
-							selectedItem="@save(vm.budget.type) @validator(vm.noEmpty, component = txtBConstructionNumber)">
+							selectedItem="@save(vm.budget.type)">
 							<radio label="Nuevo" value="true"
 								checked="@load(vm.budget.type ? 'true':'false')"
 								disabled="@load(vm.disabledAll)">
@@ -98,9 +95,8 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Nro. Obra:"></label>
-						<combobox id="txtBConstructionNumber"
-							buttonVisible="false" width="355px"
-							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = txtBConstructionNumber)"
+						<combobox buttonVisible="false" width="355px"
+							value="@save(vm.budget.constructionnumber, before = 'save') @load(vm.budget.constructionnumber) @validator(vm.noEmpty, component = self)"
 							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='constructionnumber')"
 							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
@@ -114,9 +110,8 @@
 						<label sclass="formLabel" value="Vendedor:"
 							style="Color: Blue; font-weight:bold; ">
 						</label>
-						<combobox id="txtBSeller" width="235px"
-							buttonVisible="false"
-							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = txtBSeller)"
+						<combobox width="235px" buttonVisible="false"
+							value="@save(vm.budget.seller, before = 'save') @load(vm.budget.seller) @validator(vm.noEmpty, component = self)"
 							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='seller')"
 							autocomplete="true" model="@load(vm.listBudget)"
 							autodrop="@load(vm.disabledAll)"
@@ -130,26 +125,25 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Dirección:"></label>
-						<textbox id="txtBConstructionAddress"
-							width="350px"
-							value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = txtBConstructionAddress)"
+						<textbox width="350px"
+							value="@save(vm.budget.constructionaddress, before = 'save') @load(vm.budget.constructionaddress) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel" value="Ciudad:"></label>
-						<textbox id="txtBConstructionCity" width="230px"
-							value="@save(vm.budget.constructioncity, before = 'save') @load(vm.budget.constructioncity) @validator(vm.noEmpty, component = txtBConstructionCity)"
+						<textbox width="230px"
+							value="@save(vm.budget.constructioncity, before = 'save') @load(vm.budget.constructioncity) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Teléfono:"></label>
-						<textbox id="txtBcontactPhone" width="350px"
-							value="@save(vm.budget.contactphone, before = 'save') @load(vm.budget.contactphone) @validator(vm.noEmpty, component = txtBcontactPhone)"
+						<textbox width="350px"
+							value="@save(vm.budget.contactphone, before = 'save') @load(vm.budget.contactphone) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel" value="Email:"></label>
-						<textbox id="txtBEmail" width="230px"
-							value="@save(vm.budget.email, before = 'save') @load(vm.budget.email) @validator(vm.noEmail, component = txtBEmail)"
+						<textbox width="230px"
+							value="@save(vm.budget.email, before = 'save') @load(vm.budget.email) @validator(vm.noEmail, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
 					</row>
@@ -157,8 +151,8 @@
 						<label sclass="formLabel"
 							value="Persona de contacto:">
 						</label>
-						<textbox id="txtBContactName" width="350px"
-							value="@save(vm.budget.contactname, before = 'save') @load(vm.budget.contactname) @validator(vm.noEmpty, component = txtBContactName)"
+						<textbox width="350px"
+							value="@save(vm.budget.contactname, before = 'save') @load(vm.budget.contactname) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
 						<label sclass="formLabel"
