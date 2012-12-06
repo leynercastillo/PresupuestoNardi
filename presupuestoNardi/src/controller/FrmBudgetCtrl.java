@@ -33,7 +33,6 @@ import database.Budget;
 public class FrmBudgetCtrl {
 
 	private String seleccione = new String("--Seleccione--");
-	private String title = new String("Presupuesto Nardi");
 	private static final String vacio = new String(" ");
 
 	private List<Basicdata> listBType;
@@ -89,14 +88,6 @@ public class FrmBudgetCtrl {
 	private Integer antivandalismPB;
 	private Budget budget;
 	private Integer budgetNumber;
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
 
 	public List<Budget> getListBudget() {
 		return listBudget;
