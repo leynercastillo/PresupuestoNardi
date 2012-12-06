@@ -85,7 +85,7 @@
 						</combobox>
 						<space></space>
 						<radiogroup id="radBType"
-							selectedItem="@save(vm.budget.type) @validator(vm.noEmpty, component = txtBConstructionNumber)">
+							selectedItem="@save(vm.budget.type)">
 							<radio label="Nuevo" value="true"
 								checked="@load(vm.budget.type ? 'true':'false')"
 								disabled="@load(vm.disabledAll)">
