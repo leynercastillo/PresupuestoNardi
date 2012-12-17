@@ -23,7 +23,7 @@ import org.zkoss.zul.Window;
 
 import dao.DaoBasicData;
 import dao.DaoBudget;
-import database.Basicdata;
+import database.BasicData;
 import database.Budget;
 
 /**
@@ -35,35 +35,35 @@ public class FrmBudgetCtrl {
 	private String seleccione = new String("--Seleccione--");
 	private static final String vacio = new String(" ");
 
-	private List<Basicdata> listBType;
-	private List<Basicdata> listElevatorType;
-	private List<Basicdata> listElevatorCapa;
-	private List<Basicdata> listMachineType;
-	private List<Basicdata> listBEmbarque;
-	private List<Basicdata> listElectricityType;
-	private List<Basicdata> listSpeed;
-	private List<Basicdata> listFrequency;
-	private List<Basicdata> listVoltageLighting;
-	private List<Basicdata> listHourMachine;
-	private List<Basicdata> listManeuverType;
-	private List<Basicdata> listDesign1357;
-	private List<Basicdata> listDesignP26;
-	private List<Basicdata> listRoofType;
-	private List<Basicdata> listButtonType;
-	private List<Basicdata> listRailing;
-	private List<Basicdata> listMirror;
-	private List<Basicdata> listFloorType;
-	private List<Basicdata> listFan;
-	private List<Basicdata> listDoorType;
-	private List<Basicdata> listDoorSystem;
-	private List<Basicdata> listDoorframeType;
-	private List<Basicdata> listFreeAdmission;
-	private List<Basicdata> listHeight;
-	private List<Basicdata> listControlType;
-	private List<Basicdata> listBoothButton;
-	private List<Basicdata> listBoothDisplay;
-	private List<Basicdata> listFloorDisplay;
-	private List<Basicdata> listMotorTraction;
+	private List<BasicData> listBType;
+	private List<BasicData> listElevatorType;
+	private List<BasicData> listElevatorCapa;
+	private List<BasicData> listMachineType;
+	private List<BasicData> listBEmbarque;
+	private List<BasicData> listElectricityType;
+	private List<BasicData> listSpeed;
+	private List<BasicData> listFrequency;
+	private List<BasicData> listVoltageLighting;
+	private List<BasicData> listHourMachine;
+	private List<BasicData> listManeuverType;
+	private List<BasicData> listDesign1357;
+	private List<BasicData> listDesignP26;
+	private List<BasicData> listRoofType;
+	private List<BasicData> listButtonType;
+	private List<BasicData> listRailing;
+	private List<BasicData> listMirror;
+	private List<BasicData> listFloorType;
+	private List<BasicData> listFan;
+	private List<BasicData> listDoorType;
+	private List<BasicData> listDoorSystem;
+	private List<BasicData> listDoorframeType;
+	private List<BasicData> listFreeAdmission;
+	private List<BasicData> listHeight;
+	private List<BasicData> listControlType;
+	private List<BasicData> listBoothButton;
+	private List<BasicData> listBoothDisplay;
+	private List<BasicData> listFloorDisplay;
+	private List<BasicData> listMotorTraction;
 	private List<Budget> listBudget;
 	private Boolean stopSequenceContinuous;
 	private Boolean stopSequencePar;
@@ -72,6 +72,8 @@ public class FrmBudgetCtrl {
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
 	private Boolean disabledAll;
+	private Boolean disableAfterSearch;
+	private Boolean disabledNumber;
 	private String txtStopSequenceContinuous;
 	private String txtStopSequencePar;
 	private String txtStopSequenceOdd;
@@ -87,7 +89,22 @@ public class FrmBudgetCtrl {
 	private Integer antivandalismFloor;
 	private Integer antivandalismPB;
 	private Budget budget;
-	private Integer budgetNumber;
+
+	public Boolean getDisabledNumber() {
+		return disabledNumber;
+	}
+
+	public void setDisabledNumber(Boolean disabledNumber) {
+		this.disabledNumber = disabledNumber;
+	}
+
+	public Boolean getDisableAfterSearch() {
+		return disableAfterSearch;
+	}
+
+	public void setDisableAfterSearch(Boolean disableAfterSearch) {
+		this.disableAfterSearch = disableAfterSearch;
+	}
 
 	public List<Budget> getListBudget() {
 		return listBudget;
@@ -95,14 +112,6 @@ public class FrmBudgetCtrl {
 
 	public void setListBudget(List<Budget> listBudget) {
 		this.listBudget = listBudget;
-	}
-
-	public Integer getBudgetNumber() {
-		return budgetNumber;
-	}
-
-	public void setBudgetNumber(Integer budgetNumber) {
-		this.budgetNumber = budgetNumber;
 	}
 
 	public Boolean getDisabledAll() {
@@ -289,235 +298,235 @@ public class FrmBudgetCtrl {
 		this.budget = budget;
 	}
 
-	public List<Basicdata> getListMotorTraction() {
+	public List<BasicData> getListMotorTraction() {
 		return listMotorTraction;
 	}
 
-	public void setListMotorTraction(List<Basicdata> listMotorTraction) {
+	public void setListMotorTraction(List<BasicData> listMotorTraction) {
 		this.listMotorTraction = listMotorTraction;
 	}
 
-	public List<Basicdata> getListFloorDisplay() {
+	public List<BasicData> getListFloorDisplay() {
 		return listFloorDisplay;
 	}
 
-	public void setListFloorDisplay(List<Basicdata> listFloorDisplay) {
+	public void setListFloorDisplay(List<BasicData> listFloorDisplay) {
 		this.listFloorDisplay = listFloorDisplay;
 	}
 
-	public List<Basicdata> getListBoothDisplay() {
+	public List<BasicData> getListBoothDisplay() {
 		return listBoothDisplay;
 	}
 
-	public void setListBoothDisplay(List<Basicdata> listBoothDisplay) {
+	public void setListBoothDisplay(List<BasicData> listBoothDisplay) {
 		this.listBoothDisplay = listBoothDisplay;
 	}
 
-	public List<Basicdata> getListBoothButton() {
+	public List<BasicData> getListBoothButton() {
 		return listBoothButton;
 	}
 
-	public void setListBoothButton(List<Basicdata> listBoothButton) {
+	public void setListBoothButton(List<BasicData> listBoothButton) {
 		this.listBoothButton = listBoothButton;
 	}
 
-	public List<Basicdata> getListControlType() {
+	public List<BasicData> getListControlType() {
 		return listControlType;
 	}
 
-	public void setListControlType(List<Basicdata> listControlType) {
+	public void setListControlType(List<BasicData> listControlType) {
 		this.listControlType = listControlType;
 	}
 
-	public List<Basicdata> getListHeight() {
+	public List<BasicData> getListHeight() {
 		return listHeight;
 	}
 
-	public void setListHeight(List<Basicdata> listHeight) {
+	public void setListHeight(List<BasicData> listHeight) {
 		this.listHeight = listHeight;
 	}
 
-	public List<Basicdata> getListFreeAdmission() {
+	public List<BasicData> getListFreeAdmission() {
 		return listFreeAdmission;
 	}
 
-	public void setListFreeAdmission(List<Basicdata> listFreeAdmission) {
+	public void setListFreeAdmission(List<BasicData> listFreeAdmission) {
 		this.listFreeAdmission = listFreeAdmission;
 	}
 
-	public List<Basicdata> getListDoorframeType() {
+	public List<BasicData> getListDoorframeType() {
 		return listDoorframeType;
 	}
 
-	public void setListDoorframeType(List<Basicdata> listDoorframeType) {
+	public void setListDoorframeType(List<BasicData> listDoorframeType) {
 		this.listDoorframeType = listDoorframeType;
 	}
 
-	public List<Basicdata> getListDoorSystem() {
+	public List<BasicData> getListDoorSystem() {
 		return listDoorSystem;
 	}
 
-	public void setListDoorSystem(List<Basicdata> listDoorSystem) {
+	public void setListDoorSystem(List<BasicData> listDoorSystem) {
 		this.listDoorSystem = listDoorSystem;
 	}
 
-	public List<Basicdata> getListDoorType() {
+	public List<BasicData> getListDoorType() {
 		return listDoorType;
 	}
 
-	public void setListDoorType(List<Basicdata> listDoorType) {
+	public void setListDoorType(List<BasicData> listDoorType) {
 		this.listDoorType = listDoorType;
 	}
 
-	public List<Basicdata> getListFan() {
+	public List<BasicData> getListFan() {
 		return listFan;
 	}
 
-	public void setListFan(List<Basicdata> listFan) {
+	public void setListFan(List<BasicData> listFan) {
 		this.listFan = listFan;
 	}
 
-	public List<Basicdata> getListFloorType() {
+	public List<BasicData> getListFloorType() {
 		return listFloorType;
 	}
 
-	public void setListFloorType(List<Basicdata> listFloorType) {
+	public void setListFloorType(List<BasicData> listFloorType) {
 		this.listFloorType = listFloorType;
 	}
 
-	public List<Basicdata> getListMirror() {
+	public List<BasicData> getListMirror() {
 		return listMirror;
 	}
 
-	public void setListMirror(List<Basicdata> listMirror) {
+	public void setListMirror(List<BasicData> listMirror) {
 		this.listMirror = listMirror;
 	}
 
-	public List<Basicdata> getListRailing() {
+	public List<BasicData> getListRailing() {
 		return listRailing;
 	}
 
-	public void setListRailing(List<Basicdata> listRailing) {
+	public void setListRailing(List<BasicData> listRailing) {
 		this.listRailing = listRailing;
 	}
 
-	public List<Basicdata> getListButtonType() {
+	public List<BasicData> getListButtonType() {
 		return listButtonType;
 	}
 
-	public void setListButtonType(List<Basicdata> listButtonType) {
+	public void setListButtonType(List<BasicData> listButtonType) {
 		this.listButtonType = listButtonType;
 	}
 
-	public List<Basicdata> getListRoofType() {
+	public List<BasicData> getListRoofType() {
 		return listRoofType;
 	}
 
-	public void setListRoofType(List<Basicdata> listRoofType) {
+	public void setListRoofType(List<BasicData> listRoofType) {
 		this.listRoofType = listRoofType;
 	}
 
-	public List<Basicdata> getListDesignP26() {
+	public List<BasicData> getListDesignP26() {
 		return listDesignP26;
 	}
 
-	public void setListDesignP26(List<Basicdata> listDesignP26) {
+	public void setListDesignP26(List<BasicData> listDesignP26) {
 		this.listDesignP26 = listDesignP26;
 	}
 
-	public List<Basicdata> getListDesign1357() {
+	public List<BasicData> getListDesign1357() {
 		return listDesign1357;
 	}
 
-	public void setListDesign1357(List<Basicdata> listDesign1357) {
+	public void setListDesign1357(List<BasicData> listDesign1357) {
 		this.listDesign1357 = listDesign1357;
 	}
 
-	public List<Basicdata> getListManeuverType() {
+	public List<BasicData> getListManeuverType() {
 		return listManeuverType;
 	}
 
-	public void setListManeuverType(List<Basicdata> listManeuverType) {
+	public void setListManeuverType(List<BasicData> listManeuverType) {
 		this.listManeuverType = listManeuverType;
 	}
 
-	public List<Basicdata> getListHourMachine() {
+	public List<BasicData> getListHourMachine() {
 		return listHourMachine;
 	}
 
-	public void setListHourMachine(List<Basicdata> listHourMachine) {
+	public void setListHourMachine(List<BasicData> listHourMachine) {
 		this.listHourMachine = listHourMachine;
 	}
 
-	public List<Basicdata> getListVoltageLighting() {
+	public List<BasicData> getListVoltageLighting() {
 		return listVoltageLighting;
 	}
 
-	public void setListVoltageLighting(List<Basicdata> listVoltageLighting) {
+	public void setListVoltageLighting(List<BasicData> listVoltageLighting) {
 		this.listVoltageLighting = listVoltageLighting;
 	}
 
-	public List<Basicdata> getListFrequency() {
+	public List<BasicData> getListFrequency() {
 		return listFrequency;
 	}
 
-	public void setListFrequency(List<Basicdata> listFrequency) {
+	public void setListFrequency(List<BasicData> listFrequency) {
 		this.listFrequency = listFrequency;
 	}
 
-	public List<Basicdata> getListSpeed() {
+	public List<BasicData> getListSpeed() {
 		return listSpeed;
 	}
 
-	public void setListSpeed(List<Basicdata> listSpeed) {
+	public void setListSpeed(List<BasicData> listSpeed) {
 		this.listSpeed = listSpeed;
 	}
 
-	public List<Basicdata> getListElectricityType() {
+	public List<BasicData> getListElectricityType() {
 		return listElectricityType;
 	}
 
-	public void setListElectricityType(List<Basicdata> listElectricityType) {
+	public void setListElectricityType(List<BasicData> listElectricityType) {
 		this.listElectricityType = listElectricityType;
 	}
 
-	public List<Basicdata> getListBEmbarque() {
+	public List<BasicData> getListBEmbarque() {
 		return listBEmbarque;
 	}
 
-	public void setListBEmbarque(List<Basicdata> listBEmbarque) {
+	public void setListBEmbarque(List<BasicData> listBEmbarque) {
 		this.listBEmbarque = listBEmbarque;
 	}
 
-	public List<Basicdata> getListMachineType() {
+	public List<BasicData> getListMachineType() {
 		return listMachineType;
 	}
 
-	public void setListMachineType(List<Basicdata> listMachineType) {
+	public void setListMachineType(List<BasicData> listMachineType) {
 		this.listMachineType = listMachineType;
 	}
 
-	public List<Basicdata> getListElevatorCapa() {
+	public List<BasicData> getListElevatorCapa() {
 		return listElevatorCapa;
 	}
 
-	public void setListElevatorCapa(List<Basicdata> listElevatorCapa) {
+	public void setListElevatorCapa(List<BasicData> listElevatorCapa) {
 		this.listElevatorCapa = listElevatorCapa;
 	}
 
-	public List<Basicdata> getListElevatorType() {
+	public List<BasicData> getListElevatorType() {
 		return listElevatorType;
 	}
 
-	public void setListElevatorType(List<Basicdata> listElevatorType) {
+	public void setListElevatorType(List<BasicData> listElevatorType) {
 		this.listElevatorType = listElevatorType;
 	}
 
-	public List<Basicdata> getListBType() {
+	public List<BasicData> getListBType() {
 		return listBType;
 	}
 
-	public void setListBType(List<Basicdata> listBType) {
+	public void setListBType(List<BasicData> listBType) {
 		this.listBType = listBType;
 	}
 
@@ -527,12 +536,12 @@ public class FrmBudgetCtrl {
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
-	
+
 	@Init
-	public void init(){
+	public void init() {
 		restartForm();
 	}
-	
+
 	@NotifyChange("*")
 	@Command
 	public void restartForm() {
@@ -540,34 +549,36 @@ public class FrmBudgetCtrl {
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
 		if (daoBudget.list(Budget.class).isEmpty())
-			budgetNumber = 1;
+			budget.setNumber(1);
 		else
-			budgetNumber = daoBudget.list(Budget.class)
-					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1;
-		disabledAll = false;
+			budget.setNumber(daoBudget.list(Budget.class)
+					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
+		disabledAll = new Boolean(false);
+		disableAfterSearch = new Boolean(false);
+		disabledNumber = new Boolean(true);
 		budget.setDate(new Date());
 		budget.setType(true);
-		budget.setPlanec(false);
-		budget.setPlanep(false);
-		budget.setLightcurtain(false);
-		budget.setLoadlimiter(false);
-		budget.setSpeechsynthesizer(false);
-		budget.setGomsystem(false);
+		budget.setPlaneC(false);
+		budget.setPlaneP(false);
+		budget.setLightCurtain(false);
+		budget.setLoadLimiter(false);
+		budget.setSpeechSynthesizer(false);
+		budget.setGomSystem(false);
 		budget.setIntercom(false);
 		budget.setPhone(false);
-		budget.setAccesssytem(false);
-		budget.setFirefighterkeychain(false);
-		budget.setDesignspecial(false);
-		budget.setMotortraction(vacio);
-		budget.setHallbutton(vacio);
-		budget.setDisplayplacefloor(vacio);
+		budget.setAccessSytem(false);
+		budget.setFirefighterKeychain(false);
+		budget.setDesignSpecial(false);
+		budget.setMotorTraction(vacio);
+		budget.setHallButton(vacio);
+		budget.setDisplayPlaceFloor(vacio);
 		budget.setStatus('A');
-		budget.setStopsequencecontinuous(false);
-		budget.setStopsequenceeven(false);
-		budget.setStopsequenceodd(false);
-		budget.setDoorframestainless(false);
-		budget.setDoorframebrown(false);
-		budget.setDoorframegray(false);
+		budget.setStopSequenceContinuous(false);
+		budget.setStopSequenceEven(false);
+		budget.setStopSequenceOdd(false);
+		budget.setDoorFrameStainless(false);
+		budget.setDoorFrameBrown(false);
+		budget.setDoorFrameGray(false);
 		listBType = daoBasicData.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicData.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicData.listByField("BUDGET",
@@ -604,14 +615,14 @@ public class FrmBudgetCtrl {
 		listMotorTraction = daoBasicData
 				.listByField("BUDGET", "MOTOR TRACTION");
 		listBudget = new ArrayList<Budget>();
-		budget.setSistelwarrowfloor(0);
-		budget.setSistelwdisplaypb(0);
-		budget.setSistelwdisplayfloor(0);
-		budget.setSistelwarrowpb(0);
+		budget.setSistelWarrowFloor(0);
+		budget.setSistelWdisplayPb(0);
+		budget.setSistelWdisplayFloor(0);
+		budget.setSistelWarrowPb(0);
 		budget.setBraile37floor(0);
 		budget.setBraile37pb(0);
-		budget.setAntivandalismfloor(0);
-		budget.setAntivandalismpb(0);
+		budget.setAntivandalismFloor(0);
+		budget.setAntivandalismPb(0);
 	}
 
 	/**
@@ -658,7 +669,12 @@ public class FrmBudgetCtrl {
 	@NotifyChange({ "*" })
 	@Command
 	public void save() {
-		DaoBudget daoBudget = new DaoBudget();		
+		DaoBudget daoBudget = new DaoBudget();
+		if (daoBudget.list(Budget.class).isEmpty())
+			budget.setNumber(1);
+		else
+			budget.setNumber(daoBudget.list(Budget.class)
+					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
 		if (!daoBudget.save(budget)) {
 			Messagebox.show("Fallo Guardado Budget", "Error", Messagebox.OK,
 					Messagebox.ERROR);
@@ -668,63 +684,78 @@ public class FrmBudgetCtrl {
 				Messagebox.INFORMATION);
 		restartForm();
 	}
-	
-	@NotifyChange({"disabledAll","budgetNumber","budget"})
+
+	@NotifyChange({ "disabledAll", "budgetNumber", "budget", "disableAfterSearch", "disabledNumber" })
 	@Command
-	public void search(){
+	public void search() {
 		restartForm();
-		budgetNumber = null;
-		disabledAll = true;
+		budget.setNumber(0);
+		disabledAll = new Boolean(true);
+		disableAfterSearch = new Boolean(false);
+		disabledNumber = new Boolean(false);
 	}
 
-	@NotifyChange({"listBudget"})
+	@NotifyChange({ "listBudget" })
 	@Command
-	public void loadBudgetByField(@BindingParam("field") String field){
+	public void loadBudgetByField(@BindingParam("field") String field) {
 		DaoBudget daoBudget = new DaoBudget();
 		listBudget = daoBudget.listOrderBudgetbyField(field);
 	}
 
 	@NotifyChange("*")
 	@Command
-	public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value){		
+	public void searchBudget(@BindingParam("field") String field,
+			@BindingParam("val") String value) {
 		DaoBudget daoBudget = new DaoBudget();
 		List<Budget> listBudget2 = daoBudget.findByString(field, value);
 		int listSize = listBudget2.size();
-		if (listSize == 1){
+		if (listSize == 1) {
 			budget = listBudget2.get(0);
-			budgetNumber = budget.getNumber();
-			disabledAll = false;
-		} else  if (listSize == 0){
-			Messagebox.show("Ningun registro coincide");			
+			disableAfterSearch = new Boolean(true);
+			disabledNumber = new Boolean(true);
+			/*
+			 * disabledAll = new Boolean(false); disabledSave = new
+			 * Boolean(false);
+			 */
+		} else if (listSize == 0) {
+			Messagebox.show("Ningun registro coincide");
 		} else {
 			Map map = new HashMap();
 			map.put("listBudget", listBudget2);
-			Window win = (Window)Executions.createComponents("frmWindowBudgets.zul", null, map);
+			Window win = (Window) Executions.createComponents(
+					"frmWindowBudgets.zul", null, map);
 			listBudget = listBudget2;
 		}
 	}
 
 	@NotifyChange("*")
 	@Command
-	public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value){
+	public void searchBudgetId(@BindingParam("field") String field,
+			@BindingParam("val") String value) {
 		DaoBudget daoBudget = new DaoBudget();
 		Integer budgetId = Integer.parseInt(value);
-		List<Budget> listBudget2 = daoBudget.findByInteger(field, budgetId);		
+		List<Budget> listBudget2 = daoBudget.findByInteger(field, budgetId);
 		budget = listBudget2.get(0);
-		budgetNumber = budget.getNumber();
-		disabledAll = false;
+		disableAfterSearch = new Boolean(true);
+		disabledNumber = new Boolean(true);
+		/*
+		 * disabledAll = new Boolean(false); disabledSave = new Boolean(false);
+		 */
 	}
 
-	@NotifyChange({"budget","disabledAll","budgetNumber"})
+	@NotifyChange({ "budget", "disabledAll", "budgetNumber", "disableAfterSearch", "disabledNumber" })
 	@GlobalCommand
-	public void selectedBudget(@BindingParam("Budget") Budget budget){
+	public void selectedBudget(@BindingParam("Budget") Budget budget) {
 		this.budget = budget;
-		disabledAll = false;
-		budgetNumber = budget.getNumber();
+		disableAfterSearch = new Boolean(true);
+		disabledNumber = new Boolean(true);
+		/*
+		 * disabledAll = new Boolean(false); disabledSave = new Boolean(false);
+		 */
 	}
 
 	@Command
-	public void close(){
+	public void close() {
 		Map map = new HashMap();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);

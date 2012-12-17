@@ -16,9 +16,9 @@
 			<template name="model" var="budget">
 				<listitem>
 					<listcell label="@load(budget.number)"></listcell>
-					<listcell label="@load(budget.partnername)"></listcell>
+					<listcell label="@load(budget.partnerName)"></listcell>
 					<listcell label="@load(budget.date) @converter('formattedDate', format='dd/MM/yyyy')"></listcell>
-					<listcell label="@load(budget.constructioncity)">
+					<listcell label="@load(budget.constructionCity)">
 					</listcell>
 					<listcell label="@load(budget.seller)"></listcell>
 				</listitem>

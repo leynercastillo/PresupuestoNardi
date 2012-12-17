@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.1.6
 -- Dumped by pg_dump version 9.1.6
--- Started on 2012-12-14 23:56:57 VET
+-- Started on 2012-12-14 23:58:22 VET
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -21,7 +21,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1982 (class 0 OID 0)
+-- TOC entry 1980 (class 0 OID 0)
 -- Dependencies: 166
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -71,21 +71,12 @@ CREATE SEQUENCE basicdata_idbasic_seq
 ALTER TABLE public.basicdata_idbasic_seq OWNER TO postgres;
 
 --
--- TOC entry 1983 (class 0 OID 0)
+-- TOC entry 1981 (class 0 OID 0)
 -- Dependencies: 161
 -- Name: basicdata_idbasic_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE basicdata_idbasic_seq OWNED BY basicdata.idbasic;
-
-
---
--- TOC entry 1984 (class 0 OID 0)
--- Dependencies: 161
--- Name: basicdata_idbasic_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('basicdata_idbasic_seq', 1, false);
 
 
 --
@@ -204,21 +195,12 @@ CREATE SEQUENCE budget_idbudget_seq
 ALTER TABLE public.budget_idbudget_seq OWNER TO postgres;
 
 --
--- TOC entry 1985 (class 0 OID 0)
+-- TOC entry 1982 (class 0 OID 0)
 -- Dependencies: 163
 -- Name: budget_idbudget_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE budget_idbudget_seq OWNED BY budget.idbudget;
-
-
---
--- TOC entry 1986 (class 0 OID 0)
--- Dependencies: 163
--- Name: budget_idbudget_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('budget_idbudget_seq', 1, false);
 
 
 --
@@ -238,21 +220,12 @@ CREATE SEQUENCE budget_number_seq
 ALTER TABLE public.budget_number_seq OWNER TO postgres;
 
 --
--- TOC entry 1987 (class 0 OID 0)
+-- TOC entry 1983 (class 0 OID 0)
 -- Dependencies: 164
 -- Name: budget_number_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE budget_number_seq OWNED BY budget.number;
-
-
---
--- TOC entry 1988 (class 0 OID 0)
--- Dependencies: 164
--- Name: budget_number_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('budget_number_seq', 1, false);
 
 
 --
@@ -283,156 +256,8 @@ ALTER TABLE ONLY budget ALTER COLUMN number SET DEFAULT nextval('budget_number_s
 
 
 --
--- TOC entry 1973 (class 0 OID 17584)
--- Dependencies: 162 1975
--- Data for Name: basicdata; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY basicdata (idbasic, database, name, field, editable, priority, status) FROM stdin;
-1	BUDGET	RESIDENCIAL	BUILDING TYPE	f	1	A
-2	BUDGET	COMERCIAL	BUILDING TYPE	f	2	A
-3	BUDGET	EMPRESARIAL	BUILDING TYPE	f	3	A
-4	BUDGET	HOSPITAL	BUILDING TYPE	f	4	A
-5	BUDGET	HOTEL	BUILDING TYPE	f	5	A
-6	BUDGET	INDUSTRIAL	BUILDING TYPE	f	6	A
-7	BUDGET	PASAJERO	ELEVATOR TYPE	f	1	A
-8	BUDGET	MONTA CAMILLA	ELEVATOR TYPE	f	2	A
-9	BUDGET	PANORAMICO	ELEVATOR TYPE	f	3	A
-10	BUDGET	CARGA	ELEVATOR TYPE	f	4	A
-11	BUDGET	MONTA CARRO	ELEVATOR TYPE	f	5	A
-12	BUDGET	MONTA PLATO	ELEVATOR TYPE	f	6	A
-13	BUDGET	WINCHE	ELEVATOR TYPE	f	7	A
-14	BUDGET	320 - 4	ELEVATOR CAPACITANCE	f	1	A
-15	BUDGET	450 - 6	ELEVATOR CAPACITANCE	f	2	A
-16	BUDGET	600 - 8	ELEVATOR CAPACITANCE	f	3	A
-17	BUDGET	800 - 10	ELEVATOR CAPACITANCE	f	4	A
-18	BUDGET	1000 - 13	ELEVATOR CAPACITANCE	f	5	A
-19	BUDGET	1250 - 16	ELEVATOR CAPACITANCE	f	6	A
-20	BUDGET	1500 - 19	ELEVATOR CAPACITANCE	f	7	A
-21	BUDGET	2000 - 22	ELEVATOR CAPACITANCE	f	8	A
-66	BUDGET	PL-MODULAR	ROOF TYPE	f	5	A
-44	BUDGET	110V	VOLTAGE LIGHTING	f	1	A
-56	BUDGET	FORMICA	DESIGN 1357	f	1	A
-45	BUDGET	220V	VOLTAGE LIGHTING	f	2	A
-22	BUDGET	CON SALA DE MAQUINA 2V	MACHINE TYPE	f	1	A
-23	BUDGET	CON SALA DE MAQUINA VVVF	MACHINE TYPE	f	2	A
-24	BUDGET	SIN SALA DE MAQUINA MRL	MACHINE TYPE	f	3	A
-25	BUDGET	HIDRAULICO	MACHINE TYPE	f	4	A
-26	BUDGET	WINCHE	MACHINE TYPE	f	5	A
-27	BUDGET	1 PUERTA	BUILDING EMBARQUE	f	1	A
-57	BUDGET	ACERO INOXIDABLE	DESIGN 1357	f	2	A
-46	BUDGET	180 HORAS (STANDARD)	HOUR MACHINE	f	1	A
-28	BUDGET	2 PUERTAS (DOBLE ACCESO - 180)	BUILDING EMBARQUE	f	2	A
-29	BUDGET	2 PUERTAS (DOBLE ACCESO - 90)	BUILDING EMBARQUE	f	3	A
-30	BUDGET	2 PUERTAS (DOBLE ACCESO - 270)	BUILDING EMBARQUE	f	4	A
-47	BUDGET	240 HORAS (ALTO TRAFICO)	HOUR MACHINE	f	2	A
-42	BUDGET	60 HZ	FREQUENCY	f	1	A
-31	BUDGET	208V	ELECTRICITY TYPE	f	1	A
-43	BUDGET	50 HZ	FREQUENCY	f	2	A
-32	BUDGET	220V	ELECTRICITY TYPE	f	2	A
-33	BUDGET	308V	ELECTRICITY TYPE	f	3	A
-74	BUDGET	POR CUENTA DEL CLIENTE	RAILING	f	2	A
-34	BUDGET	440V	ELECTRICITY TYPE	f	4	A
-67	BUDGET	CORTA	BUTTON TYPE	f	1	A
-48	BUDGET	COLECTIVA EN BAJADA SIMPLEX (UN BOTON)	MANEUVER TYPE	f	1	A
-35	BUDGET	0.5	SPEED	f	1	A
-58	BUDGET	FORMICA - HORIZONTAL	DESIGN P26	f	1	A
-36	BUDGET	1	SPEED	f	2	A
-37	BUDGET	1.2	SPEED	f	3	A
-38	BUDGET	1.6	SPEED	f	4	A
-49	BUDGET	COLECTIVA EN BAJADA DUPLEX (UN BOTON)	MANEUVER TYPE	f	2	A
-39	BUDGET	1.75	SPEED	f	5	A
-50	BUDGET	COLECTIVA EN BAJADA TRIPLEX (UN BOTON)	MANEUVER TYPE	f	3	A
-40	BUDGET	2	SPEED	f	6	A
-41	BUDGET	2.5	SPEED	f	7	A
-51	BUDGET	COLECTIVA EN BAJADA CUADRUPLEX (UN BOTON)	MANEUVER TYPE	f	4	A
-59	BUDGET	FORMICA - VERTICAL	DESIGN P26	f	2	A
-52	BUDGET	COLECTIVA EN BAJADA SIMPLEX (DOS BOTONES)	MANEUVER TYPE	f	5	A
-60	BUDGET	ACERO INOX. - HORIZONTAL	DESIGN P26	f	3	A
-53	BUDGET	COLECTIVA EN BAJADA DUPLEX (DOS BOTONES)	MANEUVER TYPE	f	6	A
-54	BUDGET	COLECTIVA EN BAJADA TRIPLEX (DOS BOTONES)	MANEUVER TYPE	f	7	A
-68	BUDGET	PISO A TECHO	BUTTON TYPE	f	2	A
-55	BUDGET	COLECTIVA EN BAJADA CUADRUPLEX (DOS BOTONES)	MANEUVER TYPE	f	8	A
-61	BUDGET	ACERO INOX. - VERTICAL	DESIGN P26	f	4	A
-62	BUDGET	PL-3	ROOF TYPE	f	1	A
-69	BUDGET	PISO A TECHO CON TELF	BUTTON TYPE	f	3	A
-63	BUDGET	PL-4	ROOF TYPE	f	2	A
-64	BUDGET	PL-6	ROOF TYPE	f	3	A
-65	BUDGET	PL-PERFORADO	ROOF TYPE	f	4	A
-75	BUDGET	VINIL	FLOOR TYPE	f	1	A
-70	BUDGET	RECTO	RAILING	f	1	A
-71	BUDGET	REDONDO	RAILING	f	2	A
-76	BUDGET	VULCA	FLOOR TYPE	f	2	A
-72	BUDGET	DOBLE PASAMANO REDONDO	RAILING	f	3	A
-73	BUDGET	ACERO TIPO ESPEJO	RAILING	f	1	A
-77	BUDGET	GRANITO	FLOOR TYPE	f	3	A
-78	BUDGET	GRANITO POR CUENTA DEL CLIENTE	FLOOR TYPE	f	4	A
-79	BUDGET	OTROS	FLOOR TYPE	f	5	A
-80	BUDGET	1 - 450 KG	FAN	f	1	A
-81	BUDGET	1 - 600 KG	FAN	f	2	A
-126	BUDGET	CF CONTROL LCD AZUL	FLOOR DISPLAY	f	8	A
-127	BUDGET	ACERO TIPO ESPEJO	MIRROR	f	1	A
-82	BUDGET	2 - 800 KG	FAN	f	3	A
-111	BUDGET	SISTEL MATRIZ DE PUNTO PEQUENO	BOOTH DISPLAY	f	1	A
-83	BUDGET	2 - 1000 KG	FAN	f	4	A
-84	BUDGET	2 - 1200 KG	FAN	f	5	A
-85	BUDGET	2 - 1500 KG	FAN	f	6	A
-112	BUDGET	SISTEL MATRIZ DE PUNTO GRANDE	BOOTH DISPLAY	f	2	A
-86	BUDGET	APERTURA TELESCOPIO IZQUIERDO	DOOR TYPE	f	1	A
-87	BUDGET	APERTURA TELESCOPIO DERECHA	DOOR TYPE	f	2	A
-88	BUDGET	APERTURA TELESCOPIO CENTRAL	DOOR TYPE	f	3	A
-113	BUDGET	SISTEL MATRIZ DE PUNTO HORA Y GRADO	BOOTH DISPLAY	f	3	A
-89	BUDGET	APERTURA CENTRAL	DOOR TYPE	f	4	A
-90	BUDGET	BATIENTE	DOOR TYPE	f	5	A
-128	BUDGET	POR CUENTA DEL CLIENTE	MIRROR	f	2	A
-91	BUDGET	FERMATOR	DOOR SYSTEM	f	1	A
-92	BUDGET	SELCON	DOOR SYSTEM	f	2	A
-93	BUDGET	RECTO - 50X100	DOOR FRAME TYPE	f	1	A
-115	BUDGET	SISTEL LCD AZUL	BOOTH DISPLAY	f	5	A
-94	BUDGET	RECTO - 30X150	DOOR FRAME TYPE	f	2	A
-95	BUDGET	ABIERTO	DOOR FRAME TYPE	f	3	A
-116	BUDGET	CF CONTROL MATRIZ DE PUNTO ROJO	BOOTH DISPLAY	f	6	A
-96	BUDGET	OCULTO	DOOR FRAME TYPE	f	4	A
-97	BUDGET	700	FREE ADMISSION	f	1	A
-117	BUDGET	CF CONTROL MATRIZ DE PUNTO AZUL	BOOTH DISPLAY	f	7	A
-98	BUDGET	800	FREE ADMISSION	f	2	A
-99	BUDGET	900	FREE ADMISSION	f	3	A
-100	BUDGET	1000	FREE ADMISSION	f	4	A
-118	BUDGET	CF CONTROL LCD AZUL	BOOTH DISPLAY	f	8	A
-101	BUDGET	1100	FREE ADMISSION	f	5	A
-102	BUDGET	1200	FREE ADMISSION	f	6	A
-103	BUDGET	2000	HEIGHT	f	1	A
-104	BUDGET	2100	HEIGHT	f	2	A
-119	BUDGET	SISTEL MATRIZ DE PUNTO PEQUENO	FLOOR DISPLAY	f	1	A
-105	BUDGET	SISTEL	CONTROL TYPE	f	1	A
-106	BUDGET	CF CONTROL	CONTROL TYPE	f	2	A
-107	BUDGET	RELEMATICO	CONTROL TYPE	f	3	A
-120	BUDGET	SISTEL MATRIZ DE PUNTO GRANDE	FLOOR DISPLAY	f	2	A
-108	BUDGET	SISTEL TELEFONICA	BOOTH BUTTON	f	1	A
-109	BUDGET	BOTON ACERO PLASTICO CON NOMENCLATURA Y BRAILLE DE 37mm	BOOTH BUTTON	f	2	A
-121	BUDGET	SISTEL MATRIZ DE PUNTO HORA Y GRADO	FLOOR DISPLAY	f	3	A
-110	BUDGET	BOTON DE ACERO INOX. ANTI - VANDALICO DE 30 mm	BOOTH BUTTON	f	3	A
-114	BUDGET	SISTEL LCD DE 7''	BOOTH DISPLAY	f	4	A
-122	BUDGET	SISTEL LCD DE 7 ''	FLOOR DISPLAY	f	4	A
-123	BUDGET	SISTEL LCD AZUL	FLOOR DISPLAY	f	5	A
-124	BUDGET	CF CONTROL MATRIZ DE PUNTO ROJO	FLOOR DISPLAY	f	6	A
-125	BUDGET	CF CONTROL MATRIZ DE PUNTO AZUL	FLOOR DISPLAY	f	7	A
-\.
-
-
---
--- TOC entry 1974 (class 0 OID 17597)
--- Dependencies: 165 1975
--- Data for Name: budget; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY budget (idbudget, number, date, partnername, construction, constructionnumber, seller, constructionaddress, constructioncity, contactphone, email, contactname, planep, planec, type, buildingtype, elevatortype, elevatorquantity, elevatorcapacitance, motorquantity, motortraction, machinetype, embarque, electricitytype, speed, frequency, voltagelighting, hourmachine, maneuvertype, stopnumber, tour, ontour, widthhole, fossa, bottomhole, design1357, designp26, designspecial, designspecialcomment, rooftype, buttontype, railing, mirror, floortype, fan, doorofnumber, doortype, doorsystem, doorframetype, height, freeadmission, controltype, boothbutton, hallbutton, boothdisplay, floordisplay, lightcurtain, loadlimiter, speechsynthesizer, gomsystem, intercom, phone, accesssytem, firefighterkeychain, comment, displayplacefloor, stopsequencecontinuous, stopsequencecontinuousq, stopsequenceeven, stopsequenceevenq, stopsequenceodd, stopsequenceoddq, doorframegray, doorframegraydescrip, doorframebrown, doorframebrowndescrip, doorframestainless, doorframestainlessdescrip, sistelwdisplaypb, sistelwdisplayfloor, sistelwarrowpb, sistelwarrowfloor, braile37pb, braile37floor, antivandalismpb, antivandalismfloor, status) FROM stdin;
-\.
-
-
---
 -- TOC entry 1942 (class 2606 OID 17592)
--- Dependencies: 162 162 1976
+-- Dependencies: 162 162 1974
 -- Name: idbasicdata; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -442,7 +267,7 @@ ALTER TABLE ONLY basicdata
 
 --
 -- TOC entry 1944 (class 2606 OID 17606)
--- Dependencies: 165 165 1976
+-- Dependencies: 165 165 1974
 -- Name: idbudget; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -452,7 +277,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1951 (class 2606 OID 17637)
--- Dependencies: 1941 162 165 1976
+-- Dependencies: 1941 162 165 1974
 -- Name: basicdata_budget_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -462,7 +287,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1945 (class 2606 OID 17607)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -472,7 +297,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1954 (class 2606 OID 17652)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk10; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -482,7 +307,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1955 (class 2606 OID 17657)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk12; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -492,7 +317,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1956 (class 2606 OID 17662)
--- Dependencies: 1941 165 162 1976
+-- Dependencies: 1941 165 162 1974
 -- Name: basicdata_budget_fk13; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -502,7 +327,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1957 (class 2606 OID 17667)
--- Dependencies: 165 162 1941 1976
+-- Dependencies: 165 162 1941 1974
 -- Name: basicdata_budget_fk14; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -512,7 +337,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1958 (class 2606 OID 17672)
--- Dependencies: 165 162 1941 1976
+-- Dependencies: 165 162 1941 1974
 -- Name: basicdata_budget_fk15; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -522,7 +347,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1959 (class 2606 OID 17677)
--- Dependencies: 1941 165 162 1976
+-- Dependencies: 1941 165 162 1974
 -- Name: basicdata_budget_fk16; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -532,7 +357,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1960 (class 2606 OID 17682)
--- Dependencies: 162 165 1941 1976
+-- Dependencies: 162 165 1941 1974
 -- Name: basicdata_budget_fk17; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -542,7 +367,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1961 (class 2606 OID 17687)
--- Dependencies: 162 165 1941 1976
+-- Dependencies: 162 165 1941 1974
 -- Name: basicdata_budget_fk18; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -552,7 +377,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1962 (class 2606 OID 17692)
--- Dependencies: 162 165 1941 1976
+-- Dependencies: 162 165 1941 1974
 -- Name: basicdata_budget_fk19; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -562,7 +387,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1946 (class 2606 OID 17612)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -572,7 +397,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1963 (class 2606 OID 17697)
--- Dependencies: 162 165 1941 1976
+-- Dependencies: 162 165 1941 1974
 -- Name: basicdata_budget_fk20; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -582,7 +407,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1964 (class 2606 OID 17702)
--- Dependencies: 165 1941 162 1976
+-- Dependencies: 165 1941 162 1974
 -- Name: basicdata_budget_fk21; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -592,7 +417,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1965 (class 2606 OID 17707)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk22; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -602,7 +427,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1966 (class 2606 OID 17712)
--- Dependencies: 165 162 1941 1976
+-- Dependencies: 165 162 1941 1974
 -- Name: basicdata_budget_fk23; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -612,7 +437,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1967 (class 2606 OID 17717)
--- Dependencies: 165 1941 162 1976
+-- Dependencies: 165 1941 162 1974
 -- Name: basicdata_budget_fk24; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -622,7 +447,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1968 (class 2606 OID 17722)
--- Dependencies: 1941 162 165 1976
+-- Dependencies: 1941 162 165 1974
 -- Name: basicdata_budget_fk25; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -632,7 +457,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1969 (class 2606 OID 17727)
--- Dependencies: 1941 162 165 1976
+-- Dependencies: 1941 162 165 1974
 -- Name: basicdata_budget_fk26; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -642,7 +467,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1970 (class 2606 OID 17732)
--- Dependencies: 165 1941 162 1976
+-- Dependencies: 165 1941 162 1974
 -- Name: basicdata_budget_fk27; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -652,7 +477,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1947 (class 2606 OID 17617)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -662,7 +487,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1971 (class 2606 OID 17737)
--- Dependencies: 165 1941 162 1976
+-- Dependencies: 165 1941 162 1974
 -- Name: basicdata_budget_fk30; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -672,7 +497,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1972 (class 2606 OID 17742)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk31; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -682,7 +507,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1948 (class 2606 OID 17622)
--- Dependencies: 165 162 1941 1976
+-- Dependencies: 165 162 1941 1974
 -- Name: basicdata_budget_fk5; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -692,7 +517,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1949 (class 2606 OID 17627)
--- Dependencies: 1941 165 162 1976
+-- Dependencies: 1941 165 162 1974
 -- Name: basicdata_budget_fk6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -702,7 +527,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1950 (class 2606 OID 17632)
--- Dependencies: 162 165 1941 1976
+-- Dependencies: 162 165 1941 1974
 -- Name: basicdata_budget_fk7; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -712,7 +537,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1952 (class 2606 OID 17642)
--- Dependencies: 162 1941 165 1976
+-- Dependencies: 162 1941 165 1974
 -- Name: basicdata_budget_fk8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -722,7 +547,7 @@ ALTER TABLE ONLY budget
 
 --
 -- TOC entry 1953 (class 2606 OID 17647)
--- Dependencies: 1941 165 162 1976
+-- Dependencies: 1941 165 162 1974
 -- Name: basicdata_budget_fk9; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -731,7 +556,7 @@ ALTER TABLE ONLY budget
 
 
 --
--- TOC entry 1981 (class 0 OID 0)
+-- TOC entry 1979 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -742,7 +567,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2012-12-14 23:56:57 VET
+-- Completed on 2012-12-14 23:58:22 VET
 
 --
 -- PostgreSQL database dump complete

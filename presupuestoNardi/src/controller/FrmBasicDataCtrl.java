@@ -12,7 +12,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import database.Basicdata;
+import database.BasicData;
 
 /**
  * @author leyner
@@ -20,19 +20,19 @@ import database.Basicdata;
  */
 public class FrmBasicDataCtrl {
 
-	private Basicdata basicdata;
+	private BasicData basicdata;
 
-	public Basicdata getBasicdata() {
+	public BasicData getBasicdata() {
 		return basicdata;
 	}
 
-	public void setBasicdata(Basicdata basicdata) {
+	public void setBasicdata(BasicData basicdata) {
 		this.basicdata = basicdata;
 	}
 
 	@Init
 	public void init() {
-		basicdata = new Basicdata();
+		basicdata = new BasicData();
 	}
 
 	@NotifyChange("basicdata")
