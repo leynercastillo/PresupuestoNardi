@@ -1,6 +1,11 @@
 package controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +18,6 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.ReportContext;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -27,12 +31,13 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
-import org.zkoss.web.portlet.RenderHttpServletResponse;
+import org.zkoss.util.media.AMedia;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Iframe;
 import org.zkoss.zul.Window;
 
 import dao.DaoBasicData;
@@ -48,7 +53,6 @@ public class FrmBudgetCtrl {
 
 	private String seleccione = new String("--Seleccione--");
 	private static final String vacio = new String(" ");
-
 	private List<BasicData> listBType;
 	private List<BasicData> listElevatorType;
 	private List<BasicData> listElevatorCapa;
@@ -775,8 +779,9 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
+	@NotifyChange({"report"})
 	@Command
-	public void print() throws JRException{
+	public void print() throws JRException, IOException{
 		List<Budget> listBudget = new ArrayList<Budget>(new DaoBudget().list(Budget.class));
 		String string = Sessions.getCurrent().getWebApp().getRealPath("/reports");
 		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(string+"/test2.jasper");
@@ -785,6 +790,11 @@ public class FrmBudgetCtrl {
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/reporte2.pdf");
 		jrExporter.exportReport();
-		System.out.println(string);
+		String report = new String("reports/reporte2.pdf");
+		Map map = new HashMap();
+		map.put("reportPath", report);
+		map.put("reportTitle", "Presupuesto Nardi");
+		Window win = (Window) Executions.createComponents(
+				"frmReport.zul", null, map);
 	}
 }

@@ -49,11 +49,6 @@ public class FrmWindowBudgetsCtrl {
 		Selectors.wireComponents(view, this, false);
 	}
 	
-	@Command
-	public void closeWindow(){
-		windowBudgets.detach();
-	}
-
 	@NotifyChange("selectedBudget")
 	@Command
 	public void sendBudget(@BindingParam("Budget") Budget budget){
