@@ -1,10 +1,22 @@
 package controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.ReportContext;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
@@ -15,9 +27,11 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.web.portlet.RenderHttpServletResponse;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Window;
 
@@ -759,5 +773,18 @@ public class FrmBudgetCtrl {
 		Map map = new HashMap();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
+	}
+
+	@Command
+	public void print() throws JRException{
+		List<Budget> listBudget = new ArrayList<Budget>(new DaoBudget().list(Budget.class));
+		String string = Sessions.getCurrent().getWebApp().getRealPath("/reports");
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(string+"/test2.jasper");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, new JRBeanCollectionDataSource(listBudget));
+		JRExporter jrExporter = new JRPdfExporter();
+		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/reporte2.pdf");
+		jrExporter.exportReport();
+		System.out.println(string);
 	}
 }

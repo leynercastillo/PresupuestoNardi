@@ -1206,7 +1206,7 @@
 							disabled="@load(vm.disabledAll)">
 						</button>
 						<button id="btnPrint" label="Imprimir"
-							sclass="formLabel" onClick="@command('report')"
+							sclass="formLabel" onClick="@command('print')"
 							disabled="@load(vm.disableAfterSearch ? false : true)">
 						</button>
 						<button id="btnCancel" label="Cancelar"
