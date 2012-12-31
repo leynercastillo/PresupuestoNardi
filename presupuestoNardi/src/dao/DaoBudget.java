@@ -12,6 +12,13 @@ import hibernateConnections.GenericDao;
 
 public class DaoBudget extends GenericDao<Budget> {
 
+	public Budget findByNumber(int number){
+		Transaction transaction = currentSession().beginTransaction();
+		Criteria criteria = currentSession().createCriteria(Budget.class);
+		criteria.add(Restrictions.eq("number", number));
+		return (Budget)criteria.uniqueResult();
+	}
+
 	public List<Budget> listOrderBudgetbyField(String field) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(Budget.class);
