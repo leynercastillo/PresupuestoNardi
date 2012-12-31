@@ -12,23 +12,24 @@ import org.hibernate.criterion.Restrictions;
 import org.zkoss.util.logging.Log;
 
 public class GenericDao<Model> {
-	
-	public Class<Model> domainClass = getDomainClass();	
 
-	protected Session currentSession(){
+	public Class<Model> domainClass = getDomainClass();
+
+	protected Session currentSession() {
 		return StoreHibernateUtil.openSession();
 	}
-	
-	protected Class<Model> getDomainClass(){
-		if(domainClass == null){
-			ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+
+	protected Class<Model> getDomainClass() {
+		if (domainClass == null) {
+			ParameterizedType type = (ParameterizedType) getClass()
+					.getGenericSuperclass();
 			domainClass = (Class<Model>) type.getActualTypeArguments()[0];
 		}
 		return domainClass;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public Model load(Long id){
+	public Model load(Long id) {
 		Transaction transaction = currentSession().beginTransaction();
 		Model returnvalue = (Model) currentSession().load(domainClass, id);
 		transaction.commit();
@@ -36,7 +37,7 @@ public class GenericDao<Model> {
 		return returnvalue;
 	}
 
-	public Boolean save(Model model){
+	public Boolean save(Model model) {
 		Transaction transaction = null;
 		try {
 			transaction = currentSession().beginTransaction();
@@ -50,13 +51,15 @@ public class GenericDao<Model> {
 				currentSession().close();
 				return false;
 			} catch (RuntimeException e2) {
-				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
+				System.out
+						.println("No se pudo guardar ni realizar el rollback: "
+								+ e2);
 				return false;
 			}
 		}
 	}
 
-	public Boolean delete(Model model){
+	public Boolean delete(Model model) {
 		Transaction transaction = null;
 		try {
 			transaction = currentSession().beginTransaction();
@@ -70,27 +73,21 @@ public class GenericDao<Model> {
 				currentSession().close();
 				return false;
 			} catch (RuntimeException e2) {
-				System.out.println("No se pudo guardar ni realizar el rollback: "+e2);
+				System.out
+						.println("No se pudo guardar ni realizar el rollback: "
+								+ e2);
 				return false;
 			}
 		}
 	}
-	
-	public Model findById(Long id){
-		Transaction transaction = currentSession().beginTransaction();
-		Model model = (Model) currentSession().load(domainClass, id);
-		transaction.commit();		
-		currentSession().close();
-		return model;
-	}
-	
-	public List<Model> list(Class c){
+
+	public List<Model> list(Class c) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(c);
 		return criteria.list();
 	}
-	
-	public List<Model> listActive(Class c){
+
+	public List<Model> listActive(Class c) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(c);
 		criteria.add(Restrictions.eq("status", 'A'));
