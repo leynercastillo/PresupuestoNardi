@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="ROLE_USER" />
+		<form-login login-page="/login.zul"
+			default-target-url="/index.jsp" authentication-failure-url="/login.zul?login_error=1" />
+		<logout logout-success-url="/login.zul" />
+		<session-management>
+			<concurrency-control max-sessions="1" />
+		</session-management>
+	</http>
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="
+					SELECT 
+						name,password,status
+		      		FROM 
+		      			security_user 
+		      		WHERE name=?"
+				authorities-by-username-query="
+					SELECT 
+						T0.name,
+						T4.name
+					FROM
+						security_user T0 INNER JOIN group_user T1 ON T1.id_security_user = T0.id_security_user
+						INNER JOIN security_group T2 ON T2.id_security_group = T1.id_security_group
+						INNER JOIN role_group T3 ON T3.id_security_group = T2.id_security_group
+						INNER JOIN security_role T4 ON T3.id_security_role = T4.id_security_role
+					WHERE
+						T0.name=?" />
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>
