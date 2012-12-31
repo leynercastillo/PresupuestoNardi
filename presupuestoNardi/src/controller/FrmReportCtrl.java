@@ -1,5 +1,8 @@
 package controller;
 
+import java.io.File;
+
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
@@ -13,7 +16,8 @@ public class FrmReportCtrl {
 
 	private String report;
 	private String reportTitle;
-	
+	private File file;
+
 	public String getReportTitle() {
 		return reportTitle;
 	}
@@ -31,9 +35,19 @@ public class FrmReportCtrl {
 	}
 
 	@Init
-	public void init(@ExecutionArgParam("reportPath") String reportPath, @ExecutionArgParam("reportTitle") String title, @ContextParam(ContextType.VIEW) Component view){
+	public void init(@ExecutionArgParam("reportPath") String reportPath,
+			@ExecutionArgParam("reportTitle") String title,
+			@ExecutionArgParam("absolutePath") String absolutePath,
+			@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
 		report = new String(reportPath);
 		reportTitle = new String(title);
+		file = new File(absolutePath);
+	}
+
+	@Command
+	public void close() {
+		if (!file.delete())
+			System.out.println("No se pudo eliminar el archivo.");
 	}
 }

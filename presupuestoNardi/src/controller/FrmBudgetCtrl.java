@@ -1,11 +1,16 @@
 package controller;
 
+import hibernateConnections.StoreHibernateUtil;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +27,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.impl.SessionFactoryObjectFactory;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -779,21 +787,27 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
-	@NotifyChange({"report"})
 	@Command
-	public void print() throws JRException, IOException{
-		List<Budget> listBudget = new ArrayList<Budget>(new DaoBudget().list(Budget.class));
+	public void print() throws JRException, IOException, ClassNotFoundException, SQLException{
+		/*Tomo la sesion actual de hibernate*/
+		Session session = StoreHibernateUtil.openSession();
+		/*Antes de abrir la conexion se debe iniciar una transaccion*/
+		session.beginTransaction();
 		String string = Sessions.getCurrent().getWebApp().getRealPath("/reports");
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(string+"/test2.jasper");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, new JRBeanCollectionDataSource(listBudget));
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(string+"/budget.jasper");
+		Map parameters = new HashMap();
+		parameters.put("number", budget.getNumber());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, session.connection());
 		JRExporter jrExporter = new JRPdfExporter();
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/reporte2.pdf");
+		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/budget"+budget.getNumber()+".pdf");
 		jrExporter.exportReport();
-		String report = new String("reports/reporte2.pdf");
+		session.close();
+		String report = new String("reports/budget"+budget.getNumber()+".pdf");
 		Map map = new HashMap();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto Nardi");
+		map.put("absolutePath", string+"/budget"+budget.getNumber()+".pdf");
 		Window win = (Window) Executions.createComponents(
 				"frmReport.zul", null, map);
 	}
