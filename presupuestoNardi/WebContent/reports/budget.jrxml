@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="63e12c02-de3d-4252-b05a-dd3c097b816b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="number" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+	number AS 'Numero',
+	partnerName AS 'Cliente',
+	date AS 'Fecha',
+	construction AS 'Construccion',
+	CASE WHEN type = TRUE THEN 'Nuevo' ELSE 'Modernización' END AS 'Tipo',
+	constructionNumber AS 'Numero Construccion',
+	seller AS 'Vendedor',
+	constructionAddress AS 'Direccion',
+	constructionCity AS 'Ciudad',
+	contactPhone AS 'Numero Contacto',
+	email AS 'Correo',
+	contactName AS 'Persona Contacto',
+	CASE WHEN planeP = TRUE THEN 'Si' ELSE 'NO' END AS 'Planos de corte',
+	CASE WHEN planeC = TRUE THEN 'SI' ELSE 'NO' END AS 'Planos de planta',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			buildingType = idBasic) AS 'Tipo de edificio',
+	elevatorQuantity AS 'Cantidad de ascensores',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			elevatorType = idBasic) AS 'Tipo de ascensor',
+	motorQuantity AS 'Cantidad de motores',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			elevatorCapacitance = idBasic) AS 'Carga (Kg - Cap)',
+	motorTraction AS 'Planos de corte',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			machineType = idBasic) AS 'Tipo de Maquina',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			embarque = idBasic) AS 'Embarque',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			electricityType = idBasic) AS 'Tipo de Corriente',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			speed = idBasic) AS 'Velocidad M/S',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			frequency = idBasic) AS 'Frecuencia',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			voltageLighting = idBasic) AS 'Tensión de alumbrado',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			hourMachine = idBasic) AS 'Conexiones horas máquina',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			stopSequenceContinuous = idBasic) AS 'Continua',
+	stopSequenceContinuousQ AS 'Cantidad',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			stopSequenceEven = idBasic) AS 'Par',
+	stopSequenceEvenQ AS 'Cantidad',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			stopSequenceOdd = idBasic) AS 'Impar',
+	stopSequenceOddQ AS 'Cantidad',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			maneuverType = idBasic) AS 'Tipo de maniobra',
+	stopNumber AS 'Numero de paradas',
+	tour AS 'Recorrido',
+	onTour AS 'Sobre recorrido',
+	widthHole AS 'Ancho de Hueco (mm)',
+	fossa AS 'Fosa (mm)',
+	bottomHole AS 'Fondo de Hueco (mm)',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			design1357 = idBasic) AS 'Diseño 1357',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			designP26 = idBasic) AS 'Diseño P26',
+	CASE WHEN designSpecial = TRUE THEN 'Si' Else 'No' END AS 'Diseño Especial',
+	designSpecialComment,
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			roofType = idBasic) AS 'Tipo de techo',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			buttonType = idBasic) AS 'Tipo de botonera',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			railing = idBasic) AS 'Pasamano',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			mirror = idBasic) AS 'Espejo',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			floorType = idBasic) AS 'Acabado de piso',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			fan = idBasic) AS 'Ventilador',
+	doorOfNumber AS 'Numero de puertas',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			doorType = idBasic) AS 'Tipo de puerta',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			doorSystem = idBasic) AS 'Sistema de puerta',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			doorframeType = idBasic) AS 'Tipo de marco',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			freeAdmission = idBasic) AS 'Entrada libre',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			height = idBasic) AS 'Altura',
+	doorFrameStainless AS 'Acero inoxidable',
+	doorFrameStainlessDescrip,
+	doorFrameBrown AS 'Martillado marrón',
+	doorFrameBrownDescrip,
+	doorFrameGray AS 'Martillado gris',
+	doorFrameGrayDescrip,
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			controlType = idBasic) AS 'Tipo de control',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			boothButton = idBasic) AS 'Botonera de Cabina',
+	hallButton AS 'Botonera de pasillo',
+	sistelWDisplayPB AS 'Sistel con Display PB',
+	sistelWDisplayFloor AS 'Sistel con Display Piso',
+	sistelWArrowPB AS 'Sistel con Flecha PB',
+	sistelWArrowFloor AS 'Sistel con Flecha Piso',
+	braile37PB AS 'Chapa de acero con Braille PB',
+	braile37Floor AS 'Chapa de acero con Braille Piso',
+	antivandalismPB AS 'Chapa de acero con antivandalismo PB',
+	antivandalismFLoor AS 'Chapa de acero con antivandalismo Piso',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			boothDisplay = idBasic) AS 'Display Cabina',
+	(SELECT
+			name
+		FROM
+			BasicData
+		WHERE
+			floorDisplay = idBasic) AS 'Display Piso',
+	displayPlaceFloor,
+	CASE WHEN lightCurtain = TRUE THEN 'Si' ELSE 'NO' END AS 'Cortina luminosa',
+	CASE WHEN loadLimiter = TRUE THEN 'Si' ELSE 'NO' END AS 'Limitador de carga',
+	CASE WHEN speechSynthesizer = TRUE THEN 'Si' ELSE 'NO' END AS 'Sintetizador de voz',
+	CASE WHEN gomSystem = TRUE THEN 'Si' ELSE 'NO' END AS 'Sistema de GOM en Piso',
+	CASE WHEN intercom = TRUE THEN 'Si' ELSE 'NO' END AS 'Intercomunicador',
+	CASE WHEN phone = TRUE THEN 'Si' ELSE 'NO' END AS 'Teléfono',
+	CASE WHEN accessSytem = TRUE THEN 'Si' ELSE 'NO' END AS 'Sistema de acceso',
+	CASE WHEN firefighterKeychain = TRUE THEN 'Si' ELSE 'NO' END AS 'Llave de bombero',
+	comment AS Comentarios
+FROM
+	Budget
+WHERE
+	number = $P{number}]]>
+	</queryString>
+	<field name="Numero" class="java.lang.Integer"/>
+	<field name="Cliente" class="java.lang.String"/>
+	<field name="Fecha" class="java.sql.Timestamp"/>
+	<field name="Construccion" class="java.lang.String"/>
+	<field name="Tipo" class="java.lang.String"/>
+	<field name="Numero Construccion" class="java.lang.String"/>
+	<field name="Vendedor" class="java.lang.String"/>
+	<field name="Direccion" class="java.lang.String"/>
+	<field name="Ciudad" class="java.lang.String"/>
+	<field name="Numero Contacto" class="java.lang.String"/>
+	<field name="Correo" class="java.lang.String"/>
+	<field name="Persona Contacto" class="java.lang.String"/>
+	<field name="Planos de corte" class="java.lang.String"/>
+	<field name="Planos de planta" class="java.lang.String"/>
+	<field name="Tipo de edificio" class="java.lang.String"/>
+	<field name="Cantidad de ascensores" class="java.lang.Integer"/>
+	<field name="Tipo de ascensor" class="java.lang.String"/>
+	<field name="Cantidad de motores" class="java.lang.Integer"/>
+	<field name="Carga (Kg - Cap)" class="java.lang.String"/>
+	<field name="Tipo de Maquina" class="java.lang.String"/>
+	<field name="Embarque" class="java.lang.String"/>
+	<field name="Tipo de Corriente" class="java.lang.String"/>
+	<field name="Velocidad M/S" class="java.lang.String"/>
+	<field name="Frecuencia" class="java.lang.String"/>
+	<field name="Tensión de alumbrado" class="java.lang.String"/>
+	<field name="Conexiones horas máquina" class="java.lang.String"/>
+	<field name="Continua" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.String"/>
+	<field name="Par" class="java.lang.String"/>
+	<field name="Impar" class="java.lang.String"/>
+	<field name="Tipo de maniobra" class="java.lang.String"/>
+	<field name="Numero de paradas" class="java.lang.Integer"/>
+	<field name="Recorrido" class="java.lang.Integer"/>
+	<field name="Sobre recorrido" class="java.lang.Integer"/>
+	<field name="Ancho de Hueco (mm)" class="java.lang.Integer"/>
+	<field name="Fosa (mm)" class="java.lang.Integer"/>
+	<field name="Fondo de Hueco (mm)" class="java.lang.Integer"/>
+	<field name="Diseño 1357" class="java.lang.String"/>
+	<field name="Diseño P26" class="java.lang.String"/>
+	<field name="Diseño Especial" class="java.lang.String"/>
+	<field name="designSpecialComment" class="java.lang.String"/>
+	<field name="Tipo de techo" class="java.lang.String"/>
+	<field name="Tipo de botonera" class="java.lang.String"/>
+	<field name="Pasamano" class="java.lang.String"/>
+	<field name="Espejo" class="java.lang.String"/>
+	<field name="Acabado de piso" class="java.lang.String"/>
+	<field name="Ventilador" class="java.lang.String"/>
+	<field name="Numero de puertas" class="java.lang.Integer"/>
+	<field name="Tipo de puerta" class="java.lang.String"/>
+	<field name="Sistema de puerta" class="java.lang.String"/>
+	<field name="Tipo de marco" class="java.lang.String"/>
+	<field name="Entrada libre" class="java.lang.String"/>
+	<field name="Altura" class="java.lang.String"/>
+	<field name="Acero inoxidable" class="java.lang.Boolean"/>
+	<field name="doorFrameStainlessDescrip" class="java.lang.String"/>
+	<field name="Martillado marrón" class="java.lang.Boolean"/>
+	<field name="doorFrameBrownDescrip" class="java.lang.String"/>
+	<field name="Martillado gris" class="java.lang.Boolean"/>
+	<field name="doorFrameGrayDescrip" class="java.lang.String"/>
+	<field name="Tipo de control" class="java.lang.String"/>
+	<field name="Botonera de Cabina" class="java.lang.String"/>
+	<field name="Botonera de pasillo" class="java.lang.String"/>
+	<field name="Sistel con Display PB" class="java.lang.Integer"/>
+	<field name="Sistel con Display Piso" class="java.lang.Integer"/>
+	<field name="Sistel con Flecha PB" class="java.lang.Integer"/>
+	<field name="Sistel con Flecha Piso" class="java.lang.Integer"/>
+	<field name="Chapa de acero con Braille PB" class="java.lang.Integer"/>
+	<field name="Chapa de acero con Braille Piso" class="java.lang.Integer"/>
+	<field name="Chapa de acero con antivandalismo PB" class="java.lang.Integer"/>
+	<field name="Chapa de acero con antivandalismo Piso" class="java.lang.Integer"/>
+	<field name="Display Cabina" class="java.lang.String"/>
+	<field name="Display Piso" class="java.lang.String"/>
+	<field name="displayPlaceFloor" class="java.lang.String"/>
+	<field name="Cortina luminosa" class="java.lang.String"/>
+	<field name="Limitador de carga" class="java.lang.String"/>
+	<field name="Sintetizador de voz" class="java.lang.String"/>
+	<field name="Sistema de GOM en Piso" class="java.lang.String"/>
+	<field name="Intercomunicador" class="java.lang.String"/>
+	<field name="Teléfono" class="java.lang.String"/>
+	<field name="Sistema de acceso" class="java.lang.String"/>
+	<field name="Llave de bombero" class="java.lang.String"/>
+	<field name="Comentarios" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="041cf092-5007-4e38-ac80-3b7345aa6571" x="404" y="12" width="49" height="20"/>
+				<textElement/>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1ec9e8fa-c00b-4045-8b7b-03cea0642a68" x="454" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Numero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="30efef80-32c7-4ffb-b58d-cc5b2284262d" x="454" y="32" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0ca2cb65-0302-493e-85d1-d992991d597f" x="404" y="32" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3a8e4754-4312-4463-871d-52dafeec2eed" x="29" y="12" width="304" height="40"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESUPUESTO NARDI]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2fbeb9f6-f1dd-4885-87e5-0a3981f5a62e" x="0" y="0" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="13ca2eec-9e13-4611-b2e6-530b9e883fa4" x="115" y="0" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="650c45a7-c36b-412c-9ec5-fd9d667a91a4" x="320" y="0" width="29" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3f9ba286-d739-4c3b-9de7-956d4277c306" x="349" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6e0a02f2-1d3c-459b-bcbf-86986e78a7ce" x="0" y="20" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Construccion]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fc9ab662-1304-4ba1-a059-443b56f4f3ce" x="115" y="20" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Construccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a4fe820f-b684-46df-8386-19b488b25df7" x="0" y="40" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Numero Construccion]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4d663bb0-361b-4f69-9c49-d2320f4aaebf" x="115" y="40" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Numero Construccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2ff36986-0000-42c6-a21e-2072431e4e31" x="0" y="60" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Direccion]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a43831ad-766d-47ed-88bc-ed8703091158" x="115" y="60" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c0673249-5e18-4c53-90a9-15b034eb5f8a" x="0" y="80" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Numero Contacto]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7f07c5a5-734a-4c41-9bd8-a591ecea8327" x="115" y="80" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Numero Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0979762e-1a4f-4fb9-8586-877a5468c74b" x="0" y="100" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Persona Contacto]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1f1e6b56-6112-472a-8ac7-cafcfa97db2e" x="115" y="100" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Persona Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bda7abe7-51cd-4c8e-9f8e-9653800ae7b6" x="304" y="100" width="82" height="20"/>
+				<textElement/>
+				<text><![CDATA[Planos de corte]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c91632ba-cba8-4967-a1ed-85cd130df8f5" x="386" y="100" width="46" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Planos de corte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a093fe8f-67fe-4fa0-8f09-9ccd22d4ff1f" x="432" y="100" width="89" height="20"/>
+				<textElement/>
+				<text><![CDATA[Planos de planta]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7383a48e-a765-4747-8411-f957cc394ef4" x="521" y="100" width="42" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Planos de planta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f7b01ba0-0b38-412d-afe5-18ff7b620ad9" x="304" y="80" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[Correo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3d57bd75-c8bc-4797-bc9a-2567f561b560" x="359" y="80" width="130" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Correo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="822e393a-e843-469f-8003-b5394a645398" x="304" y="60" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8852229e-4fd2-4a3e-aff2-1eb6f025d337" x="359" y="60" width="130" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Ciudad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="48d0836c-92a9-406a-b896-5187d08ef0b6" x="304" y="40" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5edba00a-ad75-473c-a946-9941ef2d73f7" x="359" y="40" width="130" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
