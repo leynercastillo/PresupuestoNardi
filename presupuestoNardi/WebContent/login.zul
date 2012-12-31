@@ -1,0 +1,46 @@
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<window border="normal" width="400px" position="center" mode="modal"
+		title="Acceso">
+		<groupbox>
+			<h:form id="f" name="f" action="j_spring_security_check"
+				method="POST" xmlns:h="native">
+				<grid>
+					<columns>
+						<column width="110px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<label value="Usuario:"></label>
+							<textbox id="u" name="j_username" />
+						</row>
+						<row>
+							<label value="Contraseña:"></label>
+							<textbox id="p" type="password"
+								name="j_password" />
+						</row>
+						<row>
+							<checkbox id="r"
+								name="j_spring_security_remember_me" />
+							<label
+								value="No olvidar mi clave por dos semanas.">
+							</label>
+						</row>
+						<row spans="2">
+							<label style="color:red"
+								if="${not empty param.login_error}"
+								value="Tu usuario o contraseña son incorrectos. Intentalo de nuevo.">
+							</label>
+						</row>
+						<row>
+							<space></space>
+							<h:input type="submit" value="Entrar" />
+						</row>
+					</rows>
+				</grid>
+			</h:form>
+		</groupbox>
+	</window>
+</zk>
