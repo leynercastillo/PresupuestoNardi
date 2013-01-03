@@ -800,14 +800,14 @@ public class FrmBudgetCtrl {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, session.connection());
 		JRExporter jrExporter = new JRPdfExporter();
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/budget"+budget.getNumber()+".pdf");
+		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/presupuesto"+budget.getNumber()+".pdf");
 		jrExporter.exportReport();
 		session.close();
-		String report = new String("reports/budget"+budget.getNumber()+".pdf");
+		String report = new String("reports/presupuesto"+budget.getNumber()+".pdf");
 		Map map = new HashMap();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto Nardi");
-		map.put("absolutePath", string+"/budget"+budget.getNumber()+".pdf");
+		map.put("absolutePath", string+"/presupuesto"+budget.getNumber()+".pdf");
 		Window win = (Window) Executions.createComponents(
 				"frmReport.zul", null, map);
 	}
