@@ -7,8 +7,8 @@
            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/**" access="ROLE_USER" />
+		<!-- <intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="ROLE_USER" /> -->
 		<form-login login-page="/login.zul"
 			default-target-url="/index.jsp" authentication-failure-url="/login.zul?login_error=1" />
 		<logout logout-success-url="/login.zul" />

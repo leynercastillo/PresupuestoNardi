@@ -45,6 +45,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Iframe;
 import org.zkoss.zul.Window;
 
@@ -92,8 +93,6 @@ public class FrmBudgetCtrl {
 	private List<BasicData> listMotorTraction;
 	private List<Budget> listBudget;
 	private Boolean stopSequenceContinuous;
-	private Boolean stopSequencePar;
-	private Boolean stopSequenceOdd;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
@@ -162,22 +161,6 @@ public class FrmBudgetCtrl {
 
 	public void setStopSequenceContinuous(Boolean stopSequenceContinuous) {
 		this.stopSequenceContinuous = stopSequenceContinuous;
-	}
-
-	public Boolean getStopSequencePar() {
-		return stopSequencePar;
-	}
-
-	public void setStopSequencePar(Boolean stopSequencePar) {
-		this.stopSequencePar = stopSequencePar;
-	}
-
-	public Boolean getStopSequenceOdd() {
-		return stopSequenceOdd;
-	}
-
-	public void setStopSequenceOdd(Boolean stopSequenceOdd) {
-		this.stopSequenceOdd = stopSequenceOdd;
 	}
 
 	public Boolean getStainlessSteel() {
@@ -580,6 +563,7 @@ public class FrmBudgetCtrl {
 			budget.setNumber(daoBudget.list(Budget.class)
 					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
 		disabledAll = new Boolean(false);
+		stopSequenceContinuous = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
 		budget.setDate(new Date());
@@ -711,12 +695,14 @@ public class FrmBudgetCtrl {
 		restartForm();
 	}
 
-	@NotifyChange({ "disabledAll", "budgetNumber", "budget", "disableAfterSearch", "disabledNumber" })
+	@NotifyChange({ "disabledAll", "budgetNumber", "budget",
+			"disableAfterSearch", "disabledNumber", "stopSequenceContinuous" })
 	@Command
 	public void search() {
 		restartForm();
 		budget.setNumber(0);
 		disabledAll = new Boolean(true);
+		stopSequenceContinuous = new Boolean(true);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(false);
 	}
@@ -769,7 +755,8 @@ public class FrmBudgetCtrl {
 		 */
 	}
 
-	@NotifyChange({ "budget", "disabledAll", "budgetNumber", "disableAfterSearch", "disabledNumber" })
+	@NotifyChange({ "budget", "disabledAll", "budgetNumber",
+			"disableAfterSearch", "disabledNumber" })
 	@GlobalCommand
 	public void selectedBudget(@BindingParam("Budget") Budget budget) {
 		this.budget = budget;
@@ -787,28 +774,43 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
+	@NotifyChange({"budget", "stopSequenceContinuous"})
 	@Command
-	public void print() throws JRException, IOException, ClassNotFoundException, SQLException{
-		/*Tomo la sesion actual de hibernate*/
+	public void isStopSequenceContinuous(){
+		budget.setStopSequenceEven(false);
+		budget.setStopSequenceOdd(false);
+		stopSequenceContinuous = !stopSequenceContinuous;
+	}
+
+	@Command
+	public void print() throws JRException, IOException,
+			ClassNotFoundException, SQLException {
+		/* Tomo la sesion actual de hibernate */
 		Session session = StoreHibernateUtil.openSession();
-		/*Antes de abrir la conexion se debe iniciar una transaccion*/
+		/* Antes de abrir la conexion se debe iniciar una transaccion */
 		session.beginTransaction();
-		String string = Sessions.getCurrent().getWebApp().getRealPath("/reports");
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(string+"/budget.jasper");
+		String string = Sessions.getCurrent().getWebApp()
+				.getRealPath("/reports");
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(string
+				+ "/budget.jasper");
 		Map parameters = new HashMap();
 		parameters.put("number", budget.getNumber());
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, session.connection());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
+				parameters, session.connection());
 		JRExporter jrExporter = new JRPdfExporter();
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string+"/presupuesto"+budget.getNumber()+".pdf");
+		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string
+				+ "/presupuesto" + budget.getNumber() + ".pdf");
 		jrExporter.exportReport();
 		session.close();
-		String report = new String("reports/presupuesto"+budget.getNumber()+".pdf");
+		String report = new String("reports/presupuesto" + budget.getNumber()
+				+ ".pdf");
 		Map map = new HashMap();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto Nardi");
-		map.put("absolutePath", string+"/presupuesto"+budget.getNumber()+".pdf");
-		Window win = (Window) Executions.createComponents(
-				"frmReport.zul", null, map);
+		map.put("absolutePath", string + "/presupuesto" + budget.getNumber()
+				+ ".pdf");
+		Window win = (Window) Executions.createComponents("frmReport.zul",
+				null, map);
 	}
 }
