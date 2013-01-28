@@ -80,25 +80,11 @@
 						</datebox>
 					</row>
 					<row>
-						<!-- <label sclass="formLabel" value="Nro. Obra:"></label> -->
 						<label sclass="formLabel" value="Dirección:"></label>
 						<textbox width="300px"
 							value="@save(vm.budget.constructionAddress, before = 'save') @load(vm.budget.constructionAddress) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
-						<!-- <combobox buttonVisible="false" width="305px"
-							value="@save(vm.budget.constructionNumber, before = 'save') @load(vm.budget.constructionNumber) @validator(vm.noEmpty, component = self)"
-							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='constructionNumber')"
-							autocomplete="true" model="@load(vm.listBudget)"
-							autodrop="@load(vm.disabledAll)"
-							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='constructionNumber', val=self.value)"
-							disabled="@load(vm.disableAfterSearch)">
-							<template name="model" var="budget">
-								<comboitem
-									label="@load(budget.constructionNumber)">
-								</comboitem>
-							</template>
-						</combobox> -->
 						<space></space>
 						<radiogroup id="radBType"
 							selectedItem="@save(vm.budget.type)">
@@ -143,7 +129,9 @@
 							value="@save(vm.budget.contactName, before = 'save') @load(vm.budget.contactName) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
 						</textbox>
-						<label sclass="formLabel" value="Teléfono contacto:"></label>
+						<label sclass="formLabel"
+							value="Teléfono contacto:">
+						</label>
 						<textbox width="230px"
 							value="@save(vm.budget.contactPhone, before = 'save') @load(vm.budget.contactPhone) @validator(vm.noEmpty, component = self)"
 							disabled="@load(vm.disabledAll)">
@@ -206,9 +194,9 @@
 							value="Tipo de Edificio:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByBuildingType eq null ? vm.seleccione : vm.budget.basicDataByBuildingType.name)"
+							value="@load(vm.budget.basicdataByBuildingType eq null ? vm.seleccione : vm.budget.basicdataByBuildingType.name)"
 							id="cmbBBuildingType" model="@load(vm.listBType)"
-							selectedItem="@bind(vm.budget.basicDataByBuildingType)"
+							selectedItem="@bind(vm.budget.basicdataByBuildingType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
@@ -227,9 +215,9 @@
 							value="Tipo de Ascensor:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByElevatorType eq null ? vm.seleccione: vm.budget.basicDataByElevatorType.name)"
+							value="@load(vm.budget.basicdataByElevatorType eq null ? vm.seleccione: vm.budget.basicdataByElevatorType.name)"
 							id="cmbBElevatorType" model="@load(vm.listElevatorType)"
-							selectedItem="@bind(vm.budget.basicDataByElevatorType)"
+							selectedItem="@bind(vm.budget.basicdataByElevatorType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="elevatorType">
 								<comboitem
@@ -251,9 +239,9 @@
 						</label>
 						<hbox>
 							<combobox
-								value="@load(vm.budget.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.budget.basicDataByElevatorCapacitance.name)"
+								value="@load(vm.budget.basicdataByElevatorCapacitance eq null ? vm.seleccione : vm.budget.basicdataByElevatorCapacitance.name)"
 								id="cmbBElevatorCapacitance" model="@load(vm.listElevatorCapa)"
-								selectedItem="@bind(vm.budget.basicDataByElevatorCapacitance)"
+								selectedItem="@bind(vm.budget.basicdataByElevatorCapacitance)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="elevatorCapa">
@@ -264,7 +252,7 @@
 							</combobox>
 							<!-- <button id="btnNewElevatorCapacitance"
 								label="Nuevo" disabled="@load(vm.disabledAll)">
-							</button> -->
+								</button> -->
 						</hbox>
 						<label sclass="formLabel"
 							value="Tracción de Motores">
@@ -287,9 +275,9 @@
 							value="Tipo de Máquina:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByMachineType eq null ? vm.seleccione : vm.budget.basicDataByMachineType.name)"
+							value="@load(vm.budget.basicdataByMachineType eq null ? vm.seleccione : vm.budget.basicdataByMachineType.name)"
 							id="cmbBMachineType" model="@load(vm.listMachineType)"
-							selectedItem="@bind(vm.budget.basicDataByMachineType)"
+							selectedItem="@bind(vm.budget.basicdataByMachineType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="MachineType">
 								<comboitem
@@ -299,13 +287,13 @@
 						</combobox>
 						<label sclass="formLabel" value="Acceso:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByEmbarque eq null ? vm.seleccione : vm.budget.basicDataByEmbarque.name)"
-							id="cmbBEmbarque" model="@load(vm.listBEmbarque)"
-							selectedItem="@bind(vm.budget.basicDataByEmbarque)"
+							value="@load(vm.budget.basicdataByAccess eq null ? vm.seleccione : vm.budget.basicdataByAccess.name)"
+							model="@load(vm.listBEmbarque)"
+							selectedItem="@bind(vm.budget.basicdataByAccess)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="BEmbarque">
+							<template name="model" var="Access">
 								<comboitem
-									label="@load(BEmbarque.name)">
+									label="@load(Access.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -315,9 +303,9 @@
 							value="Tipo de Corriente:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByElectricityType eq null ? vm.seleccione : vm.budget.basicDataByElectricityType.name)"
+							value="@load(vm.budget.basicdataByElectricityType eq null ? vm.seleccione : vm.budget.basicdataByElectricityType.name)"
 							id="cmbBElectricityType" model="@load(vm.listElectricityType)"
-							selectedItem="@bind(vm.budget.basicDataByElectricityType)"
+							selectedItem="@bind(vm.budget.basicdataByElectricityType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="ElectricityType">
@@ -331,9 +319,9 @@
 						</label>
 						<hbox>
 							<combobox
-								value="@load(vm.budget.basicDataBySpeed eq null ? vm.seleccione : vm.budget.basicDataBySpeed.name)"
+								value="@load(vm.budget.basicdataBySpeed eq null ? vm.seleccione : vm.budget.basicdataBySpeed.name)"
 								id="cmbBSpeed" model="@load(vm.listSpeed)"
-								selectedItem="@bind(vm.budget.basicDataBySpeed)" readonly="true"
+								selectedItem="@bind(vm.budget.basicdataBySpeed)" readonly="true"
 								disabled="@load(vm.disabledAll)">
 								<template name="model" var="Speed">
 									<comboitem
@@ -343,15 +331,15 @@
 							</combobox>
 							<!-- <button id="btnNewSpeed" label="Nuevo"
 								disabled="@load(vm.disabledAll)">
-							</button> -->
+								</button> -->
 						</hbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByFrequency eq null ? vm.seleccione : vm.budget.basicDataByFrequency.name)"
+							value="@load(vm.budget.basicdataByFrequency eq null ? vm.seleccione : vm.budget.basicdataByFrequency.name)"
 							id="cmbBFrequency" model="@load(vm.listFrequency)"
-							selectedItem="@bind(vm.budget.basicDataByFrequency)"
+							selectedItem="@bind(vm.budget.basicdataByFrequency)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Frequency">
 								<comboitem
@@ -363,9 +351,9 @@
 							value="Tensión de alumbrado:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByVoltageLighting eq null ? vm.seleccione : vm.budget.basicDataByVoltageLighting.name)"
+							value="@load(vm.budget.basicdataByVoltageLighting eq null ? vm.seleccione : vm.budget.basicdataByVoltageLighting.name)"
 							id="cmbBVoltageLighting" model="@load(vm.listVoltageLighting)"
-							selectedItem="@bind(vm.budget.basicDataByVoltageLighting)"
+							selectedItem="@bind(vm.budget.basicdataByVoltageLighting)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="VoltageLighting">
@@ -380,9 +368,9 @@
 							value="Arranque horas máquina:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByHourMachine eq null ? vm.seleccione : vm.budget.basicDataByHourMachine.name)"
+							value="@load(vm.budget.basicdataByHourMachine eq null ? vm.seleccione : vm.budget.basicdataByHourMachine.name)"
 							id="cmbBHourMachine" model="@load(vm.listHourMachine)"
-							selectedItem="@bind(vm.budget.basicDataByHourMachine)"
+							selectedItem="@bind(vm.budget.basicdataByHourMachine)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="HourMachine">
 								<comboitem
@@ -422,9 +410,9 @@
 							value="Tipo de Maniobra:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByManeuverType eq null ? vm.seleccione : vm.budget.basicDataByManeuverType.name)"
+							value="@load(vm.budget.basicdataByManeuverType eq null ? vm.seleccione : vm.budget.basicdataByManeuverType.name)"
 							id="cmbBManeuverType" model="@load(vm.listManeuverType)"
-							selectedItem="@bind(vm.budget.basicDataByManeuverType)"
+							selectedItem="@bind(vm.budget.basicdataByManeuverType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ManeuverType">
 								<comboitem
@@ -505,39 +493,40 @@
 						<label sclass="formLabel"
 							value="Recorrido(M)">
 						</label>
-						<spinner id="spnBTour" constraint="min 0"
-							value="@bind(vm.budget.tour)" disabled="@load(vm.disabledAll)">
-						</spinner>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.budget.tour)" disabled="@load(vm.disabledAll)"
+							step="0.5">
+						</doublespinner>
 						<label sclass="formLabel"
 							value="Sobre Recorrido (mm)">
 						</label>
-						<spinner id="spnBOnTour" constraint="min 0"
-							value="@bind(vm.budget.onTour)"
-							disabled="@load(vm.disabledAll)">
-						</spinner>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.budget.onTour)" disabled="@load(vm.disabledAll)"
+							step="0.5">
+						</doublespinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Ancho de Hueco (mm)">
 						</label>
-						<spinner id="spnBWidthHole" constraint="min 0"
+						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.widthHole)"
-							disabled="@load(vm.disabledAll)">
-						</spinner>
+							disabled="@load(vm.disabledAll)" step="0.5">
+						</doublespinner>
 						<label sclass="formLabel" value="Fosa (mm)"></label>
-						<spinner id="spnBFossa" constraint="min 0"
-							value="@bind(vm.budget.fossa)"
-							disabled="@load(vm.disabledAll)">
-						</spinner>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.budget.fossa)" disabled="@load(vm.disabledAll)"
+							step="0.5">
+						</doublespinner>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Fondo de Hueco (mm)">
 						</label>
-						<spinner id="spnBBottomHole" constraint="min 0"
+						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.bottomHole)"
-							disabled="@load(vm.disabledAll)">
-						</spinner>
+							disabled="@load(vm.disabledAll)" step="0.5">
+						</doublespinner>
 						<space></space>
 						<space></space>
 					</row>
@@ -557,29 +546,29 @@
 				</columns>
 				<rows>
 					<row>
-						<label sclass="formLabel"
-							value="Modelo:">
+						<label sclass="formLabel" value="Modelo:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByDesign1357 eq null ? vm.seleccione : vm.budget.basicDataByDesign1357.name)"
-							id="cmbBDesign1357" model="@load(vm.listDesign1357)"
-							selectedItem="@bind(vm.budget.basicDataByDesign1357)"
-							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="Design1357">
+							value="@load(vm.cabinModel eq null ? vm.seleccione : vm.cabinModel.name)"
+							model="@load(vm.listCabinModel)"
+							selectedItem="@bind(vm.cabinModel)"
+							readonly="true" disabled="@load(vm.disabledAll)"
+							onChange="@command('loadCabinDesign')">
+							<template name="model" var="cabinModel">
 								<comboitem
-									label="@load(Design1357.name)">
+									label="@load(cabinModel.name)">
 								</comboitem>
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Diseño:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByDesignP26 eq null ? vm.seleccione : vm.budget.basicDataByDesignP26.name)"
-							id="cmbBDesignP26" model="@load(vm.listDesignP26)"
-							selectedItem="@bind(vm.budget.basicDataByDesignP26)"
+							value="@load(vm.budget.basicdataByCabinDesign eq null ? vm.seleccione : vm.budget.basicdataByCabinDesign.name)"
+							model="@load(vm.listDesign)"
+							selectedItem="@bind(vm.budget.basicdataByCabinDesign)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="DesignP26">
+							<template name="model" var="Design">
 								<comboitem
-									label="@load(DesignP26.name)">
+									label="@load(Design.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -596,9 +585,9 @@
 							value="Tipo de Techo:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByRoofType eq null ? vm.seleccione : vm.budget.basicDataByRoofType.name)"
+							value="@load(vm.budget.basicdataByRoofType eq null ? vm.seleccione : vm.budget.basicdataByRoofType.name)"
 							id="cmbBRoofType" model="@load(vm.listRoofType)"
-							selectedItem="@bind(vm.budget.basicDataByRoofType)"
+							selectedItem="@bind(vm.budget.basicdataByRoofType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="RoofType">
 								<comboitem
@@ -610,9 +599,9 @@
 							value="Tipo de Botonera:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByButtonType eq null ? vm.seleccione : vm.budget.basicDataByButtonType.name)"
+							value="@load(vm.budget.basicdataByButtonType eq null ? vm.seleccione : vm.budget.basicdataByButtonType.name)"
 							id="cmbBButtonType" model="@load(vm.listButtonType)"
-							selectedItem="@bind(vm.budget.basicDataByButtonType)"
+							selectedItem="@bind(vm.budget.basicdataByButtonType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ButtonType">
 								<comboitem
@@ -632,9 +621,9 @@
 					<row>
 						<label sclass="formLabel" value="Pasamano:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByRailing eq null ? vm.seleccione : vm.budget.basicDataByRailing.name)"
+							value="@load(vm.budget.basicdataByRailing eq null ? vm.seleccione : vm.budget.basicdataByRailing.name)"
 							id="cmbBRailing" model="@load(vm.listRailing)"
-							selectedItem="@bind(vm.budget.basicDataByRailing)"
+							selectedItem="@bind(vm.budget.basicdataByRailing)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="Railing">
 								<comboitem
@@ -644,9 +633,9 @@
 						</combobox>
 						<label sclass="formLabel" value="Espejo:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByMirror eq null ? vm.seleccione : vm.budget.basicDataByMirror.name)"
+							value="@load(vm.budget.basicdataByMirror eq null ? vm.seleccione : vm.budget.basicdataByMirror.name)"
 							id="cmbBMirror" model="@load(vm.listMirror)"
-							selectedItem="@bind(vm.budget.basicDataByMirror)" readonly="true"
+							selectedItem="@bind(vm.budget.basicdataByMirror)" readonly="true"
 							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Mirror">
 								<comboitem label="@load(Mirror.name)">
@@ -661,9 +650,9 @@
 							value="Acabado de Piso:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByFloorType eq null ? vm.seleccione : vm.budget.basicDataByFloorType.name)"
+							value="@load(vm.budget.basicdataByFloorType eq null ? vm.seleccione : vm.budget.basicdataByFloorType.name)"
 							id="cmbBFloorType" model="@load(vm.listFloorType)"
-							selectedItem="@bind(vm.budget.basicDataByFloorType)"
+							selectedItem="@bind(vm.budget.basicdataByFloorType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorType">
 								<comboitem
@@ -673,9 +662,9 @@
 						</combobox>
 						<label sclass="formLabel" value="Extractor:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByFan eq null ? vm.seleccione : vm.budget.basicDataByFan.name)"
+							value="@load(vm.budget.basicdataByFan eq null ? vm.seleccione : vm.budget.basicdataByFan.name)"
 							id="cmbBFan" model="@load(vm.listFan)"
-							selectedItem="@bind(vm.budget.basicDataByFan)" readonly="true"
+							selectedItem="@bind(vm.budget.basicdataByFan)" readonly="true"
 							disabled="@load(vm.disabledAll)">
 							<template name="model" var="Fan">
 								<comboitem label="@load(Fan.name)">
@@ -710,9 +699,9 @@
 							value="Tipo de Puerta:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByDoorType eq null ? vm.seleccione : vm.budget.basicDataByDoorType.name)"
+							value="@load(vm.budget.basicdataByDoorType eq null ? vm.seleccione : vm.budget.basicdataByDoorType.name)"
 							id="spnBDoorType" model="@load(vm.listDoorType)"
-							selectedItem="@bind(vm.budget.basicDataByDoorType)"
+							selectedItem="@bind(vm.budget.basicdataByDoorType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorType">
 								<comboitem
@@ -726,9 +715,9 @@
 							value="Sistema de Puerta:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByDoorSystem eq null ? vm.seleccione : vm.budget.basicDataByDoorSystem.name)"
+							value="@load(vm.budget.basicdataByDoorSystem eq null ? vm.seleccione : vm.budget.basicdataByDoorSystem.name)"
 							id="spnBDoorSystem" model="@load(vm.listDoorSystem)"
-							selectedItem="@bind(vm.budget.basicDataByDoorSystem)"
+							selectedItem="@bind(vm.budget.basicdataByDoorSystem)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="DoorSystem">
 								<comboitem
@@ -741,9 +730,9 @@
 						</label>
 						<hbox>
 							<combobox
-								value="@load(vm.budget.basicDataByDoorframeType eq null ? vm.seleccione : vm.budget.basicDataByDoorframeType.name)"
+								value="@load(vm.budget.basicdataByDoorframeType eq null ? vm.seleccione : vm.budget.basicdataByDoorframeType.name)"
 								id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
-								selectedItem="@bind(vm.budget.basicDataByDoorframeType)"
+								selectedItem="@bind(vm.budget.basicdataByDoorframeType)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="DoorframeType">
@@ -752,9 +741,9 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<!-- <button label="Nuevo"
+							<textbox value="@bind(vm.budget.comment)"
 								disabled="@load(vm.disabledAll)">
-							</button> -->
+							</textbox>
 						</hbox>
 					</row>
 					<row>
@@ -763,9 +752,9 @@
 						</label>
 						<hbox>
 							<combobox
-								value="@load(vm.budget.basicDataByFreeAdmission eq null ? vm.seleccione : vm.budget.basicDataByFreeAdmission.name)"
+								value="@load(vm.budget.basicdataByFreeAdmission eq null ? vm.seleccione : vm.budget.basicdataByFreeAdmission.name)"
 								id="cmbBFreeAdmission" model="@load(vm.listFreeAdmission)"
-								selectedItem="@bind(vm.budget.basicDataByFreeAdmission)"
+								selectedItem="@bind(vm.budget.basicdataByFreeAdmission)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model"
 									var="FreeAdmission">
@@ -776,14 +765,14 @@
 							</combobox>
 							<!-- <button label="Nuevo"
 								disabled="@load(vm.disabledAll)">
-							</button> -->
+								</button> -->
 						</hbox>
 						<label sclass="formLabel" value="Altura:"></label>
 						<hbox>
 							<combobox
-								value="@load(vm.budget.basicDataByHeight eq null ? vm.seleccione : vm.budget.basicDataByHeight.name)"
+								value="@load(vm.budget.basicdataByHeight eq null ? vm.seleccione : vm.budget.basicdataByHeight.name)"
 								id="cmbBHeight" model="@load(vm.listHeight)"
-								selectedItem="@bind(vm.budget.basicDataByHeight)"
+								selectedItem="@bind(vm.budget.basicdataByHeight)"
 								readonly="true" disabled="@load(vm.disabledAll)">
 								<template name="model" var="Height">
 									<comboitem
@@ -793,7 +782,7 @@
 							</combobox>
 							<!-- <button label="Nuevo"
 								disabled="@load(vm.disabledAll)">
-							</button> -->
+								</button> -->
 						</hbox>
 					</row>
 					<row>
@@ -840,9 +829,9 @@
 					<row>
 						<label sclass="formLabel" value="Tipo:"></label>
 						<combobox
-							value="@load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name)"
+							value="@load(vm.budget.basicdataByControlType eq null ? vm.seleccione : vm.budget.basicdataByControlType.name)"
 							id="cmbBControlType" model="@load(vm.listControlType)"
-							selectedItem="@bind(vm.budget.basicDataByControlType)"
+							selectedItem="@bind(vm.budget.basicdataByControlType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="ControlType">
 								<comboitem
@@ -857,9 +846,9 @@
 							value="Botones de Cabina:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByBoothButton eq null ? vm.seleccione : vm.budget.basicDataByBoothButton.name)"
+							value="@load(vm.budget.basicdataByBoothButton eq null ? vm.seleccione : vm.budget.basicdataByBoothButton.name)"
 							id="cmbBBoothButton" model="@load(vm.listBoothButton)"
-							selectedItem="@bind(vm.budget.basicDataByBoothButton)"
+							selectedItem="@bind(vm.budget.basicdataByBoothButton)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothButton">
 								<comboitem
@@ -905,7 +894,9 @@
 							</spinner>
 						</hbox>
 						<hbox>
-							<label sclass="formLabel" value="Cantidad Pisos:"></label>
+							<label sclass="formLabel"
+								value="Cantidad Pisos:">
+							</label>
 							<space></space>
 							<spinner id="spnBSistelWDisplayFloor"
 								width="60px" constraint="min 0"
@@ -928,7 +919,9 @@
 							</spinner>
 						</hbox>
 						<hbox>
-							<label sclass="formLabel" value="Cantidad Pisos:"></label>
+							<label sclass="formLabel"
+								value="Cantidad Pisos:">
+							</label>
 							<space></space>
 							<spinner id="spnBSistelWArrowFloor"
 								width="60px" constraint="min 0"
@@ -945,11 +938,11 @@
 							<label sclass="formLabel" value="PB:"></label>
 							<space></space>
 							<spinner id="spnBBraile37PB" width="60px"
-								constraint="min 0" value="@bind(vm.budget.braile37pb)"
-								disabled="@load(vm.disabledAll)">
+							constraint="min 0" value="@bind(vm.budget.braile37pb)"
+							disabled="@load(vm.disabledAll)">
 							</spinner>
 							<space></space> 
-						</hbox>-->
+							</hbox>-->
 						<combobox>
 							<comboitem label="Plana"></comboitem>
 							<comboitem label="Con doblé recto"></comboitem>
@@ -959,18 +952,22 @@
 							<label sclass="formLabel" value="Piso:"></label>
 							<space></space>
 							<spinner id="spnBBraile37Floor" width="60px"
-								constraint="min 0" value="@bind(vm.budget.braile37floor)"
-								disabled="@load(vm.disabledAll)">
+							constraint="min 0" value="@bind(vm.budget.braile37floor)"
+							disabled="@load(vm.disabledAll)">
 							</spinner>
-						</hbox> -->
+							</hbox> -->
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Botón de pasillo">
 						</label>
 						<combobox>
-							<comboitem label="BOTON ACERO PLASTICO CON NOMENCLATURA Y BRAILLE DE 37 mm"></comboitem>
-							<comboitem label="BOTON DE ACERO INOX. ANTI - VANDALICO DE 30 mm"></comboitem>
+							<comboitem
+								label="BOTON ACERO PLASTICO CON NOMENCLATURA Y BRAILLE DE 37 mm">
+							</comboitem>
+							<comboitem
+								label="BOTON DE ACERO INOX. ANTI - VANDALICO DE 30 mm">
+							</comboitem>
 						</combobox>
 						<space></space>
 					</row>
@@ -979,9 +976,9 @@
 							value="Display Cabina:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByBoothDisplay eq null ? vm.seleccione : vm.budget.basicDataByBoothDisplay.name)"
+							value="@load(vm.budget.basicdataByBoothDisplay eq null ? vm.seleccione : vm.budget.basicdataByBoothDisplay.name)"
 							id="cmbBBoothDisplay" model="@load(vm.listBoothDisplay)"
-							selectedItem="@bind(vm.budget.basicDataByBoothDisplay)"
+							selectedItem="@bind(vm.budget.basicdataByBoothDisplay)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="BoothDisplay">
 								<comboitem
@@ -996,9 +993,9 @@
 							value="Display Piso:">
 						</label>
 						<combobox
-							value="@load(vm.budget.basicDataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicDataByFloorDisplay.name)"
+							value="@load(vm.budget.basicdataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicdataByFloorDisplay.name)"
 							id="cmbBFloorDisplay" model="@load(vm.listFloorDisplay)"
-							selectedItem="@bind(vm.budget.basicDataByFloorDisplay)"
+							selectedItem="@bind(vm.budget.basicdataByFloorDisplay)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model" var="FloorDisplay">
 								<comboitem
@@ -1196,8 +1193,7 @@
 							disabled="@load(vm.disabledAll)">
 						</button>
 						<button id="btnPrint" label="Imprimir"
-							sclass="formLabel"
-							onClick="@command('print')"
+							sclass="formLabel" onClick="@command('print')"
 							disabled="@load(vm.disableAfterSearch ? false : true)">
 						</button>
 						<button id="btnCancel" label="Cancelar"
