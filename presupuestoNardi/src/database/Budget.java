@@ -1,6 +1,6 @@
 package database;
 
-// Generated 28/01/2013 02:48:27 PM by Hibernate Tools 3.6.0
+// Generated 29/01/2013 03:29:50 PM by Hibernate Tools 3.6.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,7 +25,9 @@ public class Budget implements java.io.Serializable {
 	private Integer idBudget;
 	private Basicdata basicdataByButtonType;
 	private Basicdata basicdataByMachineType;
+	private Basicdata basicdataByHallButton;
 	private Basicdata basicdataByBoothDisplay;
+	private Basicdata basicdataByHallButtonType;
 	private Basicdata basicdataByManeuverType;
 	private Basicdata basicdataByFrequency;
 	private Basicdata basicdataByFloorDisplay;
@@ -41,15 +43,16 @@ public class Budget implements java.io.Serializable {
 	private Basicdata basicdataByRoofType;
 	private Basicdata basicdataByFan;
 	private Basicdata basicdataByHeight;
-	private Basicdata basicdataBySpeed;
 	private Basicdata basicdataByCabinDesign;
+	private Basicdata basicdataBySpeed;
 	private Basicdata basicdataByFreeAdmission;
+	private Basicdata basicdataByDoorFrameHammered;
 	private Basicdata basicdataByControlType;
 	private Basicdata basicdataByElevatorType;
 	private Basicdata basicdataByBoothButton;
 	private Basicdata basicdataByDoorSystem;
-	private Basicdata basicdataByDoorframeType;
 	private Basicdata basicdataByHourMachine;
+	private Basicdata basicdataByDoorframeType;
 	private int number;
 	private Date date;
 	private String partnerName;
@@ -67,16 +70,16 @@ public class Budget implements java.io.Serializable {
 	private Integer motorQuantity;
 	private String motorTraction;
 	private Integer stopNumber;
-	private Integer tour;
-	private Integer onTour;
-	private Integer widthHole;
-	private Integer fossa;
-	private Integer bottomHole;
+	private Double tour;
+	private Double onTour;
+	private Double widthHole;
+	private Double fossa;
+	private Double bottomHole;
 	private Boolean designSpecial;
 	private String designSpecialComment;
 	private Integer doorOfNumber;
 	private String doorframeTypeComment;
-	private String hallButton;
+	private String hallButtonPlace;
 	private Boolean lightCurtain;
 	private Boolean loadLimiter;
 	private Boolean speechSynthesizer;
@@ -93,20 +96,13 @@ public class Budget implements java.io.Serializable {
 	private String stopSequenceEvenQ;
 	private Boolean stopSequenceOdd;
 	private String stopSequenceOddQ;
-	private Boolean doorFrameGray;
-	private String doorFrameGrayDescrip;
-	private Boolean doorFrameBrown;
-	private String doorFrameBrownDescrip;
+	private String doorFrameHammeredDesc;
 	private Boolean doorFrameStainless;
 	private String doorFrameStainlessDescrip;
-	private Integer sistelWdisplayPb;
+	private Boolean sistelWdisplayPb;
 	private Integer sistelWdisplayFloor;
-	private Integer sistelWarrowPb;
+	private Boolean sistelWarrowPb;
 	private Integer sistelWarrowFloor;
-	private int braile37pb;
-	private Integer braile37floor;
-	private Integer antivandalismPb;
-	private int antivandalismFloor;
 	private char status;
 
 	public Budget() {
@@ -115,8 +111,7 @@ public class Budget implements java.io.Serializable {
 	public Budget(int number, Date date, String partnerName,
 			String construction, String seller, String constructionAddress,
 			String constructionCity, String contactPhone, String email,
-			String contactName, boolean type, int braile37pb,
-			int antivandalismFloor, char status) {
+			String contactName, boolean type, char status) {
 		this.number = number;
 		this.date = date;
 		this.partnerName = partnerName;
@@ -128,14 +123,13 @@ public class Budget implements java.io.Serializable {
 		this.email = email;
 		this.contactName = contactName;
 		this.type = type;
-		this.braile37pb = braile37pb;
-		this.antivandalismFloor = antivandalismFloor;
 		this.status = status;
 	}
 
 	public Budget(Basicdata basicdataByButtonType,
-			Basicdata basicdataByMachineType,
+			Basicdata basicdataByMachineType, Basicdata basicdataByHallButton,
 			Basicdata basicdataByBoothDisplay,
+			Basicdata basicdataByHallButtonType,
 			Basicdata basicdataByManeuverType, Basicdata basicdataByFrequency,
 			Basicdata basicdataByFloorDisplay, Basicdata basicdataByMirror,
 			Basicdata basicdataByVoltageLighting, Basicdata basicdataByAccess,
@@ -144,41 +138,39 @@ public class Budget implements java.io.Serializable {
 			Basicdata basicdataByBuildingType,
 			Basicdata basicdataByElevatorCapacitance,
 			Basicdata basicdataByRoofType, Basicdata basicdataByFan,
-			Basicdata basicdataByHeight, Basicdata basicdataBySpeed,
-			Basicdata basicdataByCabinDesign,
-			Basicdata basicdataByFreeAdmission,
+			Basicdata basicdataByHeight, Basicdata basicdataByCabinDesign,
+			Basicdata basicdataBySpeed, Basicdata basicdataByFreeAdmission,
+			Basicdata basicdataByDoorFrameHammered,
 			Basicdata basicdataByControlType,
 			Basicdata basicdataByElevatorType,
 			Basicdata basicdataByBoothButton, Basicdata basicdataByDoorSystem,
-			Basicdata basicdataByDoorframeType,
-			Basicdata basicdataByHourMachine, int number, Date date,
+			Basicdata basicdataByHourMachine,
+			Basicdata basicdataByDoorframeType, int number, Date date,
 			String partnerName, String construction, String seller,
 			String constructionAddress, String constructionCity,
 			String contactPhone, String email, String contactName,
 			Boolean planeP, Boolean planeC, boolean type,
 			Integer elevatorQuantity, Integer motorQuantity,
-			String motorTraction, Integer stopNumber, Integer tour,
-			Integer onTour, Integer widthHole, Integer fossa,
-			Integer bottomHole, Boolean designSpecial,
-			String designSpecialComment, Integer doorOfNumber,
-			String doorframeTypeComment, String hallButton,
-			Boolean lightCurtain, Boolean loadLimiter,
+			String motorTraction, Integer stopNumber, Double tour,
+			Double onTour, Double widthHole, Double fossa, Double bottomHole,
+			Boolean designSpecial, String designSpecialComment,
+			Integer doorOfNumber, String doorframeTypeComment,
+			String hallButtonPlace, Boolean lightCurtain, Boolean loadLimiter,
 			Boolean speechSynthesizer, Boolean gomSystem, Boolean intercom,
 			Boolean phone, Boolean accessSytem, Boolean firefighterKeychain,
 			String comment, String displayPlaceFloor,
 			Boolean stopSequenceContinuous, String stopSequenceContinuousQ,
 			Boolean stopSequenceEven, String stopSequenceEvenQ,
 			Boolean stopSequenceOdd, String stopSequenceOddQ,
-			Boolean doorFrameGray, String doorFrameGrayDescrip,
-			Boolean doorFrameBrown, String doorFrameBrownDescrip,
-			Boolean doorFrameStainless, String doorFrameStainlessDescrip,
-			Integer sistelWdisplayPb, Integer sistelWdisplayFloor,
-			Integer sistelWarrowPb, Integer sistelWarrowFloor, int braile37pb,
-			Integer braile37floor, Integer antivandalismPb,
-			int antivandalismFloor, char status) {
+			String doorFrameHammeredDesc, Boolean doorFrameStainless,
+			String doorFrameStainlessDescrip, Boolean sistelWdisplayPb,
+			Integer sistelWdisplayFloor, Boolean sistelWarrowPb,
+			Integer sistelWarrowFloor, char status) {
 		this.basicdataByButtonType = basicdataByButtonType;
 		this.basicdataByMachineType = basicdataByMachineType;
+		this.basicdataByHallButton = basicdataByHallButton;
 		this.basicdataByBoothDisplay = basicdataByBoothDisplay;
+		this.basicdataByHallButtonType = basicdataByHallButtonType;
 		this.basicdataByManeuverType = basicdataByManeuverType;
 		this.basicdataByFrequency = basicdataByFrequency;
 		this.basicdataByFloorDisplay = basicdataByFloorDisplay;
@@ -194,15 +186,16 @@ public class Budget implements java.io.Serializable {
 		this.basicdataByRoofType = basicdataByRoofType;
 		this.basicdataByFan = basicdataByFan;
 		this.basicdataByHeight = basicdataByHeight;
-		this.basicdataBySpeed = basicdataBySpeed;
 		this.basicdataByCabinDesign = basicdataByCabinDesign;
+		this.basicdataBySpeed = basicdataBySpeed;
 		this.basicdataByFreeAdmission = basicdataByFreeAdmission;
+		this.basicdataByDoorFrameHammered = basicdataByDoorFrameHammered;
 		this.basicdataByControlType = basicdataByControlType;
 		this.basicdataByElevatorType = basicdataByElevatorType;
 		this.basicdataByBoothButton = basicdataByBoothButton;
 		this.basicdataByDoorSystem = basicdataByDoorSystem;
-		this.basicdataByDoorframeType = basicdataByDoorframeType;
 		this.basicdataByHourMachine = basicdataByHourMachine;
+		this.basicdataByDoorframeType = basicdataByDoorframeType;
 		this.number = number;
 		this.date = date;
 		this.partnerName = partnerName;
@@ -229,7 +222,7 @@ public class Budget implements java.io.Serializable {
 		this.designSpecialComment = designSpecialComment;
 		this.doorOfNumber = doorOfNumber;
 		this.doorframeTypeComment = doorframeTypeComment;
-		this.hallButton = hallButton;
+		this.hallButtonPlace = hallButtonPlace;
 		this.lightCurtain = lightCurtain;
 		this.loadLimiter = loadLimiter;
 		this.speechSynthesizer = speechSynthesizer;
@@ -246,20 +239,13 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceEvenQ = stopSequenceEvenQ;
 		this.stopSequenceOdd = stopSequenceOdd;
 		this.stopSequenceOddQ = stopSequenceOddQ;
-		this.doorFrameGray = doorFrameGray;
-		this.doorFrameGrayDescrip = doorFrameGrayDescrip;
-		this.doorFrameBrown = doorFrameBrown;
-		this.doorFrameBrownDescrip = doorFrameBrownDescrip;
+		this.doorFrameHammeredDesc = doorFrameHammeredDesc;
 		this.doorFrameStainless = doorFrameStainless;
 		this.doorFrameStainlessDescrip = doorFrameStainlessDescrip;
 		this.sistelWdisplayPb = sistelWdisplayPb;
 		this.sistelWdisplayFloor = sistelWdisplayFloor;
 		this.sistelWarrowPb = sistelWarrowPb;
 		this.sistelWarrowFloor = sistelWarrowFloor;
-		this.braile37pb = braile37pb;
-		this.braile37floor = braile37floor;
-		this.antivandalismPb = antivandalismPb;
-		this.antivandalismFloor = antivandalismFloor;
 		this.status = status;
 	}
 
@@ -295,6 +281,16 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "hallButton")
+	public Basicdata getBasicdataByHallButton() {
+		return this.basicdataByHallButton;
+	}
+
+	public void setBasicdataByHallButton(Basicdata basicdataByHallButton) {
+		this.basicdataByHallButton = basicdataByHallButton;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "boothDisplay")
 	public Basicdata getBasicdataByBoothDisplay() {
 		return this.basicdataByBoothDisplay;
@@ -302,6 +298,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByBoothDisplay(Basicdata basicdataByBoothDisplay) {
 		this.basicdataByBoothDisplay = basicdataByBoothDisplay;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "hallButtonType")
+	public Basicdata getBasicdataByHallButtonType() {
+		return this.basicdataByHallButtonType;
+	}
+
+	public void setBasicdataByHallButtonType(Basicdata basicdataByHallButtonType) {
+		this.basicdataByHallButtonType = basicdataByHallButtonType;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -458,16 +464,6 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "speed")
-	public Basicdata getBasicdataBySpeed() {
-		return this.basicdataBySpeed;
-	}
-
-	public void setBasicdataBySpeed(Basicdata basicdataBySpeed) {
-		this.basicdataBySpeed = basicdataBySpeed;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cabinDesign")
 	public Basicdata getBasicdataByCabinDesign() {
 		return this.basicdataByCabinDesign;
@@ -478,6 +474,16 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "speed")
+	public Basicdata getBasicdataBySpeed() {
+		return this.basicdataBySpeed;
+	}
+
+	public void setBasicdataBySpeed(Basicdata basicdataBySpeed) {
+		this.basicdataBySpeed = basicdataBySpeed;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "freeAdmission")
 	public Basicdata getBasicdataByFreeAdmission() {
 		return this.basicdataByFreeAdmission;
@@ -485,6 +491,17 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByFreeAdmission(Basicdata basicdataByFreeAdmission) {
 		this.basicdataByFreeAdmission = basicdataByFreeAdmission;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doorFrameHammered")
+	public Basicdata getBasicdataByDoorFrameHammered() {
+		return this.basicdataByDoorFrameHammered;
+	}
+
+	public void setBasicdataByDoorFrameHammered(
+			Basicdata basicdataByDoorFrameHammered) {
+		this.basicdataByDoorFrameHammered = basicdataByDoorFrameHammered;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -528,16 +545,6 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doorframeType")
-	public Basicdata getBasicdataByDoorframeType() {
-		return this.basicdataByDoorframeType;
-	}
-
-	public void setBasicdataByDoorframeType(Basicdata basicdataByDoorframeType) {
-		this.basicdataByDoorframeType = basicdataByDoorframeType;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hourMachine")
 	public Basicdata getBasicdataByHourMachine() {
 		return this.basicdataByHourMachine;
@@ -545,6 +552,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicdataByHourMachine(Basicdata basicdataByHourMachine) {
 		this.basicdataByHourMachine = basicdataByHourMachine;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doorframeType")
+	public Basicdata getBasicdataByDoorframeType() {
+		return this.basicdataByDoorframeType;
+	}
+
+	public void setBasicdataByDoorframeType(Basicdata basicdataByDoorframeType) {
+		this.basicdataByDoorframeType = basicdataByDoorframeType;
 	}
 
 	@Column(name = "number", nullable = false)
@@ -701,48 +718,48 @@ public class Budget implements java.io.Serializable {
 		this.stopNumber = stopNumber;
 	}
 
-	@Column(name = "tour")
-	public Integer getTour() {
+	@Column(name = "tour", precision = 22, scale = 0)
+	public Double getTour() {
 		return this.tour;
 	}
 
-	public void setTour(Integer tour) {
+	public void setTour(Double tour) {
 		this.tour = tour;
 	}
 
-	@Column(name = "onTour")
-	public Integer getOnTour() {
+	@Column(name = "onTour", precision = 22, scale = 0)
+	public Double getOnTour() {
 		return this.onTour;
 	}
 
-	public void setOnTour(Integer onTour) {
+	public void setOnTour(Double onTour) {
 		this.onTour = onTour;
 	}
 
-	@Column(name = "widthHole")
-	public Integer getWidthHole() {
+	@Column(name = "widthHole", precision = 22, scale = 0)
+	public Double getWidthHole() {
 		return this.widthHole;
 	}
 
-	public void setWidthHole(Integer widthHole) {
+	public void setWidthHole(Double widthHole) {
 		this.widthHole = widthHole;
 	}
 
-	@Column(name = "fossa")
-	public Integer getFossa() {
+	@Column(name = "fossa", precision = 22, scale = 0)
+	public Double getFossa() {
 		return this.fossa;
 	}
 
-	public void setFossa(Integer fossa) {
+	public void setFossa(Double fossa) {
 		this.fossa = fossa;
 	}
 
-	@Column(name = "bottomHole")
-	public Integer getBottomHole() {
+	@Column(name = "bottomHole", precision = 22, scale = 0)
+	public Double getBottomHole() {
 		return this.bottomHole;
 	}
 
-	public void setBottomHole(Integer bottomHole) {
+	public void setBottomHole(Double bottomHole) {
 		this.bottomHole = bottomHole;
 	}
 
@@ -782,13 +799,13 @@ public class Budget implements java.io.Serializable {
 		this.doorframeTypeComment = doorframeTypeComment;
 	}
 
-	@Column(name = "hallButton", length = 100)
-	public String getHallButton() {
-		return this.hallButton;
+	@Column(name = "hallButtonPlace", length = 100)
+	public String getHallButtonPlace() {
+		return this.hallButtonPlace;
 	}
 
-	public void setHallButton(String hallButton) {
-		this.hallButton = hallButton;
+	public void setHallButtonPlace(String hallButtonPlace) {
+		this.hallButtonPlace = hallButtonPlace;
 	}
 
 	@Column(name = "lightCurtain")
@@ -935,40 +952,13 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceOddQ = stopSequenceOddQ;
 	}
 
-	@Column(name = "doorFrameGray")
-	public Boolean getDoorFrameGray() {
-		return this.doorFrameGray;
+	@Column(name = "doorFrameHammeredDesc", length = 100)
+	public String getDoorFrameHammeredDesc() {
+		return this.doorFrameHammeredDesc;
 	}
 
-	public void setDoorFrameGray(Boolean doorFrameGray) {
-		this.doorFrameGray = doorFrameGray;
-	}
-
-	@Column(name = "doorFrameGrayDescrip", length = 50)
-	public String getDoorFrameGrayDescrip() {
-		return this.doorFrameGrayDescrip;
-	}
-
-	public void setDoorFrameGrayDescrip(String doorFrameGrayDescrip) {
-		this.doorFrameGrayDescrip = doorFrameGrayDescrip;
-	}
-
-	@Column(name = "doorFrameBrown")
-	public Boolean getDoorFrameBrown() {
-		return this.doorFrameBrown;
-	}
-
-	public void setDoorFrameBrown(Boolean doorFrameBrown) {
-		this.doorFrameBrown = doorFrameBrown;
-	}
-
-	@Column(name = "doorFrameBrownDescrip", length = 50)
-	public String getDoorFrameBrownDescrip() {
-		return this.doorFrameBrownDescrip;
-	}
-
-	public void setDoorFrameBrownDescrip(String doorFrameBrownDescrip) {
-		this.doorFrameBrownDescrip = doorFrameBrownDescrip;
+	public void setDoorFrameHammeredDesc(String doorFrameHammeredDesc) {
+		this.doorFrameHammeredDesc = doorFrameHammeredDesc;
 	}
 
 	@Column(name = "doorFrameStainless")
@@ -990,11 +980,11 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@Column(name = "sistelWDisplayPB")
-	public Integer getSistelWdisplayPb() {
+	public Boolean getSistelWdisplayPb() {
 		return this.sistelWdisplayPb;
 	}
 
-	public void setSistelWdisplayPb(Integer sistelWdisplayPb) {
+	public void setSistelWdisplayPb(Boolean sistelWdisplayPb) {
 		this.sistelWdisplayPb = sistelWdisplayPb;
 	}
 
@@ -1008,11 +998,11 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@Column(name = "sistelWArrowPB")
-	public Integer getSistelWarrowPb() {
+	public Boolean getSistelWarrowPb() {
 		return this.sistelWarrowPb;
 	}
 
-	public void setSistelWarrowPb(Integer sistelWarrowPb) {
+	public void setSistelWarrowPb(Boolean sistelWarrowPb) {
 		this.sistelWarrowPb = sistelWarrowPb;
 	}
 
@@ -1023,42 +1013,6 @@ public class Budget implements java.io.Serializable {
 
 	public void setSistelWarrowFloor(Integer sistelWarrowFloor) {
 		this.sistelWarrowFloor = sistelWarrowFloor;
-	}
-
-	@Column(name = "braile37PB", nullable = false)
-	public int getBraile37pb() {
-		return this.braile37pb;
-	}
-
-	public void setBraile37pb(int braile37pb) {
-		this.braile37pb = braile37pb;
-	}
-
-	@Column(name = "braile37Floor")
-	public Integer getBraile37floor() {
-		return this.braile37floor;
-	}
-
-	public void setBraile37floor(Integer braile37floor) {
-		this.braile37floor = braile37floor;
-	}
-
-	@Column(name = "antivandalismPB")
-	public Integer getAntivandalismPb() {
-		return this.antivandalismPb;
-	}
-
-	public void setAntivandalismPb(Integer antivandalismPb) {
-		this.antivandalismPb = antivandalismPb;
-	}
-
-	@Column(name = "antivandalismFloor", nullable = false)
-	public int getAntivandalismFloor() {
-		return this.antivandalismFloor;
-	}
-
-	public void setAntivandalismFloor(int antivandalismFloor) {
-		this.antivandalismFloor = antivandalismFloor;
 	}
 
 	@Column(name = "status", nullable = false, length = 1)

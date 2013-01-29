@@ -2,14 +2,7 @@ package controller;
 
 import hibernateConnections.StoreHibernateUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,13 +16,10 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.impl.SessionFactoryObjectFactory;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -39,15 +29,13 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
-import org.zkoss.util.media.AMedia;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Iframe;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
 import dao.DaoBudget;
@@ -83,6 +71,7 @@ public class FrmBudgetCtrl {
 	private List<Basicdata> listDoorType;
 	private List<Basicdata> listDoorSystem;
 	private List<Basicdata> listDoorframeType;
+	private List<Basicdata> listDoorframeHammered;
 	private List<Basicdata> listFreeAdmission;
 	private List<Basicdata> listHeight;
 	private List<Basicdata> listControlType;
@@ -91,6 +80,8 @@ public class FrmBudgetCtrl {
 	private List<Basicdata> listFloorDisplay;
 	private List<Basicdata> listMotorTraction;
 	private List<Basicdata> listCabinModel;
+	private List<Basicdata> listHallButton;
+	private List<Basicdata> listHallButtonType;
 	private List<Budget> listBudget;
 	private Basicdata cabinModel;
 	private Boolean stopSequenceContinuous;
@@ -100,21 +91,57 @@ public class FrmBudgetCtrl {
 	private Boolean disabledAll;
 	private Boolean disableAfterSearch;
 	private Boolean disabledNumber;
+	private Boolean disabledModel;
+	private Boolean isSpecial;
 	private String txtStopSequenceContinuous;
 	private String txtStopSequencePar;
 	private String txtStopSequenceOdd;
 	private String txtBStainlessSteel;
-	private String txtBHammeredBrown;
-	private String txtBHammeredGray;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
-	private Integer braile37Floor;
-	private Integer braile37PB;
-	private Integer antivandalismFloor;
-	private Integer antivandalismPB;
 	private Budget budget;
+
+	public List<Basicdata> getListHallButton() {
+		return listHallButton;
+	}
+
+	public void setListHallButton(List<Basicdata> listHallButton) {
+		this.listHallButton = listHallButton;
+	}
+
+	public List<Basicdata> getListHallButtonType() {
+		return listHallButtonType;
+	}
+
+	public void setListHallButtonType(List<Basicdata> listHallButtonType) {
+		this.listHallButtonType = listHallButtonType;
+	}
+
+	public List<Basicdata> getListDoorframeHammered() {
+		return listDoorframeHammered;
+	}
+
+	public void setListDoorframeHammered(List<Basicdata> listDoorframeHammered) {
+		this.listDoorframeHammered = listDoorframeHammered;
+	}
+
+	public Boolean getIsSpecial() {
+		return isSpecial;
+	}
+
+	public void setIsSpecial(Boolean isSpecial) {
+		this.isSpecial = isSpecial;
+	}
+
+	public Boolean getDisabledModel() {
+		return disabledModel;
+	}
+
+	public void setDisabledModel(Boolean disabledModel) {
+		this.disabledModel = disabledModel;
+	}
 
 	public List<Basicdata> getListDesign() {
 		return listDesign;
@@ -244,38 +271,6 @@ public class FrmBudgetCtrl {
 		this.sistelWArrowPB = sistelWArrowPB;
 	}
 
-	public Integer getBraile37Floor() {
-		return braile37Floor;
-	}
-
-	public void setBraile37Floor(Integer braile37Floor) {
-		this.braile37Floor = braile37Floor;
-	}
-
-	public Integer getBraile37PB() {
-		return braile37PB;
-	}
-
-	public void setBraile37PB(Integer braile37pb) {
-		braile37PB = braile37pb;
-	}
-
-	public Integer getAntivandalismFloor() {
-		return antivandalismFloor;
-	}
-
-	public void setAntivandalismFloor(Integer antivandalismFloor) {
-		this.antivandalismFloor = antivandalismFloor;
-	}
-
-	public Integer getAntivandalismPB() {
-		return antivandalismPB;
-	}
-
-	public void setAntivandalismPB(Integer antivandalismPB) {
-		this.antivandalismPB = antivandalismPB;
-	}
-
 	public String getTxtStopSequenceOdd() {
 		return txtStopSequenceOdd;
 	}
@@ -290,22 +285,6 @@ public class FrmBudgetCtrl {
 
 	public void setTxtBStainlessSteel(String txtBStainlessSteel) {
 		this.txtBStainlessSteel = txtBStainlessSteel;
-	}
-
-	public String getTxtBHammeredBrown() {
-		return txtBHammeredBrown;
-	}
-
-	public void setTxtBHammeredBrown(String txtBHammeredBrown) {
-		this.txtBHammeredBrown = txtBHammeredBrown;
-	}
-
-	public String getTxtBHammeredGray() {
-		return txtBHammeredGray;
-	}
-
-	public void setTxtBHammeredGray(String txtBHammeredGray) {
-		this.txtBHammeredGray = txtBHammeredGray;
 	}
 
 	public String getTxtStopSequencePar() {
@@ -575,6 +554,8 @@ public class FrmBudgetCtrl {
 		stopSequenceContinuous = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
+		disabledModel = new Boolean(false);
+		isSpecial = new Boolean(false);
 		budget.setDate(new Date());
 		budget.setType(true);
 		budget.setPlaneC(false);
@@ -589,15 +570,13 @@ public class FrmBudgetCtrl {
 		budget.setFirefighterKeychain(false);
 		budget.setDesignSpecial(false);
 		budget.setMotorTraction(vacio);
-		budget.setHallButton(vacio);
+		budget.setHallButtonPlace(vacio);
 		budget.setDisplayPlaceFloor(vacio);
 		budget.setStatus('A');
 		budget.setStopSequenceContinuous(false);
 		budget.setStopSequenceEven(false);
 		budget.setStopSequenceOdd(false);
 		budget.setDoorFrameStainless(false);
-		budget.setDoorFrameBrown(false);
-		budget.setDoorFrameGray(false);
 		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicdata.listByField("BUDGET",
@@ -623,6 +602,11 @@ public class FrmBudgetCtrl {
 		listDoorSystem = daoBasicdata.listByField("BUDGET", "DOOR SYSTEM");
 		listDoorframeType = daoBasicdata.listByField("BUDGET",
 				"DOOR FRAME TYPE");
+		listDoorframeHammered = daoBasicdata.listByField("BUDGET",
+				"DOOR FRAME HAMMERED");
+		listHallButton = daoBasicdata.listByField("BUDGET", "HALL BUTTON");
+		listHallButtonType = daoBasicdata.listByField("BUDGET",
+				"HALL BUTTON TYPE");
 		listFreeAdmission = daoBasicdata
 				.listByField("BUDGET", "FREE ADMISSION");
 		listHeight = daoBasicdata.listByField("BUDGET", "HEIGHT");
@@ -635,13 +619,9 @@ public class FrmBudgetCtrl {
 		listCabinModel = daoBasicdata.listByField("BUDGET", "CABIN MODEL");
 		listBudget = new ArrayList<Budget>();
 		budget.setSistelWarrowFloor(0);
-		budget.setSistelWdisplayPb(0);
+		budget.setSistelWdisplayPb(new Boolean(false));
 		budget.setSistelWdisplayFloor(0);
-		budget.setSistelWarrowPb(0);
-		budget.setBraile37floor(0);
-		budget.setBraile37pb(0);
-		budget.setAntivandalismFloor(0);
-		budget.setAntivandalismPb(0);
+		budget.setSistelWarrowPb(new Boolean(false));
 	}
 
 	/**
@@ -687,21 +667,28 @@ public class FrmBudgetCtrl {
 
 	@NotifyChange({ "*" })
 	@Command
-	public void save() {
-		DaoBudget daoBudget = new DaoBudget();
-		if (daoBudget.list(Budget.class).isEmpty())
-			budget.setNumber(1);
-		else
-			budget.setNumber(daoBudget.list(Budget.class)
-					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
-		if (!daoBudget.save(budget)) {
-			Messagebox.show("Fallo Guardado Budget", "Error", Messagebox.OK,
-					Messagebox.ERROR);
-			return;
+	public void save(@BindingParam("component") InputElement component) {
+		if (budget.getBasicdataByDoorframeType().getName()
+				.compareTo("RECTO - 30X150") == 0) {
+			throw new WrongValueException(component,
+					"Chequee el tipo de marco.");
+		} else {
+			DaoBudget daoBudget = new DaoBudget();
+			if (daoBudget.list(Budget.class).isEmpty())
+				budget.setNumber(1);
+			else
+				budget.setNumber(daoBudget.list(Budget.class)
+						.get(daoBudget.list(Budget.class).size() - 1)
+						.getNumber() + 1);
+			if (!daoBudget.save(budget)) {
+				Messagebox.show("Fallo Guardado Budget", "Error",
+						Messagebox.OK, Messagebox.ERROR);
+				return;
+			}
+			Messagebox.show("Presupuesto guardado", "Information",
+					Messagebox.OK, Messagebox.INFORMATION);
+			restartForm();
 		}
-		Messagebox.show("Presupuesto guardado", "Information", Messagebox.OK,
-				Messagebox.INFORMATION);
-		restartForm();
 	}
 
 	@NotifyChange({ "disabledAll", "budgetNumber", "budget",
@@ -827,5 +814,35 @@ public class FrmBudgetCtrl {
 	@Command
 	public void loadCabinDesign() {
 		listDesign = new DaoBasicdata().listByParent(cabinModel);
+	}
+
+	@NotifyChange({ "disabledModel", "listDesign", "budget", "cabinModel" })
+	@Command
+	public void disableModel() {
+		disabledModel = !disabledModel;
+		cabinModel = null;
+		budget.setBasicdataByCabinDesign(null);
+		listDesign = new ArrayList<Basicdata>();
+	}
+
+	@NotifyChange({ "isSpecial" })
+	@Command
+	public void isSpecial() {
+		if (budget.getBasicdataByDoorframeType() != null)
+			if (budget.getBasicdataByDoorframeType().getName()
+					.compareTo("ESPECIAL") == 0)
+				isSpecial = new Boolean(true);
+			else
+				isSpecial = new Boolean(false);
+	}
+
+	@Command
+	public void checkWidthDoorFrame(
+			@BindingParam("component") InputElement component) {
+		if (budget.getBasicdataByDoorframeType().getName()
+				.compareTo("RECTO - 30X150") == 0) {
+			throw new WrongValueException(component,
+					"Chequee el tipo de marco.");
+		}
 	}
 }
