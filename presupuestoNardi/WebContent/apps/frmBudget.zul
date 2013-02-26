@@ -1,6 +1,5 @@
-<?script content="zk.useStackup = 'auto/gecko';"?>
 <zk>
-	<style src="/style/styleZK.css"></style>
+	<style src="style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.FrmBudgetCtrl')"
 		title="Presupuesto" closable="true" onClose="@command('close')">
@@ -184,8 +183,8 @@
 			<grid>
 				<columns>
 					<column width="200px"></column>
-					<column width="230px"></column>
-					<column width="200px"></column>
+					<column width="190px"></column>
+					<column width="180px"></column>
 					<column></column>
 				</columns>
 				<rows>
@@ -250,9 +249,6 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<!-- <button id="btnNewElevatorCapacitance"
-								label="Nuevo" disabled="@load(vm.disabledAll)">
-								</button> -->
 						</hbox>
 						<label sclass="formLabel"
 							value="Tracción de Motores">
@@ -328,9 +324,6 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<!-- <button id="btnNewSpeed" label="Nuevo"
-								disabled="@load(vm.disabledAll)">
-								</button> -->
 						</hbox>
 					</row>
 					<row>
@@ -397,7 +390,7 @@
 										<textbox
 											id="txtStopSequenceContinuous" width="150px"
 											disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')"
-											value="@bind(vm.budget.stopSequenceContinuousQ)">
+											value="@load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousQ : '') @save(vm.budget.stopSequenceContinuousQ)">
 										</textbox>
 									</row>
 								</rows>
@@ -430,13 +423,13 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequencePar" label="Par"
-											checked="@bind(vm.budget.stopSequenceEven)"
-											disabled="@load(vm.stopSequenceContinuous)">
+											checked="@load(vm.budget.stopSequenceContinuous ? 'false' : vm.budget.stopSequenceEven) @save(vm.budget.stopSequenceEven)"
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)">
 										</checkbox>
 										<textbox id="txtStopSequencePar"
 											width="150px"
-											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')"
-											value="@bind(vm.budget.stopSequenceEvenQ)">
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')"
+											value="@load(vm.budget.stopSequenceContinuous ? '' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenQ : '') @save(vm.budget.stopSequenceEvenQ)">
 										</textbox>
 									</row>
 								</rows>
@@ -462,13 +455,13 @@
 									<row>
 										<checkbox
 											id="chbxBStopSequenceOdd" label="Impar"
-											checked="@bind(vm.budget.stopSequenceOdd)"
-											disabled="@load(vm.stopSequenceContinuous)">
+											checked="@load(vm.budget.stopSequenceContinuous ? 'false' : vm.budget.stopSequenceOdd) @save(vm.budget.stopSequenceOdd)"
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)">
 										</checkbox>
 										<textbox id="txtStopSequenceOdd"
 											width="150px"
-											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceOdd ? 'false':'true')"
-											value="@bind(vm.budget.stopSequenceOddQ)">
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceOdd ? 'false':'true')"
+											value="@load(vm.budget.stopSequenceContinuous ? '' : vm.budget.stopSequenceOdd ? vm.budget.stopSequenceOddQ : '') @save(vm.budget.stopSequenceOddQ)">
 										</textbox>
 									</row>
 								</rows>
@@ -483,7 +476,7 @@
 			<grid>
 				<columns>
 					<column width="200px"></column>
-					<column width="230px"></column>
+					<column width="180px"></column>
 					<column width="200px"></column>
 					<column></column>
 				</columns>
@@ -537,9 +530,9 @@
 			<grid>
 				<columns>
 					<column width="150px"></column>
-					<column width="230px"></column>
+					<column width="180px"></column>
 					<column width="120px"></column>
-					<column width="200px"></column>
+					<column width="180px"></column>
 					<column width="110px"></column>
 					<column></column>
 				</columns>
@@ -548,7 +541,7 @@
 						<label sclass="formLabel" value="Modelo:">
 						</label>
 						<combobox
-							value="@load(vm.cabinModel eq null ? vm.seleccione : vm.cabinModel.name)"
+							value="@load(vm.budget.designSpecial ? vm.seleccione : vm.cabinModel eq null ? vm.seleccione : vm.cabinModel.name)"
 							model="@load(vm.listCabinModel)"
 							selectedItem="@bind(vm.cabinModel)" readonly="true"
 							disabled="@load(vm.disabledAll ? 'true' : vm.disabledModel)"
@@ -613,8 +606,8 @@
 						<cell rowspan="3">
 							<textbox id="txtBDesignSpecialComment"
 								rows="5" cols="30"
-								disabled="@load(vm.budget.designSpecial ? 'false':'true')"
-								value="@bind(vm.budget.designSpecialComment)">
+								disabled="@load(vm.disabledAll ? 'true' : vm.budget.designSpecial ? 'false':'true')"
+								value="@load(vm.budget.designSpecial ? vm.budget.designSpecialComment : '') @save(vm.budget.designSpecialComment)">
 							</textbox>
 						</cell>
 					</row>
@@ -682,7 +675,7 @@
 			<grid>
 				<columns>
 					<column width="150px"></column>
-					<column width="230px"></column>
+					<column width="180px"></column>
 					<column width="120px"></column>
 					<column></column>
 				</columns>
@@ -744,7 +737,7 @@
 							</combobox>
 							<space></space>
 							<textbox
-								value="@bind(vm.budget.doorframeTypeComment)"
+								value="@load(vm.isSpecial ? vm.budget.doorframeTypeComment : '') @save(vm.budget.doorframeTypeComment)"
 								disabled="@load(vm.disabledAll ? 'true' : vm.isSpecial ? 'false' : 'true')"
 								sclass="txtGeneral">
 							</textbox>
@@ -767,9 +760,6 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<!-- <button label="Nuevo"
-								disabled="@load(vm.disabledAll)">
-								</button> -->
 						</hbox>
 						<label sclass="formLabel" value="Altura:"></label>
 						<hbox>
@@ -784,9 +774,6 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<!-- <button label="Nuevo"
-								disabled="@load(vm.disabledAll)">
-								</button> -->
 						</hbox>
 					</row>
 					<row>
@@ -795,8 +782,8 @@
 							disabled="@load(vm.disabledAll)">
 						</checkbox>
 						<textbox id="txtBStainlessSteel"
-							disabled="@load(vm.budget.doorFrameStainless ? 'false': 'true')"
-							value="@bind(vm.budget.doorFrameStainlessDescrip)">
+							disabled="@load(vm.disabledAll ? 'true' : vm.budget.doorFrameStainless ? 'false': 'true')"
+							value="@load(vm.budget.doorFrameStainless ? vm.budget.doorFrameStainlessDescrip : '') @save(vm.budget.doorFrameStainlessDescrip)">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
 						<hbox>
@@ -814,7 +801,7 @@
 							</combobox>
 							<space></space>
 							<textbox
-								disabled="@load(vm.budget.basicdataByDoorFrameHammered eq null ? 'true' : 'false')"
+								disabled="@load(vm.disabledAll ? 'true' : vm.budget.basicdataByDoorFrameHammered eq null ? 'true' : 'false')"
 								value="@bind(vm.budget.doorFrameHammeredDesc)">
 							</textbox>
 						</hbox>
@@ -872,15 +859,15 @@
 							<radiogroup id="radBHallButton"
 								selectedItem="@save(vm.budget.hallButtonPlace)">
 								<space></space>
-								<radio value="Pared" label="Pared"
-									checked="@load(vm.budget.hallButtonPlace eq 'Pared' ? 'true':'false')"
+								<radio label="Pared" value="PARED"
+									checked="@load(vm.budget.hallButtonPlace eq 'PARED' ? 'true':'false')"
 									disabled="@load(vm.disabledAll)">
 								</radio>
 								<space></space>
-								<radio value="Marco" label="Marco"
-									checked="@load(vm.budget.hallButtonPlace eq 'Marco' ? 'true':'false')"
+								<radio label="Marco" value="MARCO"
+									checked="@load(vm.budget.hallButtonPlace eq 'MARCO' ? 'true':'false')"
 									disabled="@load(vm.disabledAll)"
-									onCheck="@command('checkWidthDoorFrame', component = cmbBDoorframeType)">
+									onClick="@command('checkWidthDoorFrame', component = cmbBDoorframeType)">
 								</radio>
 							</radiogroup>
 						</hbox>
@@ -941,7 +928,7 @@
 						<combobox
 							value="@load(vm.budget.basicdataByHallButtonType eq null ? vm.seleccione : vm.budget.basicdataByHallButtonType.name)"
 							model="@load(vm.listHallButtonType)"
-							selectedItem="@bind(vm.budget.basicdataByBoothButton)"
+							selectedItem="@bind(vm.budget.basicdataByHallButtonType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
 								var="HallButtonType">
@@ -1187,7 +1174,7 @@
 				<row>
 					<hbox>
 						<button id="btnSave" label="Enviar"
-							sclass="formLabel" onClick="@command('save')"
+							sclass="formLabel" onClick="@command('save', component = cmbBDoorframeType)"
 							disabled="@load(vm.disabledAll)">
 						</button>
 						<button id="btnPrint" label="Imprimir"

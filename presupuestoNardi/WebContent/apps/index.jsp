@@ -5,25 +5,25 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Insert title here</title>
+	<z:zkhead />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-	<link rel="stylesheet" type="text/css" href="style/stylePage.css">
-	<z:zkhead />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="style/stylePage.css"></link>
 </head>
 <body style="height: auto">
 	<%
-		request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE,Boolean.TRUE);
+    	request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE, Boolean.TRUE);
 	%>
 	<z:page>
 		<z:window>
 			<div class="page">
 				<div class="aside">
-					<jsp:include page="frmMenu.zul"></jsp:include>
+					<jsp:include page="../apps/frmMenu.zul"/>
 				</div>
 				<div class="section-main">
-					<jsp:include page="index.zul" />
+					<jsp:include page="../apps/index.zul"/>
 				</div>
 			</div>
 		</z:window>

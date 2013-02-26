@@ -84,7 +84,6 @@ public class FrmBudgetCtrl {
 	private List<Basicdata> listHallButtonType;
 	private List<Budget> listBudget;
 	private Basicdata cabinModel;
-	private Boolean stopSequenceContinuous;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
@@ -93,10 +92,6 @@ public class FrmBudgetCtrl {
 	private Boolean disabledNumber;
 	private Boolean disabledModel;
 	private Boolean isSpecial;
-	private String txtStopSequenceContinuous;
-	private String txtStopSequencePar;
-	private String txtStopSequenceOdd;
-	private String txtBStainlessSteel;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
@@ -207,14 +202,6 @@ public class FrmBudgetCtrl {
 		this.seleccione = seleccione;
 	}
 
-	public Boolean getStopSequenceContinuous() {
-		return stopSequenceContinuous;
-	}
-
-	public void setStopSequenceContinuous(Boolean stopSequenceContinuous) {
-		this.stopSequenceContinuous = stopSequenceContinuous;
-	}
-
 	public Boolean getStainlessSteel() {
 		return stainlessSteel;
 	}
@@ -269,38 +256,6 @@ public class FrmBudgetCtrl {
 
 	public void setSistelWArrowPB(Integer sistelWArrowPB) {
 		this.sistelWArrowPB = sistelWArrowPB;
-	}
-
-	public String getTxtStopSequenceOdd() {
-		return txtStopSequenceOdd;
-	}
-
-	public void setTxtStopSequenceOdd(String txtStopSequenceOdd) {
-		this.txtStopSequenceOdd = txtStopSequenceOdd;
-	}
-
-	public String getTxtBStainlessSteel() {
-		return txtBStainlessSteel;
-	}
-
-	public void setTxtBStainlessSteel(String txtBStainlessSteel) {
-		this.txtBStainlessSteel = txtBStainlessSteel;
-	}
-
-	public String getTxtStopSequencePar() {
-		return txtStopSequencePar;
-	}
-
-	public void setTxtStopSequencePar(String txtStopSequencePar) {
-		this.txtStopSequencePar = txtStopSequencePar;
-	}
-
-	public String getTxtStopSequenceContinuous() {
-		return txtStopSequenceContinuous;
-	}
-
-	public void setTxtStopSequenceContinuous(String txtStopSequenceContinuous) {
-		this.txtStopSequenceContinuous = txtStopSequenceContinuous;
 	}
 
 	public Budget getBudget() {
@@ -551,7 +506,6 @@ public class FrmBudgetCtrl {
 			budget.setNumber(daoBudget.list(Budget.class)
 					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
 		disabledAll = new Boolean(false);
-		stopSequenceContinuous = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
 		disabledModel = new Boolean(false);
@@ -668,8 +622,9 @@ public class FrmBudgetCtrl {
 	@NotifyChange({ "*" })
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
-		if (budget.getBasicdataByDoorframeType().getName()
-				.compareTo("RECTO - 30X150") == 0) {
+		checkboxChecking();
+		if (budget.getBasicdataByDoorframeType() != null && budget.getBasicdataByDoorframeType().getName()
+				.compareTo("RECTO - 30X150") == 0 && (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
 					"Chequee el tipo de marco.");
 		} else {
@@ -685,7 +640,7 @@ public class FrmBudgetCtrl {
 						Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
-			Messagebox.show("Presupuesto guardado", "Information",
+			Messagebox.show("Presupuesto enviado", "Information",
 					Messagebox.OK, Messagebox.INFORMATION);
 			restartForm();
 		}
@@ -698,7 +653,6 @@ public class FrmBudgetCtrl {
 		restartForm();
 		budget.setNumber(0);
 		disabledAll = new Boolean(true);
-		stopSequenceContinuous = new Boolean(true);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(false);
 	}
@@ -721,10 +675,6 @@ public class FrmBudgetCtrl {
 			budget = listBudget2.get(0);
 			disableAfterSearch = new Boolean(true);
 			disabledNumber = new Boolean(true);
-			/*
-			 * disabledAll = new Boolean(false); disabledSave = new
-			 * Boolean(false);
-			 */
 		} else if (listSize == 0) {
 			Messagebox.show("Ningun registro coincide");
 		} else {
@@ -746,9 +696,6 @@ public class FrmBudgetCtrl {
 		budget = listBudget2.get(0);
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
-		/*
-		 * disabledAll = new Boolean(false); disabledSave = new Boolean(false);
-		 */
 	}
 
 	@NotifyChange({ "budget", "disabledAll", "budgetNumber",
@@ -758,9 +705,6 @@ public class FrmBudgetCtrl {
 		this.budget = budget;
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
-		/*
-		 * disabledAll = new Boolean(false); disabledSave = new Boolean(false);
-		 */
 	}
 
 	@Command
@@ -770,12 +714,27 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
-	@NotifyChange({ "budget", "stopSequenceContinuous" })
+	public void checkboxChecking(){
+		if (!budget.getStopSequenceContinuous())
+			budget.setStopSequenceContinuousQ(vacio);
+		if (!budget.getStopSequenceEven())
+			budget.setStopSequenceEvenQ(vacio);
+		if (!budget.getStopSequenceOdd())
+			budget.setStopSequenceOddQ(vacio);
+		if (!budget.getDesignSpecial())
+			budget.setDesignSpecialComment(vacio);
+		if (!budget.getDoorFrameStainless())
+			budget.setDoorFrameStainlessDescrip(vacio);
+	}
+
 	@Command
 	public void isStopSequenceContinuous() {
 		budget.setStopSequenceEven(false);
 		budget.setStopSequenceOdd(false);
-		stopSequenceContinuous = !stopSequenceContinuous;
+		budget.setStopSequenceEvenQ(new String());
+		budget.setStopSequenceOddQ(new String());
+		if (!budget.getStopSequenceContinuous())
+			budget.setStopSequenceContinuousQ(vacio);
 	}
 
 	@Command
@@ -786,11 +745,14 @@ public class FrmBudgetCtrl {
 		/* Antes de abrir la conexion se debe iniciar una transaccion */
 		session.beginTransaction();
 		String string = Sessions.getCurrent().getWebApp()
-				.getRealPath("/reports");
+				.getRealPath("/apps/reports");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(string
 				+ "/budget.jasper");
 		Map parameters = new HashMap();
 		parameters.put("number", budget.getNumber());
+		/*Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes*/
+		parameters.put("IMAGES_DIR", "../../apps/images/");
+		parameters.put("SUBREPORT_DIR", "../../apps/reports/");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
 				parameters, session.connection());
 		JRExporter jrExporter = new JRPdfExporter();
@@ -799,7 +761,7 @@ public class FrmBudgetCtrl {
 				+ "/presupuesto" + budget.getNumber() + ".pdf");
 		jrExporter.exportReport();
 		session.close();
-		String report = new String("reports/presupuesto" + budget.getNumber()
+		String report = new String("/apps/reports/presupuesto" + budget.getNumber()
 				+ ".pdf");
 		Map map = new HashMap();
 		map.put("reportPath", report);
@@ -810,19 +772,26 @@ public class FrmBudgetCtrl {
 				null, map);
 	}
 
-	@NotifyChange({ "listDesign" })
+	@NotifyChange({ "listDesign"})
 	@Command
 	public void loadCabinDesign() {
 		listDesign = new DaoBasicdata().listByParent(cabinModel);
+		/* No asigno un nuevo OBJETO en lugar de "null"
+		 * puesto que me da error al guardar el objeto budget
+		 */
+		budget.setBasicdataByCabinDesign(null);
 	}
 
-	@NotifyChange({ "disabledModel", "listDesign", "budget", "cabinModel" })
+	@NotifyChange({ "disabledModel", "listDesign", "cabinModel" })
 	@Command
 	public void disableModel() {
 		disabledModel = !disabledModel;
-		cabinModel = null;
-		budget.setBasicdataByCabinDesign(null);
+		cabinModel = new Basicdata();
 		listDesign = new ArrayList<Basicdata>();
+		/* No asigno un nuevo OBJETO en lugar de "null" 
+		 * puesto que me da error al guardar el objeto budget
+		 */
+		budget.setBasicdataByCabinDesign(null);
 	}
 
 	@NotifyChange({ "isSpecial" })
@@ -832,15 +801,17 @@ public class FrmBudgetCtrl {
 			if (budget.getBasicdataByDoorframeType().getName()
 					.compareTo("ESPECIAL") == 0)
 				isSpecial = new Boolean(true);
-			else
+			else{
 				isSpecial = new Boolean(false);
+				budget.setDoorframeTypeComment(vacio);
+			}
 	}
 
 	@Command
 	public void checkWidthDoorFrame(
 			@BindingParam("component") InputElement component) {
-		if (budget.getBasicdataByDoorframeType().getName()
-				.compareTo("RECTO - 30X150") == 0) {
+		if (budget.getBasicdataByDoorframeType() != null && budget.getBasicdataByDoorframeType().getName()
+				.compareTo("RECTO - 30X150") == 0 && (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
 					"Chequee el tipo de marco.");
 		}

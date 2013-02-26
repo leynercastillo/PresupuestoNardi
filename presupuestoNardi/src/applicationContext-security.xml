@@ -8,7 +8,14 @@
 
 	<http auto-config="true">
 		<!-- <intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/**" access="ROLE_USER" /> -->
+		<intercept-url pattern="/apps/index.jsp" access="ROLE_USER" />
+		<intercept-url pattern="/apps/index.zul" access="ROLE_USER" />
+		<intercept-url pattern="/authorized.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/notAuthorized.zul" access="ROLE_USER" />
+		<intercept-url pattern="/apps/frmBudget.zul" access="ROLE_BUDGET" />
+		<intercept-url pattern="/apps/frmMenu.zul" access="ROLE_USER" />
+		<intercept-url pattern="/apps/frmReport.zul" access="ROLE_USER" />
+		<intercept-url pattern="/apps/frmWindowBudgets.zul" access="ROLE_USER" /> -->
 		<form-login login-page="/login.zul"
 			default-target-url="/index.jsp" authentication-failure-url="/login.zul?login_error=1" />
 		<logout logout-success-url="/login.zul" />

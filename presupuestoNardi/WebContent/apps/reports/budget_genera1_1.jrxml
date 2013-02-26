@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_genera1_1" language="groovy" pageWidth="540" pageHeight="648" columnWidth="540" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3bd75de0-205f-4086-846b-93752dd8996c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="number" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     number AS 'Numero',
+     date AS 'Fecha',
+     partnerName AS 'Cliente',
+     construction AS 'Construccion',
+     contactName AS 'Persona_Contacto',
+     elevatorQuantity AS 'Cantidad_de_ascensores',
+     ( SELECT name FROM `BasicData` WHERE elevatorType = idBasic ) AS 'Tipo elevador',
+     seller AS 'Vendedor',
+     ( SELECT phone FROM `security_user` WHERE name = seller ) AS 'Teléfono vendedor'
+FROM
+     `Budget` Budget
+WHERE
+     number = $P{number}]]>
+	</queryString>
+	<field name="Numero" class="java.lang.Integer"/>
+	<field name="Fecha" class="java.sql.Timestamp"/>
+	<field name="Cliente" class="java.lang.String"/>
+	<field name="Construccion" class="java.lang.String"/>
+	<field name="Persona_Contacto" class="java.lang.String"/>
+	<field name="Cantidad_de_ascensores" class="java.lang.Integer"/>
+	<field name="Tipo elevador" class="java.lang.String"/>
+	<field name="Vendedor" class="java.lang.String"/>
+	<field name="Teléfono vendedor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0e21eac7-3d9d-4fa4-98f2-37f1ccbd3280" x="429" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="49cea54d-4a37-4434-b4a8-316930ff69e1" x="394" y="0" width="35" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="446" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ac4aff94-7e8c-4c8d-95c5-9911106d867c" x="130" y="147" width="384" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f99468f4-4750-4cbd-8053-51e39cd026d2" x="13" y="147" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7164c50a-df67-4b52-b017-9c478880fc0e" x="130" y="190" width="384" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Construccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e866fbda-2db5-43b1-b661-95d4e51ed305" x="13" y="190" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Obra:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6e13b72f-f93f-4478-a97f-98a4b4ca3cfb" x="130" y="234" width="384" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Persona_Contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5331a974-caff-4e13-bbe9-24e7bb58f397" x="13" y="234" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atención:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ff781314-4f71-4fa6-9d31-08c1ce1c11f4" x="130" y="274" width="21" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad_de_ascensores}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2abb4dee-2a6f-447d-ba32-5aaee5b584e9" x="13" y="274" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="564c50e1-9e1f-4f81-acb9-197b025f1303" x="151" y="274" width="24" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="87375592-6d70-4aed-8e7b-0d667744e459" x="175" y="274" width="339" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo elevador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e19c6082-54e9-4318-9ba9-d53114b70364" x="195" y="0" width="157" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[BARQUISIMETO - EDO. LARA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="15339fa6-f0ab-4771-b079-441442f960b9" x="2" y="20" width="144" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Ud. Esta siendo atendido, por ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="61f78d15-6ef6-4f78-889b-201391662c4d" x="146" y="20" width="79" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6330fd56-cfe9-4c36-a0d0-0190f870750f" x="297" y="20" width="241" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[quien le dará información adicional de su interés.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="510a21a6-67d9-4afb-881c-cc98d7f18d9a" x="226" y="20" width="71" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Teléfono vendedor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

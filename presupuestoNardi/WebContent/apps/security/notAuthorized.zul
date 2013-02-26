@@ -1,0 +1,11 @@
+<zk>
+	<window title="Usuario no autorizado" border="normal" width="50%"
+		mode="modal" height="20%">
+		<vbox align="center" width="100%">
+			<label style="color: red;"
+				value="Para acceder a este sitio, es necesario que usted sea un usuario autorizado.">
+			</label>
+			<a label="Volver" href="index.jsp"></a>
+		</vbox>
+	</window>
+</zk>

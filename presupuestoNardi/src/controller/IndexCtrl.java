@@ -4,11 +4,12 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Sessions;
 
 public class IndexCtrl {
 
 	private String page;
-	
+
 	public String getPage() {
 		return page;
 	}
@@ -21,6 +22,7 @@ public class IndexCtrl {
 	public void init(){
 		page = new String();
 	}
+
 	@NotifyChange("page")
 	@GlobalCommand
 	public void selectedPage(@BindingParam("page") String page){

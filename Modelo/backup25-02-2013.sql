@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `nardi` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `nardi`;
+CREATE DATABASE  IF NOT EXISTS `ascensor_nardi` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `ascensor_nardi`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: nardi
+-- Host: localhost    Database: ascensor_nardi
 -- ------------------------------------------------------
--- Server version	5.5.24-log
+-- Server version	5.5.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -132,9 +132,9 @@ CREATE TABLE `budget` (
   `doorFrameHammeredDesc` varchar(100) DEFAULT NULL,
   `doorFrameStainless` tinyint(1) DEFAULT NULL,
   `doorFrameStainlessDescrip` varchar(50) DEFAULT NULL,
-  `sistelWDisplayPB` int(11) DEFAULT NULL,
+  `sistelWDisplayPB` tinyint(1) DEFAULT NULL,
   `sistelWDisplayFloor` int(11) DEFAULT NULL,
-  `sistelWArrowPB` int(11) DEFAULT NULL,
+  `sistelWArrowPB` tinyint(1) DEFAULT NULL,
   `sistelWArrowFloor` int(11) DEFAULT NULL,
   `hallButtonType` int(11) DEFAULT NULL,
   `hallButton` int(11) DEFAULT NULL,
@@ -170,10 +170,10 @@ CREATE TABLE `budget` (
   KEY `basicdata_budget_fk4` (`doorFrameHammered`),
   KEY `basicdata_budget_fk14` (`hallButtonType`),
   KEY `basicdata_budget_fk11` (`hallButton`),
-  CONSTRAINT `basicdata_budget_fk11` FOREIGN KEY (`hallButton`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk` FOREIGN KEY (`speed`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk1` FOREIGN KEY (`buildingType`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk10` FOREIGN KEY (`hourMachine`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `basicdata_budget_fk11` FOREIGN KEY (`hallButton`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk12` FOREIGN KEY (`maneuverType`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk13` FOREIGN KEY (`cabinDesign`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk14` FOREIGN KEY (`hallButtonType`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -200,7 +200,7 @@ CREATE TABLE `budget` (
   CONSTRAINT `basicdata_budget_fk7` FOREIGN KEY (`electricityType`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk8` FOREIGN KEY (`frequency`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk9` FOREIGN KEY (`voltageLighting`) REFERENCES `basicdata` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,6 +209,7 @@ CREATE TABLE `budget` (
 
 LOCK TABLES `budget` WRITE;
 /*!40000 ALTER TABLE `budget` DISABLE KEYS */;
+INSERT INTO `budget` VALUES (1,1,'2013-02-21 13:30:38','Leyner','PC','JESUS','PLAZA CARIBE','BQTO','1234203498','leyner@gmail.com','Leyner',0,0,1,NULL,NULL,NULL,NULL,NULL,' ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,' ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,90,' ',NULL,NULL,NULL,NULL,'MARCO',NULL,NULL,0,0,0,0,0,0,0,0,NULL,' ',0,' ',0,' ',0,' ',NULL,NULL,0,' ',0,0,0,0,NULL,NULL,'A'),(2,2,'2013-02-21 13:31:59','Leyner','LJSLDJF','LAJSDFLKJ','JASLDKFJL','ASLDJFASLKJ','LKJASDFLKJ','LAKSDJFASDF@ASDFJ.COM','LKJASDFLKJ',0,0,1,NULL,NULL,NULL,NULL,NULL,' ',NULL,NULL,NULL,NULL,43,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,' ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,' ',NULL,NULL,0,0,1,1,0,0,0,0,NULL,' ',0,' ',0,' ',0,' ',NULL,NULL,0,' ',0,0,0,0,NULL,NULL,'A'),(3,3,'2013-02-25 09:30:39','Jesus','Mi Casa Equipada','Leyner','Barquisimeto','Bqto','0251-2544873','jesus@gmail.com','Jesus',0,0,1,2,9,3,15,8,'1:1',24,29,34,37,43,45,47,129,2,1.5,10.5,1.5,5.5,3.5,60,0,' ',65,68,71,125,75,81,8,130,89,93,' ',101,98,103,106,'MARCO',114,121,0,0,0,0,0,0,0,0,'TEST PARA REPORTE','Todos los pisos',1,'1, 2, 3, 4',0,' ',0,' ',140,'3',1,'PB',1,4,1,7,143,144,'A'),(4,4,'2013-02-25 09:58:17','asdf','asdfas','asdfas','dfasdf','sadfas','dfasdf','asdfasdfasdf@lskjfc.com','dfasdfsdf',0,0,1,NULL,NULL,NULL,NULL,NULL,' ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,' ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,' ',NULL,NULL,0,0,0,0,0,0,0,0,NULL,' ',0,' ',0,' ',0,' ',NULL,NULL,0,' ',0,0,0,0,NULL,NULL,'A');
 /*!40000 ALTER TABLE `budget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,8 +225,8 @@ CREATE TABLE `group_user` (
   `id_security_group` int(11) NOT NULL,
   PRIMARY KEY (`id_security_user`,`id_security_group`),
   KEY `security_group_group_user_fk` (`id_security_group`),
-  CONSTRAINT `security_user_group_user_fk` FOREIGN KEY (`id_security_user`) REFERENCES `security_user` (`id_security_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `security_group_group_user_fk` FOREIGN KEY (`id_security_group`) REFERENCES `security_group` (`id_security_group`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `security_group_group_user_fk` FOREIGN KEY (`id_security_group`) REFERENCES `security_group` (`id_security_group`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `security_user_group_user_fk` FOREIGN KEY (`id_security_user`) REFERENCES `security_user` (`id_security_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -347,4 +348,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-29 15:26:06
+-- Dump completed on 2013-02-25 10:12:59

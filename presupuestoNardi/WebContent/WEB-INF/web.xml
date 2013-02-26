@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>presupuestoNardi</display-name>
+	<listener>
+		<description>ZK JSP Tags environment initiation </description>
+		<display-name>ZK JSP Initiator</display-name>
+		<listener-class>org.zkoss.jsp.spec.JspFactoryContextListener</listener-class>
+	</listener>
 	<listener>
 		<description>
 		Used to cleanup when a session is destroyed</description>
@@ -65,6 +72,6 @@
 	</context-param>
 	<error-page>
 		<error-code>403</error-code>
-		<location>/timeout.zul</location>
+		<location>/</location>
 	</error-page>
 </web-app>
