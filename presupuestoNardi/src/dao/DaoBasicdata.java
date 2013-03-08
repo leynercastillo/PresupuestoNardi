@@ -17,7 +17,7 @@ public class DaoBasicdata extends GenericDao<Basicdata> {
 		Criteria criteria = currentSession().createCriteria(Basicdata.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
-		criteria.add(Restrictions.eq("field", field));
+		criteria.add(Restrictions.eq("field", field).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
 		return criteria.list();
@@ -28,8 +28,8 @@ public class DaoBasicdata extends GenericDao<Basicdata> {
 		Criteria criteria = currentSession().createCriteria(Basicdata.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
-		criteria.add(Restrictions.eq("field", field));
-		criteria.add(Restrictions.eq("name", name));
+		criteria.add(Restrictions.eq("field", field).ignoreCase());
+		criteria.add(Restrictions.eq("name", name).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
 		return (Basicdata)criteria.uniqueResult();

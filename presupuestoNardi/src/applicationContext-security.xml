@@ -7,42 +7,37 @@
            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<!-- <intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/apps/index.jsp" access="ROLE_USER" />
-		<intercept-url pattern="/apps/index.zul" access="ROLE_USER" />
-		<intercept-url pattern="/authorized.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/notAuthorized.zul" access="ROLE_USER" />
-		<intercept-url pattern="/apps/frmBudget.zul" access="ROLE_BUDGET" />
-		<intercept-url pattern="/apps/frmMenu.zul" access="ROLE_USER" />
-		<intercept-url pattern="/apps/frmReport.zul" access="ROLE_USER" />
-		<intercept-url pattern="/apps/frmWindowBudgets.zul" access="ROLE_USER" /> -->
-		<form-login login-page="/login.zul"
-			default-target-url="/index.jsp" authentication-failure-url="/login.zul?login_error=1" />
-		<logout logout-success-url="/login.zul" />
+		<intercept-url pattern="/index.jsp" access="ROLE_USER" />
+		<intercept-url pattern="/index.zul" access="ROLE_USER" />
+		<intercept-url pattern="/frmBudget.zul" access="ROLE_BUDGET" />
+		<intercept-url pattern="/frmMenu.zul" access="ROLE_MENU" />
+		<intercept-url pattern="/frmReport.zul" access="ROLE_REPORT" />
+		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_BUDGETS" />
+		<intercept-url pattern="/security/authorized.jsp"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/security/notAuthorized.zul"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/security/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/security/frmSecurityProfile.zul"
+			access="ROLE_SECURITY_PROFILE" />
+		<form-login login-page="/security/login.zul"
+			default-target-url="/security/index.jsp" authentication-failure-url="/security/login.zul?login_error=1" />
+		<logout logout-success-url="/security/login.zul" />
 		<session-management>
 			<concurrency-control max-sessions="1" />
 		</session-management>
 	</http>
 	<authentication-manager>
-		<authentication-provider>
-			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="
-					SELECT 
-						name,password,status
-		      		FROM 
-		      			security_user 
-		      		WHERE name=?"
-				authorities-by-username-query="
-					SELECT 
-						T0.name,
-						T4.name
-					FROM
-						security_user T0 INNER JOIN group_user T1 ON T1.id_security_user = T0.id_security_user
-						INNER JOIN security_group T2 ON T2.id_security_group = T1.id_security_group
-						INNER JOIN role_group T3 ON T3.id_security_group = T2.id_security_group
-						INNER JOIN security_role T4 ON T3.id_security_role = T4.id_security_role
-					WHERE
-						T0.name=?" />
+		<!-- <authentication-provider> <jdbc-user-service data-source-ref="dataSource" 
+			users-by-username-query=" SELECT email,password,status FROM security_user 
+			WHERE email=?" authorities-by-username-query=" SELECT T0.email, T4.name FROM 
+			security_user T0 INNER JOIN group_user T1 ON T1.id_security_user = T0.id_security_user 
+			INNER JOIN security_group T2 ON T2.id_security_group = T1.id_security_group 
+			INNER JOIN role_group T3 ON T3.id_security_group = T2.id_security_group INNER 
+			JOIN security_role T4 ON T3.id_security_role = T4.id_security_role WHERE 
+			T0.email=?" /> </authentication-provider> -->
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="sha-256"></password-encoder>
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>

@@ -1,14 +1,28 @@
 package controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Sessions;
+import org.zkoss.spring.security.SecurityUtil;
+
+import dao.DaoSecurityUser;
+import database.SecurityUser;
 
 public class IndexCtrl {
 
 	private String page;
+	private SecurityUser user;
+
+	public SecurityUser getUser() {
+		return user;
+	}
+
+	public void setUser(SecurityUser user) {
+		this.user = user;
+	}
 
 	public String getPage() {
 		return page;
@@ -19,13 +33,21 @@ public class IndexCtrl {
 	}
 
 	@Init
-	public void init(){
+	public void init() {
 		page = new String();
+		User auxUser = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		/*
+		 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no
+		 * almacena email
+		 */
+		user = new DaoSecurityUser()
+				.findByString("name", auxUser.getUsername());
 	}
 
 	@NotifyChange("page")
 	@GlobalCommand
-	public void selectedPage(@BindingParam("page") String page){
+	public void selectedPage(@BindingParam("page") String page) {
 		this.page = page;
 	}
 }

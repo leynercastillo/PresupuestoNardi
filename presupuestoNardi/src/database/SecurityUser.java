@@ -1,6 +1,6 @@
 package database;
 
-// Generated 18/02/2013 11:33:51 AM by Hibernate Tools 3.6.0
+// Generated 05-mar-2013 9:51:50 by Hibernate Tools 3.6.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,24 +26,28 @@ public class SecurityUser implements java.io.Serializable {
 	private String name;
 	private String email;
 	private String password;
+	private String phone;
 	private byte status;
 	private Set<SecurityGroup> securityGroups = new HashSet<SecurityGroup>(0);
 
 	public SecurityUser() {
 	}
 
-	public SecurityUser(String name, String email, String password, byte status) {
+	public SecurityUser(String name, String email, String password,
+			String phone, byte status) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.status = status;
 	}
 
 	public SecurityUser(String name, String email, String password,
-			byte status, Set<SecurityGroup> securityGroups) {
+			String phone, byte status, Set<SecurityGroup> securityGroups) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.status = status;
 		this.securityGroups = securityGroups;
 	}
@@ -77,13 +81,22 @@ public class SecurityUser implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "password", nullable = false, length = 50)
+	@Column(name = "password", nullable = false, length = 100)
 	public String getPassword() {
 		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "phone", nullable = false, length = 20)
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Column(name = "status", nullable = false)

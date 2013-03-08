@@ -1,0 +1,15 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal">
+		<grid>
+			<columns>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<listbox></listbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

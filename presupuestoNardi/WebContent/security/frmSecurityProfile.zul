@@ -1,0 +1,46 @@
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.FrmSecurityProfile')"
+		title="Perfil de usuario" closable="true"
+		onClose="@command('close')">
+		<grid>
+			<columns>
+				<column width="130px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<label value="Nombre:" sclass="formLabel"></label>
+					<textbox sclass="txtGeneral"
+						value="@load(vm.user.name)" disabled="true">
+					</textbox>
+				</row>
+				<row>
+					<label value="Teléfono:" sclass="formLabel"></label>
+					<textbox sclass="txtGeneral"
+						value="@load(vm.user.phone) @save(vm.user.phone, before = 'save') @validator(vm.noEmpty, component = self)">
+					</textbox>
+				</row>
+				<row>
+					<label value="Correo:" sclass="formLabel"></label>
+					<textbox sclass="txtGeneral"
+						value="@load(vm.user.email)" disabled="true">
+					</textbox>
+				</row>
+				<row>
+					<a label="Cambiar contraseña"
+						onClick="@command('frmChangePassword')">
+					</a>
+					<space></space>
+				</row>
+				<row>
+					<space></space>
+					<button label="Actualizar"
+						onClick="@command('save')">
+					</button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

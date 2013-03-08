@@ -22,14 +22,14 @@ public class DaoBudget extends GenericDao<Budget> {
 	public List<Budget> listOrderBudgetbyField(String field) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(Budget.class);
-		criteria.addOrder(Order.asc(field));
+		criteria.addOrder(Order.asc(field).ignoreCase());
 		return criteria.list();
 	}
 	
 	public List<Budget> findByString(String field, String value) {
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(Budget.class);
-		criteria.add(Restrictions.eq(field, value));
+		criteria.add(Restrictions.eq(field, value).ignoreCase());
 		return criteria.list();
 	}
 

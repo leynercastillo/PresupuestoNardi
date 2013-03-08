@@ -1,0 +1,68 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.FrmMenuCtrl')">
+		<tabbox mold="accordion" width="100%">
+			<tabs>
+				<tab label="Ventas"></tab>
+				<tab label="Usuarios"></tab>
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<tree>
+						<treechildren>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_BUDGET')}">
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='frmBudget.zul')">
+										<label
+											value="Presupuesto Clientes">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</tabpanel>
+				<tabpanel>
+					<tree>
+						<treechildren>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_SECURITY_PROFILE')}">
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='security/frmSecurityProfile.zul')">
+										<label
+											value="Perfil de Usuario">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_SECURITY_USERS_MASTER')}">
+								<treerow>
+									<treecell>
+										<label
+											value="Maestro de usuarios">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_SECURITY_GROUPS')}">
+								<treerow>
+									<treecell>
+										<label value="Grupos"></label>
+									</treecell>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+	</window>
+</zk>

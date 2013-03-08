@@ -80,17 +80,4 @@ public class GenericDao<Model> {
 			}
 		}
 	}
-
-	public List<Model> list(Class c) {
-		Transaction transaction = currentSession().beginTransaction();
-		Criteria criteria = currentSession().createCriteria(c);
-		return criteria.list();
-	}
-
-	public List<Model> listActive(Class c) {
-		Transaction transaction = currentSession().beginTransaction();
-		Criteria criteria = currentSession().createCriteria(c);
-		criteria.add(Restrictions.eq("status", 'A'));
-		return criteria.list();
-	}
 }

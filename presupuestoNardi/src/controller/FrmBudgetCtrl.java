@@ -1,7 +1,10 @@
 package controller;
 
+import general.Emails;
+import general.ValidateZK;
 import hibernateConnections.StoreHibernateUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +12,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -19,18 +24,18 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.BindUtils;
-import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zhtml.Messagebox;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
@@ -39,6 +44,7 @@ import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
 import dao.DaoBudget;
+import dao.DaoSecurityUser;
 import database.Basicdata;
 import database.Budget;
 
@@ -91,12 +97,21 @@ public class FrmBudgetCtrl {
 	private Boolean disableAfterSearch;
 	private Boolean disabledNumber;
 	private Boolean disabledModel;
+	private Boolean disableSeller;
 	private Boolean isSpecial;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
 	private Budget budget;
+
+	public Boolean getDisableSeller() {
+		return disableSeller;
+	}
+
+	public void setDisableSeller(Boolean disableSeller) {
+		this.disableSeller = disableSeller;
+	}
 
 	public List<Basicdata> getListHallButton() {
 		return listHallButton;
@@ -500,16 +515,27 @@ public class FrmBudgetCtrl {
 		DaoBasicdata daoBasicdata = new DaoBasicdata();
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
-		if (daoBudget.list(Budget.class).isEmpty())
+		if (daoBudget.listOrderBudgetbyField("status").isEmpty())
 			budget.setNumber(1);
 		else
-			budget.setNumber(daoBudget.list(Budget.class)
-					.get(daoBudget.list(Budget.class).size() - 1).getNumber() + 1);
+			budget.setNumber(daoBudget.listOrderBudgetbyField("status")
+					.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
+					.getNumber() + 1);
 		disabledAll = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
 		disabledModel = new Boolean(false);
+		disableSeller = new Boolean(true);
 		isSpecial = new Boolean(false);
+		cabinModel = new Basicdata();
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		/*
+		 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no
+		 * almacena email
+		 */
+		budget.setSeller(new DaoSecurityUser().findByString("name",
+				user.getUsername()).getName());
 		budget.setDate(new Date());
 		budget.setType(true);
 		budget.setPlaneC(false);
@@ -584,18 +610,7 @@ public class FrmBudgetCtrl {
 	 * @return {@link Validator}
 	 */
 	public Validator getNoEmpty() {
-		return new AbstractValidator() {
-			@Override
-			public void validate(ValidationContext ctx) {
-				Component component = (Component) ctx.getBindContext()
-						.getValidatorArg("component");
-				String string = (String) ctx.getProperty().getValue();
-				if (string.isEmpty()) {
-					throw new WrongValueException(component,
-							"Ingrese un dato valido.");
-				}
-			}
-		};
+		return new ValidateZK().getNoEmpty();
 	}
 
 	/**
@@ -605,35 +620,59 @@ public class FrmBudgetCtrl {
 	 * @return {@link Validator}
 	 */
 	public Validator getNoEmail() {
-		return new AbstractValidator() {
-			@Override
-			public void validate(ValidationContext ctx) {
-				Component component = (Component) ctx.getBindContext()
-						.getValidatorArg("component");
-				String string = (String) ctx.getProperty().getValue();
-				if (string.isEmpty() || !string.matches(".+@.+\\.[a-zA-Z]+")) {
-					throw new WrongValueException(component,
-							"Ingrese una direccion de correo valida.");
-				}
-			}
-		};
+		return new ValidateZK().getNoEmail();
+	}
+
+	public String message() {
+		String seller = new String(budget.getSeller());
+		String message = new String();
+		message = "Presupuesto enviado por " + seller + "\n\nCliente: "
+				+ budget.getPartnerName() + "\n\nCantidad ascensores: "
+				+ budget.getElevatorQuantity() + "\n\nCiudad: "
+				+ budget.getConstructionCity();
+		return message;
+	}
+
+	public List<File> adjuntos(){
+		List<File> listAttach = new ArrayList<File>();
+		createPdf();
+		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/presupuesto"+budget.getNumber()+".pdf"));
+		listAttach.add(file);
+		return listAttach;
+	}
+
+	public void sendMail(){
+		Emails emails = new Emails();
+		emails.loadProperties("/resource/config/mail.properties");
+		List<String> listRecipient = new ArrayList<String>();
+		listRecipient.add("ventas@ascensoresnardi.com");
+		listRecipient.add("sistemas@ascensoresnardi.com");
+		try {
+			emails.sendMail("Presupuesto nro" + budget.getNumber(),
+					listRecipient, message(), adjuntos());
+		} catch (MessagingException e) {
+			System.out.println("Properties wasn't loaded.");
+		}
 	}
 
 	@NotifyChange({ "*" })
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
 		checkboxChecking();
-		if (budget.getBasicdataByDoorframeType() != null && budget.getBasicdataByDoorframeType().getName()
-				.compareTo("RECTO - 30X150") == 0 && (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
+		if (budget.getBasicdataByDoorframeType() != null
+				&& budget.getBasicdataByDoorframeType().getName()
+						.compareTo("RECTO - 30X150") == 0
+				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
 					"Chequee el tipo de marco.");
 		} else {
 			DaoBudget daoBudget = new DaoBudget();
-			if (daoBudget.list(Budget.class).isEmpty())
+			if (daoBudget.listOrderBudgetbyField("status").isEmpty())
 				budget.setNumber(1);
 			else
-				budget.setNumber(daoBudget.list(Budget.class)
-						.get(daoBudget.list(Budget.class).size() - 1)
+				budget.setNumber(daoBudget
+						.listOrderBudgetbyField("status")
+						.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
 						.getNumber() + 1);
 			if (!daoBudget.save(budget)) {
 				Messagebox.show("Fallo Guardado Budget", "Error",
@@ -642,6 +681,7 @@ public class FrmBudgetCtrl {
 			}
 			Messagebox.show("Presupuesto enviado", "Information",
 					Messagebox.OK, Messagebox.INFORMATION);
+			sendMail();
 			restartForm();
 		}
 	}
@@ -652,9 +692,11 @@ public class FrmBudgetCtrl {
 	public void search() {
 		restartForm();
 		budget.setNumber(0);
+		budget.setSeller(vacio);
 		disabledAll = new Boolean(true);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(false);
+		disableSeller = new Boolean(false);
 	}
 
 	@NotifyChange({ "listBudget" })
@@ -675,6 +717,7 @@ public class FrmBudgetCtrl {
 			budget = listBudget2.get(0);
 			disableAfterSearch = new Boolean(true);
 			disabledNumber = new Boolean(true);
+			disableSeller = new Boolean(true);
 		} else if (listSize == 0) {
 			Messagebox.show("Ningun registro coincide");
 		} else {
@@ -696,6 +739,7 @@ public class FrmBudgetCtrl {
 		budget = listBudget2.get(0);
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
+		disableSeller = new Boolean(true);
 	}
 
 	@NotifyChange({ "budget", "disabledAll", "budgetNumber",
@@ -705,6 +749,7 @@ public class FrmBudgetCtrl {
 		this.budget = budget;
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
+		disableSeller = new Boolean(true);
 	}
 
 	@Command
@@ -714,7 +759,7 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
-	public void checkboxChecking(){
+	public void checkboxChecking() {
 		if (!budget.getStopSequenceContinuous())
 			budget.setStopSequenceContinuousQ(vacio);
 		if (!budget.getStopSequenceEven())
@@ -738,46 +783,79 @@ public class FrmBudgetCtrl {
 	}
 
 	@Command
-	public void print() throws JRException, IOException,
-			ClassNotFoundException, SQLException {
+	public void createPdf() {
 		/* Tomo la sesion actual de hibernate */
 		Session session = StoreHibernateUtil.openSession();
 		/* Antes de abrir la conexion se debe iniciar una transaccion */
 		session.beginTransaction();
 		String string = Sessions.getCurrent().getWebApp()
-				.getRealPath("/apps/reports");
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(string
-				+ "/budget.jasper");
+				.getRealPath("/resource/reports");
+		JasperReport jasperReport;
+		try {
+			jasperReport = (JasperReport) JRLoader.loadObject(string
+					+ "/budget.jasper");
+		} catch (JRException e) {
+			jasperReport = null;
+			System.out.println("budget.jasper didn't find");
+		}
 		Map parameters = new HashMap();
 		parameters.put("number", budget.getNumber());
-		/*Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes*/
-		parameters.put("IMAGES_DIR", "../../apps/images/");
-		parameters.put("SUBREPORT_DIR", "../../apps/reports/");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
-				parameters, session.connection());
+		/*
+		 * Enviamos por parametro a ireport la ruta de la ubicacion de los
+		 * subreportes e imagenes.
+		 */
+		parameters.put("IMAGES_DIR", "../../resource/images/");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/");
+		JasperPrint jasperPrint;
+		try {
+			jasperPrint = JasperFillManager.fillReport(jasperReport,
+					parameters, session.connection());
+		} catch (HibernateException e1) {
+			jasperPrint = null;
+			System.out.println("Connection wasn't obtained.");
+		} catch (JRException e1) {
+			jasperPrint = null;
+			e1.printStackTrace();
+		}
 		JRExporter jrExporter = new JRPdfExporter();
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string
 				+ "/presupuesto" + budget.getNumber() + ".pdf");
-		jrExporter.exportReport();
+		File file = new File(string+"/presupuesto" + budget.getNumber() + ".pdf");
+		/*Eliminamos el pdf si ya existia, puesto que no se sobreescribe.*/
+		if (file.isFile())
+			file.delete();
+		try {
+			jrExporter.exportReport();
+		} catch (JRException e) {
+			System.out.println("Report wasn't export.");
+		}
 		session.close();
-		String report = new String("/apps/reports/presupuesto" + budget.getNumber()
-				+ ".pdf");
+	}
+
+	@Command
+	public void print() throws JRException, IOException,
+			ClassNotFoundException, SQLException {
+		createPdf();
+		String report = new String("/resource/reports/presupuesto"
+				+ budget.getNumber() + ".pdf");
 		Map map = new HashMap();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto Nardi");
-		map.put("absolutePath", string + "/presupuesto" + budget.getNumber()
+		map.put("absolutePath", Sessions.getCurrent().getWebApp()
+				.getRealPath("/resource/reports") + "/presupuesto" + budget.getNumber()
 				+ ".pdf");
 		Window win = (Window) Executions.createComponents("frmReport.zul",
 				null, map);
 	}
 
-	@NotifyChange({ "listDesign"})
+	@NotifyChange({ "listDesign" })
 	@Command
 	public void loadCabinDesign() {
 		listDesign = new DaoBasicdata().listByParent(cabinModel);
-		/* No asigno un nuevo OBJETO en lugar de "null"
-		 * puesto que me da error al guardar el objeto budget
+		/*
+		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
+		 * al guardar el objeto budget
 		 */
 		budget.setBasicdataByCabinDesign(null);
 	}
@@ -788,8 +866,9 @@ public class FrmBudgetCtrl {
 		disabledModel = !disabledModel;
 		cabinModel = new Basicdata();
 		listDesign = new ArrayList<Basicdata>();
-		/* No asigno un nuevo OBJETO en lugar de "null" 
-		 * puesto que me da error al guardar el objeto budget
+		/*
+		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
+		 * al guardar el objeto budget
 		 */
 		budget.setBasicdataByCabinDesign(null);
 	}
@@ -801,7 +880,7 @@ public class FrmBudgetCtrl {
 			if (budget.getBasicdataByDoorframeType().getName()
 					.compareTo("ESPECIAL") == 0)
 				isSpecial = new Boolean(true);
-			else{
+			else {
 				isSpecial = new Boolean(false);
 				budget.setDoorframeTypeComment(vacio);
 			}
@@ -810,8 +889,10 @@ public class FrmBudgetCtrl {
 	@Command
 	public void checkWidthDoorFrame(
 			@BindingParam("component") InputElement component) {
-		if (budget.getBasicdataByDoorframeType() != null && budget.getBasicdataByDoorframeType().getName()
-				.compareTo("RECTO - 30X150") == 0 && (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
+		if (budget.getBasicdataByDoorframeType() != null
+				&& budget.getBasicdataByDoorframeType().getName()
+						.compareTo("RECTO - 30X150") == 0
+				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
 					"Chequee el tipo de marco.");
 		}
