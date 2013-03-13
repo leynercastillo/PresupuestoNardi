@@ -39,13 +39,14 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
 import dao.DaoBudget;
 import dao.DaoSecurityUser;
-import database.Basicdata;
+import database.BasicData;
 import database.Budget;
 
 /**
@@ -56,40 +57,40 @@ public class FrmBudgetCtrl {
 
 	private String seleccione = new String("--Seleccione--");
 	private static final String vacio = new String(" ");
-	private List<Basicdata> listBType;
-	private List<Basicdata> listElevatorType;
-	private List<Basicdata> listElevatorCapa;
-	private List<Basicdata> listMachineType;
-	private List<Basicdata> listBEmbarque;
-	private List<Basicdata> listElectricityType;
-	private List<Basicdata> listSpeed;
-	private List<Basicdata> listFrequency;
-	private List<Basicdata> listVoltageLighting;
-	private List<Basicdata> listHourMachine;
-	private List<Basicdata> listManeuverType;
-	private List<Basicdata> listDesign;
-	private List<Basicdata> listRoofType;
-	private List<Basicdata> listButtonType;
-	private List<Basicdata> listRailing;
-	private List<Basicdata> listMirror;
-	private List<Basicdata> listFloorType;
-	private List<Basicdata> listFan;
-	private List<Basicdata> listDoorType;
-	private List<Basicdata> listDoorSystem;
-	private List<Basicdata> listDoorframeType;
-	private List<Basicdata> listDoorframeHammered;
-	private List<Basicdata> listFreeAdmission;
-	private List<Basicdata> listHeight;
-	private List<Basicdata> listControlType;
-	private List<Basicdata> listBoothButton;
-	private List<Basicdata> listBoothDisplay;
-	private List<Basicdata> listFloorDisplay;
-	private List<Basicdata> listMotorTraction;
-	private List<Basicdata> listCabinModel;
-	private List<Basicdata> listHallButton;
-	private List<Basicdata> listHallButtonType;
+	private List<BasicData> listBType;
+	private List<BasicData> listElevatorType;
+	private List<BasicData> listElevatorCapa;
+	private List<BasicData> listMachineType;
+	private List<BasicData> listBEmbarque;
+	private List<BasicData> listElectricityType;
+	private List<BasicData> listSpeed;
+	private List<BasicData> listFrequency;
+	private List<BasicData> listVoltageLighting;
+	private List<BasicData> listHourMachine;
+	private List<BasicData> listManeuverType;
+	private List<BasicData> listDesign;
+	private List<BasicData> listRoofType;
+	private List<BasicData> listButtonType;
+	private List<BasicData> listRailing;
+	private List<BasicData> listMirror;
+	private List<BasicData> listFloorType;
+	private List<BasicData> listFan;
+	private List<BasicData> listDoorType;
+	private List<BasicData> listDoorSystem;
+	private List<BasicData> listDoorframeType;
+	private List<BasicData> listDoorframeHammered;
+	private List<BasicData> listFreeAdmission;
+	private List<BasicData> listHeight;
+	private List<BasicData> listControlType;
+	private List<BasicData> listBoothButton;
+	private List<BasicData> listBoothDisplay;
+	private List<BasicData> listFloorDisplay;
+	private List<BasicData> listMotorTraction;
+	private List<BasicData> listCabinModel;
+	private List<BasicData> listHallButton;
+	private List<BasicData> listHallButtonType;
 	private List<Budget> listBudget;
-	private Basicdata cabinModel;
+	private BasicData cabinModel;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
@@ -113,27 +114,27 @@ public class FrmBudgetCtrl {
 		this.disableSeller = disableSeller;
 	}
 
-	public List<Basicdata> getListHallButton() {
+	public List<BasicData> getListHallButton() {
 		return listHallButton;
 	}
 
-	public void setListHallButton(List<Basicdata> listHallButton) {
+	public void setListHallButton(List<BasicData> listHallButton) {
 		this.listHallButton = listHallButton;
 	}
 
-	public List<Basicdata> getListHallButtonType() {
+	public List<BasicData> getListHallButtonType() {
 		return listHallButtonType;
 	}
 
-	public void setListHallButtonType(List<Basicdata> listHallButtonType) {
+	public void setListHallButtonType(List<BasicData> listHallButtonType) {
 		this.listHallButtonType = listHallButtonType;
 	}
 
-	public List<Basicdata> getListDoorframeHammered() {
+	public List<BasicData> getListDoorframeHammered() {
 		return listDoorframeHammered;
 	}
 
-	public void setListDoorframeHammered(List<Basicdata> listDoorframeHammered) {
+	public void setListDoorframeHammered(List<BasicData> listDoorframeHammered) {
 		this.listDoorframeHammered = listDoorframeHammered;
 	}
 
@@ -153,27 +154,27 @@ public class FrmBudgetCtrl {
 		this.disabledModel = disabledModel;
 	}
 
-	public List<Basicdata> getListDesign() {
+	public List<BasicData> getListDesign() {
 		return listDesign;
 	}
 
-	public void setListDesign(List<Basicdata> listDesign) {
+	public void setListDesign(List<BasicData> listDesign) {
 		this.listDesign = listDesign;
 	}
 
-	public Basicdata getCabinModel() {
+	public BasicData getCabinModel() {
 		return cabinModel;
 	}
 
-	public void setCabinModel(Basicdata cabinModel) {
+	public void setCabinModel(BasicData cabinModel) {
 		this.cabinModel = cabinModel;
 	}
 
-	public List<Basicdata> getListCabinModel() {
+	public List<BasicData> getListCabinModel() {
 		return listCabinModel;
 	}
 
-	public void setListCabinModel(List<Basicdata> listCabinModel) {
+	public void setListCabinModel(List<BasicData> listCabinModel) {
 		this.listCabinModel = listCabinModel;
 	}
 
@@ -281,219 +282,219 @@ public class FrmBudgetCtrl {
 		this.budget = budget;
 	}
 
-	public List<Basicdata> getListMotorTraction() {
+	public List<BasicData> getListMotorTraction() {
 		return listMotorTraction;
 	}
 
-	public void setListMotorTraction(List<Basicdata> listMotorTraction) {
+	public void setListMotorTraction(List<BasicData> listMotorTraction) {
 		this.listMotorTraction = listMotorTraction;
 	}
 
-	public List<Basicdata> getListFloorDisplay() {
+	public List<BasicData> getListFloorDisplay() {
 		return listFloorDisplay;
 	}
 
-	public void setListFloorDisplay(List<Basicdata> listFloorDisplay) {
+	public void setListFloorDisplay(List<BasicData> listFloorDisplay) {
 		this.listFloorDisplay = listFloorDisplay;
 	}
 
-	public List<Basicdata> getListBoothDisplay() {
+	public List<BasicData> getListBoothDisplay() {
 		return listBoothDisplay;
 	}
 
-	public void setListBoothDisplay(List<Basicdata> listBoothDisplay) {
+	public void setListBoothDisplay(List<BasicData> listBoothDisplay) {
 		this.listBoothDisplay = listBoothDisplay;
 	}
 
-	public List<Basicdata> getListBoothButton() {
+	public List<BasicData> getListBoothButton() {
 		return listBoothButton;
 	}
 
-	public void setListBoothButton(List<Basicdata> listBoothButton) {
+	public void setListBoothButton(List<BasicData> listBoothButton) {
 		this.listBoothButton = listBoothButton;
 	}
 
-	public List<Basicdata> getListControlType() {
+	public List<BasicData> getListControlType() {
 		return listControlType;
 	}
 
-	public void setListControlType(List<Basicdata> listControlType) {
+	public void setListControlType(List<BasicData> listControlType) {
 		this.listControlType = listControlType;
 	}
 
-	public List<Basicdata> getListHeight() {
+	public List<BasicData> getListHeight() {
 		return listHeight;
 	}
 
-	public void setListHeight(List<Basicdata> listHeight) {
+	public void setListHeight(List<BasicData> listHeight) {
 		this.listHeight = listHeight;
 	}
 
-	public List<Basicdata> getListFreeAdmission() {
+	public List<BasicData> getListFreeAdmission() {
 		return listFreeAdmission;
 	}
 
-	public void setListFreeAdmission(List<Basicdata> listFreeAdmission) {
+	public void setListFreeAdmission(List<BasicData> listFreeAdmission) {
 		this.listFreeAdmission = listFreeAdmission;
 	}
 
-	public List<Basicdata> getListDoorframeType() {
+	public List<BasicData> getListDoorframeType() {
 		return listDoorframeType;
 	}
 
-	public void setListDoorframeType(List<Basicdata> listDoorframeType) {
+	public void setListDoorframeType(List<BasicData> listDoorframeType) {
 		this.listDoorframeType = listDoorframeType;
 	}
 
-	public List<Basicdata> getListDoorSystem() {
+	public List<BasicData> getListDoorSystem() {
 		return listDoorSystem;
 	}
 
-	public void setListDoorSystem(List<Basicdata> listDoorSystem) {
+	public void setListDoorSystem(List<BasicData> listDoorSystem) {
 		this.listDoorSystem = listDoorSystem;
 	}
 
-	public List<Basicdata> getListDoorType() {
+	public List<BasicData> getListDoorType() {
 		return listDoorType;
 	}
 
-	public void setListDoorType(List<Basicdata> listDoorType) {
+	public void setListDoorType(List<BasicData> listDoorType) {
 		this.listDoorType = listDoorType;
 	}
 
-	public List<Basicdata> getListFan() {
+	public List<BasicData> getListFan() {
 		return listFan;
 	}
 
-	public void setListFan(List<Basicdata> listFan) {
+	public void setListFan(List<BasicData> listFan) {
 		this.listFan = listFan;
 	}
 
-	public List<Basicdata> getListFloorType() {
+	public List<BasicData> getListFloorType() {
 		return listFloorType;
 	}
 
-	public void setListFloorType(List<Basicdata> listFloorType) {
+	public void setListFloorType(List<BasicData> listFloorType) {
 		this.listFloorType = listFloorType;
 	}
 
-	public List<Basicdata> getListMirror() {
+	public List<BasicData> getListMirror() {
 		return listMirror;
 	}
 
-	public void setListMirror(List<Basicdata> listMirror) {
+	public void setListMirror(List<BasicData> listMirror) {
 		this.listMirror = listMirror;
 	}
 
-	public List<Basicdata> getListRailing() {
+	public List<BasicData> getListRailing() {
 		return listRailing;
 	}
 
-	public void setListRailing(List<Basicdata> listRailing) {
+	public void setListRailing(List<BasicData> listRailing) {
 		this.listRailing = listRailing;
 	}
 
-	public List<Basicdata> getListButtonType() {
+	public List<BasicData> getListButtonType() {
 		return listButtonType;
 	}
 
-	public void setListButtonType(List<Basicdata> listButtonType) {
+	public void setListButtonType(List<BasicData> listButtonType) {
 		this.listButtonType = listButtonType;
 	}
 
-	public List<Basicdata> getListRoofType() {
+	public List<BasicData> getListRoofType() {
 		return listRoofType;
 	}
 
-	public void setListRoofType(List<Basicdata> listRoofType) {
+	public void setListRoofType(List<BasicData> listRoofType) {
 		this.listRoofType = listRoofType;
 	}
 
-	public List<Basicdata> getListManeuverType() {
+	public List<BasicData> getListManeuverType() {
 		return listManeuverType;
 	}
 
-	public void setListManeuverType(List<Basicdata> listManeuverType) {
+	public void setListManeuverType(List<BasicData> listManeuverType) {
 		this.listManeuverType = listManeuverType;
 	}
 
-	public List<Basicdata> getListHourMachine() {
+	public List<BasicData> getListHourMachine() {
 		return listHourMachine;
 	}
 
-	public void setListHourMachine(List<Basicdata> listHourMachine) {
+	public void setListHourMachine(List<BasicData> listHourMachine) {
 		this.listHourMachine = listHourMachine;
 	}
 
-	public List<Basicdata> getListVoltageLighting() {
+	public List<BasicData> getListVoltageLighting() {
 		return listVoltageLighting;
 	}
 
-	public void setListVoltageLighting(List<Basicdata> listVoltageLighting) {
+	public void setListVoltageLighting(List<BasicData> listVoltageLighting) {
 		this.listVoltageLighting = listVoltageLighting;
 	}
 
-	public List<Basicdata> getListFrequency() {
+	public List<BasicData> getListFrequency() {
 		return listFrequency;
 	}
 
-	public void setListFrequency(List<Basicdata> listFrequency) {
+	public void setListFrequency(List<BasicData> listFrequency) {
 		this.listFrequency = listFrequency;
 	}
 
-	public List<Basicdata> getListSpeed() {
+	public List<BasicData> getListSpeed() {
 		return listSpeed;
 	}
 
-	public void setListSpeed(List<Basicdata> listSpeed) {
+	public void setListSpeed(List<BasicData> listSpeed) {
 		this.listSpeed = listSpeed;
 	}
 
-	public List<Basicdata> getListElectricityType() {
+	public List<BasicData> getListElectricityType() {
 		return listElectricityType;
 	}
 
-	public void setListElectricityType(List<Basicdata> listElectricityType) {
+	public void setListElectricityType(List<BasicData> listElectricityType) {
 		this.listElectricityType = listElectricityType;
 	}
 
-	public List<Basicdata> getListBEmbarque() {
+	public List<BasicData> getListBEmbarque() {
 		return listBEmbarque;
 	}
 
-	public void setListBEmbarque(List<Basicdata> listBEmbarque) {
+	public void setListBEmbarque(List<BasicData> listBEmbarque) {
 		this.listBEmbarque = listBEmbarque;
 	}
 
-	public List<Basicdata> getListMachineType() {
+	public List<BasicData> getListMachineType() {
 		return listMachineType;
 	}
 
-	public void setListMachineType(List<Basicdata> listMachineType) {
+	public void setListMachineType(List<BasicData> listMachineType) {
 		this.listMachineType = listMachineType;
 	}
 
-	public List<Basicdata> getListElevatorCapa() {
+	public List<BasicData> getListElevatorCapa() {
 		return listElevatorCapa;
 	}
 
-	public void setListElevatorCapa(List<Basicdata> listElevatorCapa) {
+	public void setListElevatorCapa(List<BasicData> listElevatorCapa) {
 		this.listElevatorCapa = listElevatorCapa;
 	}
 
-	public List<Basicdata> getListElevatorType() {
+	public List<BasicData> getListElevatorType() {
 		return listElevatorType;
 	}
 
-	public void setListElevatorType(List<Basicdata> listElevatorType) {
+	public void setListElevatorType(List<BasicData> listElevatorType) {
 		this.listElevatorType = listElevatorType;
 	}
 
-	public List<Basicdata> getListBType() {
+	public List<BasicData> getListBType() {
 		return listBType;
 	}
 
-	public void setListBType(List<Basicdata> listBType) {
+	public void setListBType(List<BasicData> listBType) {
 		this.listBType = listBType;
 	}
 
@@ -527,7 +528,7 @@ public class FrmBudgetCtrl {
 		disabledModel = new Boolean(false);
 		disableSeller = new Boolean(true);
 		isSpecial = new Boolean(false);
-		cabinModel = new Basicdata();
+		cabinModel = new BasicData();
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		/*
@@ -571,7 +572,7 @@ public class FrmBudgetCtrl {
 				"VOLTAGE LIGHTING");
 		listHourMachine = daoBasicdata.listByField("BUDGET", "HOUR MACHINE");
 		listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
-		listDesign = new ArrayList<Basicdata>();
+		listDesign = new ArrayList<BasicData>();
 		listRoofType = daoBasicdata.listByField("BUDGET", "ROOF TYPE");
 		listButtonType = daoBasicdata.listByField("BUDGET", "BUTTON TYPE");
 		listRailing = daoBasicdata.listByField("BUDGET", "RAILING");
@@ -659,8 +660,8 @@ public class FrmBudgetCtrl {
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
 		checkboxChecking();
-		if (budget.getBasicdataByDoorframeType() != null
-				&& budget.getBasicdataByDoorframeType().getName()
+		if (budget.getBasicDataByDoorframeType() != null
+				&& budget.getBasicDataByDoorframeType().getName()
 						.compareTo("RECTO - 30X150") == 0
 				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
@@ -675,13 +676,11 @@ public class FrmBudgetCtrl {
 						.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
 						.getNumber() + 1);
 			if (!daoBudget.save(budget)) {
-				Messagebox.show("Fallo Guardado Budget", "Error",
-						Messagebox.OK, Messagebox.ERROR);
+				Clients.showNotification("No se pudo guardar.", "error", null, "middle_center", 2000);
 				return;
 			}
-			Messagebox.show("Presupuesto enviado", "Information",
-					Messagebox.OK, Messagebox.INFORMATION);
 			sendMail();
+			Clients.showNotification("Presupuesto enviado", "info", null, "middle_center", 2000);
 			restartForm();
 		}
 	}
@@ -719,7 +718,7 @@ public class FrmBudgetCtrl {
 			disabledNumber = new Boolean(true);
 			disableSeller = new Boolean(true);
 		} else if (listSize == 0) {
-			Messagebox.show("Ningun registro coincide");
+			Clients.showNotification("Ningun registro coincide", "info", null, "middle_center",2000);
 		} else {
 			Map map = new HashMap();
 			map.put("listBudget", listBudget2);
@@ -857,27 +856,27 @@ public class FrmBudgetCtrl {
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
 		 * al guardar el objeto budget
 		 */
-		budget.setBasicdataByCabinDesign(null);
+		budget.setBasicDataByCabinDesign(null);
 	}
 
 	@NotifyChange({ "disabledModel", "listDesign", "cabinModel" })
 	@Command
 	public void disableModel() {
 		disabledModel = !disabledModel;
-		cabinModel = new Basicdata();
-		listDesign = new ArrayList<Basicdata>();
+		cabinModel = new BasicData();
+		listDesign = new ArrayList<BasicData>();
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
 		 * al guardar el objeto budget
 		 */
-		budget.setBasicdataByCabinDesign(null);
+		budget.setBasicDataByCabinDesign(null);
 	}
 
 	@NotifyChange({ "isSpecial" })
 	@Command
 	public void isSpecial() {
-		if (budget.getBasicdataByDoorframeType() != null)
-			if (budget.getBasicdataByDoorframeType().getName()
+		if (budget.getBasicDataByDoorframeType() != null)
+			if (budget.getBasicDataByDoorframeType().getName()
 					.compareTo("ESPECIAL") == 0)
 				isSpecial = new Boolean(true);
 			else {
@@ -889,8 +888,8 @@ public class FrmBudgetCtrl {
 	@Command
 	public void checkWidthDoorFrame(
 			@BindingParam("component") InputElement component) {
-		if (budget.getBasicdataByDoorframeType() != null
-				&& budget.getBasicdataByDoorframeType().getName()
+		if (budget.getBasicDataByDoorframeType() != null
+				&& budget.getBasicDataByDoorframeType().getName()
 						.compareTo("RECTO - 30X150") == 0
 				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,

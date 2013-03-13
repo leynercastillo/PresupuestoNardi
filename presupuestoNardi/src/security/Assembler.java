@@ -22,10 +22,10 @@ public class Assembler {
 		/*Datos basicos del usuario*/
 		String username = userModel.getName();
 		String password = userModel.getPassword();
-		boolean enabled = userModel.getStatus() == (byte)1 ? true : false;
-		boolean accountNonExpired = userModel.getStatus() == (byte)1 ? true : false;
-	    boolean credentialsNonExpired = userModel.getStatus() == (byte)1 ? true : false;
-	    boolean accountNonLocked = userModel.getStatus() == (byte)1 ? true : false;
+		boolean enabled = userModel.getStatus() == 'A' ? true : false;
+		boolean accountNonExpired = userModel.getStatus() == 'A' ? true : false;
+	    boolean credentialsNonExpired = userModel.getStatus() == 'A' ? true : false;
+	    boolean accountNonLocked = userModel.getStatus() == 'A' ? true : false;
 	    /*Recolectamos los roles del usuario*/
 	    Collection<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 	    Set<SecurityGroup> listGroups = userModel.getSecurityGroups();

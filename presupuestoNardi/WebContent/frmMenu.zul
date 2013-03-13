@@ -19,7 +19,7 @@
 									<treecell
 										onClick="@command('optionSelected', optionSelected='frmBudget.zul')">
 										<label
-											value="Presupuesto Clientes">
+											value="Solicitud de Presupuesto">
 										</label>
 									</treecell>
 								</treerow>
@@ -44,7 +44,8 @@
 							<treeitem
 								if="${sec:isAllGranted('ROLE_SECURITY_USERS_MASTER')}">
 								<treerow>
-									<treecell>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='security/frmSecurityUserMaster.zul')">
 										<label
 											value="Maestro de usuarios">
 										</label>

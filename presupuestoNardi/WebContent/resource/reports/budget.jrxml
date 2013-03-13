@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ef38146c-42ba-41c0-bb8c-f29c42295cc8">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="ef38146c-42ba-41c0-bb8c-f29c42295cc8">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -13,7 +13,7 @@
 	number AS 'Numero',
 	(SELECT phone FROM `security_user` WHERE name = seller) AS 'Teléfono vendedor'
 FROM
-	Budget
+	budget
 WHERE
 	number = $P{number}]]>
 	</queryString>
@@ -22,18 +22,10 @@ WHERE
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="78">
-			<image>
-				<reportElement uuid="1ed11ba8-9de1-4ea8-b9d0-d75f44b819cd" x="0" y="0" width="291" height="78"/>
-				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo 2.jpg"]]></imageExpression>
-			</image>
-		</band>
-	</pageHeader>
 	<detail>
-		<band height="70" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="9d14dd42-c59d-4697-bea9-502761f32a77" x="0" y="1" width="572" height="21"/>
+				<reportElement uuid="9d14dd42-c59d-4697-bea9-502761f32a77" x="0" y="71" width="572" height="21"/>
 				<subreportParameter name="number">
 					<subreportParameterExpression><![CDATA[$F{Numero}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -41,44 +33,41 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_genera1_1.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement uuid="9ab18ab0-22ef-41e8-8c51-aba237a44624" x="0" y="21" width="570" height="1"/>
+				<reportElement uuid="9ab18ab0-22ef-41e8-8c51-aba237a44624" x="0" y="91" width="570" height="1"/>
 			</break>
 			<subreport>
-				<reportElement uuid="5d08af78-a0a0-44c2-8363-733fa09d557a" x="0" y="22" width="572" height="23"/>
+				<reportElement uuid="5d08af78-a0a0-44c2-8363-733fa09d557a" x="0" y="92" width="572" height="23"/>
 				<subreportParameter name="number">
 					<subreportParameterExpression><![CDATA[$F{Numero}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_page_1.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement uuid="d56ed380-ef13-4852-96c3-33250cb36753" x="0" y="45" width="570" height="1"/>
-			</break>
-			<subreport>
-				<reportElement uuid="bb4d4993-0508-4b23-a262-c1634a976f8f" x="0" y="46" width="572" height="24"/>
-				<subreportParameter name="number">
-					<subreportParameterExpression><![CDATA[$F{Numero}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_page_2.jasper"]]></subreportExpression>
-			</subreport>
+			<image>
+				<reportElement uuid="1ed11ba8-9de1-4ea8-b9d0-d75f44b819cd" x="1" y="1" width="180" height="70"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="b47718cb-3063-46d2-babc-52f24bea204b" x="270" y="1" width="300" height="20"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="30">
 			<staticText>
-				<reportElement uuid="acb49144-b7a4-4deb-aeb1-bdb0200edde8" x="221" y="15" width="130" height="15"/>
+				<reportElement uuid="6b96f6c0-0c6a-4072-8f74-4b6c35d56fd2" x="44" y="0" width="484" height="15" forecolor="#000033"/>
 				<textElement textAlignment="Center">
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="8"/>
 				</textElement>
-				<text><![CDATA[www.ascensoresnardi.com]]></text>
+				<text><![CDATA[Ascensores Nardi, C.A. || RIF:J-31371609-0 || Av. 20 entre calles 14 y 15 Edif. 14-30 Piso 2, Oficina 1. Barquisimeto, Venezuela]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6b96f6c0-0c6a-4072-8f74-4b6c35d56fd2" x="221" y="0" width="130" height="15"/>
+				<reportElement uuid="c96f7239-313a-4df0-ae8a-8f30875424f3" x="98" y="15" width="376" height="15" forecolor="#000033"/>
 				<textElement textAlignment="Center">
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Barquisimeto - Edo Lara]]></text>
+				<text><![CDATA[Telef:(+58)251-2524078 || Email:ascensoresnardi@gmail.com || http://www.ascensoresnardi.com]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

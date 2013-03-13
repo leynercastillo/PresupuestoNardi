@@ -7,14 +7,14 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import database.Basicdata;
+import database.BasicData;
 import hibernateConnections.GenericDao;
 
-public class DaoBasicdata extends GenericDao<Basicdata> {
+public class DaoBasicdata extends GenericDao<BasicData> {
 
-	public List<Basicdata> listByField(String table, String field) {
+	public List<BasicData> listByField(String table, String field) {
 		Transaction transaction = currentSession().beginTransaction();
-		Criteria criteria = currentSession().createCriteria(Basicdata.class);
+		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
 		criteria.add(Restrictions.eq("field", field).ignoreCase());
@@ -23,21 +23,21 @@ public class DaoBasicdata extends GenericDao<Basicdata> {
 		return criteria.list();
 	}
 
-	public Basicdata findByName(String table, String field, String name) {
+	public BasicData findByName(String table, String field, String name) {
 		Transaction transaction = currentSession().beginTransaction();
-		Criteria criteria = currentSession().createCriteria(Basicdata.class);
+		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
 		criteria.add(Restrictions.eq("field", field).ignoreCase());
 		criteria.add(Restrictions.eq("name", name).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
-		return (Basicdata)criteria.uniqueResult();
+		return (BasicData)criteria.uniqueResult();
 	}
 
-	public List<Basicdata> listByParent(Basicdata parent){
+	public List<BasicData> listByParent(BasicData parent){
 		Transaction transaction = currentSession().beginTransaction();
-		Criteria criteria = currentSession().createCriteria(Basicdata.class);
+		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("basicdata", parent));
 		criteria.addOrder(Order.asc("priority"));
 		return criteria.list();

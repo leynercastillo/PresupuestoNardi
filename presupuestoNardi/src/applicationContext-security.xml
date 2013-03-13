@@ -13,13 +13,15 @@
 		<intercept-url pattern="/frmMenu.zul" access="ROLE_MENU" />
 		<intercept-url pattern="/frmReport.zul" access="ROLE_REPORT" />
 		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_BUDGETS" />
+		<intercept-url pattern="/security/frmSecurityProfile.zul"
+			access="ROLE_SECURITY_PROFILE" />
+		<intercept-url pattern="/security/frmSecurityUserMaster.zul"
+			access="ROLE_SECURITY_USERS_MASTER" />
 		<intercept-url pattern="/security/authorized.jsp"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/security/notAuthorized.zul"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/security/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/security/frmSecurityProfile.zul"
-			access="ROLE_SECURITY_PROFILE" />
 		<form-login login-page="/security/login.zul"
 			default-target-url="/security/index.jsp" authentication-failure-url="/security/login.zul?login_error=1" />
 		<logout logout-success-url="/security/login.zul" />
@@ -28,14 +30,6 @@
 		</session-management>
 	</http>
 	<authentication-manager>
-		<!-- <authentication-provider> <jdbc-user-service data-source-ref="dataSource" 
-			users-by-username-query=" SELECT email,password,status FROM security_user 
-			WHERE email=?" authorities-by-username-query=" SELECT T0.email, T4.name FROM 
-			security_user T0 INNER JOIN group_user T1 ON T1.id_security_user = T0.id_security_user 
-			INNER JOIN security_group T2 ON T2.id_security_group = T1.id_security_group 
-			INNER JOIN role_group T3 ON T3.id_security_group = T2.id_security_group INNER 
-			JOIN security_role T4 ON T3.id_security_role = T4.id_security_role WHERE 
-			T0.email=?" /> </authentication-provider> -->
 		<authentication-provider user-service-ref="userDetailsService">
 			<password-encoder hash="sha-256"></password-encoder>
 		</authentication-provider>

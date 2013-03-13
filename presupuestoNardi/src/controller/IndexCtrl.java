@@ -6,7 +6,6 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.spring.security.SecurityUtil;
 
 import dao.DaoSecurityUser;
 import database.SecurityUser;

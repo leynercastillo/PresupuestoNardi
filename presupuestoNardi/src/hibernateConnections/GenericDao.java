@@ -1,15 +1,10 @@
 package hibernateConnections;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
-import java.util.logging.Logger;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-import org.zkoss.util.logging.Log;
 
 public class GenericDao<Model> {
 
@@ -41,21 +36,16 @@ public class GenericDao<Model> {
 		Transaction transaction = null;
 		try {
 			transaction = currentSession().beginTransaction();
-			currentSession().saveOrUpdate(model);
+			currentSession().merge(model);
 			transaction.commit();
 			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
-			try {
-				transaction.rollback();
-				currentSession().close();
-				return false;
-			} catch (RuntimeException e2) {
-				System.out
-						.println("No se pudo guardar ni realizar el rollback: "
-								+ e2);
-				return false;
-			}
+			if (transaction != null)
+					transaction.rollback();
+			e.printStackTrace();
+			currentSession().close();
+			return false;
 		}
 	}
 
@@ -68,16 +58,11 @@ public class GenericDao<Model> {
 			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
-			try {
+			if (transaction != null)
 				transaction.rollback();
-				currentSession().close();
-				return false;
-			} catch (RuntimeException e2) {
-				System.out
-						.println("No se pudo guardar ni realizar el rollback: "
-								+ e2);
-				return false;
-			}
+			e.printStackTrace();
+			currentSession().close();
+			return false;
 		}
 	}
 }

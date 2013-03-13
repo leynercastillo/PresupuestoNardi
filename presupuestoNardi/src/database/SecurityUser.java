@@ -1,6 +1,6 @@
 package database;
 
-// Generated 05-mar-2013 9:51:50 by Hibernate Tools 3.6.0
+// Generated 12-mar-2013 15:01:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,14 +27,14 @@ public class SecurityUser implements java.io.Serializable {
 	private String email;
 	private String password;
 	private String phone;
-	private byte status;
+	private char status;
 	private Set<SecurityGroup> securityGroups = new HashSet<SecurityGroup>(0);
 
 	public SecurityUser() {
 	}
 
 	public SecurityUser(String name, String email, String password,
-			String phone, byte status) {
+			String phone, char status) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
@@ -43,7 +43,7 @@ public class SecurityUser implements java.io.Serializable {
 	}
 
 	public SecurityUser(String name, String email, String password,
-			String phone, byte status, Set<SecurityGroup> securityGroups) {
+			String phone, char status, Set<SecurityGroup> securityGroups) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
@@ -99,12 +99,12 @@ public class SecurityUser implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	@Column(name = "status", nullable = false)
-	public byte getStatus() {
+	@Column(name = "status", nullable = false, length = 1)
+	public char getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(byte status) {
+	public void setStatus(char status) {
 		this.status = status;
 	}
 

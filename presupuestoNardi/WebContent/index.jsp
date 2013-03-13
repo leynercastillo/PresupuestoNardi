@@ -9,7 +9,7 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Ascensores Nardi, C.A.</title>
 	<link rel="stylesheet" type="text/css" href="resource/style/stylePage.css"></link>
 </head>
 <body style="height: auto">
