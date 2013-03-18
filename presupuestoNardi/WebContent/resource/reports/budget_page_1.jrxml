@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_page_1" language="groovy" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="98c940fb-7fc9-4f80-b668-b909d476ab5c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="37"/>
 	<parameter name="number" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -302,98 +302,98 @@ WHERE
 				<text><![CDATA[Botones de cabina:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="64412b49-b81b-45d7-b800-6f7b211b1f86" x="143" y="175" width="150" height="15"/>
+				<reportElement uuid="64412b49-b81b-45d7-b800-6f7b211b1f86" x="143" y="175" width="422" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Botones de cabina:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1a9b0c56-22b5-4fad-a8f1-9915ae51a306" x="3" y="190" width="174" height="15"/>
+				<reportElement uuid="1a9b0c56-22b5-4fad-a8f1-9915ae51a306" x="3" y="205" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Botones Pasillo:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="af295722-30e5-45e1-9f82-bf9a1708a13f" x="415" y="190" width="150" height="15"/>
+				<reportElement uuid="af295722-30e5-45e1-9f82-bf9a1708a13f" x="381" y="205" width="184" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Lugar Botonera:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a59603cd-7a37-48a4-bc9f-25a642aa5e5d" x="3" y="205" width="174" height="15"/>
+				<reportElement uuid="a59603cd-7a37-48a4-bc9f-25a642aa5e5d" x="143" y="220" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistel con Display PB:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6b32dbbc-7617-4ee9-b770-51eefac9a6ca" x="143" y="205" width="150" height="15"/>
+				<reportElement uuid="6b32dbbc-7617-4ee9-b770-51eefac9a6ca" x="250" y="220" width="100" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Display PB:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0c6d9d31-b730-43c8-b53b-facf4530d55f" x="300" y="205" width="145" height="15"/>
+				<reportElement uuid="0c6d9d31-b730-43c8-b53b-facf4530d55f" x="332" y="220" width="145" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistel con Display Piso:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="7610bd66-9559-4973-bf7e-310cc4d6a726" x="415" y="205" width="150" height="15"/>
+				<reportElement uuid="7610bd66-9559-4973-bf7e-310cc4d6a726" x="430" y="220" width="135" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Display Piso:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="16025577-4a04-4ab2-a96c-2e1a640c529e" x="3" y="220" width="174" height="15"/>
+				<reportElement uuid="16025577-4a04-4ab2-a96c-2e1a640c529e" x="143" y="235" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistel con Flecha PB:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6c9662f0-a6a8-43be-8aed-bf81717efd9c" x="143" y="220" width="150" height="15"/>
+				<reportElement uuid="6c9662f0-a6a8-43be-8aed-bf81717efd9c" x="250" y="235" width="100" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Flecha PB:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="8ed428d4-8be8-41a7-b650-8d7e186d3598" x="300" y="220" width="145" height="15"/>
+				<reportElement uuid="8ed428d4-8be8-41a7-b650-8d7e186d3598" x="332" y="235" width="145" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistel con Flecha Piso:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="7dcc1b17-30b6-4575-9444-87215dc017d1" x="415" y="220" width="150" height="15"/>
+				<reportElement uuid="7dcc1b17-30b6-4575-9444-87215dc017d1" x="430" y="235" width="135" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Flecha Piso:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="65e0ccc0-c49a-42fd-a9fd-488e101e76a5" x="3" y="235" width="174" height="15"/>
+				<reportElement uuid="65e0ccc0-c49a-42fd-a9fd-488e101e76a5" x="3" y="190" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de botonera de pasillo:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="08f072bf-b23d-4fd8-a1cb-5d5752b3284f" x="143" y="190" width="150" height="15"/>
+				<reportElement uuid="08f072bf-b23d-4fd8-a1cb-5d5752b3284f" x="143" y="205" width="150" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de botonera de pasillo:}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="df6f7e97-ba53-44b4-b16e-a5cb44e50dbf" x="143" y="235" width="422" height="15"/>
+				<reportElement uuid="df6f7e97-ba53-44b4-b16e-a5cb44e50dbf" x="143" y="190" width="422" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
@@ -428,21 +428,21 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Display Piso:}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="116e6afc-a967-4a28-a533-990ec4f48a3b" x="403" y="265" width="162" height="15"/>
+				<reportElement uuid="116e6afc-a967-4a28-a533-990ec4f48a3b" x="381" y="265" width="184" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Lugar display piso:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="49f113d0-5607-4b74-a0f6-dd8e96d67262" x="363" y="265" width="82" height="15"/>
+				<reportElement uuid="49f113d0-5607-4b74-a0f6-dd8e96d67262" x="332" y="265" width="82" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="925638cf-e8d6-4a50-a1f4-bf06f87e2d62" x="300" y="190" width="145" height="15"/>
+				<reportElement uuid="925638cf-e8d6-4a50-a1f4-bf06f87e2d62" x="332" y="205" width="145" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
@@ -591,6 +591,13 @@ WHERE
 			<line>
 				<reportElement uuid="d514665e-dfba-43f6-9a82-05a1c1290cc8" x="127" y="317" width="445" height="1" forecolor="#CCCCCC"/>
 			</line>
+			<staticText>
+				<reportElement uuid="6f5734b1-84d5-4777-94f0-f249284227a2" x="3" y="220" width="150" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Botones de pasillo:]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>

@@ -38,7 +38,7 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 	public List<BasicData> listByParent(BasicData parent){
 		Transaction transaction = currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(BasicData.class);
-		criteria.add(Restrictions.eq("basicdata", parent));
+		criteria.add(Restrictions.eq("basicData", parent));
 		criteria.addOrder(Order.asc("priority"));
 		return criteria.list();
 	}

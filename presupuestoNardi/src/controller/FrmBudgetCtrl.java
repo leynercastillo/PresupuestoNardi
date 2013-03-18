@@ -29,17 +29,19 @@ import org.hibernate.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zhtml.Messagebox;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
@@ -558,6 +560,11 @@ public class FrmBudgetCtrl {
 		budget.setStopSequenceEven(false);
 		budget.setStopSequenceOdd(false);
 		budget.setDoorFrameStainless(false);
+		budget.setSistelWarrowFloor(0);
+		budget.setElevatorQuantity(0);
+		budget.setSistelWdisplayPb(new Boolean(false));
+		budget.setSistelWdisplayFloor(0);
+		budget.setSistelWarrowPb(new Boolean(false));
 		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicdata.listByField("BUDGET",
@@ -573,12 +580,15 @@ public class FrmBudgetCtrl {
 		listHourMachine = daoBasicdata.listByField("BUDGET", "HOUR MACHINE");
 		listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
 		listDesign = new ArrayList<BasicData>();
+		listFan = new ArrayList<BasicData>();
+		listBoothDisplay = new ArrayList<BasicData>();
+		listFloorDisplay = new ArrayList<BasicData>();
+		listBudget = new ArrayList<Budget>();
 		listRoofType = daoBasicdata.listByField("BUDGET", "ROOF TYPE");
 		listButtonType = daoBasicdata.listByField("BUDGET", "BUTTON TYPE");
 		listRailing = daoBasicdata.listByField("BUDGET", "RAILING");
 		listMirror = daoBasicdata.listByField("BUDGET", "MIRROR");
 		listFloorType = daoBasicdata.listByField("BUDGET", "FLOOR TYPE");
-		listFan = daoBasicdata.listByField("BUDGET", "FAN");
 		listDoorType = daoBasicdata.listByField("BUDGET", "DOOR TYPE");
 		listDoorSystem = daoBasicdata.listByField("BUDGET", "DOOR SYSTEM");
 		listDoorframeType = daoBasicdata.listByField("BUDGET",
@@ -593,16 +603,9 @@ public class FrmBudgetCtrl {
 		listHeight = daoBasicdata.listByField("BUDGET", "HEIGHT");
 		listControlType = daoBasicdata.listByField("BUDGET", "CONTROL TYPE");
 		listBoothButton = daoBasicdata.listByField("BUDGET", "BOOTH BUTTON");
-		listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY");
-		listFloorDisplay = daoBasicdata.listByField("BUDGET", "FLOOR DISPLAY");
 		listMotorTraction = daoBasicdata
 				.listByField("BUDGET", "MOTOR TRACTION");
 		listCabinModel = daoBasicdata.listByField("BUDGET", "CABIN MODEL");
-		listBudget = new ArrayList<Budget>();
-		budget.setSistelWarrowFloor(0);
-		budget.setSistelWdisplayPb(new Boolean(false));
-		budget.setSistelWdisplayFloor(0);
-		budget.setSistelWarrowPb(new Boolean(false));
 	}
 
 	/**
@@ -624,6 +627,21 @@ public class FrmBudgetCtrl {
 		return new ValidateZK().getNoEmail();
 	}
 
+	public Validator getNoElevatorQuantity() {
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				Spinner inputElement = (Spinner) ctx.getBindContext()
+						.getValidatorArg("component");
+				Integer quantity = inputElement.getValue();
+				if (budget.isType() && quantity < 1) {
+					throw new WrongValueException(inputElement,
+							"Debe ingresar al menos un ascensor.");
+				}
+			}
+		};
+	}
+
 	public String message() {
 		String seller = new String(budget.getSeller());
 		String message = new String();
@@ -634,15 +652,20 @@ public class FrmBudgetCtrl {
 		return message;
 	}
 
-	public List<File> adjuntos(){
+	public List<File> adjuntos() {
 		List<File> listAttach = new ArrayList<File>();
 		createPdf();
-		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/presupuesto"+budget.getNumber()+".pdf"));
+		File file = new File(Sessions
+				.getCurrent()
+				.getWebApp()
+				.getRealPath(
+						"/resource/reports/presupuesto" + budget.getNumber()
+								+ ".pdf"));
 		listAttach.add(file);
 		return listAttach;
 	}
 
-	public void sendMail(){
+	public void sendMail() {
 		Emails emails = new Emails();
 		emails.loadProperties("/resource/config/mail.properties");
 		List<String> listRecipient = new ArrayList<String>();
@@ -665,7 +688,7 @@ public class FrmBudgetCtrl {
 						.compareTo("RECTO - 30X150") == 0
 				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
-					"Chequee el tipo de marco.");
+					"Este tipo no puede ser ubicado en el Marco.");
 		} else {
 			DaoBudget daoBudget = new DaoBudget();
 			if (daoBudget.listOrderBudgetbyField("status").isEmpty())
@@ -676,11 +699,13 @@ public class FrmBudgetCtrl {
 						.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
 						.getNumber() + 1);
 			if (!daoBudget.save(budget)) {
-				Clients.showNotification("No se pudo guardar.", "error", null, "middle_center", 2000);
+				Clients.showNotification("No se pudo guardar.", "error", null,
+						"bottom_center", 2000);
 				return;
 			}
 			sendMail();
-			Clients.showNotification("Presupuesto enviado", "info", null, "middle_center", 2000);
+			Clients.showNotification("Presupuesto enviado", "info", null,
+					"bottom_center", 2000);
 			restartForm();
 		}
 	}
@@ -717,14 +742,16 @@ public class FrmBudgetCtrl {
 			disableAfterSearch = new Boolean(true);
 			disabledNumber = new Boolean(true);
 			disableSeller = new Boolean(true);
+			if (budget.getBasicDataByCabinDesign() != null)
+				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
 		} else if (listSize == 0) {
-			Clients.showNotification("Ningun registro coincide", "info", null, "middle_center",2000);
+			Clients.showNotification("Ningun registro coincide", "info", null,
+					"top_center", 2000);
 		} else {
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("listBudget", listBudget2);
 			Window win = (Window) Executions.createComponents(
 					"frmWindowBudgets.zul", null, map);
-			listBudget = listBudget2;
 		}
 	}
 
@@ -739,6 +766,8 @@ public class FrmBudgetCtrl {
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
 		disableSeller = new Boolean(true);
+		if (budget.getBasicDataByCabinDesign() != null)
+			cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
 	}
 
 	@NotifyChange({ "budget", "disabledAll", "budgetNumber",
@@ -753,7 +782,7 @@ public class FrmBudgetCtrl {
 
 	@Command
 	public void close() {
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
@@ -797,7 +826,7 @@ public class FrmBudgetCtrl {
 			jasperReport = null;
 			System.out.println("budget.jasper didn't find");
 		}
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("number", budget.getNumber());
 		/*
 		 * Enviamos por parametro a ireport la ruta de la ubicacion de los
@@ -820,8 +849,9 @@ public class FrmBudgetCtrl {
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string
 				+ "/presupuesto" + budget.getNumber() + ".pdf");
-		File file = new File(string+"/presupuesto" + budget.getNumber() + ".pdf");
-		/*Eliminamos el pdf si ya existia, puesto que no se sobreescribe.*/
+		File file = new File(string + "/presupuesto" + budget.getNumber()
+				+ ".pdf");
+		/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
 		if (file.isFile())
 			file.delete();
 		try {
@@ -838,12 +868,13 @@ public class FrmBudgetCtrl {
 		createPdf();
 		String report = new String("/resource/reports/presupuesto"
 				+ budget.getNumber() + ".pdf");
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto Nardi");
-		map.put("absolutePath", Sessions.getCurrent().getWebApp()
-				.getRealPath("/resource/reports") + "/presupuesto" + budget.getNumber()
-				+ ".pdf");
+		map.put("absolutePath",
+				Sessions.getCurrent().getWebApp()
+						.getRealPath("/resource/reports")
+						+ "/presupuesto" + budget.getNumber() + ".pdf");
 		Window win = (Window) Executions.createComponents("frmReport.zul",
 				null, map);
 	}
@@ -857,6 +888,42 @@ public class FrmBudgetCtrl {
 		 * al guardar el objeto budget
 		 */
 		budget.setBasicDataByCabinDesign(null);
+	}
+
+	@NotifyChange({ "listFan" })
+	@Command
+	public void loadFans() {
+		String elevatorCapacitance = new String(budget
+				.getBasicDataByElevatorCapacitance().getName());
+		if (elevatorCapacitance.compareTo("320 - 4") == 0
+				|| elevatorCapacitance.compareTo("450 - 6") == 0
+				|| elevatorCapacitance.compareTo("600 - 8") == 0)
+			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 1");
+		else
+			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 2");
+		/*
+		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
+		 * al guardar el objeto budget
+		 */
+		budget.setBasicDataByFan(null);
+	}
+
+	@NotifyChange({ "listBoothDisplay", "listFloorDisplay" })
+	@Command
+	public void loadBoothFloorDisplay() {
+		String controlType = budget.getBasicDataByControlType().getName();
+		if (controlType.compareTo("SISTEL") == 0){
+			listBoothDisplay = new DaoBasicdata().listByField("BUDGET", "BOOTH DISPLAY SISTEL");
+			listFloorDisplay = new DaoBasicdata().listByField("BUDGET", "FLOOR DISPLAY SISTEL");
+		} else if (controlType.compareTo("CF CONTROL") == 0){
+			listBoothDisplay = new DaoBasicdata().listByField("BUDGET", "BOOTH DISPLAY CF");
+			listFloorDisplay = new DaoBasicdata().listByField("BUDGET", "FLOOR DISPLAY CF");
+		} else {
+			listBoothDisplay = new ArrayList<BasicData>();
+			listFloorDisplay = new ArrayList<BasicData>();
+		}
+		budget.setBasicDataByBoothDisplay(null);
+		budget.setBasicDataByFloorDisplay(null);
 	}
 
 	@NotifyChange({ "disabledModel", "listDesign", "cabinModel" })
@@ -893,7 +960,7 @@ public class FrmBudgetCtrl {
 						.compareTo("RECTO - 30X150") == 0
 				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
 			throw new WrongValueException(component,
-					"Chequee el tipo de marco.");
+					"Este tipo no puede ser ubicado en el Marco.");
 		}
 	}
 }

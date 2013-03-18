@@ -1,17 +1,17 @@
 <zk>
-	<window mode="modal" height="400px" border="normal"
+	<window mode="modal" border="normal" width="70%"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.FrmWindowBudgetsCtrl')"
-		id="windowBudgets" closable="true">
+		id="windowBudgets" closable="true" title="Presupuestos">
 		<listbox model="@load(vm.listBudget)"
 			selectedItem="@bind(vm.selectedBudget)"
 			onSelect="@command('sendBudget', Budget=vm.selectedBudget)">
 			<listhead>
-				<listheader label="Nro Pedido" hflex="min"></listheader>
-				<listheader label="Cliente" hflex="min"></listheader>
-				<listheader label="Fecha" hflex="min"></listheader>
-				<listheader label="Ciudad" hflex="min"></listheader>
-				<listheader label="Vendedor" hflex="min"></listheader>
+				<listheader label="Nro Pedido" width="10%"></listheader>
+				<listheader label="Cliente" width="30%"></listheader>
+				<listheader label="Fecha" width="15%"></listheader>
+				<listheader label="Ciudad" width="15%"></listheader>
+				<listheader label="Vendedor" width="20%"></listheader>
 			</listhead>
 			<template name="model" var="budget">
 				<listitem>
