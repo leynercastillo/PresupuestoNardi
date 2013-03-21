@@ -14,53 +14,54 @@
 				<column label="Estado" width="15%"></column>
 				<column label="Editar"></column>
 			</columns>
-			<rows>
-				<template name="notEditable">
-					<row>
-						<label value="@load(each.user.name)"></label>
-						<label value="@load(each.user.email)"></label>
-						<label value="@load(each.user.phone)"></label>
-						<label value="**********"></label>
-						<label
-							value="@load(each.user.status eq 'A' ? 'Activo' : 'Inactivo')">
-						</label>
-						<button label="Editar"
-							onClick="@command('edit', user = each)"
-							onCreate="@command('changed', Component = self, user = each)">
+			<template name="notEditable">
+				<row>
+					<label value="@load(each.user.name)"></label>
+					<label value="@load(each.user.email)"></label>
+					<label value="@load(each.user.phone)"></label>
+					<label value="**********"></label>
+					<label
+						value="@load(each.user.status eq 'A' ? 'Activo' : 'Inactivo')">
+					</label>
+					<button label="Editar"
+						onClick="@command('edit', user = each)"
+						onCreate="@command('changed', Component = self, user = each)"
+						image="/resource/images/icons/edit.png">
+					</button>
+				</row>
+			</template>
+			<template name="editable">
+				<row>
+					<label value="@load(each.user.name)"></label>
+					<label value="@load(each.user.email)"></label>
+					<label value="@load(each.user.phone)"></label>
+					<textbox
+						value="@load(each.user.password) @save(each.user.password)"
+						type="password">
+					</textbox>
+					<radiogroup
+						selectedItem="@save(each.user.status)">
+						<radio label="Activo" value="A"
+							checked="@load(each.user.status eq 'A' ? 'true' : 'false')"
+							sclass="frmLabel">
+						</radio>
+						<radio label="Inactivo" value="I"
+							checked="@load(each.user.status eq 'I' ? 'true' : 'false')"
+							sclass="formLabel">
+						</radio>
+					</radiogroup>
+					<div>
+						<button label="Guardar"
+							onClick="@command('save', user = each)"
+							image="/resource/images/icons/save.png">
 						</button>
-					</row>
-				</template>
-				<template name="editable">
-					<row>
-						<label value="@load(each.user.name)"></label>
-						<label value="@load(each.user.email)"></label>
-						<label value="@load(each.user.phone)"></label>
-						<textbox
-							value="@load(each.user.password) @save(each.user.password)"
-							type="password">
-						</textbox>
-						<radiogroup id="status"
-							selectedItem="@save(each.user.status)">
-							<radio label="Activo" value="A"
-								checked="@load(each.user.status eq 'A' ? 'true' : 'false')"
-								sclass="frmLabel">
-							</radio>
-							<radio label="Inactivo" value="I"
-								checked="@load(each.user.status eq 'I' ? 'true' : 'false')"
-								sclass="formLabel">
-							</radio>
-						</radiogroup>
-						<div>
-							<button label="Guardar"
-								onClick="@command('save', user = each)">
-							</button>
-							<button label="Cancelar"
-								onClick="@command('edit', user = each)">
-							</button>
-						</div>
-					</row>
-				</template>
-			</rows>
+						<button label="Cancelar"
+							onClick="@command('edit', user = each)"
+							image="/resource/images/icons/cancel.png">
+						</button>
+					</div>
+				</row>
+			</template>
 		</grid>
 	</window>
 </zk>

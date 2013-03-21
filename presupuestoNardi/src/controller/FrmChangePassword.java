@@ -74,16 +74,12 @@ public class FrmChangePassword {
 						.getValidatorArg("component");
 				String string = inputElement.getText();
 				ShaEncoding shaEncoding = new ShaEncoding(string);
-				System.out.println(string);
 				try {
 					string = shaEncoding.encodingPassword();
-					System.out.println(string);
 				} catch (NoSuchAlgorithmException e) {
 					// password don't encoding
 					e.printStackTrace();
 				}
-				System.out.println(user.getPassword());
-				
 				if (user.getPassword().compareTo(string) != 0){
 					throw new WrongValueException(inputElement,
 							"Contraseña invalida.");

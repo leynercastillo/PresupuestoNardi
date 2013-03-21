@@ -236,7 +236,7 @@ CREATE TABLE `group_user` (
 
 LOCK TABLES `group_user` WRITE;
 /*!40000 ALTER TABLE `group_user` DISABLE KEYS */;
-INSERT INTO `group_user` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
+INSERT INTO `group_user` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,2);
 /*!40000 ALTER TABLE `group_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +332,7 @@ CREATE TABLE `security_user` (
   `phone` varchar(20) NOT NULL,
   `status` char(1) NOT NULL,
   PRIMARY KEY (`id_security_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +341,7 @@ CREATE TABLE `security_user` (
 
 LOCK TABLES `security_user` WRITE;
 /*!40000 ALTER TABLE `security_user` DISABLE KEYS */;
-INSERT INTO `security_user` VALUES (1,'Roberto Nardi','robertonardi@hotmail.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','0414-5119212','A'),(2,'Juan C. Villaverde','jcvillaverde@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','0251-2544738','A'),(3,'Mauricio Moretti','moretti@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(4,'Cesar Molina','cesarmolina@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(5,'Raul Colmenarez','raulcolmenares@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(6,'Jerry de Sousa','jerrydesousa@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A');
+INSERT INTO `security_user` VALUES (1,'Roberto Nardi','robertonardi@hotmail.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','0414-5119212','A'),(2,'Juan C. Villaverde','jcvillaverde@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','0251-2544738','A'),(3,'Mauricio Moretti','moretti@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(4,'Cesar Molina','cesarmolina@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(5,'Raul Colmenarez','raulcolmenares@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(6,'Jerry de Sousa','jerrydesousa@ascensoresnardi.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','5555555','A'),(7,'Maurizio Nardi','maurizionardi@ascensoresnardi.com	','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','0424-5019904','A'),(8,'Administrador','sistemas@ascensoresnardi.com','67cb5c15db4909600cd6d485e7aad4305d3d9f85efdf598f5435736a8efa37fe','0414-3534887','A');
 /*!40000 ALTER TABLE `security_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -354,4 +354,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-18 13:59:09
+-- Dump completed on 2013-03-19  9:49:34

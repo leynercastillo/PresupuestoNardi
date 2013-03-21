@@ -52,7 +52,7 @@ public class FrmWindowBudgetsCtrl {
 	@NotifyChange("selectedBudget")
 	@Command
 	public void sendBudget(@BindingParam("Budget") Budget budget){
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("Budget", budget);
 		windowBudgets.detach();
 		BindUtils.postGlobalCommand(null, null, "selectedBudget", map);

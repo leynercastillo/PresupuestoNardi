@@ -11,8 +11,6 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zk.ui.WrongValuesException;
 import org.zkoss.zk.ui.util.Clients;
 
 import zk.SecurityUserStatus;
@@ -44,7 +42,7 @@ public class FrmSecurityUserMaster {
 
 	@Command
 	public void close() {
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
@@ -53,8 +51,8 @@ public class FrmSecurityUserMaster {
 	public void edit(@BindingParam("user") SecurityUserStatus user) {
 		user.setEditUser(!user.getEditUser());
 		/*
-		 * Se actualiza el binder. Se realiza por aca por el uso de templates en
-		 * el archivo .zul
+		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
+		 * todo el objeto
 		 */
 		BindUtils.postNotifyChange(null, null, user, "editUser");
 	}
@@ -64,8 +62,12 @@ public class FrmSecurityUserMaster {
 	public void save(@BindingParam("user") SecurityUserStatus user) {
 		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
 		edit(user);
+		/*
+		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
+		 * todo el objeto
+		 */
 		BindUtils.postNotifyChange(null, null, user, "editUser");
-		if (!daoSecurityUser.save(user.getUser())){
+		if (!daoSecurityUser.save(user.getUser())) {
 			user.setModified(false);
 			return;
 		}

@@ -15,12 +15,13 @@
         <property name="hibernate.connection.password">leyner.18654277</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ascensor_nardi</property>
         <property name="hibernate.connection.username">ascensor_admin</property>
+        <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
-        <property name="hibernate.current_session_context_class">thread</property>
         <mapping class="database.SecurityUser" />
         <mapping class="database.SecurityGroup" />
         <mapping class="database.SecurityRole" />
+        <mapping class="database.BusinessPartner" />
         <mapping class="database.BasicData" />
         <mapping class="database.Budget" />
     </session-factory>

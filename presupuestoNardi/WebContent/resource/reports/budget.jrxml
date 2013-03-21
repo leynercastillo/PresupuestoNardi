@@ -53,22 +53,4 @@ WHERE
 			</image>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="30">
-			<staticText>
-				<reportElement uuid="6b96f6c0-0c6a-4072-8f74-4b6c35d56fd2" x="44" y="0" width="484" height="15" forecolor="#000033"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" size="8"/>
-				</textElement>
-				<text><![CDATA[Ascensores Nardi, C.A. || RIF:J-31371609-0 || Av. 20 entre calles 14 y 15 Edif. 14-30 Piso 2, Oficina 1. Barquisimeto, Venezuela]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="c96f7239-313a-4df0-ae8a-8f30875424f3" x="98" y="15" width="376" height="15" forecolor="#000033"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Telef:(+58)251-2524078 || Email:ascensoresnardi@gmail.com || http://www.ascensoresnardi.com]]></text>
-			</staticText>
-		</band>
-	</pageFooter>
 </jasperReport>

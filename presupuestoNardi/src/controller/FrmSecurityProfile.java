@@ -40,7 +40,7 @@ public class FrmSecurityProfile {
 
 	@Command
 	public void close() {
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
@@ -63,7 +63,7 @@ public class FrmSecurityProfile {
 
 	@Command
 	public void frmChangePassword(){
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user", user);
 		Window win = (Window) Executions.createComponents(
 				"security/frmChangePassword.zul", null, map);

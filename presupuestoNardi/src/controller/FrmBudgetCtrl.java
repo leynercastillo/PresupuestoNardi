@@ -33,6 +33,8 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -40,16 +42,18 @@ import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
 import dao.DaoBudget;
+import dao.DaoBusinessPartner;
 import dao.DaoSecurityUser;
 import database.BasicData;
 import database.Budget;
+import database.BusinessPartner;
 
 /**
  * @author leyner.castillo
@@ -91,7 +95,9 @@ public class FrmBudgetCtrl {
 	private List<BasicData> listCabinModel;
 	private List<BasicData> listHallButton;
 	private List<BasicData> listHallButtonType;
+	private List<BasicData> listRifType;
 	private List<Budget> listBudget;
+	private List<BusinessPartner> listBusinessPartner;
 	private BasicData cabinModel;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
@@ -99,14 +105,39 @@ public class FrmBudgetCtrl {
 	private Boolean disabledAll;
 	private Boolean disableAfterSearch;
 	private Boolean disabledNumber;
-	private Boolean disabledModel;
 	private Boolean disableSeller;
+	private Boolean disableSistelHall;
 	private Boolean isSpecial;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
 	private Budget budget;
+	private BusinessPartner businessPartner;
+
+	public List<BusinessPartner> getListBusinessPartner() {
+		return listBusinessPartner;
+	}
+
+	public void setListBusinessPartner(List<BusinessPartner> listBusinessPartner) {
+		this.listBusinessPartner = listBusinessPartner;
+	}
+
+	public List<BasicData> getListRifType() {
+		return listRifType;
+	}
+
+	public void setListRifType(List<BasicData> listRifType) {
+		this.listRifType = listRifType;
+	}
+
+	public Boolean getDisableSistelHall() {
+		return disableSistelHall;
+	}
+
+	public void setDisableSistelHall(Boolean disableSistelHall) {
+		this.disableSistelHall = disableSistelHall;
+	}
 
 	public Boolean getDisableSeller() {
 		return disableSeller;
@@ -146,14 +177,6 @@ public class FrmBudgetCtrl {
 
 	public void setIsSpecial(Boolean isSpecial) {
 		this.isSpecial = isSpecial;
-	}
-
-	public Boolean getDisabledModel() {
-		return disabledModel;
-	}
-
-	public void setDisabledModel(Boolean disabledModel) {
-		this.disabledModel = disabledModel;
 	}
 
 	public List<BasicData> getListDesign() {
@@ -518,6 +541,7 @@ public class FrmBudgetCtrl {
 		DaoBasicdata daoBasicdata = new DaoBasicdata();
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
+		businessPartner = new BusinessPartner();
 		if (daoBudget.listOrderBudgetbyField("status").isEmpty())
 			budget.setNumber(1);
 		else
@@ -527,8 +551,8 @@ public class FrmBudgetCtrl {
 		disabledAll = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
-		disabledModel = new Boolean(false);
 		disableSeller = new Boolean(true);
+		disableSistelHall = new Boolean(true);
 		isSpecial = new Boolean(false);
 		cabinModel = new BasicData();
 		User user = (User) SecurityContextHolder.getContext()
@@ -562,9 +586,24 @@ public class FrmBudgetCtrl {
 		budget.setDoorFrameStainless(false);
 		budget.setSistelWarrowFloor(0);
 		budget.setElevatorQuantity(0);
+		budget.setMotorQuantity(0);
+		budget.setStopSequenceContinuousNumber(0);
+		budget.setStopSequenceEvenNumber(0);
+		budget.setStopSequenceOddNumber(0);
 		budget.setSistelWdisplayPb(new Boolean(false));
 		budget.setSistelWdisplayFloor(0);
 		budget.setSistelWarrowPb(new Boolean(false));
+		budget.setRifType('-');
+		budget.setRifPartner(new String());
+		listBudget = new ArrayList<Budget>();
+		listDesign = new ArrayList<BasicData>();
+		listFan = new ArrayList<BasicData>();
+		listBoothDisplay = new ArrayList<BasicData>();
+		listFloorDisplay = new ArrayList<BasicData>();
+		listRoofType = new ArrayList<BasicData>();
+		listBusinessPartner = new DaoBusinessPartner()
+				.listActiveOrderByField("rif");
+		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
 		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
 		listElevatorCapa = daoBasicdata.listByField("BUDGET",
@@ -579,12 +618,6 @@ public class FrmBudgetCtrl {
 				"VOLTAGE LIGHTING");
 		listHourMachine = daoBasicdata.listByField("BUDGET", "HOUR MACHINE");
 		listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
-		listDesign = new ArrayList<BasicData>();
-		listFan = new ArrayList<BasicData>();
-		listBoothDisplay = new ArrayList<BasicData>();
-		listFloorDisplay = new ArrayList<BasicData>();
-		listBudget = new ArrayList<Budget>();
-		listRoofType = daoBasicdata.listByField("BUDGET", "ROOF TYPE");
 		listButtonType = daoBasicdata.listByField("BUDGET", "BUTTON TYPE");
 		listRailing = daoBasicdata.listByField("BUDGET", "RAILING");
 		listMirror = daoBasicdata.listByField("BUDGET", "MIRROR");
@@ -631,13 +664,49 @@ public class FrmBudgetCtrl {
 		return new AbstractValidator() {
 			@Override
 			public void validate(ValidationContext ctx) {
-				Spinner inputElement = (Spinner) ctx.getBindContext()
+				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
-				Integer quantity = inputElement.getValue();
-				if (budget.isType() && quantity < 1) {
+				Integer quantity = Integer.parseInt(inputElement.getText());
+				if (budget.isType() && (quantity < 1))
 					throw new WrongValueException(inputElement,
 							"Debe ingresar al menos un ascensor.");
+			}
+		};
+	}
+
+	public Validator getNoDash() {
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				InputElement inputElement = (InputElement) ctx.getBindContext()
+						.getValidatorArg("component");
+				String string = inputElement.getText();
+				if (string.trim().isEmpty() || string.equals("-")) {
+					throw new WrongValueException(inputElement,
+							"Seleccione una opcion valida.");
 				}
+			}
+		};
+	}
+
+	public Validator getNoEmptyForFormica() {
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				InputElement inputElement = (InputElement) ctx.getBindContext()
+						.getValidatorArg("component");
+				String str = inputElement.getText();
+				if (budget.getBasicDataByCabinDesign() != null
+						&& budget.getBasicDataByCabinDesign().getName()
+								.indexOf("FORMICA") != -1
+						&& str.trim().isEmpty())
+					throw new WrongValueException(inputElement,
+							"Debe ingresar una descripción para fórmica.");
+				if (budget.getBasicDataByFloorType() != null
+						&& budget.getBasicDataByFloorType().getName()
+								.indexOf("OTROS") != -1 && str.trim().isEmpty())
+					throw new WrongValueException(inputElement,
+							"Debe ingresar una descripción acabados de piso OTROS.");
 			}
 		};
 	}
@@ -670,7 +739,6 @@ public class FrmBudgetCtrl {
 		emails.loadProperties("/resource/config/mail.properties");
 		List<String> listRecipient = new ArrayList<String>();
 		listRecipient.add("ventas@ascensoresnardi.com");
-		listRecipient.add("sistemas@ascensoresnardi.com");
 		try {
 			emails.sendMail("Presupuesto nro" + budget.getNumber(),
 					listRecipient, message(), adjuntos());
@@ -682,11 +750,11 @@ public class FrmBudgetCtrl {
 	@NotifyChange({ "*" })
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
-		checkboxChecking();
+		budget.setBusinessPartner(businessPartner);
+		/* Cambiar if a metodo de validacion tradicional */
 		if (budget.getBasicDataByDoorframeType() != null
-				&& budget.getBasicDataByDoorframeType().getName()
-						.compareTo("RECTO - 30X150") == 0
-				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
+				&& budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1
+				&& (budget.getHallButtonPlace().indexOf("MARCO") != -1)) {
 			throw new WrongValueException(component,
 					"Este tipo no puede ser ubicado en el Marco.");
 		} else {
@@ -711,7 +779,7 @@ public class FrmBudgetCtrl {
 	}
 
 	@NotifyChange({ "disabledAll", "budgetNumber", "budget",
-			"disableAfterSearch", "disabledNumber", "stopSequenceContinuous" })
+			"disableAfterSearch", "disabledNumber" })
 	@Command
 	public void search() {
 		restartForm();
@@ -770,6 +838,31 @@ public class FrmBudgetCtrl {
 			cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
 	}
 
+	@NotifyChange("*")
+	@Command
+	public void searchBudgetBusinessPartner(@BindingParam("rif") String rif,
+			@BindingParam("rifType") String rifType) {
+		DaoBudget daoBudget = new DaoBudget();
+		List<Budget> listBudget2 = daoBudget.findByString("rifPartner", rif);
+		int listSize = listBudget2.size();
+		if (listSize == 1) {
+			budget = listBudget2.get(0);
+			disableAfterSearch = new Boolean(true);
+			disabledNumber = new Boolean(true);
+			disableSeller = new Boolean(true);
+			if (budget.getBasicDataByCabinDesign() != null)
+				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+		} else if (listSize == 0) {
+			Clients.showNotification("Ningun registro coincide", "info", null,
+					"top_center", 2000);
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("listBudget", listBudget2);
+			Window win = (Window) Executions.createComponents(
+					"frmWindowBudgets.zul", null, map);
+		}
+	}
+
 	@NotifyChange({ "budget", "disabledAll", "budgetNumber",
 			"disableAfterSearch", "disabledNumber" })
 	@GlobalCommand
@@ -787,27 +880,18 @@ public class FrmBudgetCtrl {
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
 
-	public void checkboxChecking() {
-		if (!budget.getStopSequenceContinuous())
-			budget.setStopSequenceContinuousQ(vacio);
-		if (!budget.getStopSequenceEven())
-			budget.setStopSequenceEvenQ(vacio);
-		if (!budget.getStopSequenceOdd())
-			budget.setStopSequenceOddQ(vacio);
-		if (!budget.getDesignSpecial())
-			budget.setDesignSpecialComment(vacio);
-		if (!budget.getDoorFrameStainless())
-			budget.setDoorFrameStainlessDescrip(vacio);
-	}
-
 	@Command
 	public void isStopSequenceContinuous() {
 		budget.setStopSequenceEven(false);
 		budget.setStopSequenceOdd(false);
+		budget.setStopSequenceEvenNumber(0);
+		budget.setStopSequenceOddNumber(0);
 		budget.setStopSequenceEvenQ(new String());
 		budget.setStopSequenceOddQ(new String());
-		if (!budget.getStopSequenceContinuous())
+		if (!budget.getStopSequenceContinuous()) {
 			budget.setStopSequenceContinuousQ(vacio);
+			budget.setStopSequenceContinuousNumber(0);
+		}
 	}
 
 	@Command
@@ -890,34 +974,43 @@ public class FrmBudgetCtrl {
 		budget.setBasicDataByCabinDesign(null);
 	}
 
-	@NotifyChange({ "listFan" })
+	@NotifyChange({ "listFan", "listRoofType" })
 	@Command
 	public void loadFans() {
 		String elevatorCapacitance = new String(budget
 				.getBasicDataByElevatorCapacitance().getName());
-		if (elevatorCapacitance.compareTo("320 - 4") == 0
-				|| elevatorCapacitance.compareTo("450 - 6") == 0
-				|| elevatorCapacitance.compareTo("600 - 8") == 0)
+		if (elevatorCapacitance.indexOf("320 - 4") != -1
+				|| elevatorCapacitance.indexOf("450 - 6") != -1
+				|| elevatorCapacitance.indexOf("600 - 8") != -1)
 			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 1");
 		else
 			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 2");
+		listRoofType = new DaoBasicdata().listByParent(budget
+				.getBasicDataByElevatorCapacitance());
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
 		 * al guardar el objeto budget
 		 */
+		budget.setBasicDataByRoofType(null);
 		budget.setBasicDataByFan(null);
+		BindUtils.postNotifyChange(null, null, budget, "fan");
+		BindUtils.postNotifyChange(null, null, budget, "roofType");
 	}
 
 	@NotifyChange({ "listBoothDisplay", "listFloorDisplay" })
 	@Command
 	public void loadBoothFloorDisplay() {
 		String controlType = budget.getBasicDataByControlType().getName();
-		if (controlType.compareTo("SISTEL") == 0){
-			listBoothDisplay = new DaoBasicdata().listByField("BUDGET", "BOOTH DISPLAY SISTEL");
-			listFloorDisplay = new DaoBasicdata().listByField("BUDGET", "FLOOR DISPLAY SISTEL");
-		} else if (controlType.compareTo("CF CONTROL") == 0){
-			listBoothDisplay = new DaoBasicdata().listByField("BUDGET", "BOOTH DISPLAY CF");
-			listFloorDisplay = new DaoBasicdata().listByField("BUDGET", "FLOOR DISPLAY CF");
+		if (controlType.indexOf("SISTEL") != -1) {
+			listBoothDisplay = new DaoBasicdata().listByField("BUDGET",
+					"BOOTH DISPLAY SISTEL");
+			listFloorDisplay = new DaoBasicdata().listByField("BUDGET",
+					"FLOOR DISPLAY SISTEL");
+		} else if (controlType.indexOf("CF CONTROL") != -1) {
+			listBoothDisplay = new DaoBasicdata().listByField("BUDGET",
+					"BOOTH DISPLAY CF");
+			listFloorDisplay = new DaoBasicdata().listByField("BUDGET",
+					"FLOOR DISPLAY CF");
 		} else {
 			listBoothDisplay = new ArrayList<BasicData>();
 			listFloorDisplay = new ArrayList<BasicData>();
@@ -926,25 +1019,11 @@ public class FrmBudgetCtrl {
 		budget.setBasicDataByFloorDisplay(null);
 	}
 
-	@NotifyChange({ "disabledModel", "listDesign", "cabinModel" })
-	@Command
-	public void disableModel() {
-		disabledModel = !disabledModel;
-		cabinModel = new BasicData();
-		listDesign = new ArrayList<BasicData>();
-		/*
-		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
-		 * al guardar el objeto budget
-		 */
-		budget.setBasicDataByCabinDesign(null);
-	}
-
 	@NotifyChange({ "isSpecial" })
 	@Command
 	public void isSpecial() {
 		if (budget.getBasicDataByDoorframeType() != null)
-			if (budget.getBasicDataByDoorframeType().getName()
-					.compareTo("ESPECIAL") == 0)
+			if (budget.getBasicDataByDoorframeType().getName().indexOf("ESPECIAL") != -1)
 				isSpecial = new Boolean(true);
 			else {
 				isSpecial = new Boolean(false);
@@ -956,11 +1035,98 @@ public class FrmBudgetCtrl {
 	public void checkWidthDoorFrame(
 			@BindingParam("component") InputElement component) {
 		if (budget.getBasicDataByDoorframeType() != null
-				&& budget.getBasicDataByDoorframeType().getName()
-						.compareTo("RECTO - 30X150") == 0
-				&& (budget.getHallButtonPlace().compareTo("MARCO") == 0)) {
+				&& budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1
+				&& budget.getHallButtonPlace().indexOf("MARCO") != -1) {
 			throw new WrongValueException(component,
 					"Este tipo no puede ser ubicado en el Marco.");
 		}
+	}
+
+	@NotifyChange("disableSistelHall")
+	@Command
+	public void disabledSistelsHall() {
+		if (budget.getBasicDataByHallButtonType().getName().indexOf("SISTEL") != -1)
+			disableSistelHall = false;
+		else {
+			disableSistelHall = true;
+			budget.setSistelWarrowPb(false);
+			budget.setSistelWarrowFloor(0);
+			budget.setSistelWdisplayPb(false);
+			budget.setSistelWdisplayFloor(0);
+		}
+	}
+
+	@Command
+	public void updateMotorQuantity(
+			@ContextParam(ContextType.TRIGGER_EVENT) InputEvent event) {
+		/*
+		 * Con la linea superior enlazo el evento sobre el input con el
+		 * controlador Ver: http://forum.zkoss
+		 * .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
+		 */
+		if (budget.isType()) {
+			budget.setMotorQuantity(Integer.parseInt(event.getValue()));
+			BindUtils.postNotifyChange(null, null, budget, "motorQuantity");
+		}
+	}
+
+	@Command
+	public void activeDesignComment() {
+		String cabinDesign = new String();
+		String floorType = new String();
+		if (budget.getBasicDataByCabinDesign() != null)
+			cabinDesign = budget.getBasicDataByCabinDesign().getName();
+		if (budget.getBasicDataByFloorType() != null)
+			floorType = budget.getBasicDataByFloorType().getName();
+		if (cabinDesign.indexOf("FORMICA") != -1
+				|| floorType.indexOf("OTROS") != -1)
+			budget.setDesignSpecial(true);
+		/*
+		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
+		 * todo el objeto
+		 */
+		BindUtils.postNotifyChange(null, null, budget, "designSpecial");
+	}
+
+	@Command
+	public void isDesignSpecial() {
+		budget.setDesignSpecialComment(vacio);
+	}
+
+	@Command
+	public void searchBusinessPartner(@BindingParam("rif") String rif) {
+		DaoBusinessPartner daoBusinessPartner = new DaoBusinessPartner();
+		businessPartner = daoBusinessPartner.findActiveByRif(rif);
+		if (businessPartner == null) {
+			Window win = (Window) Executions.createComponents(
+					"frmBusinessPartner.zul", null, null);
+		} else {
+			budget.setPartnerName(businessPartner.getName());
+			budget.setRifPartner(businessPartner.getRif());
+			budget.setRifType(businessPartner.getBasicData().getName()
+					.charAt(0));
+			BindUtils.postNotifyChange(null, null, budget, "partnerName");
+			BindUtils.postNotifyChange(null, null, budget, "rifType");
+			BindUtils.postNotifyChange(null, null, budget, "rifPartner");
+		}
+	}
+
+	@GlobalCommand
+	public void selectedBusinessPartner(
+			@BindingParam("BusinessPartner") BusinessPartner businessPartner) {
+		if (businessPartner != null) {
+			this.businessPartner = businessPartner;
+			budget.setPartnerName(businessPartner.getName());
+			budget.setRifPartner(businessPartner.getRif());
+			budget.setRifType(businessPartner.getBasicData().getName()
+					.charAt(0));
+		} else {
+			budget.setPartnerName(null);
+			budget.setRifPartner("");
+			budget.setRifType('-');
+		}
+		BindUtils.postNotifyChange(null, null, budget, "partnerName");
+		BindUtils.postNotifyChange(null, null, budget, "rifType");
+		BindUtils.postNotifyChange(null, null, budget, "rifPartner");
 	}
 }

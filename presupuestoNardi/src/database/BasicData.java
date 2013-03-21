@@ -1,6 +1,6 @@
 package database;
 
-// Generated 12-mar-2013 15:01:36 by Hibernate Tools 3.4.0.CR1
+// Generated 21-mar-2013 9:56:13 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,6 +55,8 @@ public class BasicData implements java.io.Serializable {
 	private Set<Budget> budgetsForElevatorCapacitance = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForDoorFrameHammered = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForBoothDisplay = new HashSet<Budget>(0);
+	private Set<BusinessPartner> businessPartners = new HashSet<BusinessPartner>(
+			0);
 	private Set<Budget> budgetsForMachineType = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFloorDisplay = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForAccess = new HashSet<Budget>(0);
@@ -96,6 +98,7 @@ public class BasicData implements java.io.Serializable {
 			Set<Budget> budgetsForElevatorCapacitance,
 			Set<Budget> budgetsForDoorFrameHammered,
 			Set<Budget> budgetsForBoothDisplay,
+			Set<BusinessPartner> businessPartners,
 			Set<Budget> budgetsForMachineType,
 			Set<Budget> budgetsForFloorDisplay, Set<Budget> budgetsForAccess,
 			Set<Budget> budgetsForElectricityType, Set<Budget> budgetsForFan,
@@ -132,6 +135,7 @@ public class BasicData implements java.io.Serializable {
 		this.budgetsForElevatorCapacitance = budgetsForElevatorCapacitance;
 		this.budgetsForDoorFrameHammered = budgetsForDoorFrameHammered;
 		this.budgetsForBoothDisplay = budgetsForBoothDisplay;
+		this.businessPartners = businessPartners;
 		this.budgetsForMachineType = budgetsForMachineType;
 		this.budgetsForFloorDisplay = budgetsForFloorDisplay;
 		this.budgetsForAccess = budgetsForAccess;
@@ -441,6 +445,15 @@ public class BasicData implements java.io.Serializable {
 
 	public void setBudgetsForBoothDisplay(Set<Budget> budgetsForBoothDisplay) {
 		this.budgetsForBoothDisplay = budgetsForBoothDisplay;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicData")
+	public Set<BusinessPartner> getBusinessPartners() {
+		return this.businessPartners;
+	}
+
+	public void setBusinessPartners(Set<BusinessPartner> businessPartners) {
+		this.businessPartners = businessPartners;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByMachineType")

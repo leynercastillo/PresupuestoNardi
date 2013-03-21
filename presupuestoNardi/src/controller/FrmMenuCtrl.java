@@ -13,8 +13,8 @@ public class FrmMenuCtrl {
 	@NotifyChange()
 	@Command
 	public void optionSelected(@BindingParam("optionSelected") String optionSelected){
-		if (!optionSelected.isEmpty()){
-			Map map = new HashMap();
+		if (!optionSelected.trim().isEmpty()){
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("page", optionSelected);
 			BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 		}

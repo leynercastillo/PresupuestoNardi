@@ -37,7 +37,8 @@
 				<row>
 					<space></space>
 					<button label="Actualizar"
-						onClick="@command('save')">
+						onClick="@command('save')"
+						image="/resource/images/icons/save.png">
 					</button>
 				</row>
 			</rows>

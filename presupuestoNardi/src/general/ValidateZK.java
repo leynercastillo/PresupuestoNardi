@@ -21,7 +21,7 @@ public class ValidateZK {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = inputElement.getText();
-				if (string.isEmpty()) {
+				if (string.trim().isEmpty()) {
 					throw new WrongValueException(inputElement,
 							"Ingrese un dato valido.");
 				}
@@ -42,7 +42,7 @@ public class ValidateZK {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = inputElement.getText();
-				if (string.isEmpty() || !string.matches(".+@.+\\.[a-zA-Z]+")) {
+				if (string.trim().isEmpty() || !string.matches(".+@.+\\.[a-zA-Z]+")) {
 					throw new WrongValueException(inputElement,
 							"Ingrese una direccion de correo valida.");
 				}
@@ -65,7 +65,7 @@ public class ValidateZK {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = inputElement.getText();
-				if (string.isEmpty() || string.equals("--")) {
+				if (string.trim().isEmpty() || string.equals("--")) {
 					throw new WrongValueException(inputElement,
 							"Seleccione una opcion valida.");
 				}
@@ -88,7 +88,7 @@ public class ValidateZK {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = inputElement.getText();
-				if (string.isEmpty() || string.equals("--Seleccione--")) {
+				if (string.trim().isEmpty() || string.equals("--Seleccione--")) {
 					throw new WrongValueException(inputElement,
 							"Seleccione una opcion valida.");
 				}

@@ -1,6 +1,6 @@
 package database;
 
-// Generated 12-mar-2013 15:01:36 by Hibernate Tools 3.4.0.CR1
+// Generated 21-mar-2013 9:56:13 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,6 +30,7 @@ public class Budget implements java.io.Serializable {
 	private BasicData basicDataByHallButtonType;
 	private BasicData basicDataByManeuverType;
 	private BasicData basicDataByFrequency;
+	private BusinessPartner businessPartner;
 	private BasicData basicDataByFloorDisplay;
 	private BasicData basicDataByMirror;
 	private BasicData basicDataByVoltageLighting;
@@ -55,6 +56,8 @@ public class Budget implements java.io.Serializable {
 	private BasicData basicDataByDoorframeType;
 	private int number;
 	private Date date;
+	private char rifType;
+	private String rifPartner;
 	private String partnerName;
 	private String construction;
 	private String seller;
@@ -92,10 +95,13 @@ public class Budget implements java.io.Serializable {
 	private String displayPlaceFloor;
 	private Boolean stopSequenceContinuous;
 	private String stopSequenceContinuousQ;
+	private Integer stopSequenceContinuousNumber;
 	private Boolean stopSequenceEven;
 	private String stopSequenceEvenQ;
+	private Integer stopSequenceEvenNumber;
 	private Boolean stopSequenceOdd;
 	private String stopSequenceOddQ;
+	private Integer stopSequenceOddNumber;
 	private String doorFrameHammeredDesc;
 	private Boolean doorFrameStainless;
 	private String doorFrameStainlessDescrip;
@@ -108,12 +114,16 @@ public class Budget implements java.io.Serializable {
 	public Budget() {
 	}
 
-	public Budget(int number, Date date, String partnerName,
+	public Budget(BusinessPartner businessPartner, int number, Date date,
+			char rifType, String rifPartner, String partnerName,
 			String construction, String seller, String constructionAddress,
 			String constructionCity, String contactPhone, String email,
 			String contactName, boolean type, char status) {
+		this.businessPartner = businessPartner;
 		this.number = number;
 		this.date = date;
+		this.rifType = rifType;
+		this.rifPartner = rifPartner;
 		this.partnerName = partnerName;
 		this.construction = construction;
 		this.seller = seller;
@@ -131,11 +141,11 @@ public class Budget implements java.io.Serializable {
 			BasicData basicDataByBoothDisplay,
 			BasicData basicDataByHallButtonType,
 			BasicData basicDataByManeuverType, BasicData basicDataByFrequency,
-			BasicData basicDataByFloorDisplay, BasicData basicDataByMirror,
-			BasicData basicDataByVoltageLighting, BasicData basicDataByAccess,
-			BasicData basicDataByElectricityType, BasicData basicDataByRailing,
-			BasicData basicDataByDoorType, BasicData basicDataByFloorType,
-			BasicData basicDataByBuildingType,
+			BusinessPartner businessPartner, BasicData basicDataByFloorDisplay,
+			BasicData basicDataByMirror, BasicData basicDataByVoltageLighting,
+			BasicData basicDataByAccess, BasicData basicDataByElectricityType,
+			BasicData basicDataByRailing, BasicData basicDataByDoorType,
+			BasicData basicDataByFloorType, BasicData basicDataByBuildingType,
 			BasicData basicDataByElevatorCapacitance,
 			BasicData basicDataByRoofType, BasicData basicDataByFan,
 			BasicData basicDataByHeight, BasicData basicDataByCabinDesign,
@@ -146,10 +156,10 @@ public class Budget implements java.io.Serializable {
 			BasicData basicDataByBoothButton, BasicData basicDataByDoorSystem,
 			BasicData basicDataByHourMachine,
 			BasicData basicDataByDoorframeType, int number, Date date,
-			String partnerName, String construction, String seller,
-			String constructionAddress, String constructionCity,
-			String contactPhone, String email, String contactName,
-			Boolean planeP, Boolean planeC, boolean type,
+			char rifType, String rifPartner, String partnerName,
+			String construction, String seller, String constructionAddress,
+			String constructionCity, String contactPhone, String email,
+			String contactName, Boolean planeP, Boolean planeC, boolean type,
 			Integer elevatorQuantity, Integer motorQuantity,
 			String motorTraction, Integer stopNumber, Double tour,
 			Double onTour, Double widthHole, Double fossa, Double bottomHole,
@@ -160,12 +170,13 @@ public class Budget implements java.io.Serializable {
 			Boolean phone, Boolean accessSytem, Boolean firefighterKeychain,
 			String comment, String displayPlaceFloor,
 			Boolean stopSequenceContinuous, String stopSequenceContinuousQ,
-			Boolean stopSequenceEven, String stopSequenceEvenQ,
+			Integer stopSequenceContinuousNumber, Boolean stopSequenceEven,
+			String stopSequenceEvenQ, Integer stopSequenceEvenNumber,
 			Boolean stopSequenceOdd, String stopSequenceOddQ,
-			String doorFrameHammeredDesc, Boolean doorFrameStainless,
-			String doorFrameStainlessDescrip, Boolean sistelWdisplayPb,
-			Integer sistelWdisplayFloor, Boolean sistelWarrowPb,
-			Integer sistelWarrowFloor, char status) {
+			Integer stopSequenceOddNumber, String doorFrameHammeredDesc,
+			Boolean doorFrameStainless, String doorFrameStainlessDescrip,
+			Boolean sistelWdisplayPb, Integer sistelWdisplayFloor,
+			Boolean sistelWarrowPb, Integer sistelWarrowFloor, char status) {
 		this.basicDataByButtonType = basicDataByButtonType;
 		this.basicDataByMachineType = basicDataByMachineType;
 		this.basicDataByHallButton = basicDataByHallButton;
@@ -173,6 +184,7 @@ public class Budget implements java.io.Serializable {
 		this.basicDataByHallButtonType = basicDataByHallButtonType;
 		this.basicDataByManeuverType = basicDataByManeuverType;
 		this.basicDataByFrequency = basicDataByFrequency;
+		this.businessPartner = businessPartner;
 		this.basicDataByFloorDisplay = basicDataByFloorDisplay;
 		this.basicDataByMirror = basicDataByMirror;
 		this.basicDataByVoltageLighting = basicDataByVoltageLighting;
@@ -198,6 +210,8 @@ public class Budget implements java.io.Serializable {
 		this.basicDataByDoorframeType = basicDataByDoorframeType;
 		this.number = number;
 		this.date = date;
+		this.rifType = rifType;
+		this.rifPartner = rifPartner;
 		this.partnerName = partnerName;
 		this.construction = construction;
 		this.seller = seller;
@@ -235,10 +249,13 @@ public class Budget implements java.io.Serializable {
 		this.displayPlaceFloor = displayPlaceFloor;
 		this.stopSequenceContinuous = stopSequenceContinuous;
 		this.stopSequenceContinuousQ = stopSequenceContinuousQ;
+		this.stopSequenceContinuousNumber = stopSequenceContinuousNumber;
 		this.stopSequenceEven = stopSequenceEven;
 		this.stopSequenceEvenQ = stopSequenceEvenQ;
+		this.stopSequenceEvenNumber = stopSequenceEvenNumber;
 		this.stopSequenceOdd = stopSequenceOdd;
 		this.stopSequenceOddQ = stopSequenceOddQ;
+		this.stopSequenceOddNumber = stopSequenceOddNumber;
 		this.doorFrameHammeredDesc = doorFrameHammeredDesc;
 		this.doorFrameStainless = doorFrameStainless;
 		this.doorFrameStainlessDescrip = doorFrameStainlessDescrip;
@@ -328,6 +345,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicDataByFrequency(BasicData basicDataByFrequency) {
 		this.basicDataByFrequency = basicDataByFrequency;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_business_partner", nullable = false)
+	public BusinessPartner getBusinessPartner() {
+		return this.businessPartner;
+	}
+
+	public void setBusinessPartner(BusinessPartner businessPartner) {
+		this.businessPartner = businessPartner;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -581,6 +608,24 @@ public class Budget implements java.io.Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	@Column(name = "rif_type", nullable = false, length = 1)
+	public char getRifType() {
+		return this.rifType;
+	}
+
+	public void setRifType(char rifType) {
+		this.rifType = rifType;
+	}
+
+	@Column(name = "rif_partner", nullable = false, length = 15)
+	public String getRifPartner() {
+		return this.rifPartner;
+	}
+
+	public void setRifPartner(String rifPartner) {
+		this.rifPartner = rifPartner;
 	}
 
 	@Column(name = "partnerName", nullable = false, length = 100)
@@ -916,6 +961,16 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceContinuousQ = stopSequenceContinuousQ;
 	}
 
+	@Column(name = "stopSequenceContinuousNumber")
+	public Integer getStopSequenceContinuousNumber() {
+		return this.stopSequenceContinuousNumber;
+	}
+
+	public void setStopSequenceContinuousNumber(
+			Integer stopSequenceContinuousNumber) {
+		this.stopSequenceContinuousNumber = stopSequenceContinuousNumber;
+	}
+
 	@Column(name = "stopSequenceEven")
 	public Boolean getStopSequenceEven() {
 		return this.stopSequenceEven;
@@ -934,6 +989,15 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceEvenQ = stopSequenceEvenQ;
 	}
 
+	@Column(name = "stopSequenceEvenNumber")
+	public Integer getStopSequenceEvenNumber() {
+		return this.stopSequenceEvenNumber;
+	}
+
+	public void setStopSequenceEvenNumber(Integer stopSequenceEvenNumber) {
+		this.stopSequenceEvenNumber = stopSequenceEvenNumber;
+	}
+
 	@Column(name = "stopSequenceOdd")
 	public Boolean getStopSequenceOdd() {
 		return this.stopSequenceOdd;
@@ -950,6 +1014,15 @@ public class Budget implements java.io.Serializable {
 
 	public void setStopSequenceOddQ(String stopSequenceOddQ) {
 		this.stopSequenceOddQ = stopSequenceOddQ;
+	}
+
+	@Column(name = "stopSequenceOddNumber")
+	public Integer getStopSequenceOddNumber() {
+		return this.stopSequenceOddNumber;
+	}
+
+	public void setStopSequenceOddNumber(Integer stopSequenceOddNumber) {
+		this.stopSequenceOddNumber = stopSequenceOddNumber;
 	}
 
 	@Column(name = "doorFrameHammeredDesc", length = 100)
