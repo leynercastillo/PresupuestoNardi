@@ -25,26 +25,21 @@ public class GenericDao<Model> {
 
 	@SuppressWarnings("unchecked")
 	public Model load(Long id) {
-		Transaction transaction = currentSession().beginTransaction();
+		currentSession().beginTransaction();
 		Model returnvalue = (Model) currentSession().load(domainClass, id);
-		transaction.commit();
-		currentSession().close();
+		currentSession().getTransaction().commit();
 		return returnvalue;
 	}
 
 	public Boolean save(Model model) {
-		Transaction transaction = null;
 		try {
-			transaction = currentSession().beginTransaction();
-			currentSession().merge(model);
-			transaction.commit();
-			currentSession().close();
+			currentSession().beginTransaction();
+			currentSession().saveOrUpdate(model);
+			currentSession().getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {
-			if (transaction != null)
-					transaction.rollback();
+			currentSession().getTransaction().rollback();
 			e.printStackTrace();
-			currentSession().close();
 			return false;
 		}
 	}
@@ -55,13 +50,11 @@ public class GenericDao<Model> {
 			transaction = currentSession().beginTransaction();
 			currentSession().delete(model);
 			transaction.commit();
-			currentSession().close();
 			return true;
 		} catch (HibernateException e) {
 			if (transaction != null)
 				transaction.rollback();
 			e.printStackTrace();
-			currentSession().close();
 			return false;
 		}
 	}

@@ -1,6 +1,6 @@
 package database;
 
-// Generated 21-mar-2013 9:56:13 by Hibernate Tools 3.4.0.CR1
+// Generated 22-mar-2013 11:18:27 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,8 +25,10 @@ public class Budget implements java.io.Serializable {
 	private Integer idBudget;
 	private BasicData basicDataByButtonType;
 	private BasicData basicDataByMachineType;
+	private BasicData basicDataByMachineBase;
 	private BasicData basicDataByHallButton;
 	private BasicData basicDataByBoothDisplay;
+	private SecurityUser securityUser;
 	private BasicData basicDataByHallButtonType;
 	private BasicData basicDataByManeuverType;
 	private BasicData basicDataByFrequency;
@@ -91,7 +93,6 @@ public class Budget implements java.io.Serializable {
 	private Boolean phone;
 	private Boolean accessSytem;
 	private Boolean firefighterKeychain;
-	private String comment;
 	private String displayPlaceFloor;
 	private Boolean stopSequenceContinuous;
 	private String stopSequenceContinuousQ;
@@ -109,16 +110,19 @@ public class Budget implements java.io.Serializable {
 	private Integer sistelWdisplayFloor;
 	private Boolean sistelWarrowPb;
 	private Integer sistelWarrowFloor;
+	private String comment;
 	private char status;
 
 	public Budget() {
 	}
 
-	public Budget(BusinessPartner businessPartner, int number, Date date,
-			char rifType, String rifPartner, String partnerName,
-			String construction, String seller, String constructionAddress,
-			String constructionCity, String contactPhone, String email,
-			String contactName, boolean type, char status) {
+	public Budget(SecurityUser securityUser, BusinessPartner businessPartner,
+			int number, Date date, char rifType, String rifPartner,
+			String partnerName, String construction, String seller,
+			String constructionAddress, String constructionCity,
+			String contactPhone, String email, String contactName,
+			boolean type, char status) {
+		this.securityUser = securityUser;
 		this.businessPartner = businessPartner;
 		this.number = number;
 		this.date = date;
@@ -137,9 +141,9 @@ public class Budget implements java.io.Serializable {
 	}
 
 	public Budget(BasicData basicDataByButtonType,
-			BasicData basicDataByMachineType, BasicData basicDataByHallButton,
-			BasicData basicDataByBoothDisplay,
-			BasicData basicDataByHallButtonType,
+			BasicData basicDataByMachineType, BasicData basicDataByMachineBase,
+			BasicData basicDataByHallButton, BasicData basicDataByBoothDisplay,
+			SecurityUser securityUser, BasicData basicDataByHallButtonType,
 			BasicData basicDataByManeuverType, BasicData basicDataByFrequency,
 			BusinessPartner businessPartner, BasicData basicDataByFloorDisplay,
 			BasicData basicDataByMirror, BasicData basicDataByVoltageLighting,
@@ -168,19 +172,22 @@ public class Budget implements java.io.Serializable {
 			String hallButtonPlace, Boolean lightCurtain, Boolean loadLimiter,
 			Boolean speechSynthesizer, Boolean gomSystem, Boolean intercom,
 			Boolean phone, Boolean accessSytem, Boolean firefighterKeychain,
-			String comment, String displayPlaceFloor,
-			Boolean stopSequenceContinuous, String stopSequenceContinuousQ,
+			String displayPlaceFloor, Boolean stopSequenceContinuous,
+			String stopSequenceContinuousQ,
 			Integer stopSequenceContinuousNumber, Boolean stopSequenceEven,
 			String stopSequenceEvenQ, Integer stopSequenceEvenNumber,
 			Boolean stopSequenceOdd, String stopSequenceOddQ,
 			Integer stopSequenceOddNumber, String doorFrameHammeredDesc,
 			Boolean doorFrameStainless, String doorFrameStainlessDescrip,
 			Boolean sistelWdisplayPb, Integer sistelWdisplayFloor,
-			Boolean sistelWarrowPb, Integer sistelWarrowFloor, char status) {
+			Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment,
+			char status) {
 		this.basicDataByButtonType = basicDataByButtonType;
 		this.basicDataByMachineType = basicDataByMachineType;
+		this.basicDataByMachineBase = basicDataByMachineBase;
 		this.basicDataByHallButton = basicDataByHallButton;
 		this.basicDataByBoothDisplay = basicDataByBoothDisplay;
+		this.securityUser = securityUser;
 		this.basicDataByHallButtonType = basicDataByHallButtonType;
 		this.basicDataByManeuverType = basicDataByManeuverType;
 		this.basicDataByFrequency = basicDataByFrequency;
@@ -245,7 +252,6 @@ public class Budget implements java.io.Serializable {
 		this.phone = phone;
 		this.accessSytem = accessSytem;
 		this.firefighterKeychain = firefighterKeychain;
-		this.comment = comment;
 		this.displayPlaceFloor = displayPlaceFloor;
 		this.stopSequenceContinuous = stopSequenceContinuous;
 		this.stopSequenceContinuousQ = stopSequenceContinuousQ;
@@ -263,6 +269,7 @@ public class Budget implements java.io.Serializable {
 		this.sistelWdisplayFloor = sistelWdisplayFloor;
 		this.sistelWarrowPb = sistelWarrowPb;
 		this.sistelWarrowFloor = sistelWarrowFloor;
+		this.comment = comment;
 		this.status = status;
 	}
 
@@ -298,6 +305,16 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "machineBase")
+	public BasicData getBasicDataByMachineBase() {
+		return this.basicDataByMachineBase;
+	}
+
+	public void setBasicDataByMachineBase(BasicData basicDataByMachineBase) {
+		this.basicDataByMachineBase = basicDataByMachineBase;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hallButton")
 	public BasicData getBasicDataByHallButton() {
 		return this.basicDataByHallButton;
@@ -315,6 +332,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicDataByBoothDisplay(BasicData basicDataByBoothDisplay) {
 		this.basicDataByBoothDisplay = basicDataByBoothDisplay;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_security_user", nullable = false)
+	public SecurityUser getSecurityUser() {
+		return this.securityUser;
+	}
+
+	public void setSecurityUser(SecurityUser securityUser) {
+		this.securityUser = securityUser;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -925,15 +952,6 @@ public class Budget implements java.io.Serializable {
 		this.firefighterKeychain = firefighterKeychain;
 	}
 
-	@Column(name = "comment", length = 300)
-	public String getComment() {
-		return this.comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
 	@Column(name = "displayPlaceFloor", length = 50)
 	public String getDisplayPlaceFloor() {
 		return this.displayPlaceFloor;
@@ -1086,6 +1104,15 @@ public class Budget implements java.io.Serializable {
 
 	public void setSistelWarrowFloor(Integer sistelWarrowFloor) {
 		this.sistelWarrowFloor = sistelWarrowFloor;
+	}
+
+	@Column(name = "comment", length = 700)
+	public String getComment() {
+		return this.comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	@Column(name = "status", nullable = false, length = 1)

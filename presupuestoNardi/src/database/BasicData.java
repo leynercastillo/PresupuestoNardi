@@ -1,6 +1,6 @@
 package database;
 
-// Generated 21-mar-2013 9:56:13 by Hibernate Tools 3.4.0.CR1
+// Generated 22-mar-2013 11:18:27 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,6 +61,7 @@ public class BasicData implements java.io.Serializable {
 	private Set<Budget> budgetsForFloorDisplay = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForAccess = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForElectricityType = new HashSet<Budget>(0);
+	private Set<Budget> budgetsForMachineBase = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForFan = new HashSet<Budget>(0);
 	private Set<Budget> budgetsForDoorType = new HashSet<Budget>(0);
 
@@ -101,7 +102,8 @@ public class BasicData implements java.io.Serializable {
 			Set<BusinessPartner> businessPartners,
 			Set<Budget> budgetsForMachineType,
 			Set<Budget> budgetsForFloorDisplay, Set<Budget> budgetsForAccess,
-			Set<Budget> budgetsForElectricityType, Set<Budget> budgetsForFan,
+			Set<Budget> budgetsForElectricityType,
+			Set<Budget> budgetsForMachineBase, Set<Budget> budgetsForFan,
 			Set<Budget> budgetsForDoorType) {
 		this.basicData = basicData;
 		this.dataBaseName = dataBaseName;
@@ -140,6 +142,7 @@ public class BasicData implements java.io.Serializable {
 		this.budgetsForFloorDisplay = budgetsForFloorDisplay;
 		this.budgetsForAccess = budgetsForAccess;
 		this.budgetsForElectricityType = budgetsForElectricityType;
+		this.budgetsForMachineBase = budgetsForMachineBase;
 		this.budgetsForFan = budgetsForFan;
 		this.budgetsForDoorType = budgetsForDoorType;
 	}
@@ -491,6 +494,15 @@ public class BasicData implements java.io.Serializable {
 	public void setBudgetsForElectricityType(
 			Set<Budget> budgetsForElectricityType) {
 		this.budgetsForElectricityType = budgetsForElectricityType;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByMachineBase")
+	public Set<Budget> getBudgetsForMachineBase() {
+		return this.budgetsForMachineBase;
+	}
+
+	public void setBudgetsForMachineBase(Set<Budget> budgetsForMachineBase) {
+		this.budgetsForMachineBase = budgetsForMachineBase;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByFan")

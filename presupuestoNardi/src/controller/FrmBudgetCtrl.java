@@ -54,6 +54,7 @@ import dao.DaoSecurityUser;
 import database.BasicData;
 import database.Budget;
 import database.BusinessPartner;
+import database.SecurityUser;
 
 /**
  * @author leyner.castillo
@@ -67,6 +68,7 @@ public class FrmBudgetCtrl {
 	private List<BasicData> listElevatorType;
 	private List<BasicData> listElevatorCapa;
 	private List<BasicData> listMachineType;
+	private List<BasicData> listMachineBase;
 	private List<BasicData> listBEmbarque;
 	private List<BasicData> listElectricityType;
 	private List<BasicData> listSpeed;
@@ -114,6 +116,14 @@ public class FrmBudgetCtrl {
 	private Integer sistelWArrowPB;
 	private Budget budget;
 	private BusinessPartner businessPartner;
+
+	public List<BasicData> getListMachineBase() {
+		return listMachineBase;
+	}
+
+	public void setListMachineBase(List<BasicData> listMachineBase) {
+		this.listMachineBase = listMachineBase;
+	}
 
 	public List<BusinessPartner> getListBusinessPartner() {
 		return listBusinessPartner;
@@ -542,12 +552,11 @@ public class FrmBudgetCtrl {
 		DaoBudget daoBudget = new DaoBudget();
 		budget = new Budget();
 		businessPartner = new BusinessPartner();
-		if (daoBudget.listOrderBudgetbyField("status").isEmpty())
+		if (daoBudget.listAll().isEmpty())
 			budget.setNumber(1);
 		else
-			budget.setNumber(daoBudget.listOrderBudgetbyField("status")
-					.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
-					.getNumber() + 1);
+			budget.setNumber(daoBudget.listAll()
+					.get(daoBudget.listAll().size() - 1).getNumber() + 1);
 		disabledAll = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
@@ -555,14 +564,16 @@ public class FrmBudgetCtrl {
 		disableSistelHall = new Boolean(true);
 		isSpecial = new Boolean(false);
 		cabinModel = new BasicData();
-		User user = (User) SecurityContextHolder.getContext()
+		User auxUser = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		/*
 		 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no
 		 * almacena email
 		 */
-		budget.setSeller(new DaoSecurityUser().findByString("name",
-				user.getUsername()).getName());
+		SecurityUser user = new DaoSecurityUser().findByString("name",
+				auxUser.getUsername());
+		budget.setSeller(user.getName());
+		budget.setSecurityUser(user);
 		budget.setDate(new Date());
 		budget.setType(true);
 		budget.setPlaneC(false);
@@ -609,6 +620,7 @@ public class FrmBudgetCtrl {
 		listElevatorCapa = daoBasicdata.listByField("BUDGET",
 				"ELEVATOR CAPACITANCE");
 		listMachineType = daoBasicdata.listByField("BUDGET", "MACHINE TYPE");
+		listMachineBase = daoBasicdata.listByField("BUDGET", "MACHINE BASE");
 		listBEmbarque = daoBasicdata.listByField("BUDGET", "BUILDING EMBARQUE");
 		listElectricityType = daoBasicdata.listByField("BUDGET",
 				"ELECTRICITY TYPE");
@@ -739,6 +751,7 @@ public class FrmBudgetCtrl {
 		emails.loadProperties("/resource/config/mail.properties");
 		List<String> listRecipient = new ArrayList<String>();
 		listRecipient.add("ventas@ascensoresnardi.com");
+		listRecipient.add("sistemas@ascensoresnardi.com");
 		try {
 			emails.sendMail("Presupuesto nro" + budget.getNumber(),
 					listRecipient, message(), adjuntos());
@@ -753,19 +766,18 @@ public class FrmBudgetCtrl {
 		budget.setBusinessPartner(businessPartner);
 		/* Cambiar if a metodo de validacion tradicional */
 		if (budget.getBasicDataByDoorframeType() != null
-				&& budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1
+				&& budget.getBasicDataByDoorframeType().getName()
+						.indexOf("RECTO - 30X150") != -1
 				&& (budget.getHallButtonPlace().indexOf("MARCO") != -1)) {
 			throw new WrongValueException(component,
 					"Este tipo no puede ser ubicado en el Marco.");
 		} else {
 			DaoBudget daoBudget = new DaoBudget();
-			if (daoBudget.listOrderBudgetbyField("status").isEmpty())
+			if (daoBudget.listAll().isEmpty())
 				budget.setNumber(1);
 			else
-				budget.setNumber(daoBudget
-						.listOrderBudgetbyField("status")
-						.get(daoBudget.listOrderBudgetbyField("status").size() - 1)
-						.getNumber() + 1);
+				budget.setNumber(daoBudget.listAll()
+						.get(daoBudget.listAll().size() - 1).getNumber() + 1);
 			if (!daoBudget.save(budget)) {
 				Clients.showNotification("No se pudo guardar.", "error", null,
 						"bottom_center", 2000);
@@ -979,14 +991,28 @@ public class FrmBudgetCtrl {
 	public void loadFans() {
 		String elevatorCapacitance = new String(budget
 				.getBasicDataByElevatorCapacitance().getName());
+		DaoBasicdata daoBasicdata = new DaoBasicdata();
 		if (elevatorCapacitance.indexOf("320 - 4") != -1
 				|| elevatorCapacitance.indexOf("450 - 6") != -1
-				|| elevatorCapacitance.indexOf("600 - 8") != -1)
-			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 1");
-		else
-			listFan = new DaoBasicdata().listByField("BUDGET", "FAN 2");
-		listRoofType = new DaoBasicdata().listByParent(budget
-				.getBasicDataByElevatorCapacitance());
+				|| elevatorCapacitance.indexOf("600 - 8") != -1) {
+			listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
+			listRoofType = daoBasicdata.listByParent(budget
+					.getBasicDataByElevatorCapacitance());
+		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
+			listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
+			listFan.addAll(daoBasicdata.listByField("BUDGET", "FAN 2"));
+			/*
+			 * Escogemos el basicdata con name "450-6" puesto que es el que
+			 * tiene todos los roofType asignados. Esto se hace porque no se
+			 * sabra que tipo de Capacidad se añadira.
+			 */
+			listRoofType = daoBasicdata.listByParent(daoBasicdata.findByName(
+					"BUDGET", "ELEVATOR CAPACITANCE", "450 - 6"));
+		} else {
+			listFan = daoBasicdata.listByField("BUDGET", "FAN 2");
+			listRoofType = daoBasicdata.listByParent(budget
+					.getBasicDataByElevatorCapacitance());
+		}
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
 		 * al guardar el objeto budget
@@ -1023,7 +1049,8 @@ public class FrmBudgetCtrl {
 	@Command
 	public void isSpecial() {
 		if (budget.getBasicDataByDoorframeType() != null)
-			if (budget.getBasicDataByDoorframeType().getName().indexOf("ESPECIAL") != -1)
+			if (budget.getBasicDataByDoorframeType().getName()
+					.indexOf("ESPECIAL") != -1)
 				isSpecial = new Boolean(true);
 			else {
 				isSpecial = new Boolean(false);
@@ -1035,7 +1062,8 @@ public class FrmBudgetCtrl {
 	public void checkWidthDoorFrame(
 			@BindingParam("component") InputElement component) {
 		if (budget.getBasicDataByDoorframeType() != null
-				&& budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1
+				&& budget.getBasicDataByDoorframeType().getName()
+						.indexOf("RECTO - 30X150") != -1
 				&& budget.getHallButtonPlace().indexOf("MARCO") != -1) {
 			throw new WrongValueException(component,
 					"Este tipo no puede ser ubicado en el Marco.");

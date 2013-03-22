@@ -17,5 +17,4 @@ public class HibernateListeners implements WebAppInit, WebAppCleanup {
 		// TODO Auto-generated method stub
 		StoreHibernateUtil.getSessionFactory().close();
 	}
-
 }

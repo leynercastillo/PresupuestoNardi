@@ -1,6 +1,6 @@
 package database;
 
-// Generated 21-mar-2013 9:56:13 by Hibernate Tools 3.4.0.CR1
+// Generated 22-mar-2013 11:18:27 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +29,7 @@ public class SecurityUser implements java.io.Serializable {
 	private String password;
 	private String phone;
 	private char status;
+	private Set<Budget> budgets = new HashSet<Budget>(0);
 	private Set<SecurityGroup> securityGroups = new HashSet<SecurityGroup>(0);
 
 	public SecurityUser() {
@@ -43,12 +45,14 @@ public class SecurityUser implements java.io.Serializable {
 	}
 
 	public SecurityUser(String name, String email, String password,
-			String phone, char status, Set<SecurityGroup> securityGroups) {
+			String phone, char status, Set<Budget> budgets,
+			Set<SecurityGroup> securityGroups) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
 		this.status = status;
+		this.budgets = budgets;
 		this.securityGroups = securityGroups;
 	}
 
@@ -106,6 +110,15 @@ public class SecurityUser implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "securityUser")
+	public Set<Budget> getBudgets() {
+		return this.budgets;
+	}
+
+	public void setBudgets(Set<Budget> budgets) {
+		this.budgets = budgets;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)

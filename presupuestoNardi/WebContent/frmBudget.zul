@@ -337,17 +337,17 @@
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Tipo de Corriente:">
+							value="Base de Máquina:">
 						</label>
 						<combobox hflex="1"
-							value="@load(vm.budget.basicDataByElectricityType eq null ? vm.seleccione : vm.budget.basicDataByElectricityType.name)"
-							model="@load(vm.listElectricityType)"
-							selectedItem="@bind(vm.budget.basicDataByElectricityType)"
+							value="@load(vm.budget.basicDataByMachineBase eq null ? vm.seleccione : vm.budget.basicDataByMachineBase.name)"
+							model="@load(vm.listMachineBase)"
+							selectedItem="@bind(vm.budget.basicDataByMachineBase)"
 							readonly="true" disabled="@load(vm.disabledAll)">
 							<template name="model"
-								var="ElectricityType">
+								var="machineBase">
 								<comboitem
-									label="@load(ElectricityType.name)">
+									label="@load(machineBase.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -367,15 +367,18 @@
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel" value="Frecuencia:"></label>
+						<label sclass="formLabel"
+							value="Tipo de Corriente:">
+						</label>
 						<combobox hflex="1"
-							value="@load(vm.budget.basicDataByFrequency eq null ? vm.seleccione : vm.budget.basicDataByFrequency.name)"
-							model="@load(vm.listFrequency)"
-							selectedItem="@bind(vm.budget.basicDataByFrequency)"
+							value="@load(vm.budget.basicDataByElectricityType eq null ? vm.seleccione : vm.budget.basicDataByElectricityType.name)"
+							model="@load(vm.listElectricityType)"
+							selectedItem="@bind(vm.budget.basicDataByElectricityType)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="Frequency">
+							<template name="model"
+								var="ElectricityType">
 								<comboitem
-									label="@load(Frequency.name)">
+									label="@load(ElectricityType.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -397,17 +400,15 @@
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel"
-							value="Arranque horas máquina:">
-						</label>
+						<label sclass="formLabel" value="Frecuencia:"></label>
 						<combobox hflex="1"
-							value="@load(vm.budget.basicDataByHourMachine eq null ? vm.seleccione : vm.budget.basicDataByHourMachine.name)"
-							model="@load(vm.listHourMachine)"
-							selectedItem="@bind(vm.budget.basicDataByHourMachine)"
+							value="@load(vm.budget.basicDataByFrequency eq null ? vm.seleccione : vm.budget.basicDataByFrequency.name)"
+							model="@load(vm.listFrequency)"
+							selectedItem="@bind(vm.budget.basicDataByFrequency)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="HourMachine">
+							<template name="model" var="Frequency">
 								<comboitem
-									label="@load(HourMachine.name)">
+									label="@load(Frequency.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -450,16 +451,16 @@
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Tipo de Maniobra:">
+							value="Arranque horas máquina:">
 						</label>
 						<combobox hflex="1"
-							value="@load(vm.budget.basicDataByManeuverType eq null ? vm.seleccione : vm.budget.basicDataByManeuverType.name)"
-							model="@load(vm.listManeuverType)"
-							selectedItem="@bind(vm.budget.basicDataByManeuverType)"
+							value="@load(vm.budget.basicDataByHourMachine eq null ? vm.seleccione : vm.budget.basicDataByHourMachine.name)"
+							model="@load(vm.listHourMachine)"
+							selectedItem="@bind(vm.budget.basicDataByHourMachine)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model" var="ManeuverType">
+							<template name="model" var="HourMachine">
 								<comboitem
-									label="@load(ManeuverType.name)">
+									label="@load(HourMachine.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -499,12 +500,19 @@
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Número de Pisos:">
+							value="Tipo de Maniobra:">
 						</label>
-						<spinner constraint="min 0"
-							value="@bind(vm.budget.stopNumber)"
-							disabled="@load(vm.disabledAll)" hflex="1">
-						</spinner>
+						<combobox hflex="1"
+							value="@load(vm.budget.basicDataByManeuverType eq null ? vm.seleccione : vm.budget.basicDataByManeuverType.name)"
+							model="@load(vm.listManeuverType)"
+							selectedItem="@bind(vm.budget.basicDataByManeuverType)"
+							readonly="true" disabled="@load(vm.disabledAll)">
+							<template name="model" var="ManeuverType">
+								<comboitem
+									label="@load(ManeuverType.name)">
+								</comboitem>
+							</template>
+						</combobox>
 						<space></space>
 						<cell colspan="2">
 							<grid hflex="1">
@@ -538,6 +546,15 @@
 								</rows>
 							</grid>
 						</cell>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Número de Pisos:">
+						</label>
+						<spinner constraint="min 0"
+							value="@bind(vm.budget.stopNumber)"
+							disabled="@load(vm.disabledAll)" hflex="1">
+						</spinner>
 					</row>
 				</rows>
 			</grid>
@@ -1265,7 +1282,7 @@
 							<textbox hflex="1" rows="4" vflex="1"
 								value="@bind(vm.budget.comment)"
 								disabled="@load(vm.disabledAll)" multiline="true"
-								maxlength="300">
+								maxlength="700">
 							</textbox>
 						</cell>
 					</row>

@@ -177,7 +177,6 @@ CREATE TABLE `budget` (
   KEY `basicdata_budget_fk14` (`hallButtonType`),
   KEY `basicdata_budget_fk11` (`hallButton`),
   KEY `business_partner_budget_fk` (`id_business_partner`),
-  CONSTRAINT `business_partner_budget_fk` FOREIGN KEY (`id_business_partner`) REFERENCES `business_partner` (`id_business_partner`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk` FOREIGN KEY (`speed`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk1` FOREIGN KEY (`buildingType`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk10` FOREIGN KEY (`hourMachine`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -207,8 +206,9 @@ CREATE TABLE `budget` (
   CONSTRAINT `basicdata_budget_fk6` FOREIGN KEY (`access`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk7` FOREIGN KEY (`electricityType`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `basicdata_budget_fk8` FOREIGN KEY (`frequency`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `basicdata_budget_fk9` FOREIGN KEY (`voltageLighting`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `basicdata_budget_fk9` FOREIGN KEY (`voltageLighting`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `business_partner_budget_fk` FOREIGN KEY (`id_business_partner`) REFERENCES `business_partner` (`id_business_partner`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,6 @@ CREATE TABLE `budget` (
 
 LOCK TABLES `budget` WRITE;
 /*!40000 ALTER TABLE `budget` DISABLE KEYS */;
-INSERT INTO `budget` VALUES (1,1,1,'2013-03-21 17:12:30','V','18654277-7','Leyner Jesus Castillo Guedez','HOTEL PLAZA CARIBE MAYOR','Administrador','URBANIZACION PLAZA CARIBE, CONDOMINIO MARTINICA, CASA 26','BARQUISIMETO, ESTADO LARA','0251-2555665','LEYNERCASTILLO@ASCENSORESNARDI.COM','LEYNER CASTILLO',1,1,1,3,8,2,19,2,'1:1',23,30,33,39,43,45,47,55,15,150,6,6,6,6,148,1,'FORMICA DE COLOR ROJO, POR CUENTA DEL CLIENTE',162,69,72,125,75,81,16,83,88,90,' ',101,98,102,106,'PARED',111,119,1,0,0,0,0,0,0,0,NULL,' ',1,'PB,1,2,3,4,5,6,7,8',9,0,'',0,0,'',0,140,'1,2,3,4,5,6,7,8',1,'PB',1,8,0,0,166,144,'A');
 /*!40000 ALTER TABLE `budget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +237,7 @@ CREATE TABLE `business_partner` (
   PRIMARY KEY (`id_business_partner`),
   KEY `basic_data_business_partner_fk` (`rif_type`),
   CONSTRAINT `basic_data_business_partner_fk` FOREIGN KEY (`rif_type`) REFERENCES `basic_data` (`idBasic`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +246,6 @@ CREATE TABLE `business_partner` (
 
 LOCK TABLES `business_partner` WRITE;
 /*!40000 ALTER TABLE `business_partner` DISABLE KEYS */;
-INSERT INTO `business_partner` VALUES (1,'18654277-7',172,'Leyner Jesus Castillo Guedez',NULL,'A');
 /*!40000 ALTER TABLE `business_partner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,8 +261,8 @@ CREATE TABLE `group_user` (
   `id_security_group` int(11) NOT NULL,
   PRIMARY KEY (`id_security_user`,`id_security_group`),
   KEY `security_group_group_user_fk` (`id_security_group`),
-  CONSTRAINT `security_user_group_user_fk` FOREIGN KEY (`id_security_user`) REFERENCES `security_user` (`id_security_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `security_group_group_user_fk` FOREIGN KEY (`id_security_group`) REFERENCES `security_group` (`id_security_group`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `security_group_group_user_fk` FOREIGN KEY (`id_security_group`) REFERENCES `security_group` (`id_security_group`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `security_user_group_user_fk` FOREIGN KEY (`id_security_user`) REFERENCES `security_user` (`id_security_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -392,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-21 17:21:55
+-- Dump completed on 2013-03-22  8:54:19
