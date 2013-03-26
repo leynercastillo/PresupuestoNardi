@@ -572,14 +572,14 @@
 				<rows>
 					<row>
 						<label sclass="formLabel"
-							value="Recorrido(M):">
+							value="Recorrido(m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.tour)" disabled="@load(vm.disabledAll)"
 							step="0.5" hflex="1">
 						</doublespinner>
 						<label sclass="formLabel"
-							value="Sobre Recorrido (mm):">
+							value="Sobre Recorrido (m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.onTour)" disabled="@load(vm.disabledAll)"
@@ -589,13 +589,13 @@
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Ancho de Hueco (mm):">
+							value="Ancho de Hueco (m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.widthHole)"
 							disabled="@load(vm.disabledAll)" step="0.5" hflex="1">
 						</doublespinner>
-						<label sclass="formLabel" value="Fosa (mm):"></label>
+						<label sclass="formLabel" value="Fosa (m):"></label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.fossa)" disabled="@load(vm.disabledAll)"
 							step="0.5" hflex="1">
@@ -604,7 +604,7 @@
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Fondo de Hueco (mm):">
+							value="Fondo de Hueco (m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.bottomHole)"

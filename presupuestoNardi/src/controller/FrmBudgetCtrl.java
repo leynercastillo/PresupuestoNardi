@@ -539,7 +539,6 @@ public class FrmBudgetCtrl {
 	 * 
 	 * Inicializa cada una de la variables insertadas en zul.
 	 */
-
 	@Init
 	public void init() {
 		restartForm();
@@ -773,11 +772,6 @@ public class FrmBudgetCtrl {
 					"Este tipo no puede ser ubicado en el Marco.");
 		} else {
 			DaoBudget daoBudget = new DaoBudget();
-			if (daoBudget.listAll().isEmpty())
-				budget.setNumber(1);
-			else
-				budget.setNumber(daoBudget.listAll()
-						.get(daoBudget.listAll().size() - 1).getNumber() + 1);
 			if (!daoBudget.save(budget)) {
 				Clients.showNotification("No se pudo guardar.", "error", null,
 						"bottom_center", 2000);
@@ -841,13 +835,17 @@ public class FrmBudgetCtrl {
 			@BindingParam("val") String value) {
 		DaoBudget daoBudget = new DaoBudget();
 		Integer budgetId = Integer.parseInt(value);
-		List<Budget> listBudget2 = daoBudget.findByInteger(field, budgetId);
-		budget = listBudget2.get(0);
-		disableAfterSearch = new Boolean(true);
-		disabledNumber = new Boolean(true);
-		disableSeller = new Boolean(true);
-		if (budget.getBasicDataByCabinDesign() != null)
-			cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+		Budget auxBudget = daoBudget.findByInteger(field, budgetId);
+		if (auxBudget != null) {
+			budget = auxBudget;
+			disableAfterSearch = new Boolean(true);
+			disabledNumber = new Boolean(true);
+			disableSeller = new Boolean(true);
+			if (budget.getBasicDataByCabinDesign() != null)
+				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+		} else
+			Clients.showNotification("Ningun registro coincide", "info", null,
+					"top_center", 2000);
 	}
 
 	@NotifyChange("*")

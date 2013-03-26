@@ -13,7 +13,6 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 
 	public List<BasicData> listByField(String table, String field) {
 		currentSession().beginTransaction();
-		currentSession().flush();
 		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
@@ -25,7 +24,6 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 
 	public BasicData findByName(String table, String field, String name) {
 		currentSession().beginTransaction();
-		currentSession().flush();
 		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("editable", false));
@@ -38,7 +36,6 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 
 	public List<BasicData> listByParent(BasicData parent) {
 		currentSession().beginTransaction();
-		currentSession().flush();
 		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("basicData", parent));
 		criteria.addOrder(Order.asc("priority"));

@@ -1,7 +1,6 @@
 package hibernateConnections;
 
 import java.lang.reflect.ParameterizedType;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,7 +33,20 @@ public class GenericDao<Model> {
 	public Boolean save(Model model) {
 		try {
 			currentSession().beginTransaction();
-			currentSession().saveOrUpdate(model);
+			currentSession().save(model);
+			currentSession().getTransaction().commit();
+			return true;
+		} catch (HibernateException e) {
+			currentSession().getTransaction().rollback();
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public Boolean update(Model model) {
+		try {
+			currentSession().beginTransaction();
+			currentSession().update(model);
 			currentSession().getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {

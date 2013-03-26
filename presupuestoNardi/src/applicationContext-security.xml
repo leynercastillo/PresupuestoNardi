@@ -25,9 +25,7 @@
 		<form-login login-page="/security/login.zul"
 			default-target-url="/security/index.jsp" authentication-failure-url="/security/login.zul?login_error=1" />
 		<logout logout-success-url="/security/login.zul" />
-		<session-management>
-			<concurrency-control max-sessions="1" />
-		</session-management>
+		<!-- <session-management> <concurrency-control max-sessions="1" /> </session-management> -->
 	</http>
 	<authentication-manager>
 		<authentication-provider user-service-ref="userDetailsService">
