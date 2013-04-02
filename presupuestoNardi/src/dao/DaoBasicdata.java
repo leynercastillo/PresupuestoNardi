@@ -19,7 +19,8 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 		criteria.add(Restrictions.eq("field", field).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
-		return criteria.list();
+		List<BasicData> list = criteria.list();
+		return list;
 	}
 
 	public BasicData findByName(String table, String field, String name) {
@@ -31,7 +32,8 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 		criteria.add(Restrictions.eq("name", name).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
-		return (BasicData) criteria.uniqueResult();
+		Object obj = criteria.uniqueResult();
+		return obj == null ? null : (BasicData) obj;
 	}
 
 	public List<BasicData> listByParent(BasicData parent) {
@@ -39,6 +41,7 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 		Criteria criteria = currentSession().createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("basicData", parent));
 		criteria.addOrder(Order.asc("priority"));
-		return criteria.list();
+		List<BasicData> list = criteria.list();
+		return list;
 	}
 }

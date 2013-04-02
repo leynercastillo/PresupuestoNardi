@@ -22,50 +22,43 @@ public class GenericDao<Model> {
 		return domainClass;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Model load(Long id) {
-		currentSession().beginTransaction();
-		Model returnvalue = (Model) currentSession().load(domainClass, id);
-		currentSession().getTransaction().commit();
-		return returnvalue;
-	}
-
 	public Boolean save(Model model) {
+		Session session = currentSession();
 		try {
-			currentSession().beginTransaction();
-			currentSession().save(model);
-			currentSession().getTransaction().commit();
+			session.beginTransaction();
+			session.save(model);
+			session.getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {
-			currentSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	public Boolean update(Model model) {
+		Session session = currentSession();
 		try {
-			currentSession().beginTransaction();
-			currentSession().update(model);
-			currentSession().getTransaction().commit();
+			session.beginTransaction();
+			session.update(model);
+			session.getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {
-			currentSession().getTransaction().rollback();
+			session.getTransaction().rollback();
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	public Boolean delete(Model model) {
-		Transaction transaction = null;
+		Session session = currentSession();
 		try {
-			transaction = currentSession().beginTransaction();
-			currentSession().delete(model);
-			transaction.commit();
+			session.beginTransaction();
+			session.delete(model);
+			session.getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {
-			if (transaction != null)
-				transaction.rollback();
+			session.getTransaction().rollback();
 			e.printStackTrace();
 			return false;
 		}

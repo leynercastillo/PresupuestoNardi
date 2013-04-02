@@ -16,7 +16,8 @@ public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
 		Criteria criteria = currentSession().createCriteria(BusinessPartner.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.addOrder(Order.asc(field));
-		return criteria.list();
+		List<BusinessPartner> list = criteria.list();
+		return list;
 	}
 
 	public BusinessPartner findByRif(String rif){

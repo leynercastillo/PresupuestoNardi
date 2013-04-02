@@ -3,7 +3,6 @@ package general;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.validator.AbstractValidator;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.impl.InputElement;
 
@@ -42,7 +41,8 @@ public class ValidateZK {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
 				String string = inputElement.getText();
-				if (string.trim().isEmpty() || !string.matches(".+@.+\\.[a-zA-Z]+")) {
+				if (string.trim().isEmpty()
+						|| !string.matches(".+@.+\\.[a-zA-Z]+")) {
 					throw new WrongValueException(inputElement,
 							"Ingrese una direccion de correo valida.");
 				}
@@ -51,8 +51,8 @@ public class ValidateZK {
 	}
 
 	/**
-	 * Metodo que valida que un combobox small no tenga seleccionado la
-	 * opcion por defecto del sistema '--'.
+	 * Metodo que valida que un combobox small no tenga seleccionado la opcion
+	 * por defecto del sistema '--'.
 	 * 
 	 * Solo aplica para componentes ZK
 	 * 
@@ -72,11 +72,11 @@ public class ValidateZK {
 			}
 		};
 	}
-	
+
 	/**
-	 * Metodo que valida que un combobox no tenga seleccionado la opción
-	 * por defecto del sistema '--Seleccione--'.
-	 *  
+	 * Metodo que valida que un combobox no tenga seleccionado la opción por
+	 * defecto del sistema '--Seleccione--'.
+	 * 
 	 * Solo aplica para componentes ZK.
 	 * 
 	 * @return {@link Validator}

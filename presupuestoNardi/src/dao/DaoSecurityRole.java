@@ -13,7 +13,8 @@ public class DaoSecurityRole extends GenericDao<SecurityRole> {
 	public List<SecurityRole> listRoles() {
 		currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(SecurityRole.class);
-		return criteria.list();
+		List<SecurityRole> list = criteria.list();
+		return list;
 	}
 
 	public SecurityRole findRoleById(Integer id) {
@@ -21,6 +22,6 @@ public class DaoSecurityRole extends GenericDao<SecurityRole> {
 		Criteria criteria = currentSession().createCriteria(SecurityRole.class);
 		criteria.add(Restrictions.eq("idSecurityRole", id));
 		Object bp = criteria.uniqueResult();
-		return bp != null ? (SecurityRole)bp : null;
+		return bp != null ? (SecurityRole) bp : null;
 	}
 }

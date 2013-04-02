@@ -1,5 +1,8 @@
 package controller;
 
+import general.ShaEncoding;
+
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,11 +66,26 @@ public class FrmSecurityUserMaster {
 		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
 		edit(user);
 		/*
+		 * Al modificar un objeto persistente en la base de datos, este primero
+		 * debe almacenarse en una variable local, para que hibernate no detecte
+		 * dos sesiones abiertas.
+		 */
+		SecurityUser securityUser = user.getUser();
+		ShaEncoding encoding = new ShaEncoding(securityUser.getPassword());
+		try {
+			securityUser.setPassword(encoding.encodingPassword());
+		} catch (NoSuchAlgorithmException e) {
+			Clients.showNotification("No se pudo encriptar la contraseña",
+					"error", null, "end_center", 2000);
+			e.printStackTrace();
+			return;
+		}
+		/*
 		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
 		 * todo el objeto
 		 */
 		BindUtils.postNotifyChange(null, null, user, "editUser");
-		if (!daoSecurityUser.save(user.getUser())) {
+		if (!daoSecurityUser.update(securityUser)) {
 			user.setModified(false);
 			return;
 		}

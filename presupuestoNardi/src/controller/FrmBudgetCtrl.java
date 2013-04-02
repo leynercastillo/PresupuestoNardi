@@ -44,6 +44,9 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.ListModel;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
@@ -98,8 +101,8 @@ public class FrmBudgetCtrl {
 	private List<BasicData> listHallButton;
 	private List<BasicData> listHallButtonType;
 	private List<BasicData> listRifType;
-	private List<Budget> listBudget;
-	private List<BusinessPartner> listBusinessPartner;
+	private ListModel<Budget> listBudget;
+	private ListModel<BusinessPartner> listBusinessPartner;
 	private BasicData cabinModel;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
@@ -125,11 +128,12 @@ public class FrmBudgetCtrl {
 		this.listMachineBase = listMachineBase;
 	}
 
-	public List<BusinessPartner> getListBusinessPartner() {
+	public ListModel<BusinessPartner> getListBusinessPartner() {
 		return listBusinessPartner;
 	}
 
-	public void setListBusinessPartner(List<BusinessPartner> listBusinessPartner) {
+	public void setListBusinessPartner(
+			ListModel<BusinessPartner> listBusinessPartner) {
 		this.listBusinessPartner = listBusinessPartner;
 	}
 
@@ -229,11 +233,11 @@ public class FrmBudgetCtrl {
 		this.disableAfterSearch = disableAfterSearch;
 	}
 
-	public List<Budget> getListBudget() {
+	public ListModel<Budget> getListBudget() {
 		return listBudget;
 	}
 
-	public void setListBudget(List<Budget> listBudget) {
+	public void setListBudget(ListModel<Budget> listBudget) {
 		this.listBudget = listBudget;
 	}
 
@@ -605,14 +609,14 @@ public class FrmBudgetCtrl {
 		budget.setSistelWarrowPb(new Boolean(false));
 		budget.setRifType('-');
 		budget.setRifPartner(new String());
-		listBudget = new ArrayList<Budget>();
+		listBudget = new ListModelList<Budget>();
 		listDesign = new ArrayList<BasicData>();
 		listFan = new ArrayList<BasicData>();
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		listRoofType = new ArrayList<BasicData>();
-		listBusinessPartner = new DaoBusinessPartner()
-				.listActiveOrderByField("rif");
+		listBusinessPartner = new SimpleListModel<BusinessPartner>(
+				new DaoBusinessPartner().listActiveOrderByField("rif"));
 		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
 		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
@@ -801,7 +805,7 @@ public class FrmBudgetCtrl {
 	@Command
 	public void loadBudgetByField(@BindingParam("field") String field) {
 		DaoBudget daoBudget = new DaoBudget();
-		listBudget = daoBudget.listOrderBudgetbyField(field);
+		listBudget = new SimpleListModel<Budget>(daoBudget.listOrderBudgetbyField(field));
 	}
 
 	@NotifyChange("*")

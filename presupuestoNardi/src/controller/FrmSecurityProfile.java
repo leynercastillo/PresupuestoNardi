@@ -11,8 +11,8 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 
 import dao.DaoSecurityUser;
@@ -32,10 +32,11 @@ public class FrmSecurityProfile {
 
 	@Init
 	public void init() {
+		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
 		User auxUser = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		user = new DaoSecurityUser().findByString("name", auxUser
-				.getUsername());
+		user = new SecurityUser();
+		user = daoSecurityUser.findByString("name", auxUser.getUsername());
 	}
 
 	@Command
@@ -52,17 +53,17 @@ public class FrmSecurityProfile {
 	@Command
 	public void save() {
 		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
-		if (!daoSecurityUser.save(user)) {
-			Messagebox.show("No se puedo guardar usuario", "Error",
-					Messagebox.OK, Messagebox.ERROR);
+		if (!daoSecurityUser.update(user)) {
+			Clients.showNotification("No se pudo guardar el usuario", "error",
+					null, "end_center", 2000);
 			return;
 		} else
-			Messagebox.show("Datos guardados", "Information", Messagebox.OK,
-					Messagebox.INFORMATION);
+			Clients.showNotification("Datos guardados.", "info", null,
+					"end_center", 2000);
 	}
 
 	@Command
-	public void frmChangePassword(){
+	public void frmChangePassword() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user", user);
 		Window win = (Window) Executions.createComponents(

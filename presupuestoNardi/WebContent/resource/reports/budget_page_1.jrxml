@@ -2,103 +2,103 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_page_1" language="groovy" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="98c940fb-7fc9-4f80-b668-b909d476ab5c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="114"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="number" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	doorOfNumber AS 'Numero de puertas:',
+	door_of_number AS "Numero de puertas:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			doorType = idBasic) AS 'Tipo de puerta:',
+			door_type = id_basic) AS "Tipo de puerta:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			doorSystem = idBasic) AS 'Sistema de puerta:',
+			door_system = id_basic) AS "Sistema de puerta:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			doorframeType = idBasic) AS 'Tipo de marco:',
-	doorframeTypeComment AS 'Comentario Marco:',
+			doorframe_type = id_basic) AS "Tipo de marco:",
+	doorframe_type_comment AS "Comentario Marco:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			freeAdmission = idBasic) AS 'Entrada libre:',
+			free_admission = id_basic) AS "Entrada libre:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			height = idBasic) AS 'Altura:',
-	CASE WHEN doorFrameStainless THEN doorFrameStainlessDescrip ELSE '' END AS 'Acero Inox:',
+			height = id_basic) AS "Altura:",
+	CASE WHEN door_frame_stainless THEN door_frame_stainless_descrip ELSE '' END AS "Acero Inox:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			doorFrameHammered = idBasic) AS 'Martillado:',
-	doorFrameHammeredDesc AS 'Desc Martillado:',
+			door_frame_hammered = id_basic) AS "Martillado:",
+	door_frame_hammered_desc AS "Desc Martillado:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			controlType = idBasic) AS 'Tipo de control:',
+			control_type = id_basic) AS "Tipo de control:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			boothButton = idBasic) AS 'Botones de cabina:',
-	hallButtonPlace AS 'Lugar Botonera:',
-	CASE WHEN sistelWDisplayPB THEN 'SI' ELSE 'NO' END AS 'Sistel con Display PB:',
-	sistelWDisplayFloor AS 'Sistel con Display Piso:',
-	CASE WHEN sistelWArrowPB THEN 'SI' ELSE 'NO' END AS 'Sistel con Flecha PB:',
-	sistelWArrowFloor AS 'Sistel con Flecha Piso:',
+			booth_button = id_basic) AS "Botones de cabina:",
+	hall_button_place AS "Lugar Botonera:",
+	CASE WHEN sistel_wdisplay_pb THEN 'SI' ELSE 'NO' END AS "Sistel con Display PB:",
+	sistel_wdisplay_floor AS "Sistel con Display Piso:",
+	CASE WHEN sistel_warrow_pb THEN 'SI' ELSE 'NO' END AS "Sistel con Flecha PB:",
+	sistel_warrow_floor AS "Sistel con Flecha Piso:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			hallButtonType = idBasic) AS 'Tipo de botonera de pasillo:',
+			hall_button_type = id_basic) AS "Tipo de botonera de pasillo:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			hallButton = idBasic) AS 'Boton de pasillo:',
+			hall_button = id_basic) AS "Boton de pasillo:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			boothDisplay = idBasic) AS 'Display Cabina:',
+			booth_display = id_basic) AS "Display Cabina:",
 	(SELECT
 			name
 		FROM
 			basic_data
 		WHERE
-			floorDisplay = idBasic) AS 'Display Piso:',
-	displayPlaceFloor AS 'Lugar display piso:',
-	CASE WHEN lightCurtain = TRUE THEN 'Si' ELSE 'NO' END AS 'Cortina luminosa:',
-	CASE WHEN loadLimiter = TRUE THEN 'Si' ELSE 'NO' END AS 'Limitador de carga:',
-	CASE WHEN speechSynthesizer = TRUE THEN 'Si' ELSE 'NO' END AS 'Sintetizador de voz:',
-	CASE WHEN gomSystem = TRUE THEN 'Si' ELSE 'NO' END AS 'Sistema de GOM en Piso:',
-	CASE WHEN intercom = TRUE THEN 'Si' ELSE 'NO' END AS 'Intercomunicador:',
-	CASE WHEN phone = TRUE THEN 'Si' ELSE 'NO' END AS 'Teléfono:',
-	CASE WHEN accessSytem = TRUE THEN 'Si' ELSE 'NO' END AS 'Sistema de acceso:',
-	CASE WHEN firefighterKeychain = TRUE THEN 'Si' ELSE 'NO' END AS 'Llave de bombero:',
-	comment AS 'Comentarios:'
+			floor_display = id_basic) AS "Display Piso:",
+	display_place_floor AS "Lugar display piso:",
+	CASE WHEN light_curtain = TRUE THEN 'Si' ELSE 'NO' END AS "Cortina luminosa:",
+	CASE WHEN load_limiter = TRUE THEN 'Si' ELSE 'NO' END AS "Limitador de carga:",
+	CASE WHEN speech_synthesizer = TRUE THEN 'Si' ELSE 'NO' END AS "Sintetizador de voz:",
+	CASE WHEN gom_system = TRUE THEN 'Si' ELSE 'NO' END AS "Sistema de GOM en Piso:",
+	CASE WHEN intercom = TRUE THEN 'Si' ELSE 'NO' END AS "Intercomunicador:",
+	CASE WHEN phone = TRUE THEN 'Si' ELSE 'NO' END AS "Teléfono:",
+	CASE WHEN access_sytem = TRUE THEN 'Si' ELSE 'NO' END AS "Sistema de acceso:",
+	CASE WHEN firefighter_keychain = TRUE THEN 'Si' ELSE 'NO' END AS "Llave de bombero:",
+	comment AS "Comentarios:"
 FROM
 	budget
 WHERE

@@ -11,8 +11,8 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.validator.AbstractValidator;
-import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
@@ -59,7 +59,7 @@ public class FrmChangePassword {
 	}
 
 	@Init
-	public void init(@ExecutionArgParam("user") SecurityUser user){
+	public void init(@ExecutionArgParam("user") SecurityUser user) {
 		this.user = user;
 		newPassword = new String();
 		confirmPassword = new String();
@@ -80,7 +80,7 @@ public class FrmChangePassword {
 					// password don't encoding
 					e.printStackTrace();
 				}
-				if (user.getPassword().compareTo(string) != 0){
+				if (user.getPassword().compareTo(string) != 0) {
 					throw new WrongValueException(inputElement,
 							"Contraseña invalida.");
 				}
@@ -94,8 +94,8 @@ public class FrmChangePassword {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext()
 						.getValidatorArg("component");
-				String string = inputElement.getText();				
-				if (confirmPassword.compareTo(string) != 0){
+				String string = inputElement.getText();
+				if (confirmPassword.compareTo(string) != 0) {
 					throw new WrongValueException(inputElement,
 							"Las contraseñas no coinciden.");
 				}
@@ -104,24 +104,24 @@ public class FrmChangePassword {
 	}
 
 	@Command
-	public void save(@BindingParam("component") Window passWindow){
+	public void save(@BindingParam("component") Window passWindow) {
 		ShaEncoding encoding = new ShaEncoding(newPassword);
 		try {
 			user.setPassword(encoding.encodingPassword());
 		} catch (NoSuchAlgorithmException e) {
-			Messagebox.show("No se pudo encriptar la contraseña", "Error",
-					Messagebox.OK, Messagebox.ERROR);
+			Clients.showNotification("No se pudo encriptar la contraseña",
+					"error", null, "end_center", 2000);
 			e.printStackTrace();
 			return;
 		}
 		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
-		if (!daoSecurityUser.save(user)) {
-			Messagebox.show("No se puedo guardar usuario", "Error",
-					Messagebox.OK, Messagebox.ERROR);
+		if (!daoSecurityUser.update(user)) {
+			Clients.showNotification("No se pudo guardar usuario", "error",
+					null, "middle_center", 2000);
 			return;
 		} else
-			Messagebox.show("Datos guardados", "Information", Messagebox.OK,
-					Messagebox.INFORMATION);
+			Clients.showNotification("Usuario guardado", "info", null,
+					"middle_center", 2000);
 		passWindow.detach();
 	}
 }

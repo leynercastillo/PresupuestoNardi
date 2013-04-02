@@ -10,7 +10,7 @@ import hibernateConnections.GenericDao;
 
 public class DaoSecurityUser extends GenericDao<SecurityUser> {
 
-	public SecurityUser findByString(String field, String value) {		
+	public SecurityUser findByString(String field, String value) {
 		currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(SecurityUser.class);
 		criteria.add(Restrictions.eq(field, value).ignoreCase());
@@ -21,6 +21,7 @@ public class DaoSecurityUser extends GenericDao<SecurityUser> {
 	public List<SecurityUser> listAll() {
 		currentSession().beginTransaction();
 		Criteria criteria = currentSession().createCriteria(SecurityUser.class);
-		return criteria.list();
+		List<SecurityUser> list = criteria.list();
+		return list;
 	}
 }

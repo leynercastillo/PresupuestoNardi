@@ -10,8 +10,8 @@
 	<parameter name="IMAGES_DIR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-	number AS 'Numero',
-	(SELECT phone FROM `security_user` WHERE name = seller) AS 'Teléfono vendedor'
+	number AS "Numero",
+	(SELECT phone FROM security_user WHERE name = seller) AS "Teléfono vendedor"
 FROM
 	budget
 WHERE

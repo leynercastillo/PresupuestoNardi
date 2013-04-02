@@ -344,8 +344,7 @@
 							model="@load(vm.listMachineBase)"
 							selectedItem="@bind(vm.budget.basicDataByMachineBase)"
 							readonly="true" disabled="@load(vm.disabledAll)">
-							<template name="model"
-								var="machineBase">
+							<template name="model" var="machineBase">
 								<comboitem
 									label="@load(machineBase.name)">
 								</comboitem>
@@ -579,36 +578,36 @@
 							step="0.5" hflex="1">
 						</doublespinner>
 						<label sclass="formLabel"
-							value="Sobre Recorrido (m):">
-						</label>
-						<doublespinner constraint="min 0"
-							value="@bind(vm.budget.onTour)" disabled="@load(vm.disabledAll)"
-							step="0.5" hflex="1">
-						</doublespinner>
-						<space></space>
-					</row>
-					<row>
-						<label sclass="formLabel"
 							value="Ancho de Hueco (m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.widthHole)"
 							disabled="@load(vm.disabledAll)" step="0.5" hflex="1">
 						</doublespinner>
-						<label sclass="formLabel" value="Fosa (m):"></label>
-						<doublespinner constraint="min 0"
-							value="@bind(vm.budget.fossa)" disabled="@load(vm.disabledAll)"
-							step="0.5" hflex="1">
-						</doublespinner>
 						<space></space>
 					</row>
 					<row>
+						<label sclass="formLabel"
+							value="Sobre Recorrido (m):">
+						</label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.budget.onTour)" disabled="@load(vm.disabledAll)"
+							step="0.5" hflex="1">
+						</doublespinner>
 						<label sclass="formLabel"
 							value="Fondo de Hueco (m):">
 						</label>
 						<doublespinner constraint="min 0"
 							value="@bind(vm.budget.bottomHole)"
 							disabled="@load(vm.disabledAll)" step="0.5" hflex="1">
+						</doublespinner>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Fosa (m):"></label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.budget.fossa)" disabled="@load(vm.disabledAll)"
+							step="0.5" hflex="1">
 						</doublespinner>
 						<space></space>
 						<space></space>
@@ -977,9 +976,10 @@
 							readonly="true" disabled="@load(vm.disabledAll)"
 							onChange="@command('disabledSistelsHall')">
 							<template name="model"
-								var="HallButtonType">
+								var="hallButtonType">
 								<comboitem
-									label="@load(HallButtonType.name)">
+									label="@load(hallButtonType.name)"
+									image="@load(hallButtonType.imageurl)">
 								</comboitem>
 							</template>
 						</combobox>
