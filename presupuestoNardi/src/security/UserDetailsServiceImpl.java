@@ -14,7 +14,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-			UserDetails userDetails = null;
 			SecurityUser user = new DaoSecurityUser().findByString("email", username);
 			if (user == null)
 				throw new UsernameNotFoundException("Usuario incorrecto.");

@@ -29,42 +29,4 @@ public class StoreHibernateUtil /*implements Filter*/ {
 			return SESSION_FACTORY.getCurrentSession();
 		}
 	}
-
-	/*
-	 * El metodo destroy se manda a llamar automaticamente al terminar el
-	 * request, de esta manera aseguramos no dejar la session abierta. Nota:
-	 * Esto porque extiende de la interfaz Filter
-	 *//*
-	@Override
-	public void destroy() {
-		try {
-			System.out.println("CERRADA");
-			SESSION_FACTORY.close();
-		} catch (HibernateException ex) {
-			throw new RuntimeException(ex);
-		}
-	}*/
-
-	/*
-	 * No se utiliza el metodo de la interfaz Filter Leer
-	 * http://www.javamexico.org
-	 * /blogs/javadicto/el_patron_de_diseno_quot_open_session_view_quot
-	 *//*
-	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1,
-			FilterChain arg2) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
-	}
-*/
-	/*
-	 * No se utiliza el metodo de la interfaz Filter Leer
-	 * http://www.javamexico.org
-	 * /blogs/javadicto/el_patron_de_diseno_quot_open_session_view_quot
-	 *//*
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
-	}*/
 }

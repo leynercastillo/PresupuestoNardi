@@ -3,7 +3,6 @@ package hibernateConnections;
 import java.lang.reflect.ParameterizedType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class GenericDao<Model> {
 
@@ -40,7 +39,7 @@ public class GenericDao<Model> {
 		Session session = currentSession();
 		try {
 			session.beginTransaction();
-			session.update(model);
+			session.merge(model);
 			session.getTransaction().commit();
 			return true;
 		} catch (HibernateException e) {

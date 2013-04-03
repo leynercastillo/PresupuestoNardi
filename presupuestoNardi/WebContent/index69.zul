@@ -1,0 +1,14 @@
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('demo.Datas')">
+		<combobox id="combo" autodrop="true" mold="rounded"
+			buttonVisible="false" model="@load(vm.dictModel)"
+			onFocus="@command('load')">
+			<template name=""></template>
+		</combobox>
+		<!-- <zscript><![CDATA[
+			ListModel dictModel = new SimpleListModel(demo.Datas.getDirectory());
+			combo.setModel(dictModel);
+			]]></zscript> -->
+	</window>
+</zk>
