@@ -21,6 +21,10 @@ public class GenericDao<Model> {
 		return domainClass;
 	}
 
+	/**
+	 * @param model Object to save in database
+	 * @return true if saved / false if not saved 
+	 */
 	public Boolean save(Model model) {
 		Session session = currentSession();
 		try {
@@ -35,6 +39,10 @@ public class GenericDao<Model> {
 		}
 	}
 
+	/**
+	 * @param model Object to update in database
+	 * @return true if updated / false if not updated 
+	 */
 	public Boolean update(Model model) {
 		Session session = currentSession();
 		try {
@@ -49,6 +57,10 @@ public class GenericDao<Model> {
 		}
 	}
 
+	/**
+	 * @param model Object to save in database
+	 * @return true if deleted / false if not deleted 
+	 */
 	public Boolean delete(Model model) {
 		Session session = currentSession();
 		try {

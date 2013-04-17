@@ -19,7 +19,7 @@ import org.zkoss.zul.Window;
 
 import database.Budget;
 
-public class FrmWindowBudgetsCtrl {
+public class FrmWindowBudgets {
 	
 	@Wire("#windowBudgets")
 	private Window windowBudgets;

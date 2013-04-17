@@ -10,7 +10,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 
-public class FrmReportCtrl {
+public class FrmReport {
 
 	private String report;
 	private String reportTitle;

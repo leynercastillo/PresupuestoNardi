@@ -1,11 +1,12 @@
 <zk>
-	<window mode="modal" border="normal" width="70%"
+	<window mode="modal" border="normal" width="90%"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.FrmWindowBudgetsCtrl')"
-		id="windowBudgets" closable="true" title="Presupuestos">
+		viewModel="@id('vm') @init('controller.FrmWindowBudgets')"
+		id="windowBudgets" closable="true" title="Solicitudes de presupuestos">
 		<listbox model="@load(vm.listBudget)"
 			selectedItem="@bind(vm.selectedBudget)"
-			onSelect="@command('sendBudget', Budget=vm.selectedBudget)">
+			onSelect="@command('sendBudget', Budget=vm.selectedBudget)"
+			mold="paging" pageSize="10" pagingPosition="both">
 			<listhead>
 				<listheader label="Nro Pedido" width="10%"></listheader>
 				<listheader label="Cliente" width="30%"></listheader>

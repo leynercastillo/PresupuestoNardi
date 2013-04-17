@@ -32,7 +32,7 @@ public class FrmBusinessPartner {
 	@Wire("#win")
 	private Window win;
 
-	private String minCombo = new String("--");
+	private String minCombo = new String("-");
 	private BusinessPartner businessPartner;
 	private List<BasicData> listRifType;
 
@@ -89,7 +89,7 @@ public class FrmBusinessPartner {
 	@Init
 	public void init(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-		Clients.showNotification("Añade el cliente si no existe en el sistema.", "info", win, "middle_right", 3500);
+		Clients.showNotification("Agregar el cliente si no existe en el sistema.", "info", win, "middle_right", 3500);
 		restartForm();
 	}
 

@@ -1,6 +1,6 @@
 package database;
 
-// Generated 01-abr-2013 15:31:52 by Hibernate Tools 3.4.0.CR1
+// Generated 08-abr-2013 16:54:55 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +23,10 @@ import javax.persistence.Table;
 @Table(name = "business_partner", schema = "public")
 public class BusinessPartner implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8226898077750640075L;
 	private int idBusinessPartner;
 	private BasicData basicData;
 	private String rif;
@@ -30,6 +34,7 @@ public class BusinessPartner implements java.io.Serializable {
 	private String address;
 	private char status;
 	private Set<Budget> budgets = new HashSet<Budget>(0);
+	private Set<Quotation> quotations = new HashSet<Quotation>(0);
 
 	public BusinessPartner() {
 	}
@@ -45,7 +50,7 @@ public class BusinessPartner implements java.io.Serializable {
 
 	public BusinessPartner(int idBusinessPartner, BasicData basicData,
 			String rif, String name, String address, char status,
-			Set<Budget> budgets) {
+			Set<Budget> budgets, Set<Quotation> quotations) {
 		this.idBusinessPartner = idBusinessPartner;
 		this.basicData = basicData;
 		this.rif = rif;
@@ -53,6 +58,7 @@ public class BusinessPartner implements java.io.Serializable {
 		this.address = address;
 		this.status = status;
 		this.budgets = budgets;
+		this.quotations = quotations;
 	}
 
 	@Id
@@ -120,6 +126,15 @@ public class BusinessPartner implements java.io.Serializable {
 
 	public void setBudgets(Set<Budget> budgets) {
 		this.budgets = budgets;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessPartner")
+	public Set<Quotation> getQuotations() {
+		return this.quotations;
+	}
+
+	public void setQuotations(Set<Quotation> quotations) {
+		this.quotations = quotations;
 	}
 
 }

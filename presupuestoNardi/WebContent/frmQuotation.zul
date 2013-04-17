@@ -1,0 +1,1012 @@
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.FrmQuotation')"
+		title="Ventas - Presupuesto" closable="true"
+		onClose="@command('close')">
+		<groupbox closable="false">
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<space></space>
+						<space></space>
+						<space></space>
+						<space></space>
+						<div align="right">
+							<button label="Buscar"
+								onClick="@command('search')"
+								image="/resource/images/icons/search.png">
+							</button>
+						</div>
+					</row>
+					<row>
+						<label value="Rif:" sclass="formLabel"></label>
+						<div>
+							<combobox readonly="true" width="18%"
+								value="@save(vm.quotation.rifType, before = 'save') @load(vm.quotation.rifType eq 'Z' ? vm.dash : vm.quotation.rifType) @validator(vm.noDash, component = self)"
+								model="@load(vm.listRifType)" disabled="true">
+								<template name="model" var="rifType">
+									<comboitem
+										label="@load(rifType.name)">
+									</comboitem>
+								</template>
+							</combobox>
+							<combobox width="80%"
+								value="@save(vm.quotation.rifPartner, before = 'save') @load(vm.quotation.rifPartner) @validator(vm.noEmpty, component = self)"
+								buttonVisible="false" autocomplete="true" autodrop="true"
+								model="@load(vm.listRifPartner)" maxlength="15"
+								onFocus="@command(vm.disableBeforeSearch ? '' : 'searchQuotationByField', field='rifPartner')"
+								onChange="@command(vm.disableBeforeSearch ? '' : 'loadQuotationByField', field='rifPartner',val=self.value)"
+								disabled="@load(vm.disableBeforeSearch)">
+							</combobox>
+						</div>
+						<label sclass="formLabel"
+							value="Nro Solicitud:">
+						</label>
+						<combobox width="50%" buttonVisible="false"
+							disabled="@load(vm.disabledBudgetNumber)"
+							value="@load(vm.quotation.budgetNumber eq 0 ? '' : vm.quotation.budgetNumber)"
+							autocomplete="true"
+							onFocus="@command(vm.disableBeforeSearch ? 'searchBudgetByField':'searchQuotationByField', field='number')"
+							model="@load(vm.listBudgetNumber)" autodrop="true"
+							onChange="@command(vm.disableBeforeSearch ? 'loadBudgetId':'loadQuotationByField', field='budgetNumber',val=self.value)"
+							hflex="1">
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Cliente:"></label>
+						<combobox hflex="1" buttonVisible="false"
+							value="@save(vm.quotation.partnerName, before = 'save') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)"
+							autocomplete="true" model="@load(vm.listPartnerName)"
+							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							maxlength="100"
+							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='partnerName')"
+							onChange="@command(vm.disableBeforeSearch  ? '':'loadQuotationByField', field='partnerName', val=self.value)"
+							disabled="@load(vm.disableBeforeSearch)">
+						</combobox>
+						<label sclass="formLabel"
+							value="NroPresupuesto:">
+						</label>
+						<div>
+							<intbox
+								value="@load(vm.quotation.type ? '1' : '2')" disabled="true"
+								onChange="@command('updateQuotationNumber')" width="14%">
+							</intbox>
+							<combobox width="81%" buttonVisible="false"
+								disabled="@load(vm.disableBeforeSearch)"
+								value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
+								autocomplete="true"
+								autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
+								onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
+								model="@load(vm.listQuotationNumber)">
+							</combobox>
+						</div>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Obra:"></label>
+						<combobox hflex="1" buttonVisible="false"
+							value="@save(vm.quotation.construction, before = 'save') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)"
+							autocomplete="true" model="@load(vm.listConstruction)"
+							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='construction')"
+							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='construction', val=self.value)"
+							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
+						</combobox>
+						<label sclass="formLabel" value="Fecha:"></label>
+						<datebox value="@load(vm.quotation.date)"
+							disabled="true" format="dd/MM/yyyy" hflex="1">
+						</datebox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Persona contacto:">
+						</label>
+						<textbox hflex="1"
+							value="@save(vm.quotation.contactName, before = 'save') @load(vm.quotation.contactName) @validator(vm.noEmpty, component = self)"
+							disabled="true" maxlength="100">
+						</textbox>
+						<label sclass="formLabel" value="Vendedor:">
+						</label>
+						<combobox hflex="1" buttonVisible="false"
+							value="@save(vm.quotation.seller, before = 'save') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
+							autocomplete="true" model="@load(vm.listSeller)"
+							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='seller')"
+							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='seller', val=self.value)"
+							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label value="Equipos" sclass="formLabel"></label>
+						<div>
+							<spinner width="18%" constraint="min 0"
+								value="@save(vm.quotation.elevatorQuantity, before = 'save') @load(vm.quotation.elevatorQuantity) @validator(vm.noElevatorQuantity, component = self)"
+								disabled="true">
+							</spinner>
+							<combobox width="80%"
+								value="@load(vm.quotation.basicDataByElevatorType eq null ? vm.seleccione : vm.quotation.basicDataByElevatorType.name)"
+								model="@load(vm.listElevatorType)"
+								selectedItem="@bind(vm.quotation.basicDataByElevatorType)"
+								readonly="true" disabled="true">
+								<template name="model"
+									var="elevatorType">
+									<comboitem
+										label="@load(elevatorType.name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</div>
+						<label value="Tipo Solicitud:"
+							sclass="formLabel">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.type)"
+							onCheck="@command('updateQuotationNumber')">
+							<radio label="Nuevo" value="true"
+								checked="@load(vm.quotation.type ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio label="Modernizacion" value="false"
+								checked="@load(vm.quotation.type ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="GENERAL" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Capacidad (Kg - Cap.):">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.quotation.basicDataByElevatorCapacitance.name)"
+							model="@load(vm.listElevatorCapa)"
+							selectedItem="@bind(vm.quotation.basicDataByElevatorCapacitance)"
+							readonly="true" disabled="true">
+							<template name="model" var="elevatorCapa">
+								<comboitem
+									label="@load(elevatorCapa.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel"
+							value="Número de Pisos:">
+						</label>
+						<spinner constraint="min 0"
+							value="@bind(vm.quotation.stopNumber)" disabled="true"
+							hflex="1">
+						</spinner>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Velocidad M/S:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataBySpeed eq null ? vm.seleccione : vm.quotation.basicDataBySpeed.name)"
+							model="@load(vm.listSpeed)"
+							selectedItem="@bind(vm.quotation.basicDataBySpeed)"
+							readonly="true" disabled="true">
+							<template name="model" var="Speed">
+								<comboitem label="@load(Speed.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Secuencia de Paradas:">
+						</label>
+						<cell colspan="3">
+							<grid hflex="1">
+								<columns>
+									<column width="20%"></column>
+									<column width="35%"></column>
+									<column></column>
+								</columns>
+								<rows>
+									<row>
+										<checkbox label="Continua:"
+											checked="@bind(vm.quotation.stopSequenceContinuous)"
+											disabled="true"
+											onClick="@command('isStopSequenceContinuous')">
+										</checkbox>
+										<textbox hflex="1"
+											disabled="true"
+											value="@load(vm.quotation.stopSequenceContinuous ? vm.quotation.stopSequenceContinuousQ : '') @save(vm.quotation.stopSequenceContinuousQ)"
+											maxlength="50">
+										</textbox>
+										<hbox>
+											<label value="Nro Paradas:"
+												hflex="1">
+											</label>
+											<spinner hflex="1"
+												value="@load(vm.quotation.stopSequenceContinuous ? vm.quotation.stopSequenceContinuousNumber : '0') @save(vm.quotation.stopSequenceContinuousNumber)"
+												disabled="true" constraint="min 0">
+											</spinner>
+										</hbox>
+									</row>
+									<row>
+										<checkbox label="Par"
+											checked="@load(vm.quotation.stopSequenceContinuous ? 'false' : vm.quotation.stopSequenceEven) @save(vm.quotation.stopSequenceEven)"
+											disabled="true">
+										</checkbox>
+										<textbox hflex="1"
+											disabled="true"
+											value="@load(vm.quotation.stopSequenceContinuous ? '' : vm.quotation.stopSequenceEven ? vm.quotation.stopSequenceEvenQ : '') @save(vm.quotation.stopSequenceEvenQ)"
+											maxlength="50">
+										</textbox>
+										<hbox>
+											<label value="Nro Paradas:"
+												hflex="1">
+											</label>
+											<spinner hflex="1"
+												value="@load(vm.quotation.stopSequenceContinuous ? '0' : vm.quotation.stopSequenceEven ? vm.quotation.stopSequenceEvenNumber : '0') @save(vm.quotation.stopSequenceEvenNumber)"
+												disabled="true" constraint="min 0">
+											</spinner>
+										</hbox>
+									</row>
+									<row>
+										<checkbox label="Impar"
+											checked="@load(vm.quotation.stopSequenceContinuous ? 'false' : vm.quotation.stopSequenceOdd) @save(vm.quotation.stopSequenceOdd)"
+											disabled="true">
+										</checkbox>
+										<textbox hflex="1"
+											disabled="true"
+											value="@load(vm.quotation.stopSequenceContinuous ? '' : vm.quotation.stopSequenceOdd ? vm.quotation.stopSequenceOddQ : '') @save(vm.quotation.stopSequenceOddQ)"
+											maxlength="50">
+										</textbox>
+										<hbox>
+											<label value="Nro Paradas:"
+												hflex="1">
+											</label>
+											<spinner hflex="1"
+												value="@load(vm.quotation.stopSequenceContinuous ? '0' : vm.quotation.stopSequenceOdd ? vm.quotation.stopSequenceOddNumber : '0') @save(vm.quotation.stopSequenceOddNumber)"
+												disabled="true" constraint="min 0">
+											</spinner>
+										</hbox>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Tipo de Máquina:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByMachineType eq null ? vm.seleccione : vm.quotation.basicDataByMachineType.name)"
+							model="@load(vm.listMachineType)"
+							selectedItem="@bind(vm.quotation.basicDataByMachineType)"
+							readonly="true" disabled="true">
+							<template name="model" var="MachineType">
+								<comboitem
+									label="@load(MachineType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel"
+							value="Tipo de Corriente:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByElectricityType eq null ? vm.seleccione : vm.quotation.basicDataByElectricityType.name)"
+							model="@load(vm.listElectricityType)"
+							selectedItem="@bind(vm.quotation.basicDataByElectricityType)"
+							readonly="true" disabled="true">
+							<template name="model"
+								var="ElectricityType">
+								<comboitem
+									label="@load(ElectricityType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Tipo de Maniobra:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByManeuverType eq null ? vm.seleccione : vm.quotation.basicDataByManeuverType.name)"
+							model="@load(vm.listManeuverType)"
+							selectedItem="@bind(vm.quotation.basicDataByManeuverType)"
+							readonly="true" disabled="true">
+							<template name="model" var="ManeuverType">
+								<comboitem
+									label="@load(ManeuverType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="HUECO" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Recorrido(m):">
+						</label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.quotation.tour)" disabled="true" step="0.5"
+							hflex="1">
+						</doublespinner>
+						<label sclass="formLabel"
+							value="Ancho de Hueco (m):">
+						</label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.quotation.widthHole)" disabled="true" step="0.5"
+							hflex="1">
+						</doublespinner>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Sobre Recorrido (m):">
+						</label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.quotation.onTour)" disabled="true" step="0.5"
+							hflex="1">
+						</doublespinner>
+						<label sclass="formLabel"
+							value="Fondo de Hueco (m):">
+						</label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.quotation.bottomHole)" disabled="true" step="0.5"
+							hflex="1">
+						</doublespinner>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Fosa (m):"></label>
+						<doublespinner constraint="min 0"
+							value="@bind(vm.quotation.fossa)" disabled="true" step="0.5"
+							hflex="1">
+						</doublespinner>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="CONTROL" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Control Modelo:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByControlType eq null ? vm.seleccione : vm.quotation.basicDataByControlType.name)"
+							model="@load(vm.listControlType)"
+							selectedItem="@bind(vm.quotation.basicDataByControlType)"
+							readonly="true" disabled="true"
+							onChange="@command('loadBoothFloorDisplay')">
+							<template name="model" var="ControlType">
+								<comboitem
+									label="@load(ControlType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Display Cabina:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByBoothDisplay eq null ? vm.seleccione : vm.quotation.basicDataByBoothDisplay.name)"
+							model="@load(vm.listBoothDisplay)"
+							selectedItem="@bind(vm.quotation.basicDataByBoothDisplay)"
+							readonly="true" disabled="true">
+							<template name="model" var="BoothDisplay">
+								<comboitem
+									label="@load(BoothDisplay.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel"
+							value="Display Piso:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByFloorDisplay eq null ? vm.seleccione : vm.quotation.basicDataByFloorDisplay.name)"
+							model="@load(vm.listFloorDisplay)"
+							selectedItem="@bind(vm.quotation.basicDataByFloorDisplay)"
+							readonly="true" disabled="true">
+							<template name="model" var="FloorDisplay">
+								<comboitem
+									label="@load(FloorDisplay.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Botones de pasillo:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByHallButton eq null ? vm.seleccione : vm.quotation.basicDataByHallButton.name)"
+							model="@load(vm.listHallButton)"
+							selectedItem="@bind(vm.quotation.basicDataByHallButton)"
+							readonly="true" disabled="true">
+							<template name="model" var="HallButton">
+								<comboitem
+									label="@load(HallButton.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel"
+							value="Tipo de botonera de pasillo:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByHallButtonType eq null ? vm.seleccione : vm.quotation.basicDataByHallButtonType.name)"
+							model="@load(vm.listHallButtonType)"
+							selectedItem="@bind(vm.quotation.basicDataByHallButtonType)"
+							readonly="true" disabled="true"
+							onChange="@command('disabledSistelsHall')">
+							<template name="model"
+								var="hallButtonType">
+								<comboitem
+									label="@load(hallButtonType.name)"
+									image="@load(hallButtonType.imageurl)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="CABINA" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel" value="Modelo:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name)"
+							model="@load(vm.listCabinModel)"
+							selectedItem="@bind(vm.cabinModel)" readonly="true"
+							disabled="true" onChange="@command('loadCabinDesign')">
+							<template name="model" var="cabinModel">
+								<comboitem
+									label="@load(cabinModel.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel" value="Diseño:"></label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByCabinDesign eq null ? vm.seleccione : vm.quotation.basicDataByCabinDesign.name)"
+							model="@load(vm.listDesign)"
+							selectedItem="@bind(vm.quotation.basicDataByCabinDesign)"
+							readonly="true" disabled="true"
+							onChange="@command('activeDesignComment')">
+							<template name="model" var="Design">
+								<comboitem label="@load(Design.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Diseño Especial:">
+						</label>
+						<checkbox
+							checked="@bind(vm.quotation.designSpecial)" disabled="true"
+							hflex="1" onCheck="@command('isDesignSpecial')">
+						</checkbox>
+						<label value="Comentario:" sclass="formLabel"></label>
+						<textbox vflex="1" hflex="1" multiline="true"
+							disabled="true"
+							value="@load(vm.quotation.designSpecial ? vm.quotation.designSpecialComment : ' ') @save(vm.quotation.designSpecialComment, before = 'save') @validator(vm.noEmptyForFormica, component = self)"
+							maxlength="300">
+						</textbox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Pasamano:"></label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByRailing eq null ? vm.seleccione : vm.quotation.basicDataByRailing.name)"
+							model="@load(vm.listRailing)"
+							selectedItem="@bind(vm.quotation.basicDataByRailing)"
+							readonly="true" disabled="true">
+							<template name="model" var="Railing">
+								<comboitem
+									label="@load(Railing.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel"
+							value="Acabado de Piso:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByFloorType eq null ? vm.seleccione : vm.quotation.basicDataByFloorType.name)"
+							model="@load(vm.listFloorType)"
+							selectedItem="@bind(vm.quotation.basicDataByFloorType)"
+							readonly="true" disabled="true"
+							onChange="@command('activeDesignComment')">
+							<template name="model" var="FloorType">
+								<comboitem
+									label="@load(FloorType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="MARCOS Y PUERTAS" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Tipo de Puerta:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByDoorType eq null ? vm.seleccione : vm.quotation.basicDataByDoorType.name)"
+							model="@load(vm.listDoorType)"
+							selectedItem="@bind(vm.quotation.basicDataByDoorType)"
+							readonly="true" disabled="true">
+							<template name="model" var="DoorType">
+								<comboitem
+									label="@load(DoorType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Entrada Libre:">
+						</label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByFreeAdmission eq null ? vm.seleccione : vm.quotation.basicDataByFreeAdmission.name)"
+							model="@load(vm.listFreeAdmission)"
+							selectedItem="@bind(vm.quotation.basicDataByFreeAdmission)"
+							readonly="true" disabled="true">
+							<template name="model"
+								var="FreeAdmission">
+								<comboitem
+									label="@load(FreeAdmission.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<label sclass="formLabel" value="Altura:"></label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByHeight eq null ? vm.seleccione : vm.quotation.basicDataByHeight.name)"
+							model="@load(vm.listHeight)"
+							selectedItem="@bind(vm.quotation.basicDataByHeight)"
+							readonly="true" disabled="true">
+							<template name="model" var="Height">
+								<comboitem label="@load(Height.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<checkbox sclass="formLabel" label="Acero Inox."
+							checked="@bind(vm.quotation.doorFrameStainless)"
+							disabled="true">
+						</checkbox>
+						<textbox hflex="1" disabled="true"
+							value="@load(vm.quotation.doorFrameStainless ? vm.quotation.doorFrameStainlessDescrip : '') @save(vm.quotation.doorFrameStainlessDescrip)"
+							maxlength="100">
+						</textbox>
+						<label sclass="formLabel" value="Martillado:"></label>
+						<combobox hflex="1"
+							value="@load(vm.quotation.basicDataByDoorFrameHammered eq null ? vm.seleccione : vm.quotation.basicDataByDoorFrameHammered.name)"
+							model="@load(vm.listDoorframeHammered)"
+							selectedItem="@bind(vm.quotation.basicDataByDoorFrameHammered)"
+							readonly="true" disabled="true" width="90%">
+							<template name="model"
+								var="doorFrameHammered">
+								<comboitem
+									label="@load(doorFrameHammered.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<textbox hflex="1" disabled="true"
+							value="@bind(vm.quotation.doorFrameHammeredDesc)"
+							maxlength="100">
+						</textbox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="ADICIONALES" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column width="10%"></column>
+					<column width="20%"></column>
+					<column width="10%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Cortina Luminosa:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.lightCurtain)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.lightCurtain? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.lightCurtain? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<label sclass="formLabel"
+							value="Limitador de carga:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.loadLimiter)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.loadLimiter ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.loadLimiter ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Sintetizador de Voz:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.speechSynthesizer)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.speechSynthesizer ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.speechSynthesizer ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<label sclass="formLabel"
+							value="Sistema de GOM en Piso:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.gomSystem)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.gomSystem ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.gomSystem ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Intercomunicador:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.intercom)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.intercom ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.intercom ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<label sclass="formLabel" value="Teléfono:"></label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.phone)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.phone ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.phone ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Sistema de Acceso:" style="font-weight:bold;">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.accessSytem)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.accessSytem ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.accessSytem ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<label sclass="formLabel"
+							value="Llave de Bombero:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.firefighterKeychain)">
+							<radio value="true" label="Si"
+								checked="@load(vm.quotation.firefighterKeychain ? 'true':'false')"
+								disabled="true">
+							</radio>
+							<radio value="false" label="No"
+								checked="@load(vm.quotation.firefighterKeychain ? 'false':'true')"
+								disabled="true">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="60%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Comentarios:">
+						</label>
+						<cell colspan="2">
+							<textbox hflex="1" rows="4" vflex="1"
+								value="@bind(vm.quotation.comment)" disabled="true"
+								multiline="true" maxlength="700">
+							</textbox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<caption label="PRECIO" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%" align="center"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="60%" sclass="formLabel"></label>
+						<label value="Material Importado:"
+							sclass="formLabel">
+						</label>
+						<doublebox
+							value="@save(vm.quotation.priceImportedMaterial) @load(vm.quotation.priceImportedMaterial)"
+							disabled="true" hflex="1" format="#.##">
+						</doublebox>
+						<label value="Bs" sclass="formLabel"></label>
+						<space></space>
+					</row>
+					<row>
+						<label value="40%" sclass="formLabel"></label>
+						<label
+							value="Material Nacional y Mano de Obra:"
+							sclass="formLabel">
+						</label>
+						<doublebox
+							value="@save(vm.quotation.priceNationalMaterial) @load(vm.quotation.priceNationalMaterial)"
+							disabled="true" hflex="1" format="#.##">
+						</doublebox>
+						<label value="Bs" sclass="formLabel"></label>
+						<space></space>
+					</row>
+					<row>
+						<label value="100%" sclass="formLabel"></label>
+						<label value="Precio Unitario Total:"
+							sclass="formLabel">
+						</label>
+						<doublebox constraint="no negative"
+							value="@save(vm.quotation.totalPrice) @load(vm.quotation.totalPrice)"
+							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+							onBlur="@command('priceUnit', val=self.value)" hflex="1" format="#.##">
+						</doublebox>
+						<label value="Bs" sclass="formLabel"></label>
+						<space></space>
+					</row>
+					<row>
+						<label
+							value="@load(vm.quotation.elevatorQuantity)"
+							sclass="formLabel">
+						</label>
+						<label
+							value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.quotation.basicDataByElevatorType.name)"
+							sclass="formLabel">
+						</label>
+						<doublebox
+							value="@load(vm.quotation.totalPrice)" disabled="true"
+							hflex="1" format="#.##">
+						</doublebox>
+						<doublebox
+							value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
+							disabled="true" hflex="1" format="#.##">
+						</doublebox>
+						<label value="Bs:" sclass="formLabel"></label>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" closable="false">
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="Condiciones de pago:"
+							sclass="formLabel">
+						</label>
+						<textbox width="60%" rows="7"
+							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+							value="@load(vm.quotation.payment)">
+						</textbox>
+					</row>
+					<row>
+						<label value="Garantía:" sclass="formLabel"></label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+								value="@load(vm.quotation.warranty)">
+							</textbox>
+							<label
+								value="meses de garantía. De suscribir contrato de mantenimiento se extiende garantía">
+							</label>
+							<textbox cols="2"
+								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+								value="@load(vm.quotation.extendedWarranty)">
+							</textbox>
+							<label value="meses más."></label>
+						</div>
+					</row>
+					<row>
+						<label value="Plazo de entrega:"
+							sclass="formLabel">
+						</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+								value="@load(vm.quotation.deliveryEstimate)">
+							</textbox>
+							<label
+								value="meses aproximados despues de la firma del contrato.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label value="Válidez del presupuesto:"
+							sclass="formLabel">
+						</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+								value="@load(vm.quotation.quotationValidity)">
+							</textbox>
+							<label
+								value="Días a partir de su presentación.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label value="Nota:" sclass="formLabel"></label>
+						<textbox width="60%" rows="8"
+							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+							value="@load(vm.quotation.notes)">
+						</textbox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<grid>
+			<rows>
+				<row>
+					<hbox>
+						<button label="Guardar" sclass="formLabel"
+							onClick="@command('save')"
+							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
+							image="/resource/images/icons/save.png">
+						</button>
+						<button label="Imprimir" sclass="formLabel"
+							onClick="@command('print')" disabled="@load(vm.disabledPrint)"
+							image="/resource/images/icons/print.png">
+						</button>
+						<button label="Cancelar" sclass="formLabel"
+							onClick="@command('restartForm')"
+							image="/resource/images/icons/cancel.png">
+						</button>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -8,7 +8,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
-public class FrmMenuCtrl {
+public class FrmMenu {
 
 	@NotifyChange()
 	@Command

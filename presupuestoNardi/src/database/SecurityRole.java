@@ -1,6 +1,6 @@
 package database;
 
-// Generated 01-abr-2013 15:31:52 by Hibernate Tools 3.4.0.CR1
+// Generated 08-abr-2013 16:54:55 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +21,10 @@ import javax.persistence.Table;
 @Table(name = "security_role", schema = "public")
 public class SecurityRole implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5328166875548422724L;
 	private int idSecurityRole;
 	private String name;
 	private char status;

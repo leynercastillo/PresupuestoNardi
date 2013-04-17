@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_page_1" language="groovy" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="98c940fb-7fc9-4f80-b668-b909d476ab5c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="114"/>
 	<parameter name="number" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -570,14 +570,14 @@ WHERE
 			<staticText>
 				<reportElement uuid="3a51550c-90ad-4177-9ae9-38b05f30078e" x="3" y="481" width="158" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Comentarios:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="9831dc96-7a7a-43d7-840a-a723945eec1f" x="72" y="481" width="493" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="8"/>
 					<paragraph lineSpacing="Proportional"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Comentarios:}]]></textFieldExpression>

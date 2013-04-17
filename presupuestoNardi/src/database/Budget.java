@@ -1,8 +1,10 @@
 package database;
 
-// Generated 01-abr-2013 15:31:52 by Hibernate Tools 3.4.0.CR1
+// Generated 08-abr-2013 16:54:55 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +29,10 @@ import org.hibernate.annotations.GenerationTime;
 @Table(name = "budget", schema = "public")
 public class Budget implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 937010112320048072L;
 	private int idBudget;
 	private BasicData basicDataByElectricityType;
 	private BasicData basicDataByHourMachine;
@@ -33,8 +40,8 @@ public class Budget implements java.io.Serializable {
 	private BasicData basicDataByRoofType;
 	private BasicData basicDataBySpeed;
 	private BasicData basicDataByVoltageLighting;
-	private BasicData basicDataByRailing;
 	private BasicData basicDataByDoorframeType;
+	private BasicData basicDataByRailing;
 	private BasicData basicDataByBoothButton;
 	private SecurityUser securityUser;
 	private BasicData basicDataByMirror;
@@ -42,8 +49,8 @@ public class Budget implements java.io.Serializable {
 	private BusinessPartner businessPartner;
 	private BasicData basicDataByBoothDisplay;
 	private BasicData basicDataByElevatorType;
-	private BasicData basicDataByFrequency;
 	private BasicData basicDataByDoorSystem;
+	private BasicData basicDataByFrequency;
 	private BasicData basicDataByHallButtonType;
 	private BasicData basicDataByFan;
 	private BasicData basicDataByCabinDesign;
@@ -116,6 +123,7 @@ public class Budget implements java.io.Serializable {
 	private Integer sistelWarrowFloor;
 	private String comment;
 	private char status;
+	private Set<Quotation> quotations = new HashSet<Quotation>(0);
 
 	public Budget() {
 	}
@@ -124,8 +132,8 @@ public class Budget implements java.io.Serializable {
 			BusinessPartner businessPartner, int number, Date date,
 			char rifType, String rifPartner, String partnerName,
 			String construction, String seller, String constructionAddress,
-			String constructionCity, String contactPhone, String email,
-			String contactName, boolean type, char status) {
+			String constructionCity, String contactPhone, String contactName,
+			boolean type, char status) {
 		this.idBudget = idBudget;
 		this.securityUser = securityUser;
 		this.businessPartner = businessPartner;
@@ -139,7 +147,6 @@ public class Budget implements java.io.Serializable {
 		this.constructionAddress = constructionAddress;
 		this.constructionCity = constructionCity;
 		this.contactPhone = contactPhone;
-		this.email = email;
 		this.contactName = contactName;
 		this.type = type;
 		this.status = status;
@@ -148,14 +155,14 @@ public class Budget implements java.io.Serializable {
 	public Budget(int idBudget, BasicData basicDataByElectricityType,
 			BasicData basicDataByHourMachine, BasicData basicDataByHallButton,
 			BasicData basicDataByRoofType, BasicData basicDataBySpeed,
-			BasicData basicDataByVoltageLighting, BasicData basicDataByRailing,
-			BasicData basicDataByDoorframeType,
+			BasicData basicDataByVoltageLighting,
+			BasicData basicDataByDoorframeType, BasicData basicDataByRailing,
 			BasicData basicDataByBoothButton, SecurityUser securityUser,
 			BasicData basicDataByMirror,
 			BasicData basicDataByElevatorCapacitance,
 			BusinessPartner businessPartner, BasicData basicDataByBoothDisplay,
-			BasicData basicDataByElevatorType, BasicData basicDataByFrequency,
-			BasicData basicDataByDoorSystem,
+			BasicData basicDataByElevatorType, BasicData basicDataByDoorSystem,
+			BasicData basicDataByFrequency,
 			BasicData basicDataByHallButtonType, BasicData basicDataByFan,
 			BasicData basicDataByCabinDesign, BasicData basicDataByMachineType,
 			BasicData basicDataByBuildingType,
@@ -188,7 +195,7 @@ public class Budget implements java.io.Serializable {
 			Boolean doorFrameStainless, String doorFrameStainlessDescrip,
 			Boolean sistelWdisplayPb, Integer sistelWdisplayFloor,
 			Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment,
-			char status) {
+			char status, Set<Quotation> quotations) {
 		this.idBudget = idBudget;
 		this.basicDataByElectricityType = basicDataByElectricityType;
 		this.basicDataByHourMachine = basicDataByHourMachine;
@@ -196,8 +203,8 @@ public class Budget implements java.io.Serializable {
 		this.basicDataByRoofType = basicDataByRoofType;
 		this.basicDataBySpeed = basicDataBySpeed;
 		this.basicDataByVoltageLighting = basicDataByVoltageLighting;
-		this.basicDataByRailing = basicDataByRailing;
 		this.basicDataByDoorframeType = basicDataByDoorframeType;
+		this.basicDataByRailing = basicDataByRailing;
 		this.basicDataByBoothButton = basicDataByBoothButton;
 		this.securityUser = securityUser;
 		this.basicDataByMirror = basicDataByMirror;
@@ -205,8 +212,8 @@ public class Budget implements java.io.Serializable {
 		this.businessPartner = businessPartner;
 		this.basicDataByBoothDisplay = basicDataByBoothDisplay;
 		this.basicDataByElevatorType = basicDataByElevatorType;
-		this.basicDataByFrequency = basicDataByFrequency;
 		this.basicDataByDoorSystem = basicDataByDoorSystem;
+		this.basicDataByFrequency = basicDataByFrequency;
 		this.basicDataByHallButtonType = basicDataByHallButtonType;
 		this.basicDataByFan = basicDataByFan;
 		this.basicDataByCabinDesign = basicDataByCabinDesign;
@@ -279,6 +286,7 @@ public class Budget implements java.io.Serializable {
 		this.sistelWarrowFloor = sistelWarrowFloor;
 		this.comment = comment;
 		this.status = status;
+		this.quotations = quotations;
 	}
 
 	@Id
@@ -356,16 +364,6 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "railing")
-	public BasicData getBasicDataByRailing() {
-		return this.basicDataByRailing;
-	}
-
-	public void setBasicDataByRailing(BasicData basicDataByRailing) {
-		this.basicDataByRailing = basicDataByRailing;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "doorframe_type")
 	public BasicData getBasicDataByDoorframeType() {
 		return this.basicDataByDoorframeType;
@@ -373,6 +371,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicDataByDoorframeType(BasicData basicDataByDoorframeType) {
 		this.basicDataByDoorframeType = basicDataByDoorframeType;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "railing")
+	public BasicData getBasicDataByRailing() {
+		return this.basicDataByRailing;
+	}
+
+	public void setBasicDataByRailing(BasicData basicDataByRailing) {
+		this.basicDataByRailing = basicDataByRailing;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -447,16 +455,6 @@ public class Budget implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "frequency")
-	public BasicData getBasicDataByFrequency() {
-		return this.basicDataByFrequency;
-	}
-
-	public void setBasicDataByFrequency(BasicData basicDataByFrequency) {
-		this.basicDataByFrequency = basicDataByFrequency;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "door_system")
 	public BasicData getBasicDataByDoorSystem() {
 		return this.basicDataByDoorSystem;
@@ -464,6 +462,16 @@ public class Budget implements java.io.Serializable {
 
 	public void setBasicDataByDoorSystem(BasicData basicDataByDoorSystem) {
 		this.basicDataByDoorSystem = basicDataByDoorSystem;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "frequency")
+	public BasicData getBasicDataByFrequency() {
+		return this.basicDataByFrequency;
+	}
+
+	public void setBasicDataByFrequency(BasicData basicDataByFrequency) {
+		this.basicDataByFrequency = basicDataByFrequency;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -726,7 +734,7 @@ public class Budget implements java.io.Serializable {
 		this.contactPhone = contactPhone;
 	}
 
-	@Column(name = "email", nullable = false, length = 100)
+	@Column(name = "email", length = 100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -1139,6 +1147,15 @@ public class Budget implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")
+	public Set<Quotation> getQuotations() {
+		return this.quotations;
+	}
+
+	public void setQuotations(Set<Quotation> quotations) {
+		this.quotations = quotations;
 	}
 
 }

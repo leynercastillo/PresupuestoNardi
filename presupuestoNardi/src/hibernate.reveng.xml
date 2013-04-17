@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="public" match-name="basic_data"/>
+  <table-filter match-schema="public" match-name="budget"/>
+  <table-filter match-schema="public" match-name="business_partner"/>
+  <table-filter match-schema="public" match-name="group_user"/>
+  <table-filter match-schema="public" match-name="quotation"/>
+  <table-filter match-schema="public" match-name="role_group"/>
+  <table-filter match-schema="public" match-name="security_group"/>
+  <table-filter match-schema="public" match-name="security_role"/>
+  <table-filter match-schema="public" match-name="security_user"/>
+</hibernate-reverse-engineering>

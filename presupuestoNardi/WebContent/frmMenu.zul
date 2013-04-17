@@ -3,7 +3,7 @@
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.FrmMenuCtrl')">
+		viewModel="@id('vm') @init('controller.FrmMenu')">
 		<tabbox mold="accordion" width="100%">
 			<tabs>
 				<tab label="Ventas"></tab>
@@ -20,6 +20,17 @@
 										onClick="@command('optionSelected', optionSelected='frmBudget.zul')">
 										<label
 											value="Solicitud de Presupuesto">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_QUOTATION')}">
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='frmQuotation.zul')">
+										<label
+											value="Presupuesto">
 										</label>
 									</treecell>
 								</treerow>

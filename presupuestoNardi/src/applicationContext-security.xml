@@ -9,10 +9,12 @@
 	<http auto-config="true">
 		<intercept-url pattern="/index.jsp" access="ROLE_USER" />
 		<intercept-url pattern="/index.zul" access="ROLE_USER" />
-		<intercept-url pattern="/frmBudget.zul" access="ROLE_BUDGET" />
 		<intercept-url pattern="/frmMenu.zul" access="ROLE_MENU" />
 		<intercept-url pattern="/frmReport.zul" access="ROLE_REPORT" />
+		<intercept-url pattern="/frmBudget.zul" access="ROLE_BUDGET" />
 		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_BUDGETS" />
+		<intercept-url pattern="/frmQuotation.zul" access="ROLE_QUOTATION" />
+		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_QUOTATIONS" />
 		<intercept-url pattern="/security/frmSecurityProfile.zul"
 			access="ROLE_SECURITY_PROFILE" />
 		<intercept-url pattern="/security/frmSecurityUserMaster.zul"
