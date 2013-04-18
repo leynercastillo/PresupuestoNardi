@@ -2,10 +2,11 @@ package controller;
 
 import general.Emails;
 import general.ValidateZK;
-import hibernateConnections.StoreHibernateUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +26,6 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.BindUtils;
@@ -43,6 +43,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.InputEvent;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -64,6 +65,15 @@ import database.SecurityUser;
  * 
  */
 public class FrmBudget {
+
+    @WireVariable
+    private DaoBasicdata daoBasicdata;
+    @WireVariable
+    private DaoBudget daoBudget;
+    @WireVariable
+    private DaoSecurityUser daoSecurityUser;
+    @WireVariable
+    private DaoBusinessPartner daoBusinessPartner;
 
     private String seleccione = new String("--Seleccione--");
     private final String dash = new String("--");
@@ -125,11 +135,11 @@ public class FrmBudget {
     private BusinessPartner businessPartner;
 
     public ListModel<String> getListSeller() {
-        return listSeller;
+	return listSeller;
     }
 
     public void setListSeller(ListModel<String> listSeller) {
-        this.listSeller = listSeller;
+	this.listSeller = listSeller;
     }
 
     public ListModel<String> getListConstruction() {
@@ -577,8 +587,8 @@ public class FrmBudget {
     }
 
     /**
-     * Metodo que inicializa la pantalla frmIndex. Se ejecuta antes de finalizar
-     * la carga del archivo DOM que muestra el navegador.
+     * Metodo que inicializa la pantalla frmIndex. Se ejecuta antes de finalizar la carga del archivo DOM que muestra el
+     * navegador.
      * 
      * Inicializa cada una de la variables insertadas en zul.
      */
@@ -590,8 +600,6 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void restartForm() {
-	DaoBasicdata daoBasicdata = new DaoBasicdata();
-	DaoBudget daoBudget = new DaoBudget();
 	budget = new Budget();
 	businessPartner = new BusinessPartner();
 	if (daoBudget.listAll().isEmpty())
@@ -607,10 +615,9 @@ public class FrmBudget {
 	cabinModel = new BasicData();
 	User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	/*
-	 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no
-	 * almacena email
+	 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no almacena email
 	 */
-	SecurityUser user = new DaoSecurityUser().findByString("name", auxUser.getUsername());
+	SecurityUser user = daoSecurityUser.findByString("email", auxUser.getUsername());
 	budget.setSeller(user.getName());
 	budget.setSecurityUser(user);
 	budget.setDate(new Date());
@@ -697,8 +704,7 @@ public class FrmBudget {
     }
 
     /**
-     * Metodo que valida que un string sea un Email valido. Solo aplica para
-     * componentes ZK
+     * Metodo que valida que un string sea un Email valido. Solo aplica para componentes ZK
      * 
      * @return {@link Validator}
      */
@@ -745,7 +751,11 @@ public class FrmBudget {
 
     public List<File> adjuntos() {
 	List<File> listAttach = new ArrayList<File>();
-	createPdf();
+	try {
+	    createPdf();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
 	File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/presupuesto" + budget.getNumber() + ".pdf"));
 	listAttach.add(file);
 	return listAttach;
@@ -755,7 +765,7 @@ public class FrmBudget {
 	Emails emails = new Emails();
 	emails.loadProperties("/resource/config/mail.properties");
 	List<String> listRecipient = new ArrayList<String>();
-	listRecipient.add("ventas@ascensoresnardi.com");
+	/*listRecipient.add("ventas@ascensoresnardi.com");*/
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	try {
 	    emails.sendMail("Presupuesto nro" + budget.getNumber(), listRecipient, message(), adjuntos());
@@ -772,7 +782,6 @@ public class FrmBudget {
 	if (budget.getBasicDataByDoorframeType() != null && budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && (budget.getHallButtonPlace().indexOf("MARCO") != -1)) {
 	    throw new WrongValueException(component, "Este tipo no puede ser ubicado en el Marco.");
 	} else {
-	    DaoBudget daoBudget = new DaoBudget();
 	    if (!daoBudget.save(budget)) {
 		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
 		return;
@@ -798,7 +807,6 @@ public class FrmBudget {
     @NotifyChange({ "listRifPartner", "listNumber", "listPartnerName", "listConstruction", "listSeller" })
     @Command
     public void loadBudgetByField(@BindingParam("field") String field) {
-	DaoBudget daoBudget = new DaoBudget();
 	if (field.compareTo("rifPartner") == 0) {
 	    listRifPartner = new SimpleListModel<String>(daoBudget.listStringByFields(field));
 	    return;
@@ -811,7 +819,7 @@ public class FrmBudget {
 	} else if (field.compareTo("construction") == 0) {
 	    listConstruction = new SimpleListModel<String>(daoBudget.listStringByFields(field));
 	    return;
-	}else if (field.compareTo("seller") == 0) {
+	} else if (field.compareTo("seller") == 0) {
 	    listSeller = new SimpleListModel<String>(daoBudget.listStringByFields(field));
 	    return;
 	}
@@ -821,7 +829,6 @@ public class FrmBudget {
     @NotifyChange({ "listRifPartner" })
     @Command
     public void loadBusinessPartnerByField(@BindingParam("field") String field) {
-	DaoBusinessPartner daoBusinessPartner = new DaoBusinessPartner();
 	if (field.compareTo("rifPartner") == 0) {
 	    listRifPartner = new SimpleListModel<String>(daoBusinessPartner.listStringByFields("rif"));
 	}
@@ -830,7 +837,6 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value) {
-	DaoBudget daoBudget = new DaoBudget();
 	List<Budget> listBudget2 = daoBudget.listByString(field, value);
 	int listSize = listBudget2.size();
 	if (listSize == 1) {
@@ -852,7 +858,8 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value) {
-	DaoBudget daoBudget = new DaoBudget();
+	if (value.trim().isEmpty())
+	    value = "0";
 	Integer budgetId = Integer.parseInt(value);
 	Budget auxBudget = daoBudget.findByInteger(field, budgetId);
 	if (auxBudget != null) {
@@ -869,7 +876,6 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void searchBudgetBusinessPartner(@BindingParam("rif") String rif) {
-	DaoBudget daoBudget = new DaoBudget();
 	List<Budget> listBudget2 = daoBudget.listByString("rifPartner", rif);
 	int listSize = listBudget2.size();
 	if (listSize == 1) {
@@ -919,11 +925,15 @@ public class FrmBudget {
     }
 
     @Command
-    public void createPdf() {
-	/* Tomo la sesion actual de hibernate */
-	Session session = StoreHibernateUtil.openSession();
-	/* Antes de abrir la conexion se debe iniciar una transaccion */
-	session.beginTransaction();
+    public void createPdf() throws SQLException {
+	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
+	try {
+	    Class.forName("org.postgresql.Driver");
+	} catch (ClassNotFoundException e2) {
+	    // TODO Auto-generated catch block
+	    e2.printStackTrace();
+	}
+	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
 	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
 	JasperReport jasperReport;
 	try {
@@ -935,14 +945,13 @@ public class FrmBudget {
 	Map<String, Object> parameters = new HashMap<String, Object>();
 	parameters.put("number", budget.getNumber());
 	/*
-	 * Enviamos por parametro a ireport la ruta de la ubicacion de los
-	 * subreportes e imagenes.
+	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
 	parameters.put("IMAGES_DIR", "../../resource/images/");
 	parameters.put("SUBREPORT_DIR", "../../resource/reports/");
 	JasperPrint jasperPrint;
 	try {
-	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, session.connection());
+	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
 	} catch (HibernateException e1) {
 	    jasperPrint = null;
 	    System.out.println("Connection wasn't obtained.");
@@ -962,7 +971,7 @@ public class FrmBudget {
 	} catch (JRException e) {
 	    System.out.println("Report wasn't export.");
 	}
-	session.close();
+	connection.close();
     }
 
     @Command
@@ -979,10 +988,9 @@ public class FrmBudget {
     @NotifyChange({ "listDesign" })
     @Command
     public void loadCabinDesign() {
-	listDesign = new DaoBasicdata().listByParent(cabinModel);
+	listDesign = daoBasicdata.listByParent(cabinModel);
 	/*
-	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
-	 * al guardar el objeto budget
+	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 	 */
 	budget.setBasicDataByCabinDesign(null);
     }
@@ -991,7 +999,6 @@ public class FrmBudget {
     @Command
     public void loadFans() {
 	String elevatorCapacitance = new String(budget.getBasicDataByElevatorCapacitance().getName());
-	DaoBasicdata daoBasicdata = new DaoBasicdata();
 	if (elevatorCapacitance.indexOf("320 - 4") != -1 || elevatorCapacitance.indexOf("450 - 6") != -1 || elevatorCapacitance.indexOf("600 - 8") != -1) {
 	    listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
 	    listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());
@@ -999,9 +1006,8 @@ public class FrmBudget {
 	    listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
 	    listFan.addAll(daoBasicdata.listByField("BUDGET", "FAN 2"));
 	    /*
-	     * Escogemos el basicdata con name "450-6" puesto que es el que
-	     * tiene todos los roofType asignados. Esto se hace porque no se
-	     * sabra que tipo de Capacidad se a�adira.
+	     * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType asignados. Esto se
+	     * hace porque no se sabra que tipo de Capacidad se a�adira.
 	     */
 	    listRoofType = daoBasicdata.listByParent(daoBasicdata.findByName("BUDGET", "ELEVATOR CAPACITANCE", "450 - 6"));
 	} else {
@@ -1009,8 +1015,7 @@ public class FrmBudget {
 	    listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());
 	}
 	/*
-	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
-	 * al guardar el objeto budget
+	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 	 */
 	budget.setBasicDataByRoofType(null);
 	budget.setBasicDataByFan(null);
@@ -1021,7 +1026,6 @@ public class FrmBudget {
     @NotifyChange({ "listBoothDisplay", "listFloorDisplay" })
     @Command
     public void loadBoothFloorDisplay() {
-	DaoBasicdata daoBasicdata = new DaoBasicdata();
 	String controlType = budget.getBasicDataByControlType().getName();
 	if (controlType.indexOf("SISTEL") != -1) {
 	    listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY SISTEL");
@@ -1073,8 +1077,7 @@ public class FrmBudget {
     @Command
     public void updateMotorQuantity(@ContextParam(ContextType.TRIGGER_EVENT) InputEvent event) {
 	/*
-	 * Con la linea superior enlazo el evento sobre el input con el
-	 * controlador Ver: http://forum.zkoss
+	 * Con la linea superior enlazo el evento sobre el input con el controlador Ver: http://forum.zkoss
 	 * .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
 	 */
 	if (budget.isType()) {
@@ -1094,8 +1097,7 @@ public class FrmBudget {
 	if (cabinDesign.indexOf("FORMICA") != -1 || floorType.indexOf("OTROS") != -1)
 	    budget.setDesignSpecial(true);
 	/*
-	 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
-	 * todo el objeto
+	 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
 	 */
 	BindUtils.postNotifyChange(null, null, budget, "designSpecial");
     }
@@ -1107,7 +1109,6 @@ public class FrmBudget {
 
     @Command
     public void searchBusinessPartner(@BindingParam("rif") String rif) {
-	DaoBusinessPartner daoBusinessPartner = new DaoBusinessPartner();
 	businessPartner = daoBusinessPartner.findActiveByRif(rif);
 	if (businessPartner == null) {
 	    Window win = (Window) Executions.createComponents("frmBusinessPartner.zul", null, null);

@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<window mode="modal" border="normal" width="90%"
 		apply="org.zkoss.bind.BindComposer"

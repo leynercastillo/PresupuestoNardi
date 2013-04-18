@@ -3,14 +3,23 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import database.Budget;
 import hibernateConnections.GenericDao;
 
+@Repository
 public class DaoBudget extends GenericDao<Budget> {
+
+    @Autowired
+    public DaoBudget(SessionFactory sessionFactory) {
+	super(sessionFactory);
+    }
 
     public Budget findByNumber(int number) {
 	currentSession().beginTransaction();

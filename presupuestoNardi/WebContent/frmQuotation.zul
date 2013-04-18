@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<style src="resource/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
@@ -29,7 +30,8 @@
 					<row>
 						<label value="Rif:" sclass="formLabel"></label>
 						<div>
-							<combobox readonly="true" width="18%"
+							<combobox readonly="true" width="25%"
+								style="float: left"
 								value="@save(vm.quotation.rifType, before = 'save') @load(vm.quotation.rifType eq 'Z' ? vm.dash : vm.quotation.rifType) @validator(vm.noDash, component = self)"
 								model="@load(vm.listRifType)" disabled="true">
 								<template name="model" var="rifType">
@@ -38,7 +40,7 @@
 									</comboitem>
 								</template>
 							</combobox>
-							<combobox width="80%"
+							<combobox width="75%" style="float: left"
 								value="@save(vm.quotation.rifPartner, before = 'save') @load(vm.quotation.rifPartner) @validator(vm.noEmpty, component = self)"
 								buttonVisible="false" autocomplete="true" autodrop="true"
 								model="@load(vm.listRifPartner)" maxlength="15"
@@ -76,19 +78,25 @@
 							value="NroPresupuesto:">
 						</label>
 						<div>
-							<intbox
+							<intbox width="11%" style="float: left"
 								value="@load(vm.quotation.type ? '1' : '2')" disabled="true"
-								onChange="@command('updateQuotationNumber')" width="14%">
+								onChange="@command('updateQuotationNumber')">
 							</intbox>
-							<combobox width="81%" buttonVisible="false"
-								disabled="@load(vm.disableBeforeSearch)"
-								value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
-								autocomplete="true"
-								autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
-								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
-								onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
-								model="@load(vm.listQuotationNumber)">
-							</combobox>
+							<div style="float: right" width="85%">
+								<combobox width="81%"
+									buttonVisible="false" 
+									disabled="@load(vm.disableBeforeSearch)"
+									value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
+									autocomplete="true"
+									autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+									onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
+									onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
+									model="@load(vm.listQuotationNumber)">
+								</combobox>
+								<intbox width="11%" 
+									disabled="true" value="@load(vm.quotation.versionNumber)">
+								</intbox>
+							</div>
 						</div>
 						<space></space>
 					</row>
@@ -862,7 +870,7 @@
 							sclass="formLabel">
 						</label>
 						<doublebox
-							value="@save(vm.quotation.priceImportedMaterial) @load(vm.quotation.priceImportedMaterial)"
+							value="@bind(vm.quotation.priceImportedMaterial)"
 							disabled="true" hflex="1" format="#.##">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
@@ -870,12 +878,11 @@
 					</row>
 					<row>
 						<label value="40%" sclass="formLabel"></label>
-						<label
-							value="Material Nacional y Mano de Obra:"
+						<label value="Material Nacional y Mano de Obra:"
 							sclass="formLabel">
 						</label>
 						<doublebox
-							value="@save(vm.quotation.priceNationalMaterial) @load(vm.quotation.priceNationalMaterial)"
+							value="@bind(vm.quotation.priceNationalMaterial)"
 							disabled="true" hflex="1" format="#.##">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
@@ -887,9 +894,10 @@
 							sclass="formLabel">
 						</label>
 						<doublebox constraint="no negative"
-							value="@save(vm.quotation.totalPrice) @load(vm.quotation.totalPrice)"
+							value="@bind(vm.quotation.totalPrice)"
 							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-							onBlur="@command('priceUnit', val=self.value)" hflex="1" format="#.##">
+							onBlur="@command('priceUnit', val=self.value)" hflex="1"
+							format="#.##">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
@@ -904,8 +912,8 @@
 							sclass="formLabel">
 						</label>
 						<doublebox
-							value="@load(vm.quotation.totalPrice)" disabled="true"
-							hflex="1" format="#.##">
+							value="@load(vm.quotation.totalPrice)" disabled="true" hflex="1"
+							format="#.##">
 						</doublebox>
 						<doublebox
 							value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
@@ -929,7 +937,7 @@
 						</label>
 						<textbox width="60%" rows="7"
 							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-							value="@load(vm.quotation.payment)">
+							value="@bind(vm.quotation.payment)">
 						</textbox>
 					</row>
 					<row>
@@ -937,14 +945,14 @@
 						<div>
 							<textbox cols="2"
 								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-								value="@load(vm.quotation.warranty)">
+								value="@bind(vm.quotation.warranty)">
 							</textbox>
 							<label
 								value="meses de garantía. De suscribir contrato de mantenimiento se extiende garantía">
 							</label>
 							<textbox cols="2"
 								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-								value="@load(vm.quotation.extendedWarranty)">
+								value="@bind(vm.quotation.extendedWarranty)">
 							</textbox>
 							<label value="meses más."></label>
 						</div>
@@ -956,7 +964,7 @@
 						<div>
 							<textbox cols="2"
 								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-								value="@load(vm.quotation.deliveryEstimate)">
+								value="@bind(vm.quotation.deliveryEstimate)">
 							</textbox>
 							<label
 								value="meses aproximados despues de la firma del contrato.">
@@ -970,7 +978,7 @@
 						<div>
 							<textbox cols="2"
 								disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-								value="@load(vm.quotation.quotationValidity)">
+								value="@bind(vm.quotation.quotationValidity)">
 							</textbox>
 							<label
 								value="Días a partir de su presentación.">
@@ -981,7 +989,7 @@
 						<label value="Nota:" sclass="formLabel"></label>
 						<textbox width="60%" rows="8"
 							disabled="@load(vm.disabledBudgetNumber ? 'false' : 'true')"
-							value="@load(vm.quotation.notes)">
+							value="@bind(vm.quotation.notes)">
 						</textbox>
 					</row>
 				</rows>

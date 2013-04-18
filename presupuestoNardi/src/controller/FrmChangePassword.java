@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
@@ -21,107 +22,102 @@ import database.SecurityUser;
 
 public class FrmChangePassword {
 
-	private SecurityUser user;
-	private String newPassword;
-	private String confirmPassword;
-	private String currentPassword;
+    @WireVariable
+    private DaoSecurityUser daoSecurityUser;
 
-	public String getCurrentPassword() {
-		return currentPassword;
-	}
+    private SecurityUser user;
+    private String newPassword;
+    private String confirmPassword;
+    private String currentPassword;
 
-	public void setCurrentPassword(String currentPassword) {
-		this.currentPassword = currentPassword;
-	}
+    public String getCurrentPassword() {
+	return currentPassword;
+    }
 
-	public String getNewPassword() {
-		return newPassword;
-	}
+    public void setCurrentPassword(String currentPassword) {
+	this.currentPassword = currentPassword;
+    }
 
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+    public String getNewPassword() {
+	return newPassword;
+    }
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
+    public void setNewPassword(String newPassword) {
+	this.newPassword = newPassword;
+    }
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+    public String getConfirmPassword() {
+	return confirmPassword;
+    }
 
-	public SecurityUser getUser() {
-		return user;
-	}
+    public void setConfirmPassword(String confirmPassword) {
+	this.confirmPassword = confirmPassword;
+    }
 
-	public void setUser(SecurityUser user) {
-		this.user = user;
-	}
+    public SecurityUser getUser() {
+	return user;
+    }
 
-	@Init
-	public void init(@ExecutionArgParam("user") SecurityUser user) {
-		this.user = user;
-		newPassword = new String();
-		confirmPassword = new String();
-		currentPassword = new String();
-	}
+    public void setUser(SecurityUser user) {
+	this.user = user;
+    }
 
-	public Validator getNoCurrentPassword() {
-		return new AbstractValidator() {
-			@Override
-			public void validate(ValidationContext ctx) {
-				InputElement inputElement = (InputElement) ctx.getBindContext()
-						.getValidatorArg("component");
-				String string = inputElement.getText();
-				ShaEncoding shaEncoding = new ShaEncoding(string);
-				try {
-					string = shaEncoding.encodingPassword();
-				} catch (NoSuchAlgorithmException e) {
-					// password don't encoding
-					e.printStackTrace();
-				}
-				if (user.getPassword().compareTo(string) != 0) {
-					throw new WrongValueException(inputElement,
-							"Contraseña invalida.");
-				}
-			}
-		};
-	}
+    @Init
+    public void init(@ExecutionArgParam("user") SecurityUser user) {
+	this.user = user;
+	newPassword = new String();
+	confirmPassword = new String();
+	currentPassword = new String();
+    }
 
-	public Validator getNoEqualPassword() {
-		return new AbstractValidator() {
-			@Override
-			public void validate(ValidationContext ctx) {
-				InputElement inputElement = (InputElement) ctx.getBindContext()
-						.getValidatorArg("component");
-				String string = inputElement.getText();
-				if (confirmPassword.compareTo(string) != 0) {
-					throw new WrongValueException(inputElement,
-							"Las contraseñas no coinciden.");
-				}
-			}
-		};
-	}
-
-	@Command
-	public void save(@BindingParam("component") Window passWindow) {
-		ShaEncoding encoding = new ShaEncoding(newPassword);
+    public Validator getNoCurrentPassword() {
+	return new AbstractValidator() {
+	    @Override
+	    public void validate(ValidationContext ctx) {
+		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
+		String string = inputElement.getText();
+		ShaEncoding shaEncoding = new ShaEncoding(string);
 		try {
-			user.setPassword(encoding.encodingPassword());
+		    string = shaEncoding.encodingPassword();
 		} catch (NoSuchAlgorithmException e) {
-			Clients.showNotification("No se pudo encriptar la contraseña",
-					"error", null, "end_center", 2000);
-			e.printStackTrace();
-			return;
+		    // password don't encoding
+		    e.printStackTrace();
 		}
-		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
-		if (!daoSecurityUser.update(user)) {
-			Clients.showNotification("No se pudo guardar usuario", "error",
-					null, "middle_center", 2000);
-			return;
-		} else
-			Clients.showNotification("Usuario guardado", "info", null,
-					"middle_center", 2000);
-		passWindow.detach();
+		if (user.getPassword().compareTo(string) != 0) {
+		    throw new WrongValueException(inputElement, "Contraseï¿½a invalida.");
+		}
+	    }
+	};
+    }
+
+    public Validator getNoEqualPassword() {
+	return new AbstractValidator() {
+	    @Override
+	    public void validate(ValidationContext ctx) {
+		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
+		String string = inputElement.getText();
+		if (confirmPassword.compareTo(string) != 0) {
+		    throw new WrongValueException(inputElement, "Las contraseï¿½as no coinciden.");
+		}
+	    }
+	};
+    }
+
+    @Command
+    public void save(@BindingParam("component") Window passWindow) {
+	ShaEncoding encoding = new ShaEncoding(newPassword);
+	try {
+	    user.setPassword(encoding.encodingPassword());
+	} catch (NoSuchAlgorithmException e) {
+	    Clients.showNotification("No se pudo encriptar la contraseï¿½a", "error", null, "end_center", 2000);
+	    e.printStackTrace();
+	    return;
 	}
+	if (!daoSecurityUser.update(user)) {
+	    Clients.showNotification("No se pudo guardar usuario", "error", null, "middle_center", 2000);
+	    return;
+	} else
+	    Clients.showNotification("Usuario guardado", "info", null, "middle_center", 2000);
+	passWindow.detach();
+    }
 }

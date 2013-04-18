@@ -1,32 +1,28 @@
 package dao;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.zkoss.zk.ui.Sessions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import database.Quotation;
 import hibernateConnections.GenericDao;
 
+@Repository
 public class DaoQuotation extends GenericDao<Quotation> {
 
-    private Properties properties;
-
-    public DaoQuotation() {
-	properties = new Properties();
-	try {
-	    properties.load(new FileInputStream(Sessions.getCurrent().getWebApp().getRealPath("/resource/config/numeration.properties")));
-	} catch (IOException e) {
-	    System.out.println("The properties wasn't loaded.");
-	}
+    @Autowired
+    public DaoQuotation(SessionFactory sessionFactory) {
+	super(sessionFactory);
     }
 
     public List<Quotation> listByString(String field, String value) {
@@ -41,6 +37,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	currentSession().beginTransaction();
 	Criteria criteria = currentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq(field, value));
+	criteria.addOrder(Order.desc("date"));
 	List<Quotation> list = criteria.list();
 	return list;
     }
@@ -72,36 +69,48 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	currentSession().beginTransaction();
 	Criteria criteria = currentSession().createCriteria(Quotation.class);
 	criteria.setProjection(Projections.max(field));
-	Integer number = (Integer)criteria.uniqueResult();
+	Integer number = (Integer) criteria.uniqueResult();
 	return number == null || number == -1 ? null : number;
     }
 
-    /* (non-Javadoc)
-     * Method that @override method in hibernateConnections.GenericDao.save(java.lang.Object)
-     * @param model Object to save in database
+    public Short getVersionQuotation(Quotation quotation) {
+	currentSession().beginTransaction();
+	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	if (quotation.isType())
+	    criteria.add(Restrictions.eq("newNumber", quotation.getNewNumber()));
+	else
+	    criteria.add(Restrictions.eq("modernizationNumber", quotation.getModernizationNumber()));
+	criteria.setProjection(Projections.max("versionNumber"));
+	Short version = (Short) criteria.uniqueResult();
+	return version == null ? null : version;
+    }
+
+    /**
+     * @param quotation
+     *            Object to save in database.
+     * @param update
+     *            Boolean for generate version number of quotation (Only change the price, not more).
      * @return true if saved / false if not saved
-     * @see hibernateConnections.GenericDao#save(java.lang.Object)
      */
-    @Override
-    public Boolean save(Quotation quotation) {
+    public Boolean save(Quotation quotation, Boolean update) {
+	quotation.setDate(new Date());
 	Session session = currentSession();
 	try {
 	    session.beginTransaction();
-	    if (quotation.isType()) {
+	    if (!update) {
+		session.evict(quotation);
+		quotation.setVersionNumber((short) (getVersionQuotation(quotation) + 1));
+	    } else if (quotation.isType()) {
 		Integer number = getMaxNumber("newNumber");
-		quotation.setNewNumber(number == null ? Integer.valueOf(properties.getProperty("quotation_new_number")) + 1 : number + 1);
+		quotation.setNewNumber(number == null ? 0 : number + 1);
 		quotation.setModernizationNumber(-1);
-		System.out.println(number);
 	    } else {
 		Integer number = getMaxNumber("modernizationNumber");
-		quotation.setModernizationNumber(number == null ? Integer.valueOf(properties.getProperty("quotation_modernization_number")) + 1 : number + 1);
+		quotation.setModernizationNumber(number == null ? 0 : number + 1);
 		quotation.setNewNumber(-1);
-		System.out.println(number);
 	    }
 	    session.save(quotation);
 	    session.getTransaction().commit();
-	    properties.setProperty("quotation_new_number", quotation.getNewNumber().toString());
-	    properties.setProperty("quotation_modernization_number", quotation.getModernizationNumber().toString());
 	    return true;
 	} catch (HibernateException e) {
 	    session.getTransaction().rollback();

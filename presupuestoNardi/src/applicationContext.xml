@@ -7,5 +7,24 @@
 
 	<bean id="userDetailsService" class="security.UserDetailsServiceImpl">
 	</bean>
+	<context:component-scan base-package="dao">
+	</context:component-scan>
 
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl"
+			value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
+		<property name="user" value="ascensor_admin" />
+		<property name="password" value="leyner.18654277" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- set Hibernate properties in hibernate.cfg.xml file -->
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
 </beans>

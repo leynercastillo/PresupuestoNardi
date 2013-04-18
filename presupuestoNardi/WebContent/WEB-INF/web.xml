@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
-	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-	id="WebApp_ID" version="2.4">
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 	<display-name>nardi</display-name>
-	<listener>
-		<description>ZK JSP Tags environment initiation </description>
-		<display-name>ZK JSP Initiator</display-name>
-		<listener-class>org.zkoss.jsp.spec.JspFactoryContextListener</listener-class>
-	</listener>
-	<listener>
-		<description>
-		Used to cleanup when a session is destroyed</description>
-		<display-name>ZK Session cleaner</display-name>
-		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
-	</listener>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
+		</filter-class>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml
+			classpath:applicationContext-security.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<listener>
+		<description>ZK JSP Tags environment initiation </description>
+		<display-name>ZK JSP Initiator</display-name>
+		<listener-class>org.zkoss.jsp.spec.JspFactoryContextListener
+		</listener-class>
+	</listener>
+	<listener>
+		<description>
+			Used to cleanup when a session is destroyed
+		</description>
+		<display-name>ZK Session cleaner</display-name>
+		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener
+		</listener-class>
+	</listener>
 	<servlet>
 		<description>
-		The ZK loader for ZUML pages</description>
+			The ZK loader for ZUML pages
+		</description>
 		<servlet-name>zkLoader</servlet-name>
 		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
 		<init-param>
@@ -40,7 +65,8 @@
 	</servlet>
 	<servlet>
 		<description>
-		The asynchronous update engine for ZK</description>
+			The asynchronous update engine for ZK
+		</description>
 		<servlet-name>auEngine</servlet-name>
 		<servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
 	</servlet>
@@ -65,13 +91,6 @@
 		<welcome-file>default.jsp</welcome-file>
 		<welcome-file>index.zul</welcome-file>
 	</welcome-file-list>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:applicationContext.xml
-			classpath:applicationContext-security.xml
-		</param-value>
-	</context-param>
 	<error-page>
 		<error-code>403</error-code>
 		<location>/security/authorized.jsp</location>

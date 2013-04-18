@@ -3,15 +3,24 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import database.BusinessPartner;
 import hibernateConnections.GenericDao;
 
+@Repository
 public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
 
+    @Autowired
+    public DaoBusinessPartner(SessionFactory sessionFactory) {
+	super(sessionFactory);
+    }
+    
     public List<BusinessPartner> listActiveOrderByField(String field) {
 	currentSession().beginTransaction();
 	Criteria criteria = currentSession().createCriteria(BusinessPartner.class);

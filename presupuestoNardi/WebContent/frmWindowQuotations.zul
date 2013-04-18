@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<window mode="modal" border="normal" width="90%"
 		apply="org.zkoss.bind.BindComposer"
@@ -11,22 +12,22 @@
 				<listheader label="Nro Prespuesto" width="10%"></listheader>
 				<listheader label="Nro Solicitud" width="10%"></listheader>
 				<listheader label="Cliente" width="30%"></listheader>
-				<listheader label="Fecha" width="15%"></listheader>
 				<listheader label="Equipo" width="15%"></listheader>
+				<listheader label="Fecha" width="15%"></listheader>
 				<listheader label="Vendedor" width="20%"></listheader>
 			</listhead>
 			<template name="model" var="quotation">
 				<listitem>
 					<listcell
-						label="@load(quotation.type ? quotation.newNumber : quotation.modernizationNumber)">
+						label="@load(vm.getQuotationNumber(quotation))">
 					</listcell>
 					<listcell label="@load(quotation.budgetNumber)"></listcell>
 					<listcell label="@load(quotation.partnerName)"></listcell>
 					<listcell
-						label="@load(quotation.date) @converter('formattedDate', format='dd/MM/yyyy')">
+						label="@load(vm.getTeam(quotation))">
 					</listcell>
 					<listcell
-						label="@load(vm.getTeam(quotation.elevatorQuantity, quotation.basicDataByElevatorType.name))">
+						label="@load(quotation.date) @converter('formattedDate', format='dd/MM/yyyy')">
 					</listcell>
 					<listcell label="@load(quotation.seller)"></listcell>
 				</listitem>

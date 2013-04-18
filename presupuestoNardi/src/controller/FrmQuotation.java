@@ -16,8 +16,6 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -25,7 +23,7 @@ import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zk.ui.event.InputEvent;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -41,6 +39,13 @@ import database.Budget;
 import database.Quotation;
 
 public class FrmQuotation {
+    
+    @WireVariable
+    private DaoBasicdata daoBasicdata;
+    @WireVariable
+    private DaoQuotation daoQuotation;
+    @WireVariable
+    private DaoBudget daoBudget;
 
     private final String seleccione = new String("--Seleccione--");
     private final String dash = new String("-");
@@ -80,11 +85,11 @@ public class FrmQuotation {
     private ListModel<String> listSeller;
 
     public Boolean getDisabledPrint() {
-        return disabledPrint;
+	return disabledPrint;
     }
 
     public void setDisabledPrint(Boolean disabledPrint) {
-        this.disabledPrint = disabledPrint;
+	this.disabledPrint = disabledPrint;
     }
 
     public ListModel<String> getListSeller() {
@@ -343,7 +348,7 @@ public class FrmQuotation {
 	return new ValidateZK().getNoEmpty();
     }
 
-    public Validator getNoZero(){
+    public Validator getNoZero() {
 	return new ValidateZK().getNoZero();
     }
 
@@ -387,7 +392,6 @@ public class FrmQuotation {
     @NotifyChange("*")
     @Command
     public void restartForm() {
-	DaoBasicdata daoBasicdata = new DaoBasicdata();
 	quotation = new Quotation();
 	quotation.setRifType(new Character('Z'));
 	quotation.setDate(new Date());
@@ -408,6 +412,7 @@ public class FrmQuotation {
 	quotation.setAccessSytem(false);
 	quotation.setFirefighterKeychain(false);
 	quotation.setTotalPrice(0);
+	quotation.setVersionNumber(new Short("1"));
 	updateQuotationNumber();
 	budget = new Budget();
 	cabinModel = new BasicData();
@@ -445,7 +450,6 @@ public class FrmQuotation {
     @NotifyChange({ "quotation", "cabinModel" })
     @Command
     public void searchQuotation(@BindingParam("field") String field, @BindingParam("val") String val) {
-	DaoQuotation daoQuotation = new DaoQuotation();
 	List<Quotation> listQuotation2 = daoQuotation.listByString(field, val);
 	int listSize = listQuotation2.size();
 	if (listSize == 1) {
@@ -525,7 +529,6 @@ public class FrmQuotation {
 
     @Command
     public void updateQuotationNumber() {
-	DaoQuotation daoQuotation = new DaoQuotation();
 	if (quotation.isType()) {
 	    Integer number = daoQuotation.getMaxNumber("newNumber");
 	    if (number != null)
@@ -546,7 +549,6 @@ public class FrmQuotation {
     @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "listBoothDisplay", "listFloorDisplay", "listDesign", "disabledBudgetNumber" })
     @Command
     public void loadBudgetId(@BindingParam("val") String value) {
-	DaoBudget daoBudget = new DaoBudget();
 	Integer budgetId = Integer.parseInt(value);
 	budget = daoBudget.findByInteger("idBudget", budgetId);
 	if (budget != null) {
@@ -555,7 +557,7 @@ public class FrmQuotation {
 	    budgetToQuotation(budget);
 	    if (quotation.getBasicDataByCabinDesign() != null) {
 		cabinModel = quotation.getBasicDataByCabinDesign().getBasicData();
-		listDesign = new DaoBasicdata().listByParent(cabinModel);
+		listDesign = daoBasicdata.listByParent(cabinModel);
 	    }
 	    updateQuotationNumber();
 	    loadPayment();
@@ -563,30 +565,18 @@ public class FrmQuotation {
 	    Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
     }
 
-    public void loadPayment(){
-	quotation.setPayment("45% de Inicial pagadera a la firma del contrato de venta.\n" +
-			"15% a los 30 días.\n" +
-			"15% a los 60 días.\n" +
-			"10% a los 90 días.\n" +
-			"10% a los 120 días.\n" +
-			"10% para el despacho del equipo a la obra.\n" +
-			"05% para la entrega del equipo.");
+    public void loadPayment() {
+	quotation.setPayment("45% de Inicial pagadera a la firma del contrato de venta.\n" + "15% a los 30 días.\n" + "15% a los 60 días.\n" + "10% a los 90 días.\n" + "10% a los 120 días.\n" + "10% para el despacho del equipo a la obra.\n" + "05% para la entrega del equipo.");
 	quotation.setWarranty("3");
 	quotation.setExtendedWarranty("9");
 	quotation.setDeliveryEstimate("8");
 	quotation.setQuotationValidity("07");
-	quotation.setNotes("- Los precios están sujetos a cambio sin previo aviso.\n" +
-			"- Los precios señalados no incluyen el IVA.\n" +
-			"- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" +
-			"- Las cuotas del material importado han sido calculadas al tipo de cambio del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" +
-			"- El plazo de instalación no debe exceder de más de "+quotation.getDeliveryEstimate()+" meses contados a partir de la firma del contrato, de lo contrario esto afecta directamente los costos del montaje del equipo.\n" +
-			"- El incumplimiento en el pago de las cuotas genera intereses de mora.");
+	quotation.setNotes("- Los precios están sujetos a cambio sin previo aviso.\n" + "- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El plazo de instalación no debe exceder de más de " + quotation.getDeliveryEstimate() + " meses contados a partir de la firma del contrato, de lo contrario esto afecta directamente los costos del montaje del equipo.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.");
     }
 
     @NotifyChange({ "listRifPartner", "listBudgetNumber", "listPartnerName", "listQuotationNumber", "listSeller", "listConstruction" })
     @Command
     public void searchQuotationByField(@BindingParam("field") String field) {
-	DaoQuotation daoQuotation = new DaoQuotation();
 	if (field.compareTo("rifPartner") == 0) {
 	    listRifPartner = new SimpleListModel<String>(daoQuotation.listStringByFields(field));
 	    return;
@@ -616,7 +606,6 @@ public class FrmQuotation {
     @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "disabledBudgetNumber", "disabledPrint" })
     @Command
     public void loadQuotationByField(@BindingParam("field") String field, @BindingParam("val") String value) {
-	DaoQuotation daoQuotation = new DaoQuotation();
 	List<Quotation> list = new ArrayList<Quotation>();
 	if (field.compareTo("budgetNumber") == 0)
 	    list = daoQuotation.listByInt(field, Integer.parseInt(value));
@@ -645,7 +634,7 @@ public class FrmQuotation {
     @NotifyChange({ "listBudgetNumber" })
     @Command
     public void searchBudgetByField(@BindingParam("field") String field) {
-	List<Integer> list = new DaoBudget().listByIntFields(field);
+	List<Integer> list = daoBudget.listByIntFields(field);
 	List<String> list2 = new ArrayList<String>();
 	for (Integer number : list) {
 	    list2.add(number.toString());
@@ -670,7 +659,7 @@ public class FrmQuotation {
     @NotifyChange({ "listDesign" })
     @Command
     public void loadCabinDesign() {
-	listDesign = new DaoBasicdata().listByParent(cabinModel);
+	listDesign = daoBasicdata.listByParent(cabinModel);
 	/*
 	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
 	 * al guardar el objeto budget
@@ -703,7 +692,6 @@ public class FrmQuotation {
     @NotifyChange({ "listBoothDisplay", "listFloorDisplay" })
     @Command
     public void loadBoothFloorDisplay() {
-	DaoBasicdata daoBasicdata = new DaoBasicdata();
 	if (quotation.getBasicDataByControlType() != null) {
 	    String controlType = quotation.getBasicDataByControlType().getName();
 	    if (controlType.indexOf("SISTEL") != -1) {
@@ -722,10 +710,10 @@ public class FrmQuotation {
     }
 
     @Command
-    public void priceUnit(@BindingParam("val") Double value){
+    public void priceUnit(@BindingParam("val") Double value) {
 	Double price = value;
-	quotation.setPriceImportedMaterial(price*0.6);
-	quotation.setPriceNationalMaterial(price*0.4);
+	quotation.setPriceImportedMaterial(price * 0.6);
+	quotation.setPriceNationalMaterial(price * 0.4);
 	BindUtils.postNotifyChange(null, null, quotation, "priceImportedMaterial");
 	BindUtils.postNotifyChange(null, null, quotation, "priceNationalMaterial");
     }
@@ -752,8 +740,7 @@ public class FrmQuotation {
     @NotifyChange("*")
     @Command
     public void save() {
-	DaoQuotation daoQuotation = new DaoQuotation();
-	if (!daoQuotation.save(quotation)) {
+	if (!daoQuotation.save(quotation, disabledPrint)) {
 	    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
 	    return;
 	}

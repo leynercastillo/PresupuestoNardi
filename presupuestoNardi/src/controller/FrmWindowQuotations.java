@@ -58,7 +58,14 @@ public class FrmWindowQuotations {
 	BindUtils.postGlobalCommand(null, null, "selectedQuotation", map);
     }
 
-    public String getTeam(String elevatorQuantity, String elevatorType){
-	return elevatorQuantity+" - "+elevatorType;
+    public String getTeam(Quotation quotation){
+	return quotation.getElevatorQuantity()+" - "+quotation.getBasicDataByElevatorType().getName();
+    }
+
+    public String getQuotationNumber(Quotation quotation){
+	if (quotation.isType())
+	    return "1 - "+quotation.getNewNumber()+" - "+quotation.getVersionNumber();
+	else
+	    return "2 - "+quotation.getModernizationNumber()+" - "+quotation.getVersionNumber();
     }
 }

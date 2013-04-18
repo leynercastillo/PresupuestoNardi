@@ -20,7 +20,7 @@ public class Assembler {
 	@Transactional(readOnly = true)
 	User buildUserFromUserEntity(SecurityUser userModel){
 		/*Datos basicos del usuario*/
-		String username = userModel.getName();
+		String username = userModel.getEmail();
 		String password = userModel.getPassword();
 		boolean enabled = userModel.getStatus() == 'A' ? true : false;
 		boolean accountNonExpired = userModel.getStatus() == 'A' ? true : false;

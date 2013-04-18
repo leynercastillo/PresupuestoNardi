@@ -6,47 +6,48 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 
 import dao.DaoSecurityUser;
 import database.SecurityUser;
 
 public class IndexCtrl {
 
-	private String page;
-	private SecurityUser user;
+    @WireVariable
+    private DaoSecurityUser daoSecurityUser;
 
-	public SecurityUser getUser() {
-		return user;
-	}
+    private String page;
+    private SecurityUser user;
 
-	public void setUser(SecurityUser user) {
-		this.user = user;
-	}
+    public SecurityUser getUser() {
+	return user;
+    }
 
-	public String getPage() {
-		return page;
-	}
+    public void setUser(SecurityUser user) {
+	this.user = user;
+    }
 
-	public void setPage(String page) {
-		this.page = page;
-	}
+    public String getPage() {
+	return page;
+    }
 
-	@Init
-	public void init() {
-		page = new String();
-		User auxUser = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		/*
-		 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no
-		 * almacena email
-		 */
-		user = new DaoSecurityUser()
-				.findByString("name", auxUser.getUsername());
-	}
+    public void setPage(String page) {
+	this.page = page;
+    }
 
-	@NotifyChange("page")
-	@GlobalCommand
-	public void selectedPage(@BindingParam("page") String page) {
-		this.page = page;
-	}
+    @Init
+    public void init() {
+	page = new String();
+	User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	/*
+	 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no almacena email
+	 */
+	user = daoSecurityUser.findByString("email", auxUser.getUsername());
+    }
+
+    @NotifyChange("page")
+    @GlobalCommand
+    public void selectedPage(@BindingParam("page") String page) {
+	this.page = page;
+    }
 }

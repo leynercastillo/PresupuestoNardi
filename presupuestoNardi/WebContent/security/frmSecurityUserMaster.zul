@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<style src="resource/style/styleZK.css"></style>
 	<window title="Maestro de Usuarios" border="normal"

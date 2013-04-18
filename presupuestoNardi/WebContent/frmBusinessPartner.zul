@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<window border="normal" title="Socios de Negocios"
 		apply="org.zkoss.bind.BindComposer" mode="modal"

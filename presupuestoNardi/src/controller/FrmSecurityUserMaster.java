@@ -14,6 +14,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 
 import zk.SecurityUserStatus;
@@ -23,96 +24,91 @@ import database.SecurityUser;
 
 public class FrmSecurityUserMaster {
 
-	private List<SecurityUserStatus> listUsers;
+    @WireVariable
+    private DaoSecurityUser daoSecurityUser;
+    
+    private List<SecurityUserStatus> listUsers;
 
-	public List<SecurityUserStatus> getListUsers() {
-		return listUsers;
-	}
+    public List<SecurityUserStatus> getListUsers() {
+	return listUsers;
+    }
 
-	public void setListUsers(List<SecurityUserStatus> listUsers) {
-		this.listUsers = listUsers;
-	}
+    public void setListUsers(List<SecurityUserStatus> listUsers) {
+	this.listUsers = listUsers;
+    }
 
-	@Init
-	public void init() {
-		restartForm();
-	}
+    @Init
+    public void init() {
+	restartForm();
+    }
 
-	@Command
-	public void restartForm() {
-		listUsers = generateListStatus();
-	}
+    @Command
+    public void restartForm() {
+	listUsers = generateListStatus();
+    }
 
-	@Command
-	public void close() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("page", "");
-		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
-	}
+    @Command
+    public void close() {
+	Map<String, Object> map = new HashMap<String, Object>();
+	map.put("page", "");
+	BindUtils.postGlobalCommand(null, null, "selectedPage", map);
+    }
 
-	@Command
-	public void edit(@BindingParam("user") SecurityUserStatus user) {
-		user.setEditUser(!user.getEditUser());
-		/*
-		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
-		 * todo el objeto
-		 */
-		BindUtils.postNotifyChange(null, null, user, "editUser");
-	}
+    @Command
+    public void edit(@BindingParam("user") SecurityUserStatus user) {
+	user.setEditUser(!user.getEditUser());
+	/*
+	 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
+	 */
+	BindUtils.postNotifyChange(null, null, user, "editUser");
+    }
 
-	@NotifyChange("changed")
-	@Command
-	public void save(@BindingParam("user") SecurityUserStatus user) {
-		DaoSecurityUser daoSecurityUser = new DaoSecurityUser();
-		edit(user);
-		/*
-		 * Al modificar un objeto persistente en la base de datos, este primero
-		 * debe almacenarse en una variable local, para que hibernate no detecte
-		 * dos sesiones abiertas.
-		 */
-		SecurityUser securityUser = user.getUser();
-		ShaEncoding encoding = new ShaEncoding(securityUser.getPassword());
-		try {
-			securityUser.setPassword(encoding.encodingPassword());
-		} catch (NoSuchAlgorithmException e) {
-			Clients.showNotification("No se pudo encriptar la contraseña",
-					"error", null, "end_center", 2000);
-			e.printStackTrace();
-			return;
-		}
-		/*
-		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no
-		 * todo el objeto
-		 */
-		BindUtils.postNotifyChange(null, null, user, "editUser");
-		if (!daoSecurityUser.update(securityUser)) {
-			user.setModified(false);
-			return;
-		}
-		user.setModified(true);
+    @NotifyChange("changed")
+    @Command
+    public void save(@BindingParam("user") SecurityUserStatus user) {
+	edit(user);
+	/*
+	 * Al modificar un objeto persistente en la base de datos, este primero debe almacenarse en una variable local,
+	 * para que hibernate no detecte dos sesiones abiertas.
+	 */
+	SecurityUser securityUser = user.getUser();
+	ShaEncoding encoding = new ShaEncoding(securityUser.getPassword());
+	try {
+	    securityUser.setPassword(encoding.encodingPassword());
+	} catch (NoSuchAlgorithmException e) {
+	    Clients.showNotification("No se pudo encriptar la contraseï¿½a", "error", null, "end_center", 2000);
+	    e.printStackTrace();
+	    return;
 	}
+	/*
+	 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
+	 */
+	BindUtils.postNotifyChange(null, null, user, "editUser");
+	if (!daoSecurityUser.update(securityUser)) {
+	    user.setModified(false);
+	    return;
+	}
+	user.setModified(true);
+    }
 
-	@Command
-	public void changed(@BindingParam("Component") Component component,
-			@BindingParam("user") SecurityUserStatus user) {
-		if (user.getModified() != null)
-			if (user.getModified()) {
-				Clients.showNotification("Guardado", "info", component,
-						"end_center", 2000);
-				user.setModified(null);
-			} else if (!user.getModified()) {
-				Clients.showNotification("No pudo guardar", "error", component,
-						"end_center", 2000);
-				user.setModified(null);
-			}
-	}
+    @Command
+    public void changed(@BindingParam("Component") Component component, @BindingParam("user") SecurityUserStatus user) {
+	if (user.getModified() != null)
+	    if (user.getModified()) {
+		Clients.showNotification("Guardado", "info", component, "end_center", 2000);
+		user.setModified(null);
+	    } else if (!user.getModified()) {
+		Clients.showNotification("No pudo guardar", "error", component, "end_center", 2000);
+		user.setModified(null);
+	    }
+    }
 
-	public List<SecurityUserStatus> generateListStatus() {
-		List<SecurityUser> listUser = new DaoSecurityUser().listAll();
-		List<SecurityUserStatus> listUserStatus = new ArrayList<SecurityUserStatus>();
-		for (SecurityUser securityUser : listUser) {
-			listUserStatus.add(new SecurityUserStatus(securityUser, false));
-		}
-		return listUserStatus;
+    public List<SecurityUserStatus> generateListStatus() {
+	List<SecurityUser> listUser = daoSecurityUser.listAll();
+	List<SecurityUserStatus> listUserStatus = new ArrayList<SecurityUserStatus>();
+	for (SecurityUser securityUser : listUser) {
+	    listUserStatus.add(new SecurityUserStatus(securityUser, false));
 	}
+	return listUserStatus;
+    }
 }

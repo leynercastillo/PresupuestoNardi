@@ -14,7 +14,7 @@
 		<intercept-url pattern="/frmBudget.zul" access="ROLE_BUDGET" />
 		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_BUDGETS" />
 		<intercept-url pattern="/frmQuotation.zul" access="ROLE_QUOTATION" />
-		<intercept-url pattern="/frmWindowBudgets.zul" access="ROLE_WINDOW_QUOTATIONS" />
+		<intercept-url pattern="/frmWindowQuotations.zul" access="ROLE_WINDOW_QUOTATIONS" />
 		<intercept-url pattern="/security/frmSecurityProfile.zul"
 			access="ROLE_SECURITY_PROFILE" />
 		<intercept-url pattern="/security/frmSecurityUserMaster.zul"
