@@ -1,0 +1,31 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<window mode="modal" border="normal" width="90%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmWindowBudgets')"
+		id="windowBudgets" closable="true" title="Solicitudes de presupuestos">
+		<listbox model="@load(vm.listBudget)"
+			selectedItem="@bind(vm.selectedBudget)"
+			onSelect="@command('sendBudget', Budget=vm.selectedBudget)"
+			mold="paging" pageSize="10" pagingPosition="both">
+			<listhead>
+				<listheader label="Nro Pedido" width="10%"></listheader>
+				<listheader label="Cliente" width="30%"></listheader>
+				<listheader label="Fecha" width="15%"></listheader>
+				<listheader label="Ciudad" width="15%"></listheader>
+				<listheader label="Vendedor" width="20%"></listheader>
+			</listhead>
+			<template name="model" var="budget">
+				<listitem>
+					<listcell label="@load(budget.number)"></listcell>
+					<listcell label="@load(budget.partnerName)"></listcell>
+					<listcell label="@load(budget.date) @converter('formattedDate', format='dd/MM/yyyy')"></listcell>
+					<listcell label="@load(budget.constructionCity)">
+					</listcell>
+					<listcell label="@load(budget.seller)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<space></space>
+	</window>
+</zk>

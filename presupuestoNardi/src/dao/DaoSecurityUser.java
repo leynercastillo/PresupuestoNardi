@@ -8,8 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import dao.generic.GenericDao;
 import database.SecurityUser;
-import hibernateConnections.GenericDao;
 
 @Repository
 public class DaoSecurityUser extends GenericDao<SecurityUser> {

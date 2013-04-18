@@ -10,13 +10,13 @@ import org.zkoss.bind.annotation.NotifyChange;
 
 public class FrmMenu {
 
-	@NotifyChange()
-	@Command
-	public void optionSelected(@BindingParam("optionSelected") String optionSelected){
-		if (!optionSelected.trim().isEmpty()){
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("page", optionSelected);
-			BindUtils.postGlobalCommand(null, null, "selectedPage", map);
-		}
+    @NotifyChange()
+    @Command
+    public void optionSelected(@BindingParam("optionSelected") String optionSelected) {
+	if (!optionSelected.trim().isEmpty()) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("page", optionSelected);
+	    BindUtils.postGlobalCommand(null, null, "selectedPage", map);
 	}
+    }
 }

@@ -5,7 +5,7 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="userDetailsService" class="security.UserDetailsServiceImpl">
+	<bean id="userDetailsService" class="controller.seguridad.generic.UserDetailsServiceImpl">
 	</bean>
 	<context:component-scan base-package="dao">
 	</context:component-scan>

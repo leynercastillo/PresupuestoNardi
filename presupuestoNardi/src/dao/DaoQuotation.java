@@ -7,15 +7,14 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import dao.generic.GenericDao;
 import database.Quotation;
-import hibernateConnections.GenericDao;
 
 @Repository
 public class DaoQuotation extends GenericDao<Quotation> {
