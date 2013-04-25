@@ -3,8 +3,8 @@
 	<style src="resource/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.ventas.presupuesto.FrmQuotation')"
-		title="Ventas - Presupuesto" closable="true"
-		onClose="@command('close')">
+		closable="true" onClose="@command('close')">
+		<caption label="PRESUPUESTO" zclass="formTitleLabel"></caption>
 		<groupbox closable="false">
 			<grid>
 				<columns>
@@ -75,7 +75,7 @@
 							disabled="@load(vm.disableBeforeSearch)">
 						</combobox>
 						<label sclass="formLabel"
-							value="NroPresupuesto:">
+							value="Nro. Presupuesto:">
 						</label>
 						<div>
 							<intbox width="11%" style="float: left"
@@ -84,8 +84,7 @@
 							</intbox>
 							<div style="float: right" width="85%">
 								<combobox width="81%"
-									buttonVisible="false" 
-									disabled="@load(vm.disableBeforeSearch)"
+									buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
 									value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
 									autocomplete="true"
 									autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
@@ -93,8 +92,8 @@
 									onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
 									model="@load(vm.listQuotationNumber)">
 								</combobox>
-								<intbox width="11%" 
-									disabled="true" value="@load(vm.quotation.versionNumber)">
+								<intbox width="11%" disabled="true"
+									value="@load(vm.quotation.versionNumber)">
 								</intbox>
 							</div>
 						</div>
@@ -870,8 +869,8 @@
 							sclass="formLabel">
 						</label>
 						<doublebox
-							value="@bind(vm.quotation.priceImportedMaterial)"
-							disabled="true" hflex="1" format="#.##">
+							value="@bind(vm.quotation.priceImportedMaterial)" disabled="true"
+							hflex="1" format="#.##">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
@@ -882,8 +881,8 @@
 							sclass="formLabel">
 						</label>
 						<doublebox
-							value="@bind(vm.quotation.priceNationalMaterial)"
-							disabled="true" hflex="1" format="#.##">
+							value="@bind(vm.quotation.priceNationalMaterial)" disabled="true"
+							hflex="1" format="#.##">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>

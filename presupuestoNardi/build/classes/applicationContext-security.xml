@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/index.jsp" access="ROLE_USER" />
+		<intercept-url pattern="/index.zul" access="ROLE_USER" />
+		<intercept-url pattern="/frmMenu.zul" access="ROLE_MENU" />
+		<intercept-url pattern="/frmReport.zul" access="ROLE_REPORT" />
+		<intercept-url pattern="/ventas/solicitud/frmBudget.zul" access="ROLE_BUDGET" />
+		<intercept-url pattern="/ventas/solicitud/frmWindowBudgets.zul" access="ROLE_WINDOW_BUDGETS" />
+		<intercept-url pattern="/ventas/presupuesto/frmQuotation.zul" access="ROLE_QUOTATION" />
+		<intercept-url pattern="/ventas/presupuesto/frmWindowQuotations.zul" access="ROLE_WINDOW_QUOTATIONS" />
+		<intercept-url pattern="/seguridad/perfil/frmSecurityProfile.zul"
+			access="ROLE_SECURITY_PROFILE" />
+		<intercept-url pattern="/seguridad/frmSecurityUserMaster.zul"
+			access="ROLE_SECURITY_USERS_MASTER" />
+		<intercept-url pattern="/seguridad/authorized.jsp"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/seguridad/notAuthorized.zul"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/seguridady/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<form-login login-page="/seguridad/login.zul"
+			default-target-url="/seguridad/index.jsp" authentication-failure-url="/seguridad/login.zul?login_error=1" />
+		<logout logout-success-url="/seguridad/login.zul" />
+		<!-- <session-management> <concurrency-control max-sessions="1" /> </session-management> -->
+	</http>
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="sha-256"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

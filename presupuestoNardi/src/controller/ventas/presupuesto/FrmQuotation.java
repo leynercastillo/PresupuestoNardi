@@ -2,8 +2,12 @@ package controller.ventas.presupuesto;
 
 import general.ValidateZK;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +15,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+import org.hibernate.HibernateException;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -39,7 +53,7 @@ import database.Budget;
 import database.Quotation;
 
 public class FrmQuotation {
-    
+
     @WireVariable
     private DaoBasicdata daoBasicdata;
     @WireVariable
@@ -513,17 +527,11 @@ public class FrmQuotation {
     public void updateQuotationNumber() {
 	if (quotation.isType()) {
 	    Integer number = daoQuotation.getMaxNumber("newNumber");
-	    if (number != null)
-		quotation.setNewNumber(number + 1);
-	    else
-		quotation.setNewNumber(Integer.valueOf(properties.getProperty("quotation_new_number")) + 1);
+	    quotation.setNewNumber(number + 1);
 	    BindUtils.postNotifyChange(null, null, quotation, "newNumber");
 	} else {
 	    Integer number = daoQuotation.getMaxNumber("modernizationNumber");
-	    if (number != null)
-		quotation.setModernizationNumber(number + 1);
-	    else
-		quotation.setModernizationNumber(Integer.valueOf(properties.getProperty("quotation_new_number")) + 1);
+	    quotation.setModernizationNumber(number + 1);
 	    BindUtils.postNotifyChange(null, null, quotation, "modernizationNumber");
 	}
     }
@@ -531,6 +539,12 @@ public class FrmQuotation {
     @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "listBoothDisplay", "listFloorDisplay", "listDesign", "disabledBudgetNumber" })
     @Command
     public void loadBudgetId(@BindingParam("val") String value) {
+	for (int i = 0; i < value.length(); i++) {
+	    if (!Character.isDigit(value.charAt(i))) {
+		value = "0";
+		break;
+	    }
+	}
 	Integer budgetId = Integer.parseInt(value);
 	budget = daoBudget.findByInteger("idBudget", budgetId);
 	if (budget != null) {
@@ -564,8 +578,8 @@ public class FrmQuotation {
 	    return;
 	} else if (field.compareTo("number") == 0) {
 	    /*
-	     * Se cambia el nombre del field, ya que en el zul, se debe enviar
-	     * una variable obligatoriamente y se utilizan dos metodos.
+	     * Se cambia el nombre del field, ya que en el zul, se debe enviar una variable obligatoriamente y se
+	     * utilizan dos metodos.
 	     */
 	    listBudgetNumber = new SimpleListModel<String>(daoQuotation.listStringByFields("budgetNumber"));
 	    return;
@@ -592,6 +606,14 @@ public class FrmQuotation {
 	if (field.compareTo("budgetNumber") == 0)
 	    list = daoQuotation.listByInt(field, Integer.parseInt(value));
 	else if (field.compareTo("quotationNumber") == 0) {
+	    if (value.isEmpty())
+	    	value = "0";
+	    for (int i = 0; i < value.length(); i++) {
+		if (!Character.isDigit(value.charAt(i))) {
+		    value = "0";
+		    break;
+		}
+	    }
 	    list = daoQuotation.listByInt("newNumber", Integer.parseInt(value));
 	    list.addAll(daoQuotation.listByInt("modernizationNumber", Integer.parseInt(value)));
 	} else
@@ -643,8 +665,7 @@ public class FrmQuotation {
     public void loadCabinDesign() {
 	listDesign = daoBasicdata.listByParent(cabinModel);
 	/*
-	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error
-	 * al guardar el objeto budget
+	 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 	 */
 	quotation.setBasicDataByCabinDesign(null);
     }
@@ -660,8 +681,7 @@ public class FrmQuotation {
 	if (cabinDesign.indexOf("FORMICA") != -1 || floorType.indexOf("OTROS") != -1)
 	    quotation.setDesignSpecial(true);
 	/*
-	 * IMPORTANTE Solo actualizo una propiedad del objeto BUDGET, mas no
-	 * todo el objeto
+	 * IMPORTANTE Solo actualizo una propiedad del objeto BUDGET, mas no todo el objeto
 	 */
 	BindUtils.postNotifyChange(null, null, quotation, "designSpecial");
     }
@@ -719,6 +739,59 @@ public class FrmQuotation {
 	disabledBudgetNumber = new Boolean(false);
     }
 
+    @Command
+    public void createPdf(String quotationNumber) throws SQLException {
+	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
+	try {
+	    Class.forName("org.postgresql.Driver");
+	} catch (ClassNotFoundException e2) {
+	    // TODO Auto-generated catch block
+	    e2.printStackTrace();
+	}
+	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
+	JasperReport jasperReport;
+	try {
+	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
+	} catch (JRException e) {
+	    jasperReport = null;
+	    e.printStackTrace();
+	}
+	Map<String, Object> parameters = new HashMap<String, Object>();
+	parameters.put("type", quotation.isType());
+	parameters.put("new", quotation.getNewNumber());
+	parameters.put("modernization", quotation.getModernizationNumber());
+	parameters.put("version", quotation.getVersionNumber());
+	/*
+	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
+	 */
+	parameters.put("IMAGES_DIR", "../../resource/images/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/");
+	JasperPrint jasperPrint;
+	try {
+	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+	} catch (HibernateException e1) {
+	    jasperPrint = null;
+	    e1.printStackTrace();
+	} catch (JRException e1) {
+	    jasperPrint = null;
+	    e1.printStackTrace();
+	}
+	JRExporter jrExporter = new JRPdfExporter();
+	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/quotation" + quotationNumber + ".pdf");
+	File file = new File(string + "/quotation" + quotationNumber + ".pdf");
+	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
+	if (file.isFile())
+	    file.delete();
+	try {
+	    jrExporter.exportReport();
+	} catch (JRException e) {
+	    System.out.println("Report wasn't export.");
+	}
+	connection.close();
+    }
+
     @NotifyChange("*")
     @Command
     public void save() {
@@ -729,6 +802,22 @@ public class FrmQuotation {
 	/* PREGUNTAR si enviará email */
 	Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
 	restartForm();
+    }
+
+    @Command
+    public void print() throws SQLException {
+	String quotationNumber = new String();
+	if (quotation.isType())
+	    quotationNumber = "1-" + quotation.getNewNumber() + quotation.getVersionNumber();
+	else
+	    quotationNumber = "2-" + quotation.getModernizationNumber() + quotation.getVersionNumber();
+	createPdf(quotationNumber);
+	String report = new String("/resource/reports/quotation" + quotationNumber + ".pdf");
+	Map<String, Object> map = new HashMap<String, Object>();
+	map.put("reportPath", report);
+	map.put("reportTitle", "Presupuesto");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/quotation" + quotationNumber + ".pdf");
+	Window win = (Window) Executions.createComponents("frmReport.zul", null, map);
     }
 
     @Command

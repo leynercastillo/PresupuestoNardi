@@ -1,10 +1,8 @@
 package controller.ventas.solicitud;
 
-import general.Emails;
 import general.ValidateZK;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,8 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.mail.MessagingException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -51,6 +47,8 @@ import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+import springBean.Emails;
+
 import dao.DaoBasicdata;
 import dao.DaoBudget;
 import dao.DaoBusinessPartner;
@@ -74,6 +72,8 @@ public class FrmBudget {
     private DaoSecurityUser daoSecurityUser;
     @WireVariable
     private DaoBusinessPartner daoBusinessPartner;
+    @WireVariable
+    private Emails emails;
 
     private String seleccione = new String("--Seleccione--");
     private final String dash = new String("--");
@@ -762,16 +762,10 @@ public class FrmBudget {
     }
 
     public void sendMail() {
-	Emails emails = new Emails();
-	emails.loadProperties("/resource/config/mail.properties");
 	List<String> listRecipient = new ArrayList<String>();
-	/*listRecipient.add("ventas@ascensoresnardi.com");*/
+	listRecipient.add("ventas@ascensoresnardi.com");
 	listRecipient.add("sistemas@ascensoresnardi.com");
-	try {
-	    emails.sendMail("Presupuesto nro" + budget.getNumber(), listRecipient, message(), adjuntos());
-	} catch (MessagingException e) {
-	    System.out.println("Properties wasn't loaded.");
-	}
+	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + budget.getNumber(), listRecipient, message(), adjuntos());
     }
 
     @NotifyChange({ "*" })
@@ -858,8 +852,12 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value) {
-	if (value.trim().isEmpty())
-	    value = "0";
+	for (int i = 0; i < value.length(); i++) {
+	    if (!Character.isDigit(value.charAt(i))){
+		value = "0";
+		break;
+	    }
+	}
 	Integer budgetId = Integer.parseInt(value);
 	Budget auxBudget = daoBudget.findByInteger(field, budgetId);
 	if (auxBudget != null) {
@@ -930,14 +928,13 @@ public class FrmBudget {
 	try {
 	    Class.forName("org.postgresql.Driver");
 	} catch (ClassNotFoundException e2) {
-	    // TODO Auto-generated catch block
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
 	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
 	JasperReport jasperReport;
 	try {
-	    jasperReport = (JasperReport) JRLoader.loadObject(string + "/budget.jasper");
+	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
 	} catch (JRException e) {
 	    jasperReport = null;
 	    System.out.println("budget.jasper didn't find");
@@ -975,7 +972,7 @@ public class FrmBudget {
     }
 
     @Command
-    public void print() throws JRException, IOException, ClassNotFoundException, SQLException {
+    public void print() throws SQLException {
 	createPdf();
 	String report = new String("/resource/reports/presupuesto" + budget.getNumber() + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
@@ -1081,7 +1078,10 @@ public class FrmBudget {
 	 * .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
 	 */
 	if (budget.isType()) {
-	    budget.setMotorQuantity(Integer.parseInt(event.getValue()));
+	    Integer value = new Integer(0);
+	    if (!event.getValue().isEmpty())
+		value = Integer.parseInt(event.getValue());
+	    budget.setMotorQuantity(value);
 	    BindUtils.postNotifyChange(null, null, budget, "motorQuantity");
 	}
     }

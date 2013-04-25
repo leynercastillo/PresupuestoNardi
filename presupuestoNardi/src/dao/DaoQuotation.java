@@ -1,7 +1,9 @@
 package dao;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -19,9 +21,17 @@ import database.Quotation;
 @Repository
 public class DaoQuotation extends GenericDao<Quotation> {
 
+    private Properties properties;
+
     @Autowired
     public DaoQuotation(SessionFactory sessionFactory) {
 	super(sessionFactory);
+	properties = new Properties();
+	try {
+	    properties.load(this.getClass().getClassLoader().getResourceAsStream("/configuration/numeration.properties"));
+	} catch (IOException e) {
+	    System.out.println("The properties wasn't loaded.");
+	}
     }
 
     public List<Quotation> listByString(String field, String value) {
@@ -69,7 +79,13 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	Criteria criteria = currentSession().createCriteria(Quotation.class);
 	criteria.setProjection(Projections.max(field));
 	Integer number = (Integer) criteria.uniqueResult();
-	return number == null || number == -1 ? null : number;
+	if (number == null || number == -1) {
+	    if (field.compareTo("newNumber") == 0)
+		number = Integer.valueOf(properties.getProperty("quotation_new_number"));
+	    else
+		number = Integer.valueOf(properties.getProperty("quotation_modernization_number"));
+	}
+	return number;
     }
 
     public Short getVersionQuotation(Quotation quotation) {

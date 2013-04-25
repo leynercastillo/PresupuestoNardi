@@ -3,12 +3,11 @@
 	<style src="resource/style/styleZK.css"></style>
 	<window border="normal" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmBudget')"
-		title="Ventas - Solicitud de Presupuesto" closable="true"
-		onClose="@command('close')">
+		closable="true" onClose="@command('close')">
+		<caption label="SOLICITUD DE PRESUPUESTO"
+			zclass="formTitleLabel">
+		</caption>
 		<groupbox closable="false">
-			<caption label="SOLICITUD DE PRESUPUESTO"
-				sclass="titleFormLabel">
-			</caption>
 			<grid>
 				<columns>
 					<column width="15%"></column>
