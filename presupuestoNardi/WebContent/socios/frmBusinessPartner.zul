@@ -5,7 +5,7 @@
 		viewModel="@id('vm') @init('controller.socios.FrmBusinessPartner')" id="win"
 		width="60%">
 		<style src="resource/style/styleZK.css"></style>
-		<grid>
+		<grid zclass="grid">
 			<columns>
 				<column width="15%" align="right"></column>
 				<column width="45%"></column>

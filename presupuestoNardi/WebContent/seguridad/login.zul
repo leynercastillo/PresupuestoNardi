@@ -1,23 +1,28 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
-	<window border="normal" width="400px" position="center" mode="modal"
-		title="Acceso">
+	<style src="../resource/style/styleZK.css"></style>
+	<window border="normal" width="400px" position="center" mode="modal">
+		<caption label="Acceso" sclass="formTitleLabel"></caption>
 		<groupbox>
 			<h:form id="f" name="f" action="../j_spring_security_check"
 				method="POST" xmlns:h="native">
-				<grid>
+				<grid zclass="grid">
 					<columns>
 						<column width="110px"></column>
 						<column></column>
 					</columns>
 					<rows>
 						<row>
-							<label value="Usuario:"></label>
+							<label value="Usuario:"
+								sclass="formLabel">
+							</label>
 							<textbox id="u" name="j_username" />
 						</row>
 						<row>
-							<label value="Contraseña:"></label>
+							<label value="Contraseña:"
+								sclass="formLabel">
+							</label>
 							<textbox id="p" type="password"
 								name="j_password" />
 						</row>

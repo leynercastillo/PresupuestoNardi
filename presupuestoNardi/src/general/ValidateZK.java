@@ -1,9 +1,14 @@
 package general;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.impl.InputElement;
 
 public class ValidateZK {
@@ -67,8 +72,7 @@ public class ValidateZK {
     }
 
     /**
-     * Metodo que valida que un combobox no tenga seleccionado la opción por
-     * defecto del sistema '--Seleccione--'.
+     * Metodo que valida que un combobox no tenga seleccionado nada.
      * 
      * Solo aplica para componentes ZK.
      * 
@@ -78,15 +82,22 @@ public class ValidateZK {
 	return new AbstractValidator() {
 	    @Override
 	    public void validate(ValidationContext ctx) {
-		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
-		String string = inputElement.getText();
-		if (string.trim().isEmpty() || string.equals("--Seleccione--")) {
-		    throw new WrongValueException(inputElement, "Seleccione una opcion valida.");
+		Combobox combo = (Combobox) ctx.getBindContext().getValidatorArg("component");
+		if (combo.getSelectedItem() == null) {
+		    throw new WrongValueException(combo, "Seleccione una opcion valida.");
 		}
 	    }
 	};
     }
 
+    /**
+     * Metodo que valida que un componente tenga no sea vacio ni tenga valor 0. Se aconseja 
+     * para usar en intbox o spinner.
+     * 
+     * Solo aplica para componentes ZK.
+     * 
+     * @return {@link Validator}
+     */
     public Validator getNoZero() {
 	return new AbstractValidator() {
 	    @Override
@@ -94,6 +105,35 @@ public class ValidateZK {
 		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 		String string = inputElement.getText();
 		if (string.trim().isEmpty() || Integer.valueOf(string) <= 0) {
+		    throw new WrongValueException(inputElement, "Ingrese una cantidad valida.");
+		}
+	    }
+	};
+    }
+
+    /**
+     * Metodo que valida que un componente tenga no sea vacio ni tenga valor 0. Se aconseja 
+     * para usar en doublebox o doublespinner.
+     * 
+     * Solo aplica para componentes ZK.
+     * 
+     * @return {@link Validator}
+     */
+    public Validator getNoZeroDouble() {
+	return new AbstractValidator() {
+	    @Override
+	    public void validate(ValidationContext ctx) {
+		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
+		NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+		Double number = new Double(0);
+		try {
+		    number = format.parse(inputElement.getText()).doubleValue();
+		} catch (WrongValueException e) {
+		    e.printStackTrace();
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		if (number <= 0) {
 		    throw new WrongValueException(inputElement, "Ingrese una cantidad valida.");
 		}
 	    }

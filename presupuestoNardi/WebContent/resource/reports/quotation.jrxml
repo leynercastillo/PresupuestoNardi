@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="351"/>
+	<property name="ireport.y" value="355"/>
 	<parameter name="type" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -24,14 +24,14 @@
 	T0.partner_name "Cliente",
 	T0.construction "Obra",
 	T0.contact_name "Atencion",
-	T0.elevator_quantity || CASE WHEN T0.elevator_quantity > 1 THEN ' - ASCENSORES ' ELSE ' - ASCENSOR' END || (
+	T0.elevator_quantity || CASE WHEN T0.elevator_quantity > 1 THEN ' - ASCENSORES ' ELSE ' - ASCENSOR ' END || (
 		SELECT
 			T1.name
 		FROM
 			basic_data T1
 		WHERE
 			T1.id_basic = T0.elevator_type) "Equipos",
-	'Ud. Esta siendo atendido por '|| T0.seller || ' (' ||
+	'Ud. esta siendo atendido por '|| T0.seller || ' (' ||
 	(SELECT
 			T3.phone
 		FROM
@@ -78,10 +78,10 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Presupuesto Nro:]]></text>
+				<text><![CDATA[PRESUPUESTO NRO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="436" y="70" width="140" height="15"/>
+				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="449" y="70" width="127" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10"/>
 				</textElement>
@@ -92,21 +92,21 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="32c9bf4d-f64c-4963-ac23-b34e3c998c44" x="436" y="85" width="140" height="15"/>
+				<reportElement uuid="32c9bf4d-f64c-4963-ac23-b34e3c998c44" x="449" y="85" width="127" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1b8e4098-de64-4e00-ba82-91034195ac61" x="60" y="334" width="100" height="20"/>
+				<reportElement uuid="1b8e4098-de64-4e00-ba82-91034195ac61" x="60" y="334" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cliente:]]></text>
+				<text><![CDATA[CLIENTE:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="d4765a2c-9d00-4788-bfb7-73846550bc88" x="160" y="334" width="416" height="20"/>
@@ -116,11 +116,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="93b654f1-27be-4d12-82de-6b9097243da6" x="60" y="354" width="100" height="20"/>
+				<reportElement uuid="93b654f1-27be-4d12-82de-6b9097243da6" x="60" y="354" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Obra:]]></text>
+				<text><![CDATA[OBRA:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="8b34cdcf-cfe5-4de9-a45b-29cb40baa81f" x="160" y="354" width="416" height="20"/>
@@ -130,11 +130,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Obra}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="beee4dfb-452b-4893-bb02-84b094aad4a9" x="60" y="374" width="100" height="20"/>
+				<reportElement uuid="beee4dfb-452b-4893-bb02-84b094aad4a9" x="60" y="374" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Atención:]]></text>
+				<text><![CDATA[ATENCION:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="1fbf6522-16f6-4b9f-acb9-2c88d8c483eb" x="160" y="374" width="416" height="20"/>
@@ -144,11 +144,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Atencion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4068636d-d67d-46a4-aeec-8565a295b86a" x="60" y="394" width="100" height="20"/>
+				<reportElement uuid="4068636d-d67d-46a4-aeec-8565a295b86a" x="60" y="394" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Equipos]]></text>
+				<text><![CDATA[EQUIPOS:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="bf8f9319-4e06-4a95-b118-2067d2dbfb63" x="160" y="394" width="416" height="20"/>
@@ -171,7 +171,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[www.ascensoresnardi.com]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="fdb18384-4782-49e4-9c17-45e7275f5764" x="0" y="712" width="576" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="10" isBold="false"/>

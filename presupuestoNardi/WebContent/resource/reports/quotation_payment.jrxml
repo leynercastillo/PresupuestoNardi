@@ -61,7 +61,7 @@
 		<![CDATA[SELECT
 	CASE WHEN T0.TYPE THEN '1-' || T0.new_number || '-' || T0.version_number ELSE '2-' || T0.modernization_number || '-' || T0.version_number END "Numero",
 	T0.elevator_quantity "Cantidad",
-	CASE WHEN T0.elevator_quantity > 1 THEN 'ASCENSORES ' ELSE 'ASCENSOR' END || (
+	CASE WHEN T0.elevator_quantity > 1 THEN 'ASCENSORES ' ELSE 'ASCENSOR ' END || (
 		SELECT
 			T1.name
 		FROM
@@ -111,10 +111,10 @@ WHERE
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Presupuesto Nro:]]></text>
+				<text><![CDATA[PRESUPUESTO NRO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="764c2f05-b13a-430c-9500-941ba73a85a9" x="492" y="10" width="120" height="20"/>
+				<reportElement uuid="764c2f05-b13a-430c-9500-941ba73a85a9" x="505" y="10" width="120" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
@@ -181,9 +181,9 @@ WHERE
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
-				<text><![CDATA[Material Importado]]></text>
+				<text><![CDATA[MATERIAL IMPORTADO]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="3c374ab5-9f95-44a1-a191-701ddf796216" mode="Transparent" x="470" y="70" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -209,9 +209,9 @@ WHERE
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
-				<text><![CDATA[Material Nacional y Mano de Obra]]></text>
+				<text><![CDATA[MATERIAL NACIONAL Y MANO DE OBRA]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="e311013d-c3f0-4c7a-a012-91a388b6f6ac" x="470" y="85" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -237,9 +237,9 @@ WHERE
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
-				<text><![CDATA[Precio unitario total]]></text>
+				<text><![CDATA[PRECIO UNITARIO TOTAL]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="bbf542be-045b-4c09-8b08-bebb9d9f364e" x="470" y="100" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -260,7 +260,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[Bs F.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="3c02007c-8443-4456-90f7-3e4ad9d34452" x="0" y="125" width="100" height="15"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -274,7 +274,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="4e58d635-bb65-4029-85e2-2e12494796ee" x="100" y="125" width="249" height="15"/>
 				<box leftPadding="5">
 					<pen lineWidth="1.0"/>
@@ -288,7 +288,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="9845f085-a62e-4dfb-b990-985e014fc2c9" x="349" y="125" width="121" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -302,7 +302,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio unitario total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="65e0e1fc-5dc5-4bee-9656-1aa5c873af75" x="470" y="125" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -317,105 +317,105 @@ WHERE
 				<textFieldExpression><![CDATA[$V{totalPrice}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2ce93b7b-3a03-4938-980b-77973622d60c" x="0" y="154" width="281" height="20"/>
+				<reportElement uuid="2ce93b7b-3a03-4938-980b-77973622d60c" x="0" y="154" width="349" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Condiciones de pago:]]></text>
+				<text><![CDATA[CONDICIONES DE PAGO:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="96a6182a-8528-4e40-8b72-86712e656313" x="122" y="154" width="480" height="20"/>
+				<reportElement uuid="96a6182a-8528-4e40-8b72-86712e656313" x="140" y="154" width="462" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Condiciones de pago}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d6a9bfac-9632-4005-86a1-684f03aefc28" x="0" y="245" width="281" height="20"/>
+				<reportElement uuid="d6a9bfac-9632-4005-86a1-684f03aefc28" x="0" y="260" width="281" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Garantia:]]></text>
+				<text><![CDATA[GARANTIA:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="eb06aadc-5c6e-4c6c-8262-61ff6fa54889" x="122" y="245" width="181" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eb06aadc-5c6e-4c6c-8262-61ff6fa54889" x="145" y="260" width="209" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Garantia}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="140" y="245" width="462" height="20"/>
+				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="158" y="260" width="443" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
-				<text><![CDATA[meses de garantía. De suscribir contrato de mantenimiento se extiende garantia]]></text>
+				<text><![CDATA[meses de garantia. De suscribir contrato de mantenimiento se extiende garantia]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="21e8e6e2-738a-4ec9-b0fc-7c42b4036f62" x="502" y="245" width="110" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="21e8e6e2-738a-4ec9-b0fc-7c42b4036f62" x="519" y="260" width="110" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Garantia extendida}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ee0b71c8-7bb7-49e5-aa9b-2eb99df7b8fa" x="517" y="245" width="123" height="20"/>
+				<reportElement uuid="ee0b71c8-7bb7-49e5-aa9b-2eb99df7b8fa" x="145" y="279" width="123" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<text><![CDATA[meses mas.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0336f8df-02ef-4927-ba87-09ff575b0bcb" x="0" y="265" width="281" height="20"/>
+				<reportElement uuid="0336f8df-02ef-4927-ba87-09ff575b0bcb" x="0" y="308" width="281" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Plazo de entrega:]]></text>
+				<text><![CDATA[PLAZO DE ENTREGA:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="94b33972-6ae1-48c3-90f7-c748c9ef028c" x="122" y="265" width="159" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="94b33972-6ae1-48c3-90f7-c748c9ef028c" x="145" y="308" width="209" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Plazo de entrega}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b185a27d-959e-43f3-8877-561da7ffee14" x="140" y="265" width="440" height="20"/>
+				<reportElement uuid="b185a27d-959e-43f3-8877-561da7ffee14" x="158" y="308" width="425" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<text><![CDATA[meses aproximados despues de la firma del contrato.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="047784ec-7d1d-4f4d-9798-71173115b97e" x="0" y="285" width="281" height="20"/>
+				<reportElement uuid="047784ec-7d1d-4f4d-9798-71173115b97e" x="0" y="338" width="281" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Validez de presupuesto:]]></text>
+				<text><![CDATA[VALIDEZ DE PRESUPUESTO:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="e9b035e6-a809-41b0-9fdf-85b3b98473ff" x="122" y="285" width="159" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e9b035e6-a809-41b0-9fdf-85b3b98473ff" x="145" y="338" width="209" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Validez de presupuesto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0913be99-a936-4760-a567-2976d922c795" x="140" y="285" width="440" height="20"/>
+				<reportElement uuid="0913be99-a936-4760-a567-2976d922c795" x="159" y="338" width="425" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
 				<text><![CDATA[Dias a partir de sus presentacion.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b4d54c42-1f6f-4669-a637-4140fe86bc64" x="0" y="305" width="159" height="20"/>
+				<reportElement uuid="b4d54c42-1f6f-4669-a637-4140fe86bc64" x="0" y="368" width="159" height="20"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Notas:]]></text>
+				<text><![CDATA[NOTAS:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ab71058b-2023-436f-8bfa-579354171699" x="122" y="305" width="458" height="20"/>
+				<reportElement uuid="ab71058b-2023-436f-8bfa-579354171699" x="145" y="368" width="435" height="20"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>
@@ -431,7 +431,7 @@ WHERE
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Recibido por]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29" x="50" y="591" width="194" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>

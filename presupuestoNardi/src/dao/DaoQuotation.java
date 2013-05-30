@@ -34,6 +34,15 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	}
     }
 
+    public Quotation findById(Quotation quotation) {
+	currentSession().beginTransaction();
+	currentSession().evict(quotation);
+	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	criteria.add(Restrictions.eq("idQuotation", quotation.getIdQuotation()));
+	Object obj = criteria.uniqueResult();
+	return obj == null ? null : (Quotation) obj;
+    }
+
     public List<Quotation> listByString(String field, String value) {
 	currentSession().beginTransaction();
 	Criteria criteria = currentSession().createCriteria(Quotation.class);
@@ -107,14 +116,15 @@ public class DaoQuotation extends GenericDao<Quotation> {
      *            Boolean for generate version number of quotation (Only change the price, not more).
      * @return true if saved / false if not saved
      */
-    public Boolean save(Quotation quotation, Boolean update) {
+    public Boolean save(Quotation quotation) {
 	quotation.setDate(new Date());
 	Session session = currentSession();
 	try {
 	    session.beginTransaction();
-	    if (!update) {
+	    List<Quotation> list = listByInt("budgetNumber", quotation.getBudgetNumber());
+	    if (list.size() > 0) {
 		session.evict(quotation);
-		quotation.setVersionNumber((short) (getVersionQuotation(quotation) + 1));
+		quotation.setVersionNumber((short) (getVersionQuotation(list.get(0)) + 1));
 	    } else if (quotation.isType()) {
 		Integer number = getMaxNumber("newNumber");
 		quotation.setNewNumber(number == null ? 0 : number + 1);

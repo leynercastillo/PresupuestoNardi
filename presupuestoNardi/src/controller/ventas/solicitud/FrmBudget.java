@@ -75,7 +75,7 @@ public class FrmBudget {
     @WireVariable
     private Emails emails;
 
-    private String seleccione = new String("--Seleccione--");
+    private String seleccione;
     private final String dash = new String("--");
     private List<BasicData> listBType;
     private List<BasicData> listElevatorType;
@@ -600,6 +600,7 @@ public class FrmBudget {
     @NotifyChange("*")
     @Command
     public void restartForm() {
+	seleccione = new String("--Seleccione--");
 	budget = new Budget();
 	businessPartner = new BusinessPartner();
 	if (daoBudget.listAll().isEmpty())
@@ -712,6 +713,12 @@ public class FrmBudget {
 	return new ValidateZK().getNoEmail();
     }
 
+    /**
+     * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si la solicitud de presupuesto es
+     * Nueva. Solo aplica para componentes ZK
+     * 
+     * @return {@link Validator}
+     */
     public Validator getNoElevatorQuantity() {
 	return new AbstractValidator() {
 	    @Override
@@ -724,10 +731,11 @@ public class FrmBudget {
 	};
     }
 
-    public Validator getNoDash() {
-	return new ValidateZK().getNoDash();
-    }
-
+    /**
+     * Metodo que valida que se anada una descripcion si se selecciona un diseno formica.
+     * 
+     * @return {@link Validator}
+     */
     public Validator getNoEmptyForFormica() {
 	return new AbstractValidator() {
 	    @Override
@@ -737,19 +745,31 @@ public class FrmBudget {
 		if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("FORMICA") != -1 && str.trim().isEmpty())
 		    throw new WrongValueException(inputElement, "Debe ingresar una descripcion para formica.");
 		if (budget.getBasicDataByFloorType() != null && budget.getBasicDataByFloorType().getName().indexOf("OTROS") != -1 && str.trim().isEmpty())
-		    throw new WrongValueException(inputElement, "Debe ingresar una descripci�n acabados de piso OTROS.");
+		    throw new WrongValueException(inputElement, "Debe ingresar una descripcion acabados de piso OTROS.");
 	    }
 	};
     }
 
-    public String message() {
+    public Validator getNoSelect(){
+	return new ValidateZK().getNoSelect();
+    }
+
+    public Validator getNoZero(){
+	return new ValidateZK().getNoZero();
+    }
+
+    public Validator getNoZeroDouble(){
+	return new ValidateZK().getNoZeroDouble();
+    }
+
+    public String mailMessage() {
 	String seller = new String(budget.getSeller());
 	String message = new String();
 	message = "Presupuesto enviado por " + seller + "\n\nCliente: " + budget.getPartnerName() + "\n\nCantidad ascensores: " + budget.getElevatorQuantity() + "\n\nCiudad: " + budget.getConstructionCity();
 	return message;
     }
 
-    public List<File> adjuntos() {
+    public List<File> mailAttach() {
 	List<File> listAttach = new ArrayList<File>();
 	try {
 	    createPdf();
@@ -763,9 +783,9 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	listRecipient.add("ventas@ascensoresnardi.com");
+	/*listRecipient.add("ventas@ascensoresnardi.com");*/
 	listRecipient.add("sistemas@ascensoresnardi.com");
-	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + budget.getNumber(), listRecipient, message(), adjuntos());
+	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
 
     @NotifyChange({ "*" })
@@ -996,7 +1016,7 @@ public class FrmBudget {
     @Command
     public void loadFans() {
 	String elevatorCapacitance = new String(budget.getBasicDataByElevatorCapacitance().getName());
-	if (elevatorCapacitance.indexOf("320 - 4") != -1 || elevatorCapacitance.indexOf("450 - 6") != -1 || elevatorCapacitance.indexOf("600 - 8") != -1) {
+	if (elevatorCapacitance.indexOf("320 Kg - 4 Pers") != -1 || elevatorCapacitance.indexOf("450 Kg - 6 Pers") != -1 || elevatorCapacitance.indexOf("600 Kg - 8 Pers") != -1) {
 	    listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
 	    listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());
 	} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
@@ -1004,9 +1024,9 @@ public class FrmBudget {
 	    listFan.addAll(daoBasicdata.listByField("BUDGET", "FAN 2"));
 	    /*
 	     * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType asignados. Esto se
-	     * hace porque no se sabra que tipo de Capacidad se a�adira.
+	     * hace porque no se sabra que tipo de Capacidad se anadira.
 	     */
-	    listRoofType = daoBasicdata.listByParent(daoBasicdata.findByName("BUDGET", "ELEVATOR CAPACITANCE", "450 - 6"));
+	    listRoofType = daoBasicdata.listByParent(daoBasicdata.findByName("BUDGET", "ELEVATOR CAPACITANCE", "450 Kg - 6 Pers"));
 	} else {
 	    listFan = daoBasicdata.listByField("BUDGET", "FAN 2");
 	    listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());

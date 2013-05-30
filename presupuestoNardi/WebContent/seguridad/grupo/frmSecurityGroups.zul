@@ -4,7 +4,7 @@
 	<window title="Gestión Grupos" border="normal" closable="true"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.seguridad.grupo.FrmSecurityGroups')">
-		<grid>
+		<grid zclass="grid">
 			<columns>
 				<column width="15%"></column>
 				<column width="27%"></column>

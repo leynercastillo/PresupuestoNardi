@@ -9,12 +9,13 @@
 			onSelect="@command('sendQuotation', quotation=vm.selectedQuotation)"
 			mold="paging" pageSize="10" pagingPosition="both">
 			<listhead>
-				<listheader label="Nro Prespuesto" width="10%"></listheader>
-				<listheader label="Nro Solicitud" width="10%"></listheader>
+				<listheader align="right" label="Nro Prespuesto" width="10%"></listheader>
+				<listheader align="right" label="Nro Solicitud" width="10%"></listheader>
 				<listheader label="Cliente" width="30%"></listheader>
 				<listheader label="Equipo" width="15%"></listheader>
 				<listheader label="Fecha" width="15%"></listheader>
-				<listheader label="Vendedor" width="20%"></listheader>
+				<listheader align="right" label="Precio" width="10%"></listheader>
+				<listheader label="Vendedor" width="15%"></listheader>
 			</listhead>
 			<template name="model" var="quotation">
 				<listitem>
@@ -29,6 +30,7 @@
 					<listcell
 						label="@load(quotation.date) @converter('formattedDate', format='dd/MM/yyyy')">
 					</listcell>
+					<listcell label="@load(quotation.totalPrice)"></listcell>
 					<listcell label="@load(quotation.seller)"></listcell>
 				</listitem>
 			</template>

@@ -41,6 +41,7 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
@@ -70,6 +71,7 @@ public class FrmQuotation {
     private Boolean disableBeforeSearch;
     private Boolean disabledBudgetNumber;
     private Boolean disabledPrint;
+    private Boolean disabledEdit;
     private BasicData cabinModel;
     private List<BasicData> listRifType;
     private List<BasicData> listElevatorType;
@@ -91,12 +93,29 @@ public class FrmQuotation {
     private List<BasicData> listHeight;
     private List<BasicData> listDoorframeHammered;
     private List<BasicData> listControlType;
+    private List<BasicData> listRoofType;
     private ListModel<String> listQuotationNumber;
     private ListModel<String> listRifPartner;
     private ListModel<String> listBudgetNumber;
     private ListModel<String> listPartnerName;
     private ListModel<String> listConstruction;
     private ListModel<String> listSeller;
+
+    public Boolean getDisabledEdit() {
+	return disabledEdit;
+    }
+
+    public void setDisabledEdit(Boolean disabledEdit) {
+	this.disabledEdit = disabledEdit;
+    }
+
+    public List<BasicData> getListRoofType() {
+	return listRoofType;
+    }
+
+    public void setListRoofType(List<BasicData> listRoofType) {
+	this.listRoofType = listRoofType;
+    }
 
     public Boolean getDisabledPrint() {
 	return disabledPrint;
@@ -392,6 +411,25 @@ public class FrmQuotation {
 	};
     }
 
+    public Validator getWasApproved() {
+	return new AbstractValidator() {
+	    @Override
+	    public void validate(ValidationContext ctx) {
+		Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
+		if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
+		    List<Quotation> list = daoQuotation.listByInt("budgetNumber", quotation.getBudgetNumber());
+		    for (Quotation q : list) {
+			if (q.getStatus() == 'A') {
+			    quotation.setStatus('E');
+			    BindUtils.postNotifyChange(null, null, quotation, "status");
+			    throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
+			}
+		    }
+		}
+	    }
+	};
+    }
+
     @Init
     public void init() {
 	properties = new Properties();
@@ -427,12 +465,14 @@ public class FrmQuotation {
 	quotation.setFirefighterKeychain(false);
 	quotation.setTotalPrice(0);
 	quotation.setVersionNumber(new Short("1"));
-	updateQuotationNumber();
+	/* Numero improbable */
+	updateQuotationNumber(-1);
 	budget = new Budget();
 	cabinModel = new BasicData();
 	disableBeforeSearch = new Boolean(true);
 	disabledBudgetNumber = new Boolean(false);
 	disabledPrint = new Boolean(true);
+	disabledEdit = new Boolean(true);
 	listQuotationNumber = new ListModelList<String>();
 	listRifPartner = new ListModelList<String>();
 	listBudgetNumber = new ListModelList<String>();
@@ -441,6 +481,7 @@ public class FrmQuotation {
 	listSeller = new ListModelList<String>();
 	listDesign = new ArrayList<BasicData>();
 	listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
+	listRoofType = daoBasicdata.listByField("", "");
 	listElevatorCapa = daoBasicdata.listByField("BUDGET", "ELEVATOR CAPACITANCE");
 	listSpeed = daoBasicdata.listByField("BUDGET", "SPEED");
 	listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
@@ -524,19 +565,24 @@ public class FrmQuotation {
     }
 
     @Command
-    public void updateQuotationNumber() {
-	if (quotation.isType()) {
-	    Integer number = daoQuotation.getMaxNumber("newNumber");
-	    quotation.setNewNumber(number + 1);
-	    BindUtils.postNotifyChange(null, null, quotation, "newNumber");
-	} else {
-	    Integer number = daoQuotation.getMaxNumber("modernizationNumber");
-	    quotation.setModernizationNumber(number + 1);
-	    BindUtils.postNotifyChange(null, null, quotation, "modernizationNumber");
+    public void updateQuotationNumber(Integer num) {
+	List<Quotation> lisQuotations = daoQuotation.listByInt("budgetNumber", num);
+	if (lisQuotations.size() == 0)
+	    if (quotation.isType()) {
+		Integer number = daoQuotation.getMaxNumber("newNumber");
+		quotation.setNewNumber(number + 1);
+	    } else {
+		Integer number = daoQuotation.getMaxNumber("modernizationNumber");
+		quotation.setModernizationNumber(number + 1);
+		BindUtils.postNotifyChange(null, null, quotation, "modernizationNumber");
+	    }
+	else {
+	    quotation.setNewNumber(lisQuotations.get(0).getNewNumber());
+	    quotation.setModernizationNumber(lisQuotations.get(0).getModernizationNumber());
 	}
     }
 
-    @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "listBoothDisplay", "listFloorDisplay", "listDesign", "disabledBudgetNumber" })
+    @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "listBoothDisplay", "listFloorDisplay", "listDesign", "disabledBudgetNumber", "disabledEdit" })
     @Command
     public void loadBudgetId(@BindingParam("val") String value) {
 	for (int i = 0; i < value.length(); i++) {
@@ -550,12 +596,13 @@ public class FrmQuotation {
 	if (budget != null) {
 	    disableBeforeSearch = new Boolean(true);
 	    disabledBudgetNumber = new Boolean(true);
+	    disabledEdit = new Boolean(false);
 	    budgetToQuotation(budget);
 	    if (quotation.getBasicDataByCabinDesign() != null) {
 		cabinModel = quotation.getBasicDataByCabinDesign().getBasicData();
 		listDesign = daoBasicdata.listByParent(cabinModel);
 	    }
-	    updateQuotationNumber();
+	    updateQuotationNumber(budgetId);
 	    loadPayment();
 	} else
 	    Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
@@ -599,15 +646,21 @@ public class FrmQuotation {
 	}
     }
 
-    @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "disabledBudgetNumber", "disabledPrint" })
+    @NotifyChange({ "disableBeforeSearch", "cabinModel", "quotation", "disabledBudgetNumber", "disabledPrint", "disabledEdit" })
     @Command
     public void loadQuotationByField(@BindingParam("field") String field, @BindingParam("val") String value) {
 	List<Quotation> list = new ArrayList<Quotation>();
-	if (field.compareTo("budgetNumber") == 0)
+	if (field.compareTo("budgetNumber") == 0) {
+	    for (int i = 0; i < value.length(); i++) {
+		if (!Character.isDigit(value.charAt(i))) {
+		    value = "0";
+		    break;
+		}
+	    }
 	    list = daoQuotation.listByInt(field, Integer.parseInt(value));
-	else if (field.compareTo("quotationNumber") == 0) {
+	} else if (field.compareTo("quotationNumber") == 0) {
 	    if (value.isEmpty())
-	    	value = "0";
+		value = "0";
 	    for (int i = 0; i < value.length(); i++) {
 		if (!Character.isDigit(value.charAt(i))) {
 		    value = "0";
@@ -624,6 +677,7 @@ public class FrmQuotation {
 	    disableBeforeSearch = new Boolean(true);
 	    disabledBudgetNumber = new Boolean(true);
 	    disabledPrint = new Boolean(false);
+	    disabledEdit = new Boolean(true);
 	    if (quotation.getBasicDataByCabinDesign() != null)
 		cabinModel = quotation.getBasicDataByCabinDesign().getBasicData();
 	} else if (listSize == 0) {
@@ -639,6 +693,7 @@ public class FrmQuotation {
     @Command
     public void searchBudgetByField(@BindingParam("field") String field) {
 	List<Integer> list = daoBudget.listByIntFields(field);
+
 	List<String> list2 = new ArrayList<String>();
 	for (Integer number : list) {
 	    list2.add(number.toString());
@@ -727,9 +782,10 @@ public class FrmQuotation {
 	disableBeforeSearch = new Boolean(true);
 	disabledBudgetNumber = new Boolean(true);
 	disabledPrint = new Boolean(false);
+	disabledEdit = new Boolean(true);
     }
 
-    @NotifyChange({ "quotation", "disableBeforeSearch", "disabledBudgetNumber" })
+    @NotifyChange({ "quotation", "disableBeforeSearch", "disabledBudgetNumber", "disabledEdit" })
     @Command
     public void search() {
 	restartForm();
@@ -737,6 +793,7 @@ public class FrmQuotation {
 	quotation.setModernizationNumber(0);
 	disableBeforeSearch = new Boolean(false);
 	disabledBudgetNumber = new Boolean(false);
+	disabledEdit = new Boolean(true);
     }
 
     @Command
@@ -745,7 +802,6 @@ public class FrmQuotation {
 	try {
 	    Class.forName("org.postgresql.Driver");
 	} catch (ClassNotFoundException e2) {
-	    // TODO Auto-generated catch block
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
@@ -795,13 +851,28 @@ public class FrmQuotation {
     @NotifyChange("*")
     @Command
     public void save() {
-	if (!daoQuotation.save(quotation, disabledPrint)) {
-	    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-	    return;
+	Quotation auxQuotation = daoQuotation.findById(quotation);
+	System.out.println("cambiad: "+quotation.getStatus()+"; actual: "+auxQuotation.getStatus());
+	if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
+	    if (!daoQuotation.save(quotation)) {
+		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		return;
+	    }
+	} else if (quotation.getStatus() != auxQuotation.getStatus()) {
+	    if (!daoQuotation.update(quotation)) {
+		Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
+		return;
+	    }
 	}
 	/* PREGUNTAR si enviará email */
-	Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
+	Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
 	restartForm();
+    }
+
+    @NotifyChange({ "disabledEdit" })
+    @Command
+    public void edit() {
+	disabledEdit = new Boolean(false);
     }
 
     @Command

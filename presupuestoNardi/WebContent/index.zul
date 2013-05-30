@@ -7,8 +7,8 @@
 			<hbox>
 				<label value="@load(vm.user.name)"></label>
 				<space></space>
-				<a label="Cerrar sesion"
-					href="/j_spring_security_logout" style="color: blue">
+				<a href="/j_spring_security_logout"
+					label="Cerrar sesion" style="color: blue">
 				</a>
 			</hbox>
 		</toolbar>

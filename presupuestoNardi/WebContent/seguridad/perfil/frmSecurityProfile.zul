@@ -5,7 +5,7 @@
 		viewModel="@id('vm') @init('controller.seguridad.perfil.FrmSecurityProfile')"
 		title="Perfil de usuario" closable="true"
 		onClose="@command('close')">
-		<grid>
+		<grid zclass="grid">
 			<columns>
 				<column width="130px"></column>
 				<column></column>

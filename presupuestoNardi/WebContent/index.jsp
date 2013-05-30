@@ -5,25 +5,27 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<z:zkhead />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="-1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Ascensores Nardi, C.A.</title>
-	<link rel="stylesheet" type="text/css" href="resource/style/stylePage.css"></link>
+<z:zkhead />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Ascensores Nardi, C.A.</title>
+<link rel="stylesheet" type="text/css"
+	href="resource/style/stylePage.css"></link>
+<link rel="icon" type="image/png" href="resource/images/icons/logo.png" />
 </head>
 <body style="height: auto">
 	<%
-    	request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE, Boolean.TRUE);
+	    request.setAttribute(org.zkoss.zk.ui.sys.Attributes.NO_CACHE, Boolean.TRUE);
 	%>
 	<z:page>
 		<z:window>
 			<div class="page">
 				<div class="aside">
-					<jsp:include page="/frmMenu.zul"/>
+					<jsp:include page="/frmMenu.zul" />
 				</div>
 				<div class="section-main">
-					<jsp:include page="/index.zul"/>
+					<jsp:include page="/index.zul" />
 				</div>
 			</div>
 		</z:window>
