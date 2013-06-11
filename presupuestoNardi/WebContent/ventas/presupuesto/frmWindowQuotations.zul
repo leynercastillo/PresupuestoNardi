@@ -1,16 +1,21 @@
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
-	<window mode="modal" border="normal" width="90%"
-		apply="org.zkoss.bind.BindComposer"
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" id="windowQuotations" mode="modal"
+		title="Presupuestos"
 		viewModel="@id('vm') @init('controller.ventas.presupuesto.FrmWindowQuotations')"
-		id="windowQuotations" closable="true" title="Presupuestos">
-		<listbox model="@load(vm.listQuotations)"
-			selectedItem="@bind(vm.selectedQuotation)"
+		width="90%">
+		<listbox model="@load(vm.listQuotations)" mold="paging"
 			onSelect="@command('sendQuotation', quotation=vm.selectedQuotation)"
-			mold="paging" pageSize="10" pagingPosition="both">
+			pageSize="10" pagingPosition="both"
+			selectedItem="@bind(vm.selectedQuotation)">
 			<listhead>
-				<listheader align="right" label="Nro Prespuesto" width="10%"></listheader>
-				<listheader align="right" label="Nro Solicitud" width="10%"></listheader>
+				<listheader align="right" label="Nro Prespuesto"
+					width="10%">
+				</listheader>
+				<listheader align="right" label="Nro Solicitud"
+					width="10%">
+				</listheader>
 				<listheader label="Cliente" width="30%"></listheader>
 				<listheader label="Equipo" width="15%"></listheader>
 				<listheader label="Fecha" width="15%"></listheader>
@@ -24,8 +29,7 @@
 					</listcell>
 					<listcell label="@load(quotation.budgetNumber)"></listcell>
 					<listcell label="@load(quotation.partnerName)"></listcell>
-					<listcell
-						label="@load(vm.getTeam(quotation))">
+					<listcell label="@load(vm.getTeam(quotation))">
 					</listcell>
 					<listcell
 						label="@load(quotation.date) @converter('formattedDate', format='dd/MM/yyyy')">

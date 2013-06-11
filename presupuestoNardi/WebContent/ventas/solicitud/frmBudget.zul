@@ -1,9 +1,9 @@
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<style src="resource/style/styleZK.css"></style>
-	<window border="normal" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmBudget')"
-		closable="true" onClose="@command('close')">
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmBudget')">
 		<caption label="SOLICITUD DE PRESUPUESTO"
 			zclass="formTitleLabel">
 		</caption>

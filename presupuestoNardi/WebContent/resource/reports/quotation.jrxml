@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="355"/>
+	<property name="ireport.y" value="351"/>
 	<parameter name="type" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -64,7 +64,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="756" splitType="Stretch">
+		<band height="751" splitType="Stretch">
 			<image>
 				<reportElement uuid="07e748a9-5f7b-40b7-96a0-7948487a2bd5" x="0" y="0" width="180" height="70"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
@@ -179,10 +179,10 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Telefono}]]></textFieldExpression>
 			</textField>
 			<break>
-				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="742" width="576" height="1"/>
+				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="739" width="576" height="1"/>
 			</break>
 			<subreport>
-				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="743" width="576" height="6"/>
+				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="740" width="576" height="6"/>
 				<subreportParameter name="new">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -199,10 +199,10 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_detail.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="748" width="576" height="1"/>
+				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="745" width="576" height="1"/>
 			</break>
 			<subreport>
-				<reportElement uuid="b636592c-0daf-4a80-860d-edc647b67c74" stretchType="RelativeToTallestObject" x="0" y="749" width="576" height="5"/>
+				<reportElement uuid="b636592c-0daf-4a80-860d-edc647b67c74" stretchType="RelativeToTallestObject" x="0" y="746" width="576" height="5"/>
 				<subreportParameter name="new">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
 				</subreportParameter>

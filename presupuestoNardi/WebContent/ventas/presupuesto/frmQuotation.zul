@@ -874,7 +874,7 @@
 			<grid zclass="grid">
 				<columns>
 					<column width="15%" align="center"></column>
-					<column width="20%"></column>
+					<column width="30%"></column>
 					<column width="15%"></column>
 					<column width="20%"></column>
 					<column></column>
@@ -894,7 +894,8 @@
 					</row>
 					<row>
 						<label value="40%" sclass="formLabel"></label>
-						<label value="Material Nacional y Mano de Obra:"
+						<label
+							value="Material Nacional y Mano de Obra de fabricacion:"
 							sclass="formLabel">
 						</label>
 						<doublebox
@@ -905,7 +906,7 @@
 						<space></space>
 					</row>
 					<row>
-						<label value="99%" sclass="formLabel"></label>
+						<label value="100%" sclass="formLabel"></label>
 						<label value="Precio Unitario Total:"
 							sclass="formLabel">
 						</label>
@@ -963,13 +964,22 @@
 								value="@bind(vm.quotation.warranty)">
 							</textbox>
 							<label
-								value="meses de garantía. De suscribir contrato de mantenimiento se extiende garantía">
+								value="meses de garantía y mantenimiento gratuito.">
 							</label>
+						</div>
+					</row>
+					<row>
+						<label value="Garantía extendida:"
+							sclass="formLabel">
+						</label>
+						<div>
 							<textbox cols="2"
 								disabled="@load(vm.disabledEdit)"
 								value="@bind(vm.quotation.extendedWarranty)">
 							</textbox>
-							<label value="meses más."></label>
+							<label
+								value="años por defectos de fabricación e instalación con la suscripcion de un contrato de mantenimiento.">
+							</label>
 						</div>
 					</row>
 					<row>
@@ -1010,7 +1020,7 @@
 					<row>
 						<space></space>
 						<radiogroup
-							selectedItem="@save(vm.quotation.status) @validator(vm.wasApproved, component = self)">
+							selectedItem="@save(vm.quotation.status, before = 'save') @validator(vm.wasApproved, component = self)">
 							<radio
 								checked="@load(vm.quotation.status eq 'A' ? 'true' : false)"
 								disabled="@load(vm.disabledEdit)" label="Aprobado"

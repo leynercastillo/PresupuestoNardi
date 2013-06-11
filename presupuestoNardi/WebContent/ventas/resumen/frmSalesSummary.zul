@@ -1,0 +1,32 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true"
+		viewModel="@id('vm') @init('controller.ventas.resumen.FrmSalesSummary')">
+		<caption label="RESUMENES DE VENTAS" zclass="formTitleLabel"></caption>
+		<listbox model="@load(vm.listQuotations)" mold="paging"
+			onSelect="@command('sendQuotation', quotation=vm.quotation)"
+			pageSize="10" pagingPosition="both"
+			selectedItem="@bind(vm.quotation)">
+			<listhead>
+				<listheader label="Nro Presupuesto" sort="auto"></listheader>
+				<listheader label="Cliente" sort="auto"></listheader>
+				<listheader label="Obra" sort="auto"></listheader>
+				<listheader label="Equipo" sort="auto"></listheader>
+				<listheader label="Vendedor" sort="auto"></listheader>
+			</listhead>
+			<template name="model" var="salesSummary">
+				<listitem>
+					<listcell
+						label="@load(vm.getQuotationNumber(salesSummary))">
+					</listcell>
+					<listcell label="@load(salesSummary.partnerName)"></listcell>
+					<listcell label="@load(salesSummary.partnerName)"></listcell>
+					<listcell label="@load(vm.getTeam(salesSummary))"></listcell>
+					<listcell label="@load(salesSummary.seller)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</window>
+</zk>

@@ -35,6 +35,16 @@
 									</treecell>
 								</treerow>
 							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='ventas/resumen/frmSalesSummary.zul')">
+										<label
+											value="Resumenes de venta">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
 						</treechildren>
 					</tree>
 				</tabpanel>

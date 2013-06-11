@@ -1,6 +1,6 @@
 package database;
 
-// Generated 08-abr-2013 16:54:55 by Hibernate Tools 3.4.0.CR1
+// Generated 10-jun-2013 14:28:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,10 +23,7 @@ import javax.persistence.Table;
 @Table(name = "basic_data", schema = "public")
 public class BasicData implements java.io.Serializable {
 
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -1619618635532027852L;
+    private static final long serialVersionUID = -3178387161743077228L;
     private int idBasic;
     private BasicData basicData;
     private String dataBaseName;

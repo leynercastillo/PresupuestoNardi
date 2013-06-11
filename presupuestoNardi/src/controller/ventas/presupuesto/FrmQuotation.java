@@ -421,10 +421,17 @@ public class FrmQuotation {
 		    for (Quotation q : list) {
 			if (q.getStatus() == 'A') {
 			    quotation.setStatus('E');
+			    quotation.setApprovedDate(null);
 			    BindUtils.postNotifyChange(null, null, quotation, "status");
+			    BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
 			    throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
 			}
 		    }
+		    /* Si no hay ninguna aprobada, excepto la actual, entonces se asigna fecha de aprobacion */
+		    quotation.setApprovedDate(new Date());
+		} else {
+		    quotation.setApprovedDate(null);
+		    BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
 		}
 	    }
 	};
@@ -541,6 +548,7 @@ public class FrmQuotation {
 	quotation.setBasicDataByCabinDesign(budget.getBasicDataByCabinDesign());
 	quotation.setDesignSpecial(budget.getDesignSpecial());
 	quotation.setDesignSpecialComment(budget.getDesignSpecialComment());
+	quotation.setBasicDataByRoofType(budget.getBasicDataByRoofType());
 	quotation.setBasicDataByRailing(budget.getBasicDataByRailing());
 	quotation.setBasicDataByFloorType(budget.getBasicDataByFloorType());
 	quotation.setBasicDataByDoorType(budget.getBasicDataByDoorType());
@@ -609,12 +617,12 @@ public class FrmQuotation {
     }
 
     public void loadPayment() {
-	quotation.setPayment("45% de Inicial pagadera a la firma del contrato de venta.\n" + "15% a los 30 días.\n" + "15% a los 60 días.\n" + "10% a los 90 días.\n" + "10% a los 120 días.\n" + "10% para el despacho del equipo a la obra.\n" + "05% para la entrega del equipo.");
+	quotation.setPayment("60% de Inicial pagadera a la firma del contrato de venta.\n" + "15% a los 30 días.\n" + "15% a los 60 días.\n" + "5% para el despacho del equipo a la obra.\n" + "5% para la entrega del equipo y puesta en marcha.");
 	quotation.setWarranty("3");
-	quotation.setExtendedWarranty("9");
+	quotation.setExtendedWarranty("2");
 	quotation.setDeliveryEstimate("8");
 	quotation.setQuotationValidity("07");
-	quotation.setNotes("- Los precios están sujetos a cambio sin previo aviso.\n" + "- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El plazo de instalación no debe exceder de más de " + quotation.getDeliveryEstimate() + " meses contados a partir de la firma del contrato, de lo contrario esto afecta directamente los costos del montaje del equipo.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.");
+	quotation.setNotes("- Los precios están sujetos a cambio sin previo aviso.\n" + "- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
     }
 
     @NotifyChange({ "listRifPartner", "listBudgetNumber", "listPartnerName", "listQuotationNumber", "listSeller", "listConstruction" })
@@ -693,7 +701,6 @@ public class FrmQuotation {
     @Command
     public void searchBudgetByField(@BindingParam("field") String field) {
 	List<Integer> list = daoBudget.listByIntFields(field);
-
 	List<String> list2 = new ArrayList<String>();
 	for (Integer number : list) {
 	    list2.add(number.toString());
@@ -852,7 +859,6 @@ public class FrmQuotation {
     @Command
     public void save() {
 	Quotation auxQuotation = daoQuotation.findById(quotation);
-	System.out.println("cambiad: "+quotation.getStatus()+"; actual: "+auxQuotation.getStatus());
 	if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
 	    if (!daoQuotation.save(quotation)) {
 		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);

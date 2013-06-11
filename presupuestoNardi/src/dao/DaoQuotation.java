@@ -143,4 +143,32 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	    return false;
 	}
     }
+
+    /**
+     * @param field
+     *            field for which it ordered the list.
+     * @return list of Quotation approved ordered by field.
+     */
+    public List<Quotation> listActiveOrderAscByField(String field) {
+	currentSession().beginTransaction();
+	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	criteria.add(Restrictions.eq("status", 'A'));
+	criteria.addOrder(Order.asc(field).ignoreCase());
+	List<Quotation> list = criteria.list();
+	return list;
+    }
+
+    /**
+     * @param field
+     *            field for which it ordered the list.
+     * @return list of Quotation approved ordered by field.
+     */
+    public List<Quotation> listActiveOrderDescByField(String field) {
+	currentSession().beginTransaction();
+	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	criteria.add(Restrictions.eq("status", 'A'));
+	criteria.addOrder(Order.desc(field).ignoreCase());
+	List<Quotation> list = criteria.list();
+	return list;
+    }
 }
