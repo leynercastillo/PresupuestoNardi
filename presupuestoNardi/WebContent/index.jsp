@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.zkoss.org/jsp/zul" prefix="z"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <z:zkhead />
@@ -11,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ascensores Nardi, C.A.</title>
 <link rel="stylesheet" type="text/css"
-	href="resource/style/stylePage.css"></link>
+	href="resource/style/stylePage.css"/>
 <link rel="icon" type="image/png" href="resource/images/icons/logo.png" />
 </head>
 <body style="height: auto">

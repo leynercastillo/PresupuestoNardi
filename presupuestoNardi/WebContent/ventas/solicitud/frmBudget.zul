@@ -1284,19 +1284,19 @@
 			<rows>
 				<row>
 					<div>
-						<button label="Enviar" sclass="formLabel"
+						<button disabled="@load(vm.disabledAll)"
+							image="/resource/images/icons/email.png" label="Enviar"
 							onClick="@command('save', component = cmbBDoorframeType)"
-							disabled="@load(vm.disabledAll)"
-							image="/resource/images/icons/email.png">
+							sclass="formLabel">
 						</button>
-						<button label="Imprimir" sclass="formLabel"
-							onClick="@command('print')"
+						<button
 							disabled="@load(vm.disableAfterSearch ? false : true)"
-							image="/resource/images/icons/print.png">
+							image="/resource/images/icons/print.png" label="Imprimir"
+							onClick="@command('print')" sclass="formLabel">
 						</button>
-						<button label="Cancelar" sclass="formLabel"
-							onClick="@command('restartForm')"
-							image="/resource/images/icons/cancel.png">
+						<button
+							image="/resource/images/icons/cancel.png" label="Cancelar"
+							onClick="@command('restartForm')" sclass="formLabel">
 						</button>
 					</div>
 				</row>

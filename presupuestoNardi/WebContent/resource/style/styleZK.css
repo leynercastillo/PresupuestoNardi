@@ -33,17 +33,25 @@
 /*====================================================================================*/
 
 /*======================Eliminar los borders a los grid===============================*/
-.grid {
+div.z-grid{
 	border: none;
+}
+/*======================Eliminar los colores a los grid===============================*/
+
+/*====================================================================================*/
+tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell, tr.z-grid-odd{
+	background: white;
 }
 /*====================================================================================*/
 
 /*===================Eliminar el efecto hover sobre los grid==========================*/
-tr.z-row-over td.z-row-inner {
-    border-bottom: 1px solid white;
-    border-top: 1px solid white;
-}
 tr.z-row-over td.z-row-inner, tr.z-row-over .z-cell {
     background-image: none;
+    /*border-bottom: 1px solid white;
+    border-top: 1px solid white;*/
+}
+tr.z-row td.z-row-inner, tr.z-row-over .z-cell {
+    background-image: none;
+    border:none;
 }
 /*====================================================================================*/

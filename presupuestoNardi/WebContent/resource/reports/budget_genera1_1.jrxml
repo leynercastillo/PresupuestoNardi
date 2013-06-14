@@ -322,7 +322,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="eb00284a-fd32-4ca5-b634-42173ff7b7cb" x="406" y="101" width="164" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>

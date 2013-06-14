@@ -44,7 +44,6 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.SimpleListModel;
-import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
@@ -714,8 +713,8 @@ public class FrmBudget {
     }
 
     /**
-     * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si la solicitud de presupuesto es
-     * Nueva. Solo aplica para componentes ZK
+     * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si la solicitud de presupuesto es Nueva.
+     * Solo aplica para componentes ZK
      * 
      * @return {@link Validator}
      */
@@ -750,15 +749,15 @@ public class FrmBudget {
 	};
     }
 
-    public Validator getNoSelect(){
+    public Validator getNoSelect() {
 	return new ValidateZK().getNoSelect();
     }
 
-    public Validator getNoZero(){
+    public Validator getNoZero() {
 	return new ValidateZK().getNoZero();
     }
 
-    public Validator getNoZeroDouble(){
+    public Validator getNoZeroDouble() {
 	return new ValidateZK().getNoZeroDouble();
     }
 
@@ -783,7 +782,7 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/*listRecipient.add("ventas@ascensoresnardi.com");*/
+	/* listRecipient.add("ventas@ascensoresnardi.com"); */
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
@@ -865,7 +864,7 @@ public class FrmBudget {
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("listBudget", listBudget2);
-	    Window win = (Window) Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
+	    Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
 	}
     }
 
@@ -873,7 +872,7 @@ public class FrmBudget {
     @Command
     public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value) {
 	for (int i = 0; i < value.length(); i++) {
-	    if (!Character.isDigit(value.charAt(i))){
+	    if (!Character.isDigit(value.charAt(i))) {
 		value = "0";
 		break;
 	    }
@@ -908,7 +907,7 @@ public class FrmBudget {
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("listBudget", listBudget2);
-	    Window win = (Window) Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
+	    Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
 	}
     }
 
@@ -999,7 +998,7 @@ public class FrmBudget {
 	map.put("reportPath", report);
 	map.put("reportTitle", "Solicitud de presupuesto");
 	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/presupuesto" + budget.getNumber() + ".pdf");
-	Window win = (Window) Executions.createComponents("frmReport.zul", null, map);
+	Executions.createComponents("frmReport.zul", null, map);
     }
 
     @NotifyChange({ "listDesign" })
@@ -1131,7 +1130,7 @@ public class FrmBudget {
     public void searchBusinessPartner(@BindingParam("rif") String rif) {
 	businessPartner = daoBusinessPartner.findActiveByRif(rif);
 	if (businessPartner == null) {
-	    Window win = (Window) Executions.createComponents("socios/frmBusinessPartner.zul", null, null);
+	    Executions.createComponents("socios/frmBusinessPartner.zul", null, null);
 	} else {
 	    budget.setPartnerName(businessPartner.getName());
 	    budget.setRifPartner(businessPartner.getRif());

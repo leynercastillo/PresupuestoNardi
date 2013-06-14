@@ -6,15 +6,16 @@
 		viewModel="@id('vm') @init('controller.ventas.resumen.FrmSalesSummary')">
 		<caption label="RESUMENES DE VENTAS" zclass="formTitleLabel"></caption>
 		<listbox model="@load(vm.listQuotations)" mold="paging"
-			onSelect="@command('sendQuotation', quotation=vm.quotation)"
+			onSelect="@command('pdfQuotation')"
 			pageSize="10" pagingPosition="both"
 			selectedItem="@bind(vm.quotation)">
 			<listhead>
-				<listheader label="Nro Presupuesto" sort="auto"></listheader>
-				<listheader label="Cliente" sort="auto"></listheader>
-				<listheader label="Obra" sort="auto"></listheader>
-				<listheader label="Equipo" sort="auto"></listheader>
-				<listheader label="Vendedor" sort="auto"></listheader>
+				<listheader label="Nro Presupuesto"></listheader>
+				<listheader label="Cliente"></listheader>
+				<listheader label="Obra"></listheader>
+				<listheader label="Equipo"></listheader>
+				<listheader label="Fecha aprobacion"></listheader>
+				<listheader label="Vendedor"></listheader>
 			</listhead>
 			<template name="model" var="salesSummary">
 				<listitem>
@@ -24,6 +25,9 @@
 					<listcell label="@load(salesSummary.partnerName)"></listcell>
 					<listcell label="@load(salesSummary.partnerName)"></listcell>
 					<listcell label="@load(vm.getTeam(salesSummary))"></listcell>
+					<listcell
+						label="@load(vm.getDateFormat(salesSummary))">
+					</listcell>
 					<listcell label="@load(salesSummary.seller)"></listcell>
 				</listitem>
 			</template>

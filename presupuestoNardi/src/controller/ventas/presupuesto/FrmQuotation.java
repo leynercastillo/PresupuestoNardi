@@ -43,7 +43,6 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.SimpleListModel;
-import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
@@ -693,7 +692,7 @@ public class FrmQuotation {
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("listQuotations", list);
-	    Window win = (Window) Executions.createComponents("ventas/presupuesto/frmWindowQuotations.zul", null, map);
+	    Executions.createComponents("ventas/presupuesto/frmWindowQuotations.zul", null, map);
 	}
     }
 
@@ -894,7 +893,7 @@ public class FrmQuotation {
 	map.put("reportPath", report);
 	map.put("reportTitle", "Presupuesto");
 	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/quotation" + quotationNumber + ".pdf");
-	Window win = (Window) Executions.createComponents("frmReport.zul", null, map);
+	Executions.createComponents("frmReport.zul", null, map);
     }
 
     @Command

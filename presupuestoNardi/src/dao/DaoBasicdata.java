@@ -19,7 +19,7 @@ public class DaoBasicdata extends GenericDao<BasicData> {
     public DaoBasicdata(SessionFactory sessionFactory) {
 	super(sessionFactory);
     }
-    
+
     public List<BasicData> listByField(String table, String field) {
 	currentSession().beginTransaction();
 	Criteria criteria = currentSession().createCriteria(BasicData.class);

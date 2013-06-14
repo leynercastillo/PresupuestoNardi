@@ -1,0 +1,69 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<style src="../resource/style/styleZK.css"></style>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('controller.contacto.FrmContact')">
+		<grid>
+			<columns>
+				<column width="20%"></column>
+				<column width="50%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<space></space>
+					<label value="Contacto"
+						style="font-size: 2.3em; color: #18184C">
+					</label>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Nombre:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Empresa:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Vendedor:"></label>
+					<combobox model="@load(vm.listSecurityUsers)"
+						readonly="true" width="100%">
+						<template name="model" var="user">
+							<comboitem label="@load(user.name)"></comboitem>
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Ciudad:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Direccion:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Telefono:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Email:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<label sclass="formLabel" value="Comentario:"></label>
+					<textbox width="97%"></textbox>
+				</row>
+				<row>
+					<div align="right">
+						<button label="Enviar" mold="trendy"
+							onClick="@command('send')">
+						</button>
+					</div>
+					<button label="Cancelar" mold="trendy"
+						onClick="@command('cancel')">
+					</button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -14,7 +14,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Window;
 
 import dao.DaoSecurityUser;
 import database.SecurityUser;
@@ -23,7 +22,7 @@ public class FrmSecurityProfile {
 
     @WireVariable
     private DaoSecurityUser daoSecurityUser;
-    
+
     private SecurityUser user;
 
     public SecurityUser getUser() {
@@ -65,6 +64,6 @@ public class FrmSecurityProfile {
     public void frmChangePassword() {
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("user", user);
-	Window win = (Window) Executions.createComponents("seguridad/perfil/frmChangePassword.zul", null, map);
+	Executions.createComponents("seguridad/perfil/frmChangePassword.zul", null, map);
     }
 }
