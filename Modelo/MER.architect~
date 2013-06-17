@@ -4,10 +4,10 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="PostgresUbuntuNardi" />
+   <property key="Logical" value="PostgresNardi" />
    <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://192.168.10.125:5432/ascensor_nardi" />
-   <property key="UID" value="ascensor_admin" />
+   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
+   <property key="UID" value="postgres" />
    <property key="PWD" value="leyner.18654277" />
    <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
@@ -16,10 +16,10 @@
    <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
   <data-source id="DS0">
-   <property key="Logical" value="PostgresUbuntuNardi" />
+   <property key="Logical" value="PostgresNardi" />
    <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://192.168.10.125:5432/ascensor_nardi" />
-   <property key="UID" value="ascensor_admin" />
+   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
+   <property key="UID" value="postgres" />
    <property key="PWD" value="leyner.18654277" />
    <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
@@ -29,7 +29,7 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="70ce2b78-622f-4d73-a8f3-23fbdc6fbc0e" dbcs-ref="DS0" name="PostgresUbuntuNardi" physicalName="PostgresNardi" >
+  <database id="DB0" populated="true" UUID="70ce2b78-622f-4d73-a8f3-23fbdc6fbc0e" dbcs-ref="DS0" name="PostgresNardi" physicalName="PostgresNardi" >
    <catalog id="CAT1" populated="true" UUID="e42b1d25-9f35-469c-88a9-03b7fd000636" name="ascensor_nardi" nativeTerm="database" physicalName="ascensor_nardi" >
     <schema id="SCH2" populated="false" UUID="65c7f993-e754-406b-8241-18b882ae4376" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -791,7 +791,7 @@
     <column id="COL241" populated="true" UUID="55c07429-6b2a-4da2-bf0d-d7c1ce09d06f" autoIncrement="false" autoIncrementSequenceName="contact_address_seq" defaultValue="" name="address" nullable="0" physicalName="address" precision="200" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL242" populated="true" UUID="8b913c93-79e4-4fd9-a571-1a611d575316" autoIncrement="false" autoIncrementSequenceName="contact_phone_seq" defaultValue="" name="phone" nullable="1" physicalName="phone" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL242" populated="true" UUID="8b913c93-79e4-4fd9-a571-1a611d575316" autoIncrement="false" autoIncrementSequenceName="contact_phone_seq" defaultValue="" name="phone" nullable="0" physicalName="phone" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL243" populated="true" UUID="241952e0-e859-48ec-80e5-193765bd9fc6" autoIncrement="false" autoIncrementSequenceName="contact_date_seq" defaultValue="" name="date" nullable="0" physicalName="date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
@@ -800,7 +800,7 @@
     <column id="COL244" populated="true" UUID="8248adce-ab0e-49ec-b32a-05567520d49e" autoIncrement="false" autoIncrementSequenceName="contact_contact_email_seq" defaultValue="" name="contact_email" nullable="0" physicalName="contact_email" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL245" populated="true" UUID="094aea39-83a8-43e4-b12f-5842e66c24d7" autoIncrement="false" autoIncrementSequenceName="contact_comment_seq" defaultValue="" name="comment" nullable="1" physicalName="comment" precision="700" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL245" populated="true" UUID="094aea39-83a8-43e4-b12f-5842e66c24d7" autoIncrement="false" autoIncrementSequenceName="contact_comment_seq" defaultValue="" name="comment" nullable="0" physicalName="comment" precision="700" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL246" populated="true" UUID="bbd3ddb5-37b8-476d-be4c-97b9a0b389cc" autoIncrement="false" autoIncrementSequenceName="contact_status_seq" defaultValue="" name="status" nullable="0" physicalName="status" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
@@ -1012,7 +1012,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0" viewportX="8" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB7" x="48" y="22" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB100" x="368" y="431" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB112" x="1073" y="46" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>

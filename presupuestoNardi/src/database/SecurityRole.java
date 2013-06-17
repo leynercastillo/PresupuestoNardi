@@ -1,6 +1,6 @@
 package database;
 
-// Generated 10-jun-2013 14:28:06 by Hibernate Tools 3.4.0.CR1
+// Generated 17-jun-2013 14:24:15 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,8 +44,8 @@ public class SecurityRole implements java.io.Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "security_group_seq")
-    @SequenceGenerator(name = "security_group_seq", sequenceName = "security_group_id_security_group_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "security_role_seq")
+    @SequenceGenerator(name = "security_role_seq", sequenceName = "security_role_id_security_role_seq")
     @Column(name = "id_security_role", unique = true, nullable = false)
     public int getIdSecurityRole() {
 	return this.idSecurityRole;

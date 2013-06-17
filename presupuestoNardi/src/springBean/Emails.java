@@ -51,8 +51,10 @@ public class Emails {
 	    String[] to = listRecipient.toArray(new String[listRecipient.size()]);
 	    helper.setTo(to);
 	    helper.setText(message);
-	    for (File file : listAttach) {
-		helper.addAttachment(file.getName(), file);
+	    if (listAttach != null) {
+		for (File file : listAttach) {
+		    helper.addAttachment(file.getName(), file);
+		}
 	    }
 	} catch (MessagingException e) {
 	    throw new MailParseException(e);

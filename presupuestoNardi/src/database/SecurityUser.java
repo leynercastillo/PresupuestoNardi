@@ -1,6 +1,6 @@
 package database;
 
-// Generated 10-jun-2013 14:28:06 by Hibernate Tools 3.4.0.CR1
+// Generated 17-jun-2013 14:24:15 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "security_user", schema = "public")
 public class SecurityUser implements java.io.Serializable {
 
-    private static final long serialVersionUID = -2086101010868705178L;
+    private static final long serialVersionUID = -2384110049643640951L;
     private int idSecurityUser;
     private String name;
     private String email;
@@ -33,6 +33,7 @@ public class SecurityUser implements java.io.Serializable {
     private char status;
     private Set<Budget> budgets = new HashSet<Budget>(0);
     private Set<SecurityGroup> securityGroups = new HashSet<SecurityGroup>(0);
+    private Set<Contact> contacts = new HashSet<Contact>(0);
 
     public SecurityUser() {
     }
@@ -46,7 +47,7 @@ public class SecurityUser implements java.io.Serializable {
 	this.status = status;
     }
 
-    public SecurityUser(int idSecurityUser, String name, String email, String password, String phone, char status, Set<Budget> budgets, Set<SecurityGroup> securityGroups) {
+    public SecurityUser(int idSecurityUser, String name, String email, String password, String phone, char status, Set<Budget> budgets, Set<SecurityGroup> securityGroups, Set<Contact> contacts) {
 	this.idSecurityUser = idSecurityUser;
 	this.name = name;
 	this.email = email;
@@ -55,6 +56,7 @@ public class SecurityUser implements java.io.Serializable {
 	this.status = status;
 	this.budgets = budgets;
 	this.securityGroups = securityGroups;
+	this.contacts = contacts;
     }
 
     @Id
@@ -131,6 +133,15 @@ public class SecurityUser implements java.io.Serializable {
 
     public void setSecurityGroups(Set<SecurityGroup> securityGroups) {
 	this.securityGroups = securityGroups;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "securityUser")
+    public Set<Contact> getContacts() {
+	return this.contacts;
+    }
+
+    public void setContacts(Set<Contact> contacts) {
+	this.contacts = contacts;
     }
 
 }

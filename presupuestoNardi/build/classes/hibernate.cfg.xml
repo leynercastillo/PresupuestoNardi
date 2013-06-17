@@ -25,6 +25,7 @@
         <mapping class="database.BusinessPartner" />
         <mapping class="database.BasicData" />
         <mapping class="database.Quotation" />
+        <mapping class="database.Contact" />
         <mapping class="database.Budget" />
     </session-factory>
 </hibernate-configuration>
