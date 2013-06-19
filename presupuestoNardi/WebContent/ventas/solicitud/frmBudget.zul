@@ -8,7 +8,7 @@
 			zclass="formTitleLabel">
 		</caption>
 		<groupbox closable="false">
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="30%"></column>
@@ -193,7 +193,7 @@
 		<groupbox mold="3d" closable="false">
 			<caption label="INFORMACION GENERAL" sclass="formLabel">
 			</caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="20%"></column>
 					<column width="20%"></column>
@@ -400,7 +400,7 @@
 							value="Secuencia de Paradas:">
 						</label>
 						<cell rowspan="3" colspan="2">
-							<grid zclass="grid">
+							<grid>
 								<columns>
 									<column width="20%"></column>
 									<column width="35%"></column>
@@ -530,7 +530,7 @@
 		</groupbox>
 		<groupbox mold="3d" closable="false">
 			<caption label="HUECO" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="20%"></column>
 					<column width="20%"></column>
@@ -588,7 +588,7 @@
 		</groupbox>
 		<groupbox mold="3d" closable="false">
 			<caption label="CABINA" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="15%"></column>
@@ -741,7 +741,7 @@
 		</groupbox>
 		<groupbox mold="3d" closable="false">
 			<caption label="PUERTAS Y MARCOS" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="17%"></column>
 					<column width="17%"></column>
@@ -883,7 +883,7 @@
 		</groupbox>
 		<groupbox mold="3d" closable="false">
 			<caption label="CONTROL" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="20%"></column>
 					<column width="20%"></column>
@@ -995,8 +995,8 @@
 							sclass="formLabel">
 						</label>
 						<cell colspan="4">
-							<groupbox closable="false" mold="3d">
-								<grid zclass="grid">
+							<groupbox closable="false">
+								<grid>
 									<columns>
 										<column width="15%"></column>
 										<column width="15%"></column>
@@ -1123,7 +1123,7 @@
 		</groupbox>
 		<groupbox mold="3d" closable="false">
 			<caption label="ADICIONALES" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="20%"></column>
 					<column width="10%"></column>
@@ -1258,7 +1258,7 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="60%"></column>
@@ -1280,7 +1280,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<grid zclass="grid">
+		<grid>
 			<rows>
 				<row>
 					<div>

@@ -50,7 +50,7 @@ tr.z-row-over td.z-row-inner, tr.z-row-over .z-cell {
     /*border-bottom: 1px solid white;
     border-top: 1px solid white;*/
 }
-tr.z-row td.z-row-inner, tr.z-row-over .z-cell {
+tr.z-row td.z-row-inner, tr.z-row-over .z-cell, tr.z-row .z-cell {
     background-image: none;
     border:none;
 }
