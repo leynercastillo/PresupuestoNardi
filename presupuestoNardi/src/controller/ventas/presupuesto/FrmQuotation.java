@@ -921,9 +921,8 @@ public class FrmQuotation {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/*
-	 * listRecipient.add("ventas@ascensoresnardi.com"); listRecipient.add("logistica@ascensoresnardi.com");
-	 */
+	listRecipient.add("ventas@ascensoresnardi.com");
+	listRecipient.add("logistica@ascensoresnardi.com");
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mailMessage(), mailAttach());
     }
