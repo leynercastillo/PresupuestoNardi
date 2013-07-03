@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import dao.generic.GenericDao;
-import database.SecurityGroup;
 import database.SecurityUser;
 
 @Repository
@@ -21,16 +20,16 @@ public class DaoSecurityUser extends GenericDao<SecurityUser> {
     }
 
     public SecurityUser findByString(String field, String value) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(SecurityUser.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	Object su = criteria.uniqueResult();
 	return su != null ? (SecurityUser) su : null;
     }
 
     public List<SecurityUser> listAll() {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(SecurityUser.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);
 	List<SecurityUser> list = criteria.list();
 	return list;
     }

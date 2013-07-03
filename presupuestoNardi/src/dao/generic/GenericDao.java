@@ -1,6 +1,7 @@
 package dao.generic;
 
 import java.lang.reflect.ParameterizedType;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,14 +9,14 @@ import org.hibernate.SessionFactory;
 public class GenericDao<Model> {
 
     private SessionFactory sessionFactory;
-    
+
     public Class<Model> domainClass = getDomainClass();
 
     public GenericDao(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
-    
-    protected Session currentSession() {
+
+    protected Session getCurrentSession() {
 	return sessionFactory.getCurrentSession();
     }
 
@@ -33,7 +34,7 @@ public class GenericDao<Model> {
      * @return true if saved / false if not saved
      */
     public Boolean save(Model model) {
-	Session session = currentSession();
+	Session session = getCurrentSession();
 	try {
 	    session.beginTransaction();
 	    session.save(model);
@@ -52,7 +53,7 @@ public class GenericDao<Model> {
      * @return true if updated / false if not updated
      */
     public Boolean update(Model model) {
-	Session session = currentSession();
+	Session session = getCurrentSession();
 	try {
 	    session.beginTransaction();
 	    session.merge(model);
@@ -67,11 +68,11 @@ public class GenericDao<Model> {
 
     /**
      * @param model
-     *            Object to save in database
+     *            Object to delete in database
      * @return true if deleted / false if not deleted
      */
     public Boolean delete(Model model) {
-	Session session = currentSession();
+	Session session = getCurrentSession();
 	try {
 	    session.beginTransaction();
 	    session.delete(model);

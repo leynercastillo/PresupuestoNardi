@@ -14,16 +14,15 @@
 	<context:component-scan base-package="springBean">
 	</context:component-scan>
 
-	<!-- Load external files *.properties -->
+	<!-- Load external properties files -->
 	<context:property-placeholder location="classpath*:configuration/*.properties" />
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
-		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="jdbcUrl"
-			value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
-		<property name="user" value="ascensor_admin" />
-		<property name="password" value="leyner.18654277" />
+		<property name="driverClass" value="${db.driverClass}" />
+		<property name="jdbcUrl" value="${db.jdbcUrl}" />
+		<property name="user" value="${db.user}" />
+		<property name="password" value="${db.password}" />
 	</bean>
 
 	<bean id="sessionFactory"

@@ -3,12 +3,13 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="number" class="java.lang.Integer">
+	<parameter name="NUMBER" class="java.lang.Integer">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="IMAGES_DIR" class="java.lang.String"/>
+	<parameter name="REPORT_TITLE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	number AS "Numero",
@@ -16,7 +17,7 @@
 FROM
 	budget
 WHERE
-	number = $P{number}]]>
+	number = $P{NUMBER}]]>
 	</queryString>
 	<field name="Numero" class="java.lang.Integer"/>
 	<field name="Teléfono vendedor" class="java.lang.String"/>
@@ -26,23 +27,26 @@ WHERE
 	<detail>
 		<band height="115" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="9d14dd42-c59d-4697-bea9-502761f32a77" x="0" y="71" width="572" height="21"/>
-				<subreportParameter name="number">
+				<reportElement uuid="9d14dd42-c59d-4697-bea9-502761f32a77" x="0" y="71" width="576" height="21"/>
+				<subreportParameter name="REPORT_TITLE">
+					<subreportParameterExpression><![CDATA[$P{REPORT_TITLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NUMBER">
 					<subreportParameterExpression><![CDATA[$F{Numero}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_genera1_1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_detail_1.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
 				<reportElement uuid="9ab18ab0-22ef-41e8-8c51-aba237a44624" x="0" y="91" width="570" height="1"/>
 			</break>
 			<subreport>
-				<reportElement uuid="5d08af78-a0a0-44c2-8363-733fa09d557a" x="0" y="92" width="572" height="23"/>
-				<subreportParameter name="number">
+				<reportElement uuid="5d08af78-a0a0-44c2-8363-733fa09d557a" x="0" y="92" width="576" height="23"/>
+				<subreportParameter name="NUMBER">
 					<subreportParameterExpression><![CDATA[$F{Numero}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_page_1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"budget_detail_2.jasper"]]></subreportExpression>
 			</subreport>
 			<image>
 				<reportElement uuid="1ed11ba8-9de1-4ea8-b9d0-d75f44b819cd" x="1" y="1" width="180" height="70"/>

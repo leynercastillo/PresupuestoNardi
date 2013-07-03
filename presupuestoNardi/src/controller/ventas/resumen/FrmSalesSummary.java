@@ -88,7 +88,7 @@ public class FrmSalesSummary {
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
 	JasperReport jasperReport;
 	try {
 	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
@@ -97,12 +97,13 @@ public class FrmSalesSummary {
 	    System.out.println("budget.jasper didn't find");
 	}
 	Map<String, Object> parameters = new HashMap<String, Object>();
-	parameters.put("number", quotation.getBudgetNumber());
+	parameters.put("REPORT_TITLE", "Resumen de Venta");
+	parameters.put("NUMBER", quotation.getBudgetNumber());
 	/*
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
-	parameters.put("IMAGES_DIR", "../../resource/images/");
-	parameters.put("SUBREPORT_DIR", "../../resource/reports/");
+	parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
 	JasperPrint jasperPrint;
 	try {
 	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
@@ -123,7 +124,7 @@ public class FrmSalesSummary {
 	try {
 	    jrExporter.exportReport();
 	} catch (JRException e) {
-	    System.out.println("Report wasn't export.");
+	    e.printStackTrace();
 	}
 	connection.close();
     }
@@ -131,11 +132,11 @@ public class FrmSalesSummary {
     @Command
     public void pdfQuotation() throws SQLException {
 	createPdf();
-	String report = new String("/resource/reports/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	String report = new String("/resource/reports/ventas/solicitud/presupuesto" + quotation.getBudgetNumber() + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
-	map.put("reportTitle", "Solicitud de presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
-	Executions.createComponents("frmReport.zul", null, map);
+	map.put("reportTitle", "Resumen de Ventas");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud") + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	Executions.createComponents("system/frmReport.zul", null, map);
     }
 }

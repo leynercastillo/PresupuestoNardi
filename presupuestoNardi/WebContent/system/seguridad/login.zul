@@ -1,9 +1,9 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk xmlns:h="native">
-	<style src="../resource/style/styleZK.css"></style>
+	<style src="../../resource/style/styleZK.css"></style>
 	<window width="100%">
-		<h:form id="f" name="f" action="../j_spring_security_check"
+		<h:form id="f" name="f" action="../../j_spring_security_check"
 			method="POST" xmlns:h="native">
 			<grid zclass="login">
 				<columns>
@@ -30,7 +30,6 @@
 							mold="rounded" />
 						<textbox hflex="1" id="p" name="j_password"
 							type="password" mold="rounded" />
-						<!-- <h:input type="submit" value="Entrar" /> -->
 						<button type="submit" label="Entrar"
 							mold="trendy">
 						</button>

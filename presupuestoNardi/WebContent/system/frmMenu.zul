@@ -16,7 +16,7 @@
 								if="${sec:isAllGranted('ROLE_BUDGET')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='ventas/solicitud/frmBudget.zul')">
+										onClick="@command('optionSelected', optionSelected='system/ventas/solicitud/frmBudget.zul')">
 										<label
 											value="Solicitud de Presupuesto">
 										</label>
@@ -27,7 +27,7 @@
 								if="${sec:isAllGranted('ROLE_QUOTATION')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='ventas/presupuesto/frmQuotation.zul')">
+										onClick="@command('optionSelected', optionSelected='system/ventas/presupuesto/frmQuotation.zul')">
 										<label
 											value="Presupuesto">
 										</label>
@@ -37,7 +37,7 @@
 							<treeitem if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='ventas/resumen/frmSalesSummary.zul')">
+										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSalesSummary.zul')">
 										<label
 											value="Resumenes de venta">
 										</label>
@@ -54,7 +54,7 @@
 								if="${sec:isAllGranted('ROLE_SECURITY_PROFILE')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='seguridad/perfil/frmSecurityProfile.zul')">
+										onClick="@command('optionSelected', optionSelected='system/seguridad/perfil/frmSecurityProfile.zul')">
 										<label
 											value="Perfil de Usuario">
 										</label>
@@ -65,7 +65,7 @@
 								if="${sec:isAllGranted('ROLE_SECURITY_USERS_MASTER')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='seguridad/frmSecurityUserMaster.zul')">
+										onClick="@command('optionSelected', optionSelected='system/seguridad/frmSecurityUserMaster.zul')">
 										<label
 											value="Maestro de usuarios">
 										</label>

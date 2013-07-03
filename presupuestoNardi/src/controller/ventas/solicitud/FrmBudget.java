@@ -614,9 +614,6 @@ public class FrmBudget {
 	isSpecial = new Boolean(false);
 	cabinModel = new BasicData();
 	User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	/*
-	 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no almacena email
-	 */
 	SecurityUser user = daoSecurityUser.findByString("email", auxUser.getUsername());
 	budget.setSeller(user.getName());
 	budget.setSecurityUser(user);
@@ -764,7 +761,7 @@ public class FrmBudget {
     public String mailMessage() {
 	String seller = new String(budget.getSeller());
 	String message = new String();
-	message = "Presupuesto enviado por " + seller + "\n\nCliente: " + budget.getPartnerName() + "\n\nCantidad ascensores: " + budget.getElevatorQuantity() + "\n\nCiudad: " + budget.getConstructionCity();
+	message = "Solicitud de presupuesto enviada por " + seller + "\n\nCliente: " + budget.getPartnerName() + "\n\nCantidad ascensores: " + budget.getElevatorQuantity() + "\n\nCiudad: " + budget.getConstructionCity();
 	return message;
     }
 
@@ -782,9 +779,9 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/* listRecipient.add("ventas@ascensoresnardi.com"); */
+	listRecipient.add("ventas@ascensoresnardi.com");
 	listRecipient.add("sistemas@ascensoresnardi.com");
-	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
+	emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
 
     @NotifyChange({ "*" })
@@ -950,7 +947,7 @@ public class FrmBudget {
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
 	JasperReport jasperReport;
 	try {
 	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
@@ -959,12 +956,13 @@ public class FrmBudget {
 	    System.out.println("budget.jasper didn't find");
 	}
 	Map<String, Object> parameters = new HashMap<String, Object>();
-	parameters.put("number", budget.getNumber());
+	parameters.put("NUMBER", budget.getNumber());
 	/*
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
-	parameters.put("IMAGES_DIR", "../../resource/images/");
-	parameters.put("SUBREPORT_DIR", "../../resource/reports/");
+	parameters.put("REPORT_TITLE", "Solicitud Presupuesto");
+	parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
 	JasperPrint jasperPrint;
 	try {
 	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
@@ -993,12 +991,12 @@ public class FrmBudget {
     @Command
     public void print() throws SQLException {
 	createPdf();
-	String report = new String("/resource/reports/presupuesto" + budget.getNumber() + ".pdf");
+	String report = new String("/resource/reports/ventas/solicitud/presupuesto" + budget.getNumber() + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Solicitud de presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/presupuesto" + budget.getNumber() + ".pdf");
-	Executions.createComponents("frmReport.zul", null, map);
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/") + "/presupuesto" + budget.getNumber() + ".pdf");
+	Executions.createComponents("system/frmReport.zul", null, map);
     }
 
     @NotifyChange({ "listDesign" })
@@ -1130,7 +1128,7 @@ public class FrmBudget {
     public void searchBusinessPartner(@BindingParam("rif") String rif) {
 	businessPartner = daoBusinessPartner.findActiveByRif(rif);
 	if (businessPartner == null) {
-	    Executions.createComponents("socios/frmBusinessPartner.zul", null, null);
+	    Executions.createComponents("system/socios/frmBusinessPartner.zul", null, null);
 	} else {
 	    budget.setPartnerName(businessPartner.getName());
 	    budget.setRifPartner(businessPartner.getRif());

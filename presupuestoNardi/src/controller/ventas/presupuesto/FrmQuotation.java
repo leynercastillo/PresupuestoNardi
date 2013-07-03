@@ -3,17 +3,16 @@ package controller.ventas.presupuesto;
 import general.ValidateZK;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -45,6 +44,8 @@ import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.impl.InputElement;
 
+import springBean.Emails;
+
 import dao.DaoBasicdata;
 import dao.DaoBudget;
 import dao.DaoQuotation;
@@ -60,10 +61,11 @@ public class FrmQuotation {
     private DaoQuotation daoQuotation;
     @WireVariable
     private DaoBudget daoBudget;
+    @WireVariable
+    private Emails emails;
 
     private final String seleccione = new String("--Seleccione--");
     private final String dash = new String("-");
-    private Properties properties;
 
     private Quotation quotation;
     private Budget budget;
@@ -438,12 +440,6 @@ public class FrmQuotation {
 
     @Init
     public void init() {
-	properties = new Properties();
-	try {
-	    properties.load(new FileInputStream(Sessions.getCurrent().getWebApp().getRealPath("/resource/config/numeration.properties")));
-	} catch (IOException e) {
-	    System.out.println("The properties wasn't loaded.");
-	}
 	restartForm();
     }
 
@@ -692,7 +688,7 @@ public class FrmQuotation {
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("listQuotations", list);
-	    Executions.createComponents("ventas/presupuesto/frmWindowQuotations.zul", null, map);
+	    Executions.createComponents("system/ventas/presupuesto/frmWindowQuotations.zul", null, map);
 	}
     }
 
@@ -803,7 +799,7 @@ public class FrmQuotation {
     }
 
     @Command
-    public void createPdf(String quotationNumber) throws SQLException {
+    public void createQuotationPdf(String quotationNumber) throws SQLException {
 	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
 	try {
 	    Class.forName("org.postgresql.Driver");
@@ -811,7 +807,7 @@ public class FrmQuotation {
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto");
 	JasperReport jasperReport;
 	try {
 	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
@@ -827,8 +823,8 @@ public class FrmQuotation {
 	/*
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
-	parameters.put("IMAGES_DIR", "../../resource/images/");
-	parameters.put("SUBREPORT_DIR", "../../resource/reports/");
+	parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
 	JasperPrint jasperPrint;
 	try {
 	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
@@ -854,22 +850,104 @@ public class FrmQuotation {
 	connection.close();
     }
 
+    @Command
+    public void createBudgetPdf() throws SQLException {
+	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
+	try {
+	    Class.forName("org.postgresql.Driver");
+	} catch (ClassNotFoundException e2) {
+	    e2.printStackTrace();
+	}
+	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
+	JasperReport jasperReport;
+	try {
+	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
+	} catch (JRException e) {
+	    jasperReport = null;
+	    e.printStackTrace();
+	}
+	Map<String, Object> parameters = new HashMap<String, Object>();
+	parameters.put("REPORT_TITLE", "Resumen de Venta");
+	parameters.put("NUMBER", quotation.getBudgetNumber());
+	/*
+	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
+	 */
+	parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
+	JasperPrint jasperPrint;
+	try {
+	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+	} catch (HibernateException e1) {
+	    jasperPrint = null;
+	    System.out.println("Connection wasn't obtained.");
+	} catch (JRException e1) {
+	    jasperPrint = null;
+	    e1.printStackTrace();
+	}
+	JRExporter jrExporter = new JRPdfExporter();
+	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	File file = new File(string + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
+	if (file.isFile())
+	    file.delete();
+	try {
+	    jrExporter.exportReport();
+	} catch (JRException e) {
+	    e.printStackTrace();
+	}
+	connection.close();
+    }
+
+    public List<File> mailAttach() {
+	List<File> listAttach = new ArrayList<File>();
+	try {
+	    createBudgetPdf();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/presupuesto" + quotation.getBudgetNumber() + ".pdf"));
+	listAttach.add(file);
+	return listAttach;
+    }
+
+    public String mailMessage() {
+	Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+	String message = new String();
+	message = "Presupuesto aprobado el dia " + formatter.format(quotation.getApprovedDate()) + "\n\nPresupuesto nro:" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber() + "\n\nCliente: " + quotation.getPartnerName() + "\n\nCantidad ascensores: " + quotation.getElevatorQuantity() + "\n\nCiudad: " + quotation.getConstruction();
+	return message;
+    }
+
+    public void sendMail() {
+	List<String> listRecipient = new ArrayList<String>();
+	/*
+	 * listRecipient.add("ventas@ascensoresnardi.com"); listRecipient.add("logistica@ascensoresnardi.com");
+	 */
+	listRecipient.add("sistemas@ascensoresnardi.com");
+	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mailMessage(), mailAttach());
+    }
+
     @NotifyChange("*")
     @Command
     public void save() {
+	Boolean updatedOrSaved = true;
 	Quotation auxQuotation = daoQuotation.findById(quotation);
 	if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
 	    if (!daoQuotation.save(quotation)) {
 		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		updatedOrSaved = false;
 		return;
 	    }
 	} else if (quotation.getStatus() != auxQuotation.getStatus()) {
 	    if (!daoQuotation.update(quotation)) {
 		Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
+		updatedOrSaved = false;
 		return;
 	    }
 	}
-	/* PREGUNTAR si enviará email */
+	if (updatedOrSaved && quotation.getStatus() == 'A')
+	    sendMail();
 	Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
 	restartForm();
     }
@@ -887,13 +965,13 @@ public class FrmQuotation {
 	    quotationNumber = "1-" + quotation.getNewNumber() + quotation.getVersionNumber();
 	else
 	    quotationNumber = "2-" + quotation.getModernizationNumber() + quotation.getVersionNumber();
-	createPdf(quotationNumber);
-	String report = new String("/resource/reports/quotation" + quotationNumber + ".pdf");
+	createQuotationPdf(quotationNumber);
+	String report = new String("/resource/reports/ventas/presupuesto/quotation" + quotationNumber + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports") + "/quotation" + quotationNumber + ".pdf");
-	Executions.createComponents("frmReport.zul", null, map);
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/quotation" + quotationNumber + ".pdf");
+	Executions.createComponents("system/frmReport.zul", null, map);
     }
 
     @Command

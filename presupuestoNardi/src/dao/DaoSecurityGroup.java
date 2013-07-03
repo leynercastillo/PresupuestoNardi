@@ -18,8 +18,8 @@ public class DaoSecurityGroup extends GenericDao<SecurityGroup> {
     }
 
     public SecurityGroup listByField(String field, Object value){
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(SecurityGroup.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(SecurityGroup.class);
 	criteria.add(Restrictions.eq(field, value));
 	Object obj = criteria.uniqueResult();
 	return obj == null ? null : (SecurityGroup)obj;

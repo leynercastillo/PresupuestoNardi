@@ -35,25 +35,25 @@ public class DaoQuotation extends GenericDao<Quotation> {
     }
 
     public Quotation findById(Quotation quotation) {
-	currentSession().beginTransaction();
-	currentSession().evict(quotation);
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	getCurrentSession().evict(quotation);
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("idQuotation", quotation.getIdQuotation()));
 	Object obj = criteria.uniqueResult();
 	return obj == null ? null : (Quotation) obj;
     }
 
     public List<Quotation> listByString(String field, String value) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	List<Quotation> list = criteria.list();
 	return list;
     }
 
     public List<Quotation> listByInt(String field, int value) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq(field, value));
 	criteria.addOrder(Order.desc("date"));
 	List<Quotation> list = criteria.list();
@@ -61,8 +61,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
     }
 
     public List<Quotation> listQuotationOrderByField(String field) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.addOrder(Order.asc(field).ignoreCase());
 	criteria.addOrder(Order.desc("date"));
 	List<Quotation> list = criteria.list();
@@ -70,8 +70,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
     }
 
     public List<String> listStringByFields(String field) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.setProjection(Projections.distinct(Projections.property(field)));
 	criteria.addOrder(Order.asc(field));
 	List<String> list = criteria.list();
@@ -84,8 +84,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
      * @return The integer max value in this field db.
      */
     public Integer getMaxNumber(String field) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.setProjection(Projections.max(field));
 	Integer number = (Integer) criteria.uniqueResult();
 	if (number == null || number == -1) {
@@ -98,8 +98,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
     }
 
     public Short getVersionQuotation(Quotation quotation) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	if (quotation.isType())
 	    criteria.add(Restrictions.eq("newNumber", quotation.getNewNumber()));
 	else
@@ -118,7 +118,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
      */
     public Boolean save(Quotation quotation) {
 	quotation.setDate(new Date());
-	Session session = currentSession();
+	Session session = getCurrentSession();
 	try {
 	    session.beginTransaction();
 	    List<Quotation> list = listByInt("budgetNumber", quotation.getBudgetNumber());
@@ -150,8 +150,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
      * @return list of Quotation approved ordered by field.
      */
     public List<Quotation> listActiveOrderAscByField(String field) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.addOrder(Order.asc(field).ignoreCase());
 	List<Quotation> list = criteria.list();
@@ -164,8 +164,8 @@ public class DaoQuotation extends GenericDao<Quotation> {
      * @return list of Quotation approved ordered by field.
      */
     public List<Quotation> listActiveOrderDescByField(String field) {
-	currentSession().beginTransaction();
-	Criteria criteria = currentSession().createCriteria(Quotation.class);
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.addOrder(Order.desc(field).ignoreCase());
 	List<Quotation> list = criteria.list();

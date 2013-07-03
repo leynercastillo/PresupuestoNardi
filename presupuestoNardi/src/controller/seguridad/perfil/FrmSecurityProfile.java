@@ -64,6 +64,6 @@ public class FrmSecurityProfile {
     public void frmChangePassword() {
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("user", user);
-	Executions.createComponents("seguridad/perfil/frmChangePassword.zul", null, map);
+	Executions.createComponents("system/seguridad/perfil/frmChangePassword.zul", null, map);
     }
 }

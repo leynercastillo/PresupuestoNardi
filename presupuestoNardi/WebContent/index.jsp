@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ascensores Nardi, C.A.</title>
 <link rel="stylesheet" type="text/css"
-	href="resource/style/stylePage.css"/>
+	href="resource/style/stylePage.css" />
 <link rel="icon" type="image/png" href="resource/images/icons/logo.png" />
 </head>
 <body style="height: auto">
@@ -21,10 +21,10 @@
 		<z:window>
 			<div class="page">
 				<div class="aside">
-					<jsp:include page="/frmMenu.zul" />
+					<jsp:include page="/system/frmMenu.zul" />
 				</div>
 				<div class="section-main">
-					<jsp:include page="/index.zul" />
+					<jsp:include page="/system/index.zul" />
 				</div>
 			</div>
 		</z:window>

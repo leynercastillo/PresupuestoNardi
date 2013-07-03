@@ -7,38 +7,39 @@
            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/index.jsp" access="ROLE_USER" />
-		<intercept-url pattern="/index.zul" access="ROLE_USER" />
-		<intercept-url pattern="/frmMenu.zul" access="ROLE_MENU" />
-		<intercept-url pattern="/frmReport.zul" access="ROLE_REPORT" />
-		<intercept-url pattern="/ventas/solicitud/frmBudget.zul"
-			access="ROLE_BUDGET" />
-		<intercept-url pattern="/ventas/solicitud/frmWindowBudgets.zul"
-			access="ROLE_WINDOW_BUDGETS" />
-		<intercept-url pattern="/ventas/presupuesto/frmQuotation.zul"
-			access="ROLE_QUOTATION" />
-		<intercept-url pattern="/ventas/presupuesto/frmWindowQuotations.zul"
-			access="ROLE_WINDOW_QUOTATIONS" />
-		<intercept-url pattern="/ventas/resumen/frmSalesSummary.zul"
-			access="ROLE_SALES_SUMMARY" />
-		<intercept-url pattern="/socios/frmBusinessPartner.zul"
-			access="ROLE_BUSINESS_PARTNER" />
-		<intercept-url pattern="/seguridad/perfil/frmSecurityProfile.zul"
-			access="ROLE_SECURITY_PROFILE" />
-		<intercept-url pattern="/seguridad/perfil/frmChangePassword.zul"
-			access="ROLE_SECURITY_PROFILE" />
-		<intercept-url pattern="/seguridad/grupo/frmSecurityGroups.zul"
-			access="ROLE_SECURITY_GROUPS" />
-		<intercept-url pattern="/seguridad/frmSecurityUserMaster.zul"
-			access="ROLE_SECURITY_USERS_MASTER" />
-		<intercept-url pattern="/seguridad/authorized.jsp"
-			access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/seguridad/notAuthorized.zul"
-			access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/seguridady/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<form-login login-page="/seguridad/index.jsp"
-			default-target-url="/index.jsp" authentication-failure-url="/seguridad/index.jsp?login_error=1" />
-		<logout logout-success-url="/seguridad/index.jsp" />
+		<intercept-url access="ROLE_USER" pattern="/index.jsp" />
+		<intercept-url access="ROLE_USER" pattern="/system/index.zul" />
+		<intercept-url access="ROLE_MENU" pattern="/system/frmMenu.zul" />
+		<intercept-url access="ROLE_REPORT" pattern="/system/frmReport.zul" />
+		<intercept-url access="ROLE_BUDGET"
+			pattern="/system/ventas/solicitud/frmBudget.zul" />
+		<intercept-url access="ROLE_WINDOW_BUDGETS"
+			pattern="/system/ventas/solicitud/frmWindowBudgets.zul" />
+		<intercept-url access="ROLE_QUOTATION"
+			pattern="/system/ventas/presupuesto/frmQuotation.zul" />
+		<intercept-url access="ROLE_WINDOW_QUOTATIONS"
+			pattern="/system/ventas/presupuesto/frmWindowQuotations.zul" />
+		<intercept-url access="ROLE_SALES_SUMMARY"
+			pattern="/system/ventas/resumen/frmSalesSummary.zul" />
+		<intercept-url access="ROLE_BUSINESS_PARTNER"
+			pattern="/system/socios/frmBusinessPartner.zul" />
+		<intercept-url access="ROLE_SECURITY_PROFILE"
+			pattern="/system/seguridad/perfil/frmSecurityProfile.zul" />
+		<intercept-url access="ROLE_SECURITY_PROFILE"
+			pattern="/system/seguridad/perfil/frmChangePassword.zul" />
+		<intercept-url access="ROLE_SECURITY_GROUPS"
+			pattern="/system/seguridad/grupo/frmSecurityGroups.zul" />
+		<intercept-url access="ROLE_SECURITY_USERS_MASTER"
+			pattern="/system/seguridad/frmSecurityUserMaster.zul" />
+		<intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
+			pattern="/system/seguridad/authorized.jsp" />
+		<intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
+			pattern="/system/seguridad/notAuthorized.zul" />
+		<intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
+			pattern="/system/seguridady/login.zul" />
+		<form-login authentication-failure-url="/system/seguridad/index.jsp?login_error=1"
+			default-target-url="/index.jsp" login-page="/system/seguridad/index.jsp" />
+		<logout logout-success-url="/system/seguridad/index.jsp" />
 		<!-- <session-management> <concurrency-control max-sessions="1" /> </session-management> -->
 	</http>
 	<authentication-manager>
