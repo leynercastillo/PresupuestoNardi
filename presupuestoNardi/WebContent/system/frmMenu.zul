@@ -5,11 +5,39 @@
 		viewModel="@id('vm') @init('controller.FrmMenu')">
 		<tabbox mold="accordion" width="100%">
 			<tabs>
-				<tab label="Ventas"></tab>
-				<tab label="Usuarios"></tab>
+				<tab if="${sec:isAnyGranted('ROLE_ITEM_MASTER')}"
+					label="Inventario">
+				</tab>
+				<tab
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}"
+					label="Ventas">
+				</tab>
+				<tab
+					if="${sec:isAnyGranted('ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS')}"
+					label="Usuarios">
+				</tab>
 			</tabs>
 			<tabpanels>
-				<tabpanel>
+				<tabpanel
+					if="${sec:isAnyGranted('ROLE_ITEM_MASTER')}">
+					<tree>
+						<treechildren>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_ITEM_MASTER')}">
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='system/inventario/frmItemMaster.zul')">
+										<label
+											value="Maestro artículos">
+										</label>
+									</treecell>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</tabpanel>
+				<tabpanel
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}">
 					<tree>
 						<treechildren>
 							<treeitem
@@ -28,13 +56,13 @@
 								<treerow>
 									<treecell
 										onClick="@command('optionSelected', optionSelected='system/ventas/presupuesto/frmQuotation.zul')">
-										<label
-											value="Presupuesto">
+										<label value="Presupuesto">
 										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
-							<treeitem if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
+							<treeitem
+								if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
 								<treerow>
 									<treecell
 										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSalesSummary.zul')">
@@ -47,7 +75,8 @@
 						</treechildren>
 					</tree>
 				</tabpanel>
-				<tabpanel>
+				<tabpanel
+					if="${sec:isAnyGranted('ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS')}">
 					<tree>
 						<treechildren>
 							<treeitem

@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.generic.GenericDao;
 import database.BusinessPartner;
@@ -20,7 +21,8 @@ public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
     public DaoBusinessPartner(SessionFactory sessionFactory) {
 	super(sessionFactory);
     }
-    
+
+    @Transactional(readOnly = true)
     public List<BusinessPartner> listActiveOrderByField(String field) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
@@ -30,6 +32,7 @@ public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
 	return list;
     }
 
+    @Transactional(readOnly = true)
     public BusinessPartner findByRif(String rif) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
@@ -38,6 +41,7 @@ public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
 	return object != null ? (BusinessPartner) object : null;
     }
 
+    @Transactional(readOnly = true)
     public BusinessPartner findActiveByRif(String rif) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
@@ -47,6 +51,7 @@ public class DaoBusinessPartner extends GenericDao<BusinessPartner> {
 	return object != null ? (BusinessPartner) object : null;
     }
 
+    @Transactional(readOnly = true)
     public List<String> listStringByFields(String field) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);

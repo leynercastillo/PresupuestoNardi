@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.generic.GenericDao;
 import database.SecurityUser;
@@ -19,6 +20,7 @@ public class DaoSecurityUser extends GenericDao<SecurityUser> {
 	super(sessionFactory);
     }
 
+    @Transactional(readOnly = true)
     public SecurityUser findByString(String field, String value) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);
@@ -27,6 +29,7 @@ public class DaoSecurityUser extends GenericDao<SecurityUser> {
 	return su != null ? (SecurityUser) su : null;
     }
 
+    @Transactional(readOnly = true)
     public List<SecurityUser> listAll() {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);

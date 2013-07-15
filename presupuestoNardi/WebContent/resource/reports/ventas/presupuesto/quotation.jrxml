@@ -2,17 +2,17 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="351"/>
-	<parameter name="type" class="java.lang.Boolean">
+	<property name="ireport.y" value="336"/>
+	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
-	<parameter name="new" class="java.lang.Integer">
+	<parameter name="NEW" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
-	<parameter name="modernization" class="java.lang.Integer" isForPrompting="false">
+	<parameter name="MODERNIZATION" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
-	<parameter name="version" class="java.lang.Short">
+	<parameter name="VERSION" class="java.lang.Short">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
@@ -45,9 +45,9 @@
 FROM
 	quotation T0
 WHERE
-	T0.type = $P{type}
-	AND CASE WHEN T0.type THEN T0.new_number = $P{new} ELSE T0.modernization_number = $P{modernization} END
-	AND T0.version_number = $P{version}]]>
+	T0.type = $P{TYPE}
+	AND CASE WHEN T0.type THEN T0.new_number = $P{NEW} ELSE T0.modernization_number = $P{MODERNIZATION} END
+	AND T0.version_number = $P{VERSION}]]>
 	</queryString>
 	<field name="Numero" class="java.lang.String"/>
 	<field name="Fecha" class="java.sql.Timestamp"/>
@@ -183,17 +183,17 @@ WHERE
 			</break>
 			<subreport>
 				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="740" width="576" height="6"/>
-				<subreportParameter name="new">
+				<subreportParameter name="NEW">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="modernization">
+				<subreportParameter name="VERSION">
+					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MODERNIZATION">
 					<subreportParameterExpression><![CDATA[$F{modernizacion}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="type">
+				<subreportParameter name="TYPE">
 					<subreportParameterExpression><![CDATA[$F{tipo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="version">
-					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_detail.jasper"]]></subreportExpression>
@@ -203,17 +203,17 @@ WHERE
 			</break>
 			<subreport>
 				<reportElement uuid="b636592c-0daf-4a80-860d-edc647b67c74" stretchType="RelativeToTallestObject" x="0" y="746" width="576" height="5"/>
-				<subreportParameter name="new">
+				<subreportParameter name="NEW">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="modernization">
+				<subreportParameter name="VERSION">
+					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MODERNIZATION">
 					<subreportParameterExpression><![CDATA[$F{modernizacion}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="type">
+				<subreportParameter name="TYPE">
 					<subreportParameterExpression><![CDATA[$F{tipo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="version">
-					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_payment.jasper"]]></subreportExpression>

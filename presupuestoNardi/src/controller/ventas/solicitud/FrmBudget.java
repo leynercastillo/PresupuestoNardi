@@ -772,14 +772,14 @@ public class FrmBudget {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/presupuesto" + budget.getNumber() + ".pdf"));
+	File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/presupuesto" + budget.getNumber() + ".pdf"));
 	listAttach.add(file);
 	return listAttach;
     }
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	listRecipient.add("ventas@ascensoresnardi.com");
+	/* listRecipient.add("ventas@ascensoresnardi.com"); */
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
@@ -861,7 +861,7 @@ public class FrmBudget {
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("listBudget", listBudget2);
-	    Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
+	    Executions.createComponents("system/ventas/solicitud/frmWindowBudgets.zul", null, map);
 	}
     }
 
@@ -941,6 +941,7 @@ public class FrmBudget {
     @Command
     public void createPdf() throws SQLException {
 	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
+	Integer number = budget.getNumber();
 	try {
 	    Class.forName("org.postgresql.Driver");
 	} catch (ClassNotFoundException e2) {
@@ -956,7 +957,7 @@ public class FrmBudget {
 	    System.out.println("budget.jasper didn't find");
 	}
 	Map<String, Object> parameters = new HashMap<String, Object>();
-	parameters.put("NUMBER", budget.getNumber());
+	parameters.put("NUMBER", number);
 	/*
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
@@ -975,8 +976,8 @@ public class FrmBudget {
 	}
 	JRExporter jrExporter = new JRPdfExporter();
 	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + budget.getNumber() + ".pdf");
-	File file = new File(string + "/presupuesto" + budget.getNumber() + ".pdf");
+	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + number + ".pdf");
+	File file = new File(string + "/presupuesto" + number + ".pdf");
 	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
 	if (file.isFile())
 	    file.delete();

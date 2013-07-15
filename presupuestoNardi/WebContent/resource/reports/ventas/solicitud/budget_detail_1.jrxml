@@ -307,7 +307,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Presupuesto Nro:]]></text>
+				<text><![CDATA[Solicitud Nro:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="2d6a92ca-848e-4dd2-969f-6a82fff754ba" x="406" y="76" width="164" height="15"/>

@@ -5,18 +5,18 @@ import java.lang.reflect.ParameterizedType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 public class GenericDao<Model> {
 
     private SessionFactory sessionFactory;
-
     public Class<Model> domainClass = getDomainClass();
 
     public GenericDao(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
 
-    protected Session getCurrentSession() {
+    public Session getCurrentSession() {
 	return sessionFactory.getCurrentSession();
     }
 
@@ -33,6 +33,7 @@ public class GenericDao<Model> {
      *            Object to save in database
      * @return true if saved / false if not saved
      */
+    @Transactional
     public Boolean save(Model model) {
 	Session session = getCurrentSession();
 	try {
@@ -52,6 +53,7 @@ public class GenericDao<Model> {
      *            Object to update in database
      * @return true if updated / false if not updated
      */
+    @Transactional
     public Boolean update(Model model) {
 	Session session = getCurrentSession();
 	try {
@@ -71,6 +73,7 @@ public class GenericDao<Model> {
      *            Object to delete in database
      * @return true if deleted / false if not deleted
      */
+    @Transactional
     public Boolean delete(Model model) {
 	Session session = getCurrentSession();
 	try {

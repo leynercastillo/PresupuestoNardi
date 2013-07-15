@@ -952,7 +952,7 @@
 							sclass="formLabel">
 						</label>
 						<textbox width="60%" rows="7"
-							disabled="@load(vm.disabledEdit)"
+							disabled="@load(vm.disabledEdit)" maxlength="700"
 							value="@bind(vm.quotation.payment)">
 						</textbox>
 					</row>
@@ -960,7 +960,7 @@
 						<label value="Garantía:" sclass="formLabel"></label>
 						<div>
 							<textbox cols="2"
-								disabled="@load(vm.disabledEdit)"
+								disabled="@load(vm.disabledEdit)" maxlength="120"
 								value="@bind(vm.quotation.warranty)">
 							</textbox>
 							<label
@@ -974,11 +974,11 @@
 						</label>
 						<div>
 							<textbox cols="2"
-								disabled="@load(vm.disabledEdit)"
+								disabled="@load(vm.disabledEdit)" maxlength="120"
 								value="@bind(vm.quotation.extendedWarranty)">
 							</textbox>
 							<label
-								value="años por defectos de fabricación e instalación con la suscripcion de un contrato de mantenimiento.">
+								value="meses mas con la suscripcion de un contrato de mantenimiento dentro de los 3 meses de garantia.">
 							</label>
 						</div>
 					</row>
@@ -988,7 +988,7 @@
 						</label>
 						<div>
 							<textbox cols="2"
-								disabled="@load(vm.disabledEdit)"
+								disabled="@load(vm.disabledEdit)" maxlength="120"
 								value="@bind(vm.quotation.deliveryEstimate)">
 							</textbox>
 							<label
@@ -1002,7 +1002,7 @@
 						</label>
 						<div>
 							<textbox cols="2"
-								disabled="@load(vm.disabledEdit)"
+								disabled="@load(vm.disabledEdit)" maxlength="120"
 								value="@bind(vm.quotation.quotationValidity)">
 							</textbox>
 							<label
@@ -1013,7 +1013,7 @@
 					<row>
 						<label value="Nota:" sclass="formLabel"></label>
 						<textbox width="60%" rows="8"
-							disabled="@load(vm.disabledEdit)"
+							disabled="@load(vm.disabledEdit)" maxlength="1000"
 							value="@bind(vm.quotation.notes)">
 						</textbox>
 					</row>

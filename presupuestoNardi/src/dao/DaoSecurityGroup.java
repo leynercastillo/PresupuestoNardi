@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.generic.GenericDao;
 import database.SecurityGroup;
@@ -17,6 +18,7 @@ public class DaoSecurityGroup extends GenericDao<SecurityGroup> {
 	super(sessionFactory);
     }
 
+    @Transactional(readOnly = true)
     public SecurityGroup listByField(String field, Object value){
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(SecurityGroup.class);

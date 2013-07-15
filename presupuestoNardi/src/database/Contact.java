@@ -1,6 +1,6 @@
 package database;
 
-// Generated 17-jun-2013 14:24:15 by Hibernate Tools 3.4.0.CR1
+// Generated 08-jul-2013 15:07:39 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -37,6 +37,18 @@ public class Contact implements java.io.Serializable {
     private char status;
 
     public Contact() {
+    }
+
+    public Contact(int idContact, SecurityUser securityUser, String partnerName, String contactName, String city, String address, Date date, String contactEmail, char status) {
+	this.idContact = idContact;
+	this.securityUser = securityUser;
+	this.partnerName = partnerName;
+	this.contactName = contactName;
+	this.city = city;
+	this.address = address;
+	this.date = date;
+	this.contactEmail = contactEmail;
+	this.status = status;
     }
 
     public Contact(int idContact, SecurityUser securityUser, String partnerName, String contactName, String city, String address, String phone, Date date, String contactEmail, String comment, char status) {

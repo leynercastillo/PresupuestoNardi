@@ -14,5 +14,4 @@ public class DaoContact extends GenericDao<Contact> {
     public DaoContact(SessionFactory sessionFactory) {
 	super(sessionFactory);
     }
-
 }

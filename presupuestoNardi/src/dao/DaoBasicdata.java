@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.generic.GenericDao;
 import database.BasicData;
@@ -20,6 +22,7 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 	super(sessionFactory);
     }
 
+    @Transactional(readOnly = true)
     public List<BasicData> listByField(String table, String field) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
@@ -32,6 +35,7 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 	return list;
     }
 
+    @Transactional(readOnly = true)
     public BasicData findByName(String table, String field, String name) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
@@ -45,11 +49,32 @@ public class DaoBasicdata extends GenericDao<BasicData> {
 	return obj == null ? null : (BasicData) obj;
     }
 
+    @Transactional(readOnly = true)
     public List<BasicData> listByParent(BasicData parent) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
 	criteria.add(Restrictions.eq("basicData", parent));
 	criteria.addOrder(Order.asc("priority"));
+	List<BasicData> list = criteria.list();
+	return list;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> listStringByFields(String field) {
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	criteria.setProjection(Projections.distinct(Projections.property(field)));
+	criteria.add(Restrictions.eq("dataBaseName", "BUDGET"));
+	criteria.addOrder(Order.asc(field));
+	List<String> list = criteria.list();
+	return list;
+    }
+
+    @Transactional(readOnly = true)
+    public List<BasicData> listByString(String field, String value) {
+	getCurrentSession().beginTransaction();
+	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	List<BasicData> list = criteria.list();
 	return list;
     }

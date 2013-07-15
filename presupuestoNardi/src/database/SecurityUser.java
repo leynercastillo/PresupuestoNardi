@@ -1,6 +1,6 @@
 package database;
 
-// Generated 17-jun-2013 14:24:15 by Hibernate Tools 3.4.0.CR1
+// Generated 08-jul-2013 15:07:39 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;

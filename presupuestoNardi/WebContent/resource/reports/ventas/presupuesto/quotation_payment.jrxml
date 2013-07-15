@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="276"/>
+	<property name="ireport.y" value="37"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -45,16 +45,16 @@
 	</style>
 	<subDataset name="Table Dataset 1" uuid="a68e0c7d-96df-4e86-b8e1-dc1fb1452046"/>
 	<subDataset name="Table Dataset 2" uuid="83e792c2-8d03-42b5-857c-76c43584ca46"/>
-	<parameter name="modernization" class="java.lang.Integer" isForPrompting="false">
+	<parameter name="MODERNIZATION" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
-	<parameter name="new" class="java.lang.Integer">
+	<parameter name="NEW" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
-	<parameter name="type" class="java.lang.Boolean">
+	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
-	<parameter name="version" class="java.lang.Short">
+	<parameter name="VERSION" class="java.lang.Short">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -81,9 +81,9 @@
 FROM
 	quotation T0
 WHERE
-	T0.type = $P{type}
-	AND CASE WHEN T0.type THEN T0.new_number = $P{new} ELSE T0.modernization_number = $P{modernization} END
-	AND T0.version_number = $P{version}]]>
+	T0.type = $P{TYPE}
+	AND CASE WHEN T0.type THEN T0.new_number = $P{NEW} ELSE T0.modernization_number = $P{MODERNIZATION} END
+	AND T0.version_number = $P{VERSION}]]>
 	</queryString>
 	<field name="Numero" class="java.lang.String"/>
 	<field name="Cantidad" class="java.lang.Integer"/>
@@ -105,7 +105,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="646" splitType="Stretch">
+		<band height="647" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="b05f3524-1c4d-4f51-b03a-9d0e3fe92fd5" x="396" y="10" width="174" height="20"/>
 				<textElement>
@@ -317,147 +317,154 @@ WHERE
 				<textFieldExpression><![CDATA[$V{totalPrice}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2ce93b7b-3a03-4938-980b-77973622d60c" x="0" y="149" width="349" height="20"/>
+				<reportElement uuid="2ce93b7b-3a03-4938-980b-77973622d60c" x="0" y="149" width="349" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONDICIONES DE PAGO:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="96a6182a-8528-4e40-8b72-86712e656313" x="140" y="149" width="462" height="20"/>
+				<reportElement uuid="96a6182a-8528-4e40-8b72-86712e656313" x="129" y="149" width="462" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Condiciones de pago}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d6a9bfac-9632-4005-86a1-684f03aefc28" x="0" y="272" width="281" height="20"/>
+				<reportElement uuid="d6a9bfac-9632-4005-86a1-684f03aefc28" x="0" y="255" width="281" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GARANTIA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="eb06aadc-5c6e-4c6c-8262-61ff6fa54889" x="123" y="272" width="209" height="20"/>
+				<reportElement uuid="eb06aadc-5c6e-4c6c-8262-61ff6fa54889" x="116" y="255" width="209" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Garantia}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="136" y="272" width="443" height="20"/>
+				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="129" y="255" width="476" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<text><![CDATA[meses de garantía y mantenimiento gratuito.]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="21e8e6e2-738a-4ec9-b0fc-7c42b4036f62" x="123" y="302" width="110" height="20"/>
+				<reportElement uuid="21e8e6e2-738a-4ec9-b0fc-7c42b4036f62" x="116" y="277" width="110" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Garantia extendida}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0336f8df-02ef-4927-ba87-09ff575b0bcb" x="0" y="332" width="281" height="20"/>
+				<reportElement uuid="0336f8df-02ef-4927-ba87-09ff575b0bcb" x="0" y="321" width="281" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLAZO DE ENTREGA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="94b33972-6ae1-48c3-90f7-c748c9ef028c" x="123" y="332" width="209" height="20"/>
+				<reportElement uuid="94b33972-6ae1-48c3-90f7-c748c9ef028c" x="116" y="321" width="209" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Plazo de entrega}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b185a27d-959e-43f3-8877-561da7ffee14" x="136" y="332" width="443" height="20"/>
+				<reportElement uuid="b185a27d-959e-43f3-8877-561da7ffee14" x="129" y="321" width="476" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<text><![CDATA[meses aproximados despues de la firma del contrato.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="047784ec-7d1d-4f4d-9798-71173115b97e" x="0" y="364" width="281" height="20"/>
+				<reportElement uuid="047784ec-7d1d-4f4d-9798-71173115b97e" x="0" y="344" width="281" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VALIDEZ:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e9b035e6-a809-41b0-9fdf-85b3b98473ff" x="123" y="364" width="209" height="20"/>
+				<reportElement uuid="e9b035e6-a809-41b0-9fdf-85b3b98473ff" x="116" y="344" width="209" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Validez de presupuesto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0913be99-a936-4760-a567-2976d922c795" x="137" y="364" width="442" height="20"/>
+				<reportElement uuid="0913be99-a936-4760-a567-2976d922c795" x="130" y="344" width="475" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<text><![CDATA[Dias a partir de su presentacion.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b4d54c42-1f6f-4669-a637-4140fe86bc64" x="0" y="394" width="159" height="20"/>
+				<reportElement uuid="b4d54c42-1f6f-4669-a637-4140fe86bc64" x="0" y="368" width="159" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTAS:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ab71058b-2023-436f-8bfa-579354171699" x="123" y="394" width="456" height="20"/>
+				<reportElement uuid="ab71058b-2023-436f-8bfa-579354171699" x="116" y="368" width="479" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Nota}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="8c2520c3-5e5f-425f-b7b8-b73f191e6b00" x="50" y="550" width="194" height="20"/>
+				<reportElement uuid="8c2520c3-5e5f-425f-b7b8-b73f191e6b00" x="50" y="551" width="194" height="20"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Atentamente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4b04c1fc-8015-497c-ab62-bc737162bc75" x="355" y="550" width="165" height="20"/>
+				<reportElement uuid="4b04c1fc-8015-497c-ab62-bc737162bc75" x="355" y="551" width="165" height="20"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Recibido por]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29" x="50" y="617" width="194" height="15"/>
+				<reportElement uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29" x="50" y="618" width="194" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929" x="50" y="616" width="194" height="1"/>
+				<reportElement uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929" x="50" y="617" width="194" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="017a9284-be30-49a8-adf6-1230d1a6feff" x="50" y="631" width="194" height="15"/>
+				<reportElement uuid="017a9284-be30-49a8-adf6-1230d1a6feff" x="50" y="632" width="194" height="15"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Dpto. de Ventas]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929" x="355" y="615" width="165" height="1"/>
+				<reportElement uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929" x="355" y="616" width="165" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="017a9284-be30-49a8-adf6-1230d1a6feff" x="355" y="617" width="165" height="15"/>
+				<reportElement uuid="017a9284-be30-49a8-adf6-1230d1a6feff" x="355" y="618" width="165" height="15"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="375343a0-e562-4b99-9ff6-b9e89f3a2fdf" x="0" y="302" width="159" height="20"/>
+				<reportElement uuid="375343a0-e562-4b99-9ff6-b9e89f3a2fdf" x="0" y="277" width="159" height="15"/>
 				<textElement>
-					<font fontName="Serif" isBold="true"/>
+					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GARANTIA EXTENDIDA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="136" y="302" width="443" height="20"/>
+				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="135" y="277" width="470" height="15"/>
 				<textElement>
-					<font fontName="Serif"/>
+					<font fontName="Serif" size="9"/>
 				</textElement>
-				<text><![CDATA[años por defectos de fabricación e instalación con la suscripcion de un contrato de mantenimiento.]]></text>
+				<text><![CDATA[meses mas con la suscripcion de un contrato de mantenimiento dentro de los 3 primeros meses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="699752b7-ea19-497e-b750-3f072d4362f8" x="116" y="297" width="489" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<text><![CDATA[de garantía.]]></text>
 			</staticText>
 		</band>
 	</detail>
