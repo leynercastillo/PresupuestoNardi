@@ -1,5 +1,6 @@
 package controller.inventario;
 
+import general.Autocomplete;
 import general.ValidateZK;
 
 import java.util.HashMap;
@@ -12,14 +13,18 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.SimpleListModel;
@@ -45,9 +50,18 @@ public class FrmItemMaster {
     private Item item;
     private Boolean update;
     private BasicData elevatorComponent;
+    private List<BasicData> listPriceType;
     private ListModel<String> listItemCode;
     private ListModel<String> listItemName;
     private ListModel<String> listComponents;
+
+    public List<BasicData> getListPriceType() {
+	return listPriceType;
+    }
+
+    public void setListPriceType(List<BasicData> listPriceType) {
+	this.listPriceType = listPriceType;
+    }
 
     public ListModel<String> getListComponents() {
 	return listComponents;
@@ -134,23 +148,12 @@ public class FrmItemMaster {
 	return new ValidateZK().getNoEmpty();
     }
 
-    public Validator getNoEmptyInt() {
-	return new AbstractValidator() {
-	    @Override
-	    public void validate(ValidationContext ctx) {
-		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
-		Tab tab = (Tab) ctx.getBindContext().getValidatorArg("tab");
-		String string = inputElement.getText();
-		if (string.trim().isEmpty()) {
-		    tab.setSelected(true);
-		    throw new WrongValueException(inputElement, "Ingrese un dato valido.");
-		}
-	    }
-	};
+    public Validator getNoEmptyInTab() {
+	return new ValidateZK().getNoEmptyInTab();
     }
 
-    public Validator getNoSelect() {
-	return new ValidateZK().getNoSelect();
+    public Validator getNoSelectInTab() {
+	return new ValidateZK().getNoSelectInTab();
     }
 
     public Validator getNoRepeatCode() {
@@ -187,6 +190,7 @@ public class FrmItemMaster {
 	update = new Boolean(false);
 	item.setStatus('A');
 	elevatorComponent = new BasicData();
+	listPriceType = daoBasicdata.listByField("ITEM", "PRICE TYPE");
 	listItemCode = new ListModelList<String>();
 	listItemName = new ListModelList<String>();
 	listComponents = new ListModelList<String>();
@@ -202,7 +206,7 @@ public class FrmItemMaster {
 	    listItemName = new SimpleListModel<String>(daoItem.listStringByFields(field));
 	    return;
 	} else if (field.compareTo("componentName") == 0) {
-	    listComponents = new SimpleListModel<String>(daoBasicdata.listStringByFields("name"));
+	    listComponents = new SimpleListModel<String>(daoBasicdata.listStringByFields("BUDGET"));
 	    return;
 	}
     }
@@ -306,6 +310,12 @@ public class FrmItemMaster {
 		break;
 	    }
 	}
+    }
+
+    @Command
+    public void toComplete(@BindingParam("component") Combobox combobox, @ContextParam(ContextType.TRIGGER_EVENT) InputEvent event) {
+	Autocomplete autocomplete = new Autocomplete(15);
+	combobox = autocomplete.getAutoCompleted(combobox, event.getValue());
     }
 
     @Command

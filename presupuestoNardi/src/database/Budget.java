@@ -1,6 +1,6 @@
 package database;
 
-// Generated 08-jul-2013 15:07:39 by Hibernate Tools 3.4.0.CR1
+// Generated 16-jul-2013 16:07:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 

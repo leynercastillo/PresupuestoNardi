@@ -36,10 +36,14 @@ import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.impl.InputElement;
@@ -418,6 +422,11 @@ public class FrmQuotation {
 	    public void validate(ValidationContext ctx) {
 		Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
 		if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
+		    if (quotation.getDeliveryDate() == null) {
+			Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
+			datebox.setDisabled(false);
+			throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
+		    }
 		    List<Quotation> list = daoQuotation.listByInt("budgetNumber", quotation.getBudgetNumber());
 		    for (Quotation q : list) {
 			if (q.getStatus() == 'A') {
@@ -617,7 +626,7 @@ public class FrmQuotation {
 	quotation.setExtendedWarranty("12");
 	quotation.setDeliveryEstimate("8");
 	quotation.setQuotationValidity("07");
-	quotation.setNotes("- Los precios están sujetos a cambio sin previo aviso.\n" + "- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+	quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
     }
 
     @NotifyChange({ "listRifPartner", "listBudgetNumber", "listPartnerName", "listQuotationNumber", "listSeller", "listConstruction" })
@@ -773,8 +782,10 @@ public class FrmQuotation {
 	Double price = value;
 	quotation.setPriceImportedMaterial(price * 0.6);
 	quotation.setPriceNationalMaterial(price * 0.4);
+	quotation.setTotalPrice(value);
 	BindUtils.postNotifyChange(null, null, quotation, "priceImportedMaterial");
 	BindUtils.postNotifyChange(null, null, quotation, "priceNationalMaterial");
+	BindUtils.postNotifyChange(null, null, quotation, "totalPrice");
     }
 
     @NotifyChange({ "quotation", "disabledPrint", "disableBeforeSearch", "disabledBudgetNumber" })
@@ -796,6 +807,10 @@ public class FrmQuotation {
 	disableBeforeSearch = new Boolean(false);
 	disabledBudgetNumber = new Boolean(false);
 	disabledEdit = new Boolean(true);
+    }
+
+    public String getElevatorType(String str) {
+	return (quotation.getElevatorQuantity() > 1 ? "ASCENSORES " : "ASCENSOR ") + str;
     }
 
     @Command
@@ -837,8 +852,8 @@ public class FrmQuotation {
 	}
 	JRExporter jrExporter = new JRPdfExporter();
 	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/quotation" + quotationNumber + ".pdf");
-	File file = new File(string + "/quotation" + quotationNumber + ".pdf");
+	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
+	File file = new File(string + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
 	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
 	if (file.isFile())
 	    file.delete();
@@ -922,9 +937,8 @@ public class FrmQuotation {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/*
-	 * listRecipient.add("ventas@ascensoresnardi.com"); listRecipient.add("logistica@ascensoresnardi.com");
-	 */
+	listRecipient.add("ventas@ascensoresnardi.com");
+	listRecipient.add("logistica@ascensoresnardi.com");
 	listRecipient.add(quotation.getBudget().getSecurityUser().getEmail());
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mailMessage(), mailAttach());
@@ -933,22 +947,32 @@ public class FrmQuotation {
     @NotifyChange("*")
     @Command
     public void save() {
-	Quotation auxQuotation = daoQuotation.findById(quotation);
-	if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
-	    if (!daoQuotation.save(quotation)) {
-		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-		return;
+	Messagebox.show("El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?", "Atención", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
+	    @Override
+	    public void onEvent(Event evt) throws Exception {
+		if (Messagebox.ON_OK.equals(evt.getName())) {
+		    Quotation auxQuotation = daoQuotation.findById(quotation);
+		    if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
+			if (!daoQuotation.save(quotation)) {
+			    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+			    return;
+			}
+		    } else if (quotation.getStatus() != auxQuotation.getStatus()) {
+			if (!daoQuotation.update(quotation)) {
+			    Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
+			    return;
+			}
+		    }
+		    if (quotation.getStatus() == 'A')
+			sendMail();
+		    Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
+		    restartForm();
+		    print();
+		} else if (Messagebox.ON_CANCEL.equals(evt.getName())) {
+		    return;
+		}
 	    }
-	} else if (quotation.getStatus() != auxQuotation.getStatus()) {
-	    if (!daoQuotation.update(quotation)) {
-		Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
-		return;
-	    }
-	}
-	if (quotation.getStatus() == 'A')
-	    sendMail();
-	Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
-	restartForm();
+	});
     }
 
     @NotifyChange({ "disabledEdit" })
@@ -961,15 +985,15 @@ public class FrmQuotation {
     public void print() throws SQLException {
 	String quotationNumber = new String();
 	if (quotation.isType())
-	    quotationNumber = "1-" + quotation.getNewNumber() + quotation.getVersionNumber();
+	    quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
 	else
-	    quotationNumber = "2-" + quotation.getModernizationNumber() + quotation.getVersionNumber();
+	    quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
 	createQuotationPdf(quotationNumber);
-	String report = new String("/resource/reports/ventas/presupuesto/quotation" + quotationNumber + ".pdf");
+	String report = new String("/resource/reports/ventas/presupuesto/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/quotation" + quotationNumber + ".pdf");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
 	Executions.createComponents("system/frmReport.zul", null, map);
     }
 

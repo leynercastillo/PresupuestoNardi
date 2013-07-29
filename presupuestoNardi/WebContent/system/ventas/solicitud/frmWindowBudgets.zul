@@ -10,9 +10,9 @@
 			mold="paging" pageSize="10" pagingPosition="both">
 			<listhead>
 				<listheader label="Nro Pedido" width="10%"></listheader>
-				<listheader label="Cliente" width="30%"></listheader>
+				<listheader label="Cliente" width="35%"></listheader>
 				<listheader label="Fecha" width="15%"></listheader>
-				<listheader label="Ciudad" width="15%"></listheader>
+				<listheader label="Ciudad" width="20%"></listheader>
 				<listheader label="Vendedor" width="20%"></listheader>
 			</listhead>
 			<template name="model" var="budget">

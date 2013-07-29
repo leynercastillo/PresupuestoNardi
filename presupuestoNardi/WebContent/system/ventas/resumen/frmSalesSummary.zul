@@ -2,7 +2,7 @@
 <zk>
 	<style src="resource/style/styleZK.css"></style>
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
-		closable="true"
+		closable="true" onClose="@command('close')"
 		viewModel="@id('vm') @init('controller.ventas.resumen.FrmSalesSummary')">
 		<caption label="RESUMENES DE VENTAS" zclass="formTitleLabel"></caption>
 		<listbox model="@load(vm.listQuotations)" mold="paging"
@@ -10,12 +10,13 @@
 			pageSize="10" pagingPosition="both"
 			selectedItem="@bind(vm.quotation)">
 			<listhead>
-				<listheader label="Nro Presupuesto"></listheader>
-				<listheader label="Cliente"></listheader>
-				<listheader label="Obra"></listheader>
-				<listheader label="Equipo"></listheader>
-				<listheader label="Fecha aprobacion"></listheader>
-				<listheader label="Vendedor"></listheader>
+				<listheader label="Nro Presupuesto" width="12%"></listheader>
+				<listheader label="Cliente" width="18%"></listheader>
+				<listheader label="Obra" width="19%"></listheader>
+				<listheader label="Equipo" width="10%"></listheader>
+				<listheader label="Fecha aprobacion" width="13%"></listheader>
+				<listheader label="Fecha entrega" width="13%"></listheader>
+				<listheader label="Vendedor" width="15%"></listheader>
 			</listhead>
 			<template name="model" var="salesSummary">
 				<listitem>
@@ -26,8 +27,9 @@
 					<listcell label="@load(salesSummary.partnerName)"></listcell>
 					<listcell label="@load(vm.getTeam(salesSummary))"></listcell>
 					<listcell
-						label="@load(vm.getDateFormat(salesSummary))">
+						label="@load(vm.getDateFormat(salesSummary.approvedDate))">
 					</listcell>
+					<listcell label="@load(vm.getDateFormat(salesSummary.deliveryDate))"></listcell>
 					<listcell label="@load(salesSummary.seller)"></listcell>
 				</listitem>
 			</template>

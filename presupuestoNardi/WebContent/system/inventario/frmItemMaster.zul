@@ -36,8 +36,8 @@
 					<tabbox>
 						<tabs>
 							<tab id="tabGeneral" label="General"></tab>
-							<tab id="tabSales" label="Ventas"></tab>
 							<tab id="tabBuys" label="Compras"></tab>
+							<tab id="tabSales" label="Ventas"></tab>
 						</tabs>
 						<tabpanels>
 							<tabpanel>
@@ -85,10 +85,11 @@
 												value="Característica:">
 											</label>
 											<combobox
-												autocomplete="true" autodrop="true" buttonVisible="false"
-												disabled="@load(vm.update ? 'true': vm.disableAll)" hflex="1" maxlength="100"
-												model="@load(vm.listComponents)"
+												autodrop="true" buttonVisible="false"
+												disabled="@load(vm.update ? 'true': vm.disableAll)"
+												hflex="1" maxlength="100" model="@load(vm.listComponents)"
 												onChange="@command(vm.disableAll ? '':'loadItemByField', input=self)"
+												onChanging="@command('toComplete', component = self)"
 												onFocus="@command(vm.disableAll ? '':'searchItemByField', field='componentName')"
 												value="@save(vm.elevatorComponent.name, before = 'addItem') @load(vm.elevatorComponent eq null ? '' : vm.elevatorComponent.name) @validator(vm.noEmpty, component = self)">
 											</combobox>
@@ -121,8 +122,9 @@
 												value="Costo:">
 											</label>
 											<doublebox
-												disabled="@load(vm.disableAll)" hflex="1" maxlength="9"
-												value="@save(vm.item.cost, before = 'save') @load(vm.item.cost) @validator(vm.noEmptyInt, component = self, tab = tabSales)">
+												disabled="@load(vm.disableAll)" format="#,##0.##" hflex="1"
+												maxlength="9" style="text-align: right;"
+												value="@save(vm.item.cost, before = 'save') @load(vm.item.cost) @validator(vm.noEmptyInTab, component = self, tab = tabBuys)">
 											</doublebox>
 											<space></space>
 										</row>
@@ -140,12 +142,30 @@
 									</columns>
 									<rows>
 										<row>
+											<label sclass="formLabel"
+												value="Tipo:">
+											</label>
+											<combobox
+												disabled="@load(vm.disableAll)" hflex="1"
+												model="@load(vm.listPriceType)" readonly="true"
+												selectedItem="@save(vm.item.basicData, before = 'save') @load(vm.item.basicData) @validator(vm.noSelectInTab, component = self, tab = tabSales)"
+												value="@load(vm.item.basicData eq null ? '--Seleccione--' : vm.item.basicData.name)">
+												<template name="model"
+													var="priceType">
+													<comboitem
+														label="@load(priceType.name)">
+													</comboitem>
+												</template>
+											</combobox>
+										</row>
+										<row>
 											<label value="Precio:"
 												sclass="formLabel">
 											</label>
 											<doublebox
-												disabled="@load(vm.disableAll)" hflex="1" maxlength="9"
-												value="@save(vm.item.price, before = 'save') @load(vm.item.price) @validator(vm.noEmptyInt, component = self, tab = tabBuys)">
+												disabled="@load(vm.disableAll)" format="######0.##"
+												hflex="1" maxlength="9" style="text-align: right;"
+												value="@save(vm.item.price, before = 'save') @load(vm.item.price) @validator(vm.noEmptyInTab, component = self, tab = tabSales)">
 											</doublebox>
 										</row>
 									</rows>

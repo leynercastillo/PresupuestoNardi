@@ -63,9 +63,9 @@ public class DaoBasicdata extends GenericDao<BasicData> {
     public List<String> listStringByFields(String field) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
-	criteria.setProjection(Projections.distinct(Projections.property(field)));
-	criteria.add(Restrictions.eq("dataBaseName", "BUDGET"));
-	criteria.addOrder(Order.asc(field));
+	criteria.setProjection(Projections.distinct(Projections.property("name")));
+	criteria.add(Restrictions.eq("dataBaseName", field));
+	criteria.addOrder(Order.asc("name"));
 	List<String> list = criteria.list();
 	return list;
     }

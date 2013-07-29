@@ -41,6 +41,7 @@ import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.SimpleListModel;
@@ -51,10 +52,12 @@ import springBean.Emails;
 import dao.DaoBasicdata;
 import dao.DaoBudget;
 import dao.DaoBusinessPartner;
+import dao.DaoQuotation;
 import dao.DaoSecurityUser;
 import database.BasicData;
 import database.Budget;
 import database.BusinessPartner;
+import database.Quotation;
 import database.SecurityUser;
 
 /**
@@ -73,6 +76,8 @@ public class FrmBudget {
     private DaoBusinessPartner daoBusinessPartner;
     @WireVariable
     private Emails emails;
+    @WireVariable
+    private DaoQuotation daoQuotation;
 
     private String seleccione;
     private final String dash = new String("--");
@@ -779,7 +784,7 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/* listRecipient.add("ventas@ascensoresnardi.com"); */
+	listRecipient.add("ventas@ascensoresnardi.com");
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
@@ -787,19 +792,42 @@ public class FrmBudget {
     @NotifyChange({ "*" })
     @Command
     public void save(@BindingParam("component") InputElement component) {
-	budget.setBusinessPartner(businessPartner);
+	if (businessPartner.getIdBusinessPartner() != 0)
+	    budget.setBusinessPartner(businessPartner);
 	/* Cambiar if a metodo de validacion tradicional */
 	if (budget.getBasicDataByDoorframeType() != null && budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && (budget.getHallButtonPlace().indexOf("MARCO") != -1)) {
 	    throw new WrongValueException(component, "Este tipo no puede ser ubicado en el Marco.");
 	} else {
-	    if (!daoBudget.save(budget)) {
-		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-		return;
+	    if (budget.getIdBudget() == 0) {
+		if (!daoBudget.save(budget)) {
+		    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		    return;
+		}
+	    } else {
+		if (!daoBudget.update(budget)) {
+		    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		    return;
+		}
 	    }
-	    sendMail();
+	    /* Se envia si se guarda. Si se modifica o no se guarda, no se envia */
+	    if (budget.getIdBudget() == 0)
+		sendMail();
 	    Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
 	    restartForm();
 	}
+    }
+
+    @NotifyChange({ "disabledAll" })
+    @Command
+    public void edit(@BindingParam("component") Button button) {
+	List<Quotation> list = daoQuotation.listByInt("budgetNumber", budget.getNumber());
+	for (Quotation q : list) {
+	    if (q.getStatus() == 'A') {
+		disabledAll = new Boolean(false);
+		return;
+	    }
+	}
+	throw new WrongValueException(button, "Esta solicitud no tiene ningun presupuesto aprobado. No puede ser editada.");
     }
 
     @NotifyChange({ "disabledAll", "budgetNumber", "budget", "disableAfterSearch", "disabledNumber" })
@@ -848,21 +876,7 @@ public class FrmBudget {
     @Command
     public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value) {
 	List<Budget> listBudget2 = daoBudget.listByString(field, value);
-	int listSize = listBudget2.size();
-	if (listSize == 1) {
-	    budget = listBudget2.get(0);
-	    disableAfterSearch = new Boolean(true);
-	    disabledNumber = new Boolean(true);
-	    disableSeller = new Boolean(true);
-	    if (budget.getBasicDataByCabinDesign() != null)
-		cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
-	} else if (listSize == 0) {
-	    Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
-	} else {
-	    Map<String, Object> map = new HashMap<String, Object>();
-	    map.put("listBudget", listBudget2);
-	    Executions.createComponents("system/ventas/solicitud/frmWindowBudgets.zul", null, map);
-	}
+	searchGeneric(listBudget2);
     }
 
     @NotifyChange("*")
@@ -881,8 +895,13 @@ public class FrmBudget {
 	    disableAfterSearch = new Boolean(true);
 	    disabledNumber = new Boolean(true);
 	    disableSeller = new Boolean(true);
-	    if (budget.getBasicDataByCabinDesign() != null)
+	    if (budget.getBasicDataByCabinDesign() != null) {
 		cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+		listDesign.add(budget.getBasicDataByCabinDesign());
+		listRoofType.add(budget.getBasicDataByRoofType());
+		listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
+		listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
+	    }
 	} else
 	    Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
     }
@@ -891,30 +910,46 @@ public class FrmBudget {
     @Command
     public void searchBudgetBusinessPartner(@BindingParam("rif") String rif) {
 	List<Budget> listBudget2 = daoBudget.listByString("rifPartner", rif);
-	int listSize = listBudget2.size();
+	searchGeneric(listBudget2);
+    }
+
+    public void searchGeneric(List<Budget> list) {
+	int listSize = list.size();
 	if (listSize == 1) {
-	    budget = listBudget2.get(0);
+	    budget = list.get(0);
 	    disableAfterSearch = new Boolean(true);
 	    disabledNumber = new Boolean(true);
 	    disableSeller = new Boolean(true);
-	    if (budget.getBasicDataByCabinDesign() != null)
+	    listRoofType.add(budget.getBasicDataByRoofType());
+	    listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
+	    listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
+	    if (budget.getBasicDataByCabinDesign() != null) {
 		cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+		listDesign.add(budget.getBasicDataByCabinDesign());
+	    }
 	} else if (listSize == 0) {
 	    Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
 	} else {
 	    Map<String, Object> map = new HashMap<String, Object>();
-	    map.put("listBudget", listBudget2);
-	    Executions.createComponents("ventas/solicitud/frmWindowBudgets.zul", null, map);
+	    map.put("listBudget", list);
+	    Executions.createComponents("system/ventas/solicitud/frmWindowBudgets.zul", null, map);
 	}
     }
 
-    @NotifyChange({ "budget", "disabledAll", "budgetNumber", "disableAfterSearch", "disabledNumber" })
+    @NotifyChange({ "budget", "budgetNumber", "disableAfterSearch", "disabledNumber", "disableSeller", "listRoofType", "listBoothDisplay", "listFloorDisplay", "cabinModel", "listDesign" })
     @GlobalCommand
     public void selectedBudget(@BindingParam("Budget") Budget budget) {
 	this.budget = budget;
 	disableAfterSearch = new Boolean(true);
 	disabledNumber = new Boolean(true);
 	disableSeller = new Boolean(true);
+	listRoofType.add(budget.getBasicDataByRoofType());
+	listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
+	listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
+	if (budget.getBasicDataByCabinDesign() != null) {
+	    cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+	    listDesign.add(budget.getBasicDataByCabinDesign());
+	}
     }
 
     @Command

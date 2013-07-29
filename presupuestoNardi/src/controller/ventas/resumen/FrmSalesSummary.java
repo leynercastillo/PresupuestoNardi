@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.HibernateException;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -74,9 +76,9 @@ public class FrmSalesSummary {
 	return quotation.getElevatorQuantity() + " - " + quotation.getBasicDataByElevatorType().getName();
     }
 
-    public String getDateFormat(Quotation quotation) {
+    public String getDateFormat(Date date) {
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-	return dateFormat.format(quotation.getApprovedDate());
+	return dateFormat.format(date);
     }
 
     @Command
@@ -88,13 +90,13 @@ public class FrmSalesSummary {
 	    e2.printStackTrace();
 	}
 	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
+	String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/resumen");
 	JasperReport jasperReport;
 	try {
-	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
+	    jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/sale_summary.jasper");
 	} catch (JRException e) {
 	    jasperReport = null;
-	    System.out.println("budget.jasper didn't find");
+	    System.out.println("sale_summary.jasper didn't find");
 	}
 	Map<String, Object> parameters = new HashMap<String, Object>();
 	parameters.put("REPORT_TITLE", "Resumen de Venta");
@@ -103,7 +105,7 @@ public class FrmSalesSummary {
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
 	parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
+	parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
 	JasperPrint jasperPrint;
 	try {
 	    jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
@@ -132,11 +134,18 @@ public class FrmSalesSummary {
     @Command
     public void pdfQuotation() throws SQLException {
 	createPdf();
-	String report = new String("/resource/reports/ventas/solicitud/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	String report = new String("/resource/reports/ventas/resumen/presupuesto" + quotation.getBudgetNumber() + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Resumen de Ventas");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud") + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/resumen") + "/presupuesto" + quotation.getBudgetNumber() + ".pdf");
 	Executions.createComponents("system/frmReport.zul", null, map);
+    }
+
+    @Command
+    public void close() {
+	Map<String, Object> map = new HashMap<String, Object>();
+	map.put("page", "");
+	BindUtils.postGlobalCommand(null, null, "selectedPage", map);
     }
 }

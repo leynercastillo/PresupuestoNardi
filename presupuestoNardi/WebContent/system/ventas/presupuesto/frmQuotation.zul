@@ -18,8 +18,27 @@
 					<row>
 						<space></space>
 						<space></space>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel"
+							value="Nro. Presupuesto:">
+						</label>
+						<div width="100%">
+							<intbox disabled="true" style="float: left"
+								value="@load(vm.quotation.type ? '1' : '2')" width="10%">
+							</intbox>
+							<combobox autocomplete="true"
+								autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+								buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
+								model="@load(vm.listQuotationNumber)"
+								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
+								onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
+								style="margin-left: 1%"
+								value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
+								width="67%">
+							</combobox>
+							<intbox disabled="true"
+								value="@load(vm.quotation.versionNumber)" width="10%">
+							</intbox>
+						</div>
 						<div align="right">
 							<button
 								image="/resource/images/icons/search.png" label="Buscar"
@@ -77,30 +96,10 @@
 							value="@save(vm.quotation.partnerName, before = 'save') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)"
 							width="99%">
 						</combobox>
-						<label sclass="formLabel"
-							value="Nro. Presupuesto:">
-						</label>
-						<div>
-							<intbox disabled="true"
-								style="float: left; margin-right: 1%"
-								value="@load(vm.quotation.type ? '1' : '2')" width="10%">
-							</intbox>
-							<div style="float: right; padding: 0%"
-								width="86%">
-								<combobox autocomplete="true"
-									autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
-									buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
-									model="@load(vm.listQuotationNumber)"
-									onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
-									onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
-									value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
-									width="81%">
-								</combobox>
-								<intbox disabled="true"
-									value="@load(vm.quotation.versionNumber)" width="11%">
-								</intbox>
-							</div>
-						</div>
+						<label sclass="formLabel" value="Fecha:"></label>
+						<datebox disabled="true" format="dd/MM/yyyy"
+							value="@load(vm.quotation.date)" width="97%">
+						</datebox>
 						<space></space>
 					</row>
 					<row>
@@ -113,9 +112,13 @@
 							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='construction', val=self.value)"
 							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
 						</combobox>
-						<label sclass="formLabel" value="Fecha:"></label>
-						<datebox value="@load(vm.quotation.date)"
-							disabled="true" format="dd/MM/yyyy" width="97%">
+						<label sclass="formLabel"
+							value="Fecha Entrega:">
+						</label>
+						<datebox disabled="true" format="dd/MM/yyyy"
+							id="deliveryDate"
+							value="@save(vm.quotation.deliveryDate) @load(vm.quotation.deliveryDate)"
+							width="97%">
 						</datebox>
 						<space></space>
 					</row>
@@ -144,14 +147,14 @@
 						<div>
 							<intbox disabled="true" style="float: left"
 								value="@save(vm.quotation.elevatorQuantity, before = 'save') @load(vm.quotation.elevatorQuantity) @validator(vm.noElevatorQuantity, component = self)"
-								width="18%">
+								width="17%">
 							</intbox>
 							<combobox
 								value="@load(vm.quotation.basicDataByElevatorType eq null ? vm.seleccione : vm.quotation.basicDataByElevatorType.name)"
 								model="@load(vm.listElevatorType)"
 								selectedItem="@bind(vm.quotation.basicDataByElevatorType)"
 								style="float: right" readonly="false" disabled="true"
-								width="78%">
+								width="77%">
 								<template name="model"
 									var="elevatorType">
 									<comboitem
@@ -912,7 +915,8 @@
 						</label>
 						<doublebox disabled="@load(vm.disabledEdit)"
 							format="#.##" onBlur="@command('priceUnit', val=self.value)"
-							value="@bind(vm.quotation.totalPrice)" width="95%">
+							value="@save(vm.quotation.totalPrice, before = 'save') @load(vm.quotation.totalPrice) @validator(vm.noZero, component = self)"
+							width="95%">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
@@ -923,7 +927,7 @@
 							sclass="formLabel">
 						</label>
 						<label
-							value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.quotation.basicDataByElevatorType.name)"
+							value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))"
 							sclass="formLabel">
 						</label>
 						<doublebox
@@ -996,7 +1000,8 @@
 							</label>
 						</div>
 					</row>
-					<row>
+					<!-- OCULTO POR SITUACION DEL MERCADO -->
+					<row visible="false">
 						<label value="Válidez del presupuesto:"
 							sclass="formLabel">
 						</label>
@@ -1020,7 +1025,7 @@
 					<row>
 						<space></space>
 						<radiogroup
-							selectedItem="@save(vm.quotation.status, before = 'save') @validator(vm.wasApproved, component = self)">
+							selectedItem="@save(vm.quotation.status, before = 'save') @validator(vm.wasApproved, component = self, datebox = deliveryDate)">
 							<radio
 								checked="@load(vm.quotation.status eq 'A' ? 'true' : false)"
 								disabled="@load(vm.disabledEdit)" label="Aprobado"

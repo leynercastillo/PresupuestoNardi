@@ -1,6 +1,6 @@
 package database;
 
-// Generated 08-jul-2013 15:07:39 by Hibernate Tools 3.4.0.CR1
+// Generated 16-jul-2013 16:07:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,35 +27,45 @@ public class Item implements java.io.Serializable {
 
     private static final long serialVersionUID = 794900053845942242L;
     private int idItem;
+    private Item item;
+    private BasicData basicData;
     private String code;
     private String name;
     private float cost;
     private float price;
+    private float percentPrice;
     private char status;
     private Set<Quotation> quotations = new HashSet<Quotation>(0);
     private Set<BasicData> basicDatas = new HashSet<BasicData>(0);
+    private Set<Item> items = new HashSet<Item>(0);
 
     public Item() {
     }
 
-    public Item(int idItem, String code, String name, float cost, float price, char status) {
+    public Item(int idItem, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status) {
 	this.idItem = idItem;
+	this.basicData = basicData;
 	this.code = code;
 	this.name = name;
 	this.cost = cost;
 	this.price = price;
+	this.percentPrice = percentPrice;
 	this.status = status;
     }
 
-    public Item(int idItem, String code, String name, float cost, float price, char status, Set<Quotation> quotations, Set<BasicData> basicDatas) {
+    public Item(int idItem, Item item, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status, Set<Quotation> quotations, Set<BasicData> basicDatas, Set<Item> items) {
 	this.idItem = idItem;
+	this.item = item;
+	this.basicData = basicData;
 	this.code = code;
 	this.name = name;
 	this.cost = cost;
 	this.price = price;
+	this.percentPrice = percentPrice;
 	this.status = status;
 	this.quotations = quotations;
 	this.basicDatas = basicDatas;
+	this.items = items;
     }
 
     @Id
@@ -66,6 +78,26 @@ public class Item implements java.io.Serializable {
 
     public void setIdItem(int idItem) {
 	this.idItem = idItem;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id_item")
+    public Item getItem() {
+	return this.item;
+    }
+
+    public void setItem(Item item) {
+	this.item = item;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type", nullable = false)
+    public BasicData getBasicData() {
+	return this.basicData;
+    }
+
+    public void setBasicData(BasicData basicData) {
+	this.basicData = basicData;
     }
 
     @Column(name = "code", nullable = false, length = 15)
@@ -104,6 +136,15 @@ public class Item implements java.io.Serializable {
 	this.price = price;
     }
 
+    @Column(name = "percent_price", nullable = false, precision = 8, scale = 8)
+    public float getPercentPrice() {
+	return this.percentPrice;
+    }
+
+    public void setPercentPrice(float percentPrice) {
+	this.percentPrice = percentPrice;
+    }
+
     @Column(name = "status", nullable = false, length = 1)
     public char getStatus() {
 	return this.status;
@@ -131,6 +172,15 @@ public class Item implements java.io.Serializable {
 
     public void setBasicDatas(Set<BasicData> basicDatas) {
 	this.basicDatas = basicDatas;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    public Set<Item> getItems() {
+	return this.items;
+    }
+
+    public void setItems(Set<Item> items) {
+	this.items = items;
     }
 
 }

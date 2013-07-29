@@ -1,6 +1,6 @@
 package database;
 
-// Generated 08-jul-2013 15:07:39 by Hibernate Tools 3.4.0.CR1
+// Generated 16-jul-2013 16:07:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +44,7 @@ public class BasicData implements java.io.Serializable {
     private Set<Quotation> quotationsForElevatorType = new HashSet<Quotation>(0);
     private Set<Budget> budgetsForSpeed = new HashSet<Budget>(0);
     private Set<Item> items = new HashSet<Item>(0);
+    private Set<Item> items_1 = new HashSet<Item>(0);
     private Set<Quotation> quotationsForCabinDesign = new HashSet<Quotation>(0);
     private Set<Budget> budgetsForFloorType = new HashSet<Budget>(0);
     private Set<Quotation> quotationsForMirror = new HashSet<Quotation>(0);
@@ -103,7 +104,7 @@ public class BasicData implements java.io.Serializable {
 	this.status = status;
     }
 
-    public BasicData(int idBasic, BasicData basicData, String dataBaseName, String name, String field, boolean editable, int priority, String imageurl, char status, Set<Quotation> quotationsForElectricityType, Set<Quotation> quotationsForRailing, Set<Quotation> quotationsForRoofType, Set<Quotation> quotationsForFloorType, Set<Quotation> quotationsForDoorType, Set<Budget> budgetsForHeight, Set<Budget> budgetsForFreeAdmission, Set<Quotation> quotationsForElevatorType, Set<Budget> budgetsForSpeed, Set<Item> items, Set<Quotation> quotationsForCabinDesign, Set<Budget> budgetsForFloorType, Set<Quotation> quotationsForMirror, Set<Budget> budgetsForDoorSystem, Set<Quotation> quotationsForDoorFrameHammered, Set<Budget> budgetsForDoorframeType, Set<Quotation> quotationsForHeight, Set<Budget> budgetsForControlType, Set<Quotation> quotationsForFreeAdmission, Set<Budget> budgetsForBoothButton, Set<Budget> budgetsForBoothDisplay, Set<Budget> budgetsForFloorDisplay, Set<BusinessPartner> businessPartners, Set<Quotation> quotationsForDoorframeType, Set<Budget> budgetsForFan, Set<Budget> budgetsForDoorType, Set<Budget> budgetsForVoltageLighting, Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourMachine, Set<Budget> budgetsForMirror, Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtonType, Set<Budget> budgetsForRoofType, Set<Budget> budgetsForHallButtonType, Set<Budget> budgetsForCabinDesign, Set<Budget> budgetsForManeuverType, Set<Budget> budgetsForHallButton, Set<BasicData> basicDatas, Set<Quotation> quotationsForHallButtonType, Set<Budget> budgetsForBuildingType, Set<Quotation> quotationsForFloorDisplay, Set<Budget> budgetsForElevatorType, Set<Quotation> quotationsForBoothDisplay, Set<Budget> budgetsForElevatorCapacitance, Set<Quotation> quotationsForControlType, Set<Budget> budgetsForDoorFrameHammered, Set<Budget> budgetsForMachineType, Set<Budget> budgetsForAccess, Set<Quotation> quotationsForMachineType, Set<Budget> budgetsForElectricityType, Set<Quotation> quotationsForHallButton, Set<Quotation> quotationsForManeuverType, Set<Budget> budgetsForMachineBase, Set<Quotation> quotationsForSpeed, Set<Quotation> quotationsForElevatorCapacitance) {
+    public BasicData(int idBasic, BasicData basicData, String dataBaseName, String name, String field, boolean editable, int priority, String imageurl, char status, Set<Quotation> quotationsForElectricityType, Set<Quotation> quotationsForRailing, Set<Quotation> quotationsForRoofType, Set<Quotation> quotationsForFloorType, Set<Quotation> quotationsForDoorType, Set<Budget> budgetsForHeight, Set<Budget> budgetsForFreeAdmission, Set<Quotation> quotationsForElevatorType, Set<Budget> budgetsForSpeed, Set<Item> items, Set<Item> items_1, Set<Quotation> quotationsForCabinDesign, Set<Budget> budgetsForFloorType, Set<Quotation> quotationsForMirror, Set<Budget> budgetsForDoorSystem, Set<Quotation> quotationsForDoorFrameHammered, Set<Budget> budgetsForDoorframeType, Set<Quotation> quotationsForHeight, Set<Budget> budgetsForControlType, Set<Quotation> quotationsForFreeAdmission, Set<Budget> budgetsForBoothButton, Set<Budget> budgetsForBoothDisplay, Set<Budget> budgetsForFloorDisplay, Set<BusinessPartner> businessPartners, Set<Quotation> quotationsForDoorframeType, Set<Budget> budgetsForFan, Set<Budget> budgetsForDoorType, Set<Budget> budgetsForVoltageLighting, Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourMachine, Set<Budget> budgetsForMirror, Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtonType, Set<Budget> budgetsForRoofType, Set<Budget> budgetsForHallButtonType, Set<Budget> budgetsForCabinDesign, Set<Budget> budgetsForManeuverType, Set<Budget> budgetsForHallButton, Set<BasicData> basicDatas, Set<Quotation> quotationsForHallButtonType, Set<Budget> budgetsForBuildingType, Set<Quotation> quotationsForFloorDisplay, Set<Budget> budgetsForElevatorType, Set<Quotation> quotationsForBoothDisplay, Set<Budget> budgetsForElevatorCapacitance, Set<Quotation> quotationsForControlType, Set<Budget> budgetsForDoorFrameHammered, Set<Budget> budgetsForMachineType, Set<Budget> budgetsForAccess, Set<Quotation> quotationsForMachineType, Set<Budget> budgetsForElectricityType, Set<Quotation> quotationsForHallButton, Set<Quotation> quotationsForManeuverType, Set<Budget> budgetsForMachineBase, Set<Quotation> quotationsForSpeed, Set<Quotation> quotationsForElevatorCapacitance) {
 	this.idBasic = idBasic;
 	this.basicData = basicData;
 	this.dataBaseName = dataBaseName;
@@ -123,6 +124,7 @@ public class BasicData implements java.io.Serializable {
 	this.quotationsForElevatorType = quotationsForElevatorType;
 	this.budgetsForSpeed = budgetsForSpeed;
 	this.items = items;
+	this.items_1 = items_1;
 	this.quotationsForCabinDesign = quotationsForCabinDesign;
 	this.budgetsForFloorType = budgetsForFloorType;
 	this.quotationsForMirror = quotationsForMirror;
@@ -336,13 +338,22 @@ public class BasicData implements java.io.Serializable {
 	this.budgetsForSpeed = budgetsForSpeed;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "basicDatas")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "basicData")
     public Set<Item> getItems() {
 	return this.items;
     }
 
     public void setItems(Set<Item> items) {
 	this.items = items;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "basicDatas")
+    public Set<Item> getItems_1() {
+	return this.items_1;
+    }
+
+    public void setItems_1(Set<Item> items_1) {
+	this.items_1 = items_1;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByCabinDesign")

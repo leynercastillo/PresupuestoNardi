@@ -21,6 +21,10 @@
 			pattern="/system/ventas/presupuesto/frmWindowQuotations.zul" />
 		<intercept-url access="ROLE_SALES_SUMMARY"
 			pattern="/system/ventas/resumen/frmSalesSummary.zul" />
+		<intercept-url access="ROLE_ITEM"
+			pattern="/system/inventario/frmItemList.zul" />
+		<intercept-url access="ROLE_ITEM_LIST"
+			pattern="/system/inventario/frmItemMaster.zul" />
 		<intercept-url access="ROLE_BUSINESS_PARTNER"
 			pattern="/system/socios/frmBusinessPartner.zul" />
 		<intercept-url access="ROLE_SECURITY_PROFILE"
@@ -37,6 +41,8 @@
 			pattern="/system/seguridad/notAuthorized.zul" />
 		<intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
 			pattern="/system/seguridady/login.zul" />
+		<intercept-url access="IS_AUTHENTICATED_ANONYMOUSLY"
+			pattern="/system/contacto/frmContact.zul" />
 		<form-login authentication-failure-url="/system/seguridad/index.jsp?login_error=1"
 			default-target-url="/index.jsp" login-page="/system/seguridad/index.jsp" />
 		<logout logout-success-url="/system/seguridad/index.jsp" />
