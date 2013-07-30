@@ -21,10 +21,10 @@
 			pattern="/system/ventas/presupuesto/frmWindowQuotations.zul" />
 		<intercept-url access="ROLE_SALES_SUMMARY"
 			pattern="/system/ventas/resumen/frmSalesSummary.zul" />
-		<intercept-url access="ROLE_ITEM"
-			pattern="/system/inventario/frmItemList.zul" />
-		<intercept-url access="ROLE_ITEM_LIST"
+		<intercept-url access="ROLE_ITEM_MASTER"
 			pattern="/system/inventario/frmItemMaster.zul" />
+		<intercept-url access="ROLE_ITEM_MASTER"
+			pattern="/system/inventario/frmItemList.zul" />
 		<intercept-url access="ROLE_BUSINESS_PARTNER"
 			pattern="/system/socios/frmBusinessPartner.zul" />
 		<intercept-url access="ROLE_SECURITY_PROFILE"

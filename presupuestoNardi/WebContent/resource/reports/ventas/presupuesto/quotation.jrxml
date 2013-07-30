@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="336"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -66,11 +66,11 @@ WHERE
 	<detail>
 		<band height="751" splitType="Stretch">
 			<image>
-				<reportElement uuid="07e748a9-5f7b-40b7-96a0-7948487a2bd5" x="0" y="0" width="180" height="70"/>
+				<reportElement uuid="07e748a9-5f7b-40b7-96a0-7948487a2bd5" x="0" y="0" width="194" height="75"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement uuid="1730da45-de0a-4f13-aa24-f4a68da2c9f2" x="276" y="0" width="300" height="20"/>
+				<reportElement uuid="1730da45-de0a-4f13-aa24-f4a68da2c9f2" x="334" y="0" width="242" height="16"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
 			</image>
 			<staticText>

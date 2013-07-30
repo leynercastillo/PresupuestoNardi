@@ -132,6 +132,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	    getCurrentSession().beginTransaction();
 	    List<Quotation> list = listByInt("budgetNumber", quotation.getBudgetNumber());
 	    if (list.size() > 0) {
+		getCurrentSession().evict(quotation);
 		quotation.setIdQuotation(0);
 		quotation.setVersionNumber((short) (getVersionQuotation(list.get(0)) + 1));
 	    } else if (quotation.isType()) {

@@ -428,7 +428,7 @@ WHERE
 			<staticText>
 				<reportElement uuid="017a9284-be30-49a8-adf6-1230d1a6feff" x="50" y="627" width="194" height="15"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Dpto. de Ventas]]></text>
+				<text><![CDATA[Representante de Ventas]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929" x="355" y="611" width="165" height="1"/>

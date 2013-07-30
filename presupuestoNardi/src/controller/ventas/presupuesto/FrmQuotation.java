@@ -852,8 +852,8 @@ public class FrmQuotation {
 	}
 	JRExporter jrExporter = new JRPdfExporter();
 	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
-	File file = new File(string + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
+	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppt_" + quotationNumber + ".pdf");
+	File file = new File(string + "/Ppt_" + quotationNumber + ".pdf");
 	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
 	if (file.isFile())
 	    file.delete();
@@ -966,8 +966,8 @@ public class FrmQuotation {
 		    if (quotation.getStatus() == 'A')
 			sendMail();
 		    Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
-		    restartForm();
 		    print();
+		    restartForm();
 		} else if (Messagebox.ON_CANCEL.equals(evt.getName())) {
 		    return;
 		}
@@ -989,11 +989,11 @@ public class FrmQuotation {
 	else
 	    quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
 	createQuotationPdf(quotationNumber);
-	String report = new String("/resource/reports/ventas/presupuesto/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
+	String report = new String("/resource/reports/ventas/presupuesto/Ppt_" + quotationNumber + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/Ppt " + quotationNumber + " (" + quotation.getPartnerName() + ").pdf");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/Ppt_" + quotationNumber + ".pdf");
 	Executions.createComponents("system/frmReport.zul", null, map);
     }
 
