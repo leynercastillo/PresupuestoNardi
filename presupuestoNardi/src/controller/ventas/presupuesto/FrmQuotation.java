@@ -386,8 +386,8 @@ public class FrmQuotation {
 	return new ValidateZK().getNoEmpty();
     }
 
-    public Validator getNoZero() {
-	return new ValidateZK().getNoZero();
+    public Validator getnoZeroDouble() {
+	return new ValidateZK().getNoZeroDouble();
     }
 
     public Validator getNoEmptyForFormica() {
@@ -681,8 +681,9 @@ public class FrmQuotation {
 	    }
 	    list = daoQuotation.listByInt("newNumber", Integer.parseInt(value));
 	    list.addAll(daoQuotation.listByInt("modernizationNumber", Integer.parseInt(value)));
-	} else
+	} else {
 	    list = daoQuotation.listByString(field, value);
+	}
 	int listSize = list.size();
 	if (listSize == 1) {
 	    quotation = list.get(0);
@@ -779,9 +780,8 @@ public class FrmQuotation {
 
     @Command
     public void priceUnit(@BindingParam("val") Double value) {
-	Double price = value;
-	quotation.setPriceImportedMaterial(price * 0.6);
-	quotation.setPriceNationalMaterial(price * 0.4);
+	quotation.setPriceImportedMaterial(value * 0.6);
+	quotation.setPriceNationalMaterial(value * 0.4);
 	quotation.setTotalPrice(value);
 	BindUtils.postNotifyChange(null, null, quotation, "priceImportedMaterial");
 	BindUtils.postNotifyChange(null, null, quotation, "priceNationalMaterial");
@@ -904,10 +904,6 @@ public class FrmQuotation {
 	JRExporter jrExporter = new JRPdfExporter();
 	jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 	jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + number + ".pdf");
-	File file = new File(string + "/presupuesto" + number + ".pdf");
-	/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
-	if (file.isFile())
-	    file.delete();
 	try {
 	    jrExporter.exportReport();
 	} catch (JRException e) {
@@ -993,7 +989,7 @@ public class FrmQuotation {
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);
 	map.put("reportTitle", "Presupuesto");
-	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/") + "/Ppt_" + quotationNumber + ".pdf");
+	map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto") + "/Ppt_" + quotationNumber + ".pdf");
 	Executions.createComponents("system/frmReport.zul", null, map);
     }
 

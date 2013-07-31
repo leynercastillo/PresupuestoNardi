@@ -22,6 +22,9 @@ import database.Quotation;
 @Repository
 public class DaoQuotation extends GenericDao<Quotation> {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     private Properties properties;
 
     @Autowired
@@ -61,6 +64,10 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	criteria.add(Restrictions.eq(field, value));
 	criteria.addOrder(Order.desc("date"));
 	List<Quotation> list = criteria.list();
+	/* Saco a los objetos de la cache hibernate por error al guardar. Revisar metodo save() */
+	for (int i = 0; i < list.size(); i++) {
+	    getCurrentSession().evict(list.get(i));
+	}
 	return list;
     }
 
@@ -101,6 +108,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	    else
 		number = Integer.valueOf(properties.getProperty("quotation_modernization_number"));
 	}
+	getCurrentSession().close();
 	return number;
     }
 
@@ -128,6 +136,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
     @Override
     public Boolean save(Quotation quotation) {
 	quotation.setDate(new Date());
+	getCurrentSession().close();
 	try {
 	    getCurrentSession().beginTransaction();
 	    List<Quotation> list = listByInt("budgetNumber", quotation.getBudgetNumber());
@@ -146,6 +155,7 @@ public class DaoQuotation extends GenericDao<Quotation> {
 	    }
 	    /* Se utiliza el merge por un error no solucionado con los estados de los objetos de hibernate */
 	    getCurrentSession().merge(quotation);
+	    getCurrentSession().flush();
 	    getCurrentSession().getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {

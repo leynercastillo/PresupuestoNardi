@@ -19,11 +19,11 @@ public class DaoSecurityGroup extends GenericDao<SecurityGroup> {
     }
 
     @Transactional(readOnly = true)
-    public SecurityGroup listByField(String field, Object value){
+    public SecurityGroup listByField(String field, Object value) {
 	getCurrentSession().beginTransaction();
 	Criteria criteria = getCurrentSession().createCriteria(SecurityGroup.class);
 	criteria.add(Restrictions.eq(field, value));
 	Object obj = criteria.uniqueResult();
-	return obj == null ? null : (SecurityGroup)obj;
+	return obj == null ? null : (SecurityGroup) obj;
     }
 }

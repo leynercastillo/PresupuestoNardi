@@ -29,8 +29,8 @@
 								autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
 								buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
 								model="@load(vm.listQuotationNumber)"
-								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
 								onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='quotationNumber', val=self.value)"
+								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
 								style="margin-left: 1%"
 								value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
 								width="67%">
@@ -888,9 +888,9 @@
 						<label value="Material Importado:"
 							sclass="formLabel">
 						</label>
-						<doublebox
-							value="@bind(vm.quotation.priceImportedMaterial)" disabled="true"
-							format="#.##" width="95%">
+						<doublebox disabled="true" format="#,##0.00"
+							style="text-align: right"
+							value="@bind(vm.quotation.priceImportedMaterial)" width="95%">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
@@ -901,9 +901,9 @@
 							value="Material Nacional y Mano de Obra de fabricacion:"
 							sclass="formLabel">
 						</label>
-						<doublebox
-							value="@bind(vm.quotation.priceNationalMaterial)" disabled="true"
-							format="#.##" width="95%">
+						<doublebox disabled="true" format="#,##0.00"
+							style="text-align: right"
+							value="@bind(vm.quotation.priceNationalMaterial)" width="95%">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
@@ -914,29 +914,29 @@
 							sclass="formLabel">
 						</label>
 						<doublebox disabled="@load(vm.disabledEdit)"
-							format="#.##" onBlur="@command('priceUnit', val=self.value)"
-							value="@save(vm.quotation.totalPrice, before = 'save') @load(vm.quotation.totalPrice) @validator(vm.noZero, component = self)"
+							format="#,##0.00" onBlur="@command('priceUnit', val=self.value)"
+							style="text-align: right"
+							value="@save(vm.quotation.totalPrice, before = 'save') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
 							width="95%">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
 						<space></space>
 					</row>
 					<row>
-						<label
-							value="@load(vm.quotation.elevatorQuantity)"
-							sclass="formLabel">
+						<label sclass="formLabel"
+							value="@load(vm.quotation.elevatorQuantity)">
 						</label>
-						<label
-							value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))"
-							sclass="formLabel">
+						<label sclass="formLabel"
+							value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
 						</label>
-						<doublebox
-							value="@load(vm.quotation.totalPrice)" disabled="true"
-							format="#.##" width="95%">
+						<doublebox disabled="true" format="#,##0.00"
+							style="text-align: right" value="@load(vm.quotation.totalPrice)"
+							width="95%">
 						</doublebox>
-						<doublebox
+						<doublebox disabled="true" format="#,##0.00"
+							style="text-align: right"
 							value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
-							disabled="true" format="#.##" width="95%">
+							width="95%">
 						</doublebox>
 						<label value="Bs:" sclass="formLabel"></label>
 					</row>

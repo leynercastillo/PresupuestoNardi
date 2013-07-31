@@ -110,7 +110,8 @@ public class ValidateZK {
     }
 
     /**
-     * Metodo que valida que un combobox no tenga seleccionado nada y ademas se encuentre dentro de un tabbox > tabs > tab
+     * Metodo que valida que un combobox no tenga seleccionado nada y ademas se encuentre dentro de un tabbox > tabs >
+     * tab
      * 
      * Solo aplica para componentes ZK.
      * 

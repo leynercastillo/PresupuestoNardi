@@ -44,6 +44,5 @@ public class FrmReport {
     public void close() {
 	if (!file.delete())
 	    System.out.println("No se pudo eliminar el archivo.");
-	
     }
 }

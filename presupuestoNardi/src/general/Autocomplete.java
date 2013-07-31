@@ -1,11 +1,9 @@
 package general;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
-import org.zkoss.zul.ListModel;
 
 public class Autocomplete {
 

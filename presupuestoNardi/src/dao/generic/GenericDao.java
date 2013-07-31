@@ -5,10 +5,12 @@ import java.lang.reflect.ParameterizedType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 public class GenericDao<Model> {
 
+    @Autowired
     private SessionFactory sessionFactory;
     public Class<Model> domainClass = getDomainClass();
 
@@ -16,7 +18,7 @@ public class GenericDao<Model> {
 	this.sessionFactory = sessionFactory;
     }
 
-    public Session getCurrentSession() {
+    protected Session getCurrentSession() {
 	return sessionFactory.getCurrentSession();
     }
 

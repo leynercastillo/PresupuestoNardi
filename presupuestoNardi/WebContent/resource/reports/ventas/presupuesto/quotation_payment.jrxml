@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="272"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -183,7 +183,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[MATERIAL IMPORTADO]]></text>
 			</staticText>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="3c374ab5-9f95-44a1-a191-701ddf796216" mode="Transparent" x="470" y="61" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -211,7 +211,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[MATERIAL NACIONAL Y MANO DE OBRA]]></text>
 			</staticText>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="e311013d-c3f0-4c7a-a012-91a388b6f6ac" x="470" y="76" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -239,7 +239,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[PRECIO UNITARIO TOTAL]]></text>
 			</staticText>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="bbf542be-045b-4c09-8b08-bebb9d9f364e" x="470" y="91" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -288,7 +288,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="9845f085-a62e-4dfb-b990-985e014fc2c9" x="349" y="118" width="121" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
@@ -302,7 +302,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio unitario total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="65e0e1fc-5dc5-4bee-9656-1aa5c873af75" x="470" y="118" width="110" height="15"/>
 				<box rightPadding="5">
 					<pen lineWidth="1.0"/>
