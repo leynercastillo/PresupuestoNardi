@@ -3,6 +3,8 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -15,11 +17,76 @@ import dao.generic.GenericDao;
 import database.Item;
 
 @Repository
-public class DaoItem extends GenericDao<Item> {
+public class DaoItem /* extends GenericDao<Item> */{
 
+    /*
+     * @Autowired public DaoItem(SessionFactory sessionFactory) { super(sessionFactory); }
+     */
     @Autowired
-    public DaoItem(SessionFactory sessionFactory) {
-	super(sessionFactory);
+    private SessionFactory sessionFactory;
+
+    protected final Session getCurrentSession() {
+	return sessionFactory.getCurrentSession();
+    }
+
+    /**
+     * @param model
+     *            Object to save in database
+     * @return true if saved / false if not saved
+     */
+    @Transactional
+    public Boolean save(Item item) {
+	Session session = getCurrentSession();
+	try {
+	    session.beginTransaction();
+	    session.save(item);
+	    session.getTransaction().commit();
+	    return true;
+	} catch (HibernateException e) {
+	    session.getTransaction().rollback();
+	    e.printStackTrace();
+	    return false;
+	}
+    }
+
+    /**
+     * @param model
+     *            Object to update in database
+     * @return true if updated / false if not updated
+     */
+    @Transactional
+    public Boolean update(Item item) {
+	Session session = getCurrentSession();
+	try {
+	    session.beginTransaction();
+	    session.merge(item);
+	    session.getTransaction().commit();
+	    return true;
+	} catch (HibernateException e) {
+	    session.getTransaction().rollback();
+	    e.printStackTrace();
+	    return false;
+	}
+    }
+
+    /**
+     * @param model
+     *            Object to delete in database
+     * @return true if deleted / false if not deleted
+     */
+    @Transactional
+    public Boolean delete(Item item) {
+	Session session = getCurrentSession();
+	try {
+	    session.beginTransaction();
+	    session.delete(item);
+	    session.getTransaction().commit();
+	    return true;
+	} catch (HibernateException e) {
+	    session.getTransaction().rollback();
+	    e.printStackTrace();
+	    return false;
+	}
     }
 
     @Transactional(readOnly = true)

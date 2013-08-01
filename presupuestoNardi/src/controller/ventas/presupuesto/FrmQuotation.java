@@ -814,7 +814,7 @@ public class FrmQuotation {
     }
 
     @Command
-    public void createQuotationPdf(String quotationNumber) throws SQLException {
+    public void createQuotationPdf(String quotationNumber, Quotation q) throws SQLException {
 	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
 	try {
 	    Class.forName("org.postgresql.Driver");
@@ -831,10 +831,10 @@ public class FrmQuotation {
 	    e.printStackTrace();
 	}
 	Map<String, Object> parameters = new HashMap<String, Object>();
-	parameters.put("TYPE", quotation.isType());
-	parameters.put("NEW", quotation.getNewNumber());
-	parameters.put("MODERNIZATION", quotation.getModernizationNumber());
-	parameters.put("VERSION", quotation.getVersionNumber());
+	parameters.put("TYPE", q.isType());
+	parameters.put("NEW", q.getNewNumber());
+	parameters.put("MODERNIZATION", q.getModernizationNumber());
+	parameters.put("VERSION", q.getVersionNumber());
 	/*
 	 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
 	 */
@@ -866,8 +866,8 @@ public class FrmQuotation {
     }
 
     @Command
-    public void createBudgetPdf() throws SQLException {
-	Integer number = quotation.getBudgetNumber();
+    public void createBudgetPdf(Quotation q) throws SQLException {
+	Integer number = q.getBudgetNumber();
 	/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
 	try {
 	    Class.forName("org.postgresql.Driver");
@@ -915,7 +915,7 @@ public class FrmQuotation {
     public List<File> mailAttach() {
 	List<File> listAttach = new ArrayList<File>();
 	try {
-	    createBudgetPdf();
+	    createBudgetPdf(quotation);
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
@@ -943,10 +943,9 @@ public class FrmQuotation {
     @NotifyChange("*")
     @Command
     public void save() {
-	Messagebox.show("El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?", "Atención", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
-	    @Override
-	    public void onEvent(Event evt) throws Exception {
-		if (Messagebox.ON_OK.equals(evt.getName())) {
+	Messagebox.show("El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?", "Atención", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener<Event>() {
+	    public void onEvent(Event e) throws Exception {
+		if (Messagebox.ON_YES.equals(e.getName())) {
 		    Quotation auxQuotation = daoQuotation.findById(quotation);
 		    if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
 			if (!daoQuotation.save(quotation)) {
@@ -962,9 +961,8 @@ public class FrmQuotation {
 		    if (quotation.getStatus() == 'A')
 			sendMail();
 		    Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
-		    print();
 		    restartForm();
-		} else if (Messagebox.ON_CANCEL.equals(evt.getName())) {
+		} else if (Messagebox.ON_NO.equals(e.getName())) {
 		    return;
 		}
 	    }
@@ -977,14 +975,15 @@ public class FrmQuotation {
 	disabledEdit = new Boolean(false);
     }
 
+    @NotifyChange("*")
     @Command
-    public void print() throws SQLException {
+    public void print(@BindingParam("quotation") Quotation q) throws SQLException {
 	String quotationNumber = new String();
-	if (quotation.isType())
-	    quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
+	if (q.isType())
+	    quotationNumber = "1-" + q.getNewNumber() + "-" + q.getVersionNumber();
 	else
-	    quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
-	createQuotationPdf(quotationNumber);
+	    quotationNumber = "2-" + q.getModernizationNumber() + "-" + q.getVersionNumber();
+	createQuotationPdf(quotationNumber, q);
 	String report = new String("/resource/reports/ventas/presupuesto/Ppt_" + quotationNumber + ".pdf");
 	Map<String, Object> map = new HashMap<String, Object>();
 	map.put("reportPath", report);

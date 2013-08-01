@@ -12,12 +12,6 @@
 	<bean id="userDetailsService" class="controller.seguridad.generic.UserDetailsServiceImpl">
 	</bean>
 
-	<!-- Load beans in the classpath package -->
-	<context:component-scan base-package="dao">
-	</context:component-scan>
-	<context:component-scan base-package="springBean">
-	</context:component-scan>
-
 	<!-- Load external properties files -->
 	<context:property-placeholder location="classpath*:configuration/*.properties" />
 
@@ -54,4 +48,15 @@
 			</props>
 		</property>
 	</bean>
+
+	<!-- Load beans in the classpath package -->
+	<context:component-scan base-package="dao">
+	</context:component-scan>
+
+	<context:component-scan base-package="springBean">
+	</context:component-scan>
+
+	<context:annotation-config />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

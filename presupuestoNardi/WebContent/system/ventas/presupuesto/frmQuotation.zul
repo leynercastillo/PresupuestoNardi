@@ -1057,7 +1057,7 @@
 						</button>
 						<button disabled="@load(vm.disabledPrint)"
 							image="/resource/images/icons/print.png" label="Imprimir"
-							onClick="@command('print')" sclass="formLabel">
+							onClick="@command('print', quotation = vm.quotation)" sclass="formLabel">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
