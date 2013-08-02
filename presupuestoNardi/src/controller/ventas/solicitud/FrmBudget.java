@@ -806,7 +806,7 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	/* listRecipient.add("ventas@ascensoresnardi.com"); */
+	listRecipient.add("ventas@ascensoresnardi.com");
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
