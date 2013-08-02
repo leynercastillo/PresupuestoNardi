@@ -48,12 +48,9 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     public Boolean update(Quotation quotation) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(quotation);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -68,12 +65,9 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     public Boolean delete(Quotation quotation) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(quotation);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -82,7 +76,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public Quotation findById(Quotation quotation) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("idQuotation", quotation.getIdQuotation()));
 	Object obj = criteria.uniqueResult();
@@ -93,7 +86,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<Quotation> listByString(String field, String value) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	List<Quotation> list = criteria.list();
@@ -103,7 +95,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<Quotation> listByInt(String field, int value) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq(field, value));
 	criteria.addOrder(Order.desc("date"));
@@ -114,7 +105,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<Quotation> listQuotationOrderByField(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.addOrder(Order.asc(field).ignoreCase());
 	criteria.addOrder(Order.desc("date"));
@@ -125,7 +115,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<String> listStringByFields(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.setProjection(Projections.distinct(Projections.property(field)));
 	criteria.addOrder(Order.asc(field));
@@ -141,7 +130,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public Integer getMaxNumber(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.setProjection(Projections.max(field));
 	Integer number = (Integer) criteria.uniqueResult();
@@ -157,7 +145,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public Short getVersionQuotation(Quotation quotation) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	if (quotation.isType())
 	    criteria.add(Restrictions.eq("newNumber", quotation.getNewNumber()));
@@ -180,10 +167,9 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 	Session session = getCurrentSession();
 	quotation.setDate(new Date());
 	try {
-	    session.beginTransaction();
 	    List<Quotation> list = listByInt("budgetNumber", quotation.getBudgetNumber());
 	    if (list.size() > 0) {
-		quotation = (Quotation) session.merge(quotation);
+		/* quotation = (Quotation) session.merge(quotation); */
 		getCurrentSession().evict(quotation);
 		quotation.setIdQuotation(0);
 		quotation.setVersionNumber((short) (getVersionQuotation(list.get(0)) + 1));
@@ -197,11 +183,9 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 		quotation.setNewNumber(-1);
 	    }
 	    /* Se utiliza el merge por un error no solucionado con los estados de los objetos de hibernate */
-	    session.merge(quotation);
-	    session.getTransaction().commit();
+	    session.save(quotation);
 	    return true;
 	} catch (HibernateException e) {
-	    getCurrentSession().getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -215,7 +199,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<Quotation> listActiveOrderAscByField(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.addOrder(Order.asc(field).ignoreCase());
@@ -231,7 +214,6 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
     @Transactional(readOnly = true)
     public List<Quotation> listActiveOrderDescByField(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Quotation.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.addOrder(Order.desc(field).ignoreCase());

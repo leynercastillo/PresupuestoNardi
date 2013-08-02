@@ -10,12 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import database.Contact;
 
 @Repository
-public class DaoContact /*extends GenericDao<Contact> */{
+public class DaoContact /* extends GenericDao<Contact> */{
 
-    /*@Autowired
-    public DaoContact(SessionFactory sessionFactory) {
-	super(sessionFactory);
-    }*/
+    /*
+     * @Autowired public DaoContact(SessionFactory sessionFactory) { super(sessionFactory); }
+     */
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -33,12 +32,9 @@ public class DaoContact /*extends GenericDao<Contact> */{
     public Boolean save(Contact contact) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(contact);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -53,12 +49,9 @@ public class DaoContact /*extends GenericDao<Contact> */{
     public Boolean update(Contact contact) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(contact);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -73,12 +66,9 @@ public class DaoContact /*extends GenericDao<Contact> */{
     public Boolean delete(Contact contact) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(contact);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}

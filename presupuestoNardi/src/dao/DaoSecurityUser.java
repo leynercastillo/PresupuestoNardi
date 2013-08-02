@@ -35,12 +35,9 @@ public class DaoSecurityUser /* extends GenericDao<SecurityUser> */{
     public Boolean save(SecurityUser securityUser) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(securityUser);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -55,12 +52,9 @@ public class DaoSecurityUser /* extends GenericDao<SecurityUser> */{
     public Boolean update(SecurityUser securityUser) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(securityUser);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -75,12 +69,9 @@ public class DaoSecurityUser /* extends GenericDao<SecurityUser> */{
     public Boolean delete(SecurityUser securityUser) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(securityUser);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -88,8 +79,8 @@ public class DaoSecurityUser /* extends GenericDao<SecurityUser> */{
 
     @Transactional(readOnly = true)
     public SecurityUser findByString(String field, String value) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(SecurityUser.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	Object su = criteria.uniqueResult();
 	return su != null ? (SecurityUser) su : null;
@@ -97,8 +88,8 @@ public class DaoSecurityUser /* extends GenericDao<SecurityUser> */{
 
     @Transactional(readOnly = true)
     public List<SecurityUser> listAll() {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(SecurityUser.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(SecurityUser.class);
 	List<SecurityUser> list = criteria.list();
 	return list;
     }

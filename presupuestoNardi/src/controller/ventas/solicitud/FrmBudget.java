@@ -80,6 +80,7 @@ public class FrmBudget {
     private DaoQuotation daoQuotation;
 
     private String seleccione;
+    private String modalMessage;
     private final String dash = new String("--");
     private List<BasicData> listBType;
     private List<BasicData> listElevatorType;
@@ -137,6 +138,14 @@ public class FrmBudget {
     private Integer sistelWArrowPB;
     private Budget budget;
     private BusinessPartner businessPartner;
+
+    public String getModalMessage() {
+	return modalMessage;
+    }
+
+    public void setModalMessage(String modalMessage) {
+	this.modalMessage = modalMessage;
+    }
 
     public ListModel<String> getListSeller() {
 	return listSeller;
@@ -605,6 +614,7 @@ public class FrmBudget {
     @Command
     public void restartForm() {
 	seleccione = new String("--Seleccione--");
+	modalMessage = null;
 	budget = new Budget();
 	businessPartner = new BusinessPartner();
 	if (daoBudget.listAll().isEmpty())
@@ -751,6 +761,18 @@ public class FrmBudget {
 	};
     }
 
+    public Validator getValidateDoorframeType() {
+	return new AbstractValidator() {
+	    @Override
+	    public void validate(ValidationContext ctx) {
+		InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
+		String str = inputElement.getText();
+		if (budget.getBasicDataByDoorframeType() != null && (str.indexOf("RECTO - 30X150") != -1) && (budget.getHallButtonPlace().indexOf("MARCO") != -1))
+		    throw new WrongValueException(inputElement, "Este tipo no puede ser ubicado en el Marco.");
+	    }
+	};
+    }
+
     public Validator getNoSelect() {
 	return new ValidateZK().getNoSelect();
     }
@@ -784,37 +806,46 @@ public class FrmBudget {
 
     public void sendMail() {
 	List<String> listRecipient = new ArrayList<String>();
-	listRecipient.add("ventas@ascensoresnardi.com");
+	/* listRecipient.add("ventas@ascensoresnardi.com"); */
 	listRecipient.add("sistemas@ascensoresnardi.com");
 	emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
     }
 
     @NotifyChange({ "*" })
     @Command
-    public void save(@BindingParam("component") InputElement component) {
+    public void save(@BindingParam("component") InputElement component) throws SQLException {
 	if (businessPartner.getIdBusinessPartner() != 0)
 	    budget.setBusinessPartner(businessPartner);
 	/* Cambiar if a metodo de validacion tradicional */
-	if (budget.getBasicDataByDoorframeType() != null && budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && (budget.getHallButtonPlace().indexOf("MARCO") != -1)) {
-	    throw new WrongValueException(component, "Este tipo no puede ser ubicado en el Marco.");
-	} else {
-	    if (budget.getIdBudget() == 0) {
-		if (!daoBudget.save(budget)) {
-		    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-		    return;
-		}
-	    } else {
-		if (!daoBudget.update(budget)) {
-		    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-		    return;
-		}
+	if (budget.getIdBudget() == 0) {
+	    if (!daoBudget.save(budget)) {
+		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		return;
 	    }
-	    /* Se envia si se guarda. Si se modifica o no se guarda, no se envia */
-	    if (budget.getIdBudget() == 0)
-		sendMail();
-	    Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
-	    restartForm();
+	} else {
+	    if (!daoBudget.update(budget)) {
+		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		return;
+	    }
 	}
+	/* Se envia si se guarda. Si se modifica o no se guarda, no se envia */
+	if (budget.getIdBudget() == 0)
+	    sendMail();
+	Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
+	print();
+	restartForm();
+    }
+
+    @NotifyChange("modalMessage")
+    @Command
+    public void confirmSave() {
+	modalMessage = "¿Esta seguro de guardar la solicitud?";
+    }
+
+    @NotifyChange("modalMessage")
+    @Command
+    public void cancelModal() {
+	modalMessage = null;
     }
 
     @NotifyChange({ "disabledAll" })
@@ -939,16 +970,16 @@ public class FrmBudget {
     @NotifyChange({ "budget", "budgetNumber", "disableAfterSearch", "disabledNumber", "disableSeller", "listRoofType", "listBoothDisplay", "listFloorDisplay", "cabinModel", "listDesign" })
     @GlobalCommand
     public void selectedBudget(@BindingParam("Budget") Budget budget) {
-	this.budget = budget;
+	this.budget = daoBudget.findById(budget);
 	disableAfterSearch = new Boolean(true);
 	disabledNumber = new Boolean(true);
 	disableSeller = new Boolean(true);
-	listRoofType.add(budget.getBasicDataByRoofType());
-	listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
-	listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
-	if (budget.getBasicDataByCabinDesign() != null) {
-	    cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
-	    listDesign.add(budget.getBasicDataByCabinDesign());
+	listRoofType.add(this.budget.getBasicDataByRoofType());
+	listBoothDisplay.add(this.budget.getBasicDataByBoothDisplay());
+	listFloorDisplay.add(this.budget.getBasicDataByFloorDisplay());
+	if (this.budget.getBasicDataByCabinDesign() != null) {
+	    cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
+	    listDesign.add(this.budget.getBasicDataByCabinDesign());
 	}
     }
 
@@ -1178,10 +1209,10 @@ public class FrmBudget {
     @GlobalCommand
     public void selectedBusinessPartner(@BindingParam("BusinessPartner") BusinessPartner businessPartner) {
 	if (businessPartner != null) {
-	    this.businessPartner = businessPartner;
-	    budget.setPartnerName(businessPartner.getName());
-	    budget.setRifPartner(businessPartner.getRif());
-	    budget.setRifType(businessPartner.getBasicData().getName().charAt(0));
+	    this.businessPartner = daoBusinessPartner.findById(businessPartner);
+	    budget.setPartnerName(this.businessPartner.getName());
+	    budget.setRifPartner(this.businessPartner.getRif());
+	    budget.setRifType(this.businessPartner.getBasicData().getName().charAt(0));
 	} else {
 	    budget.setPartnerName(null);
 	    budget.setRifPartner("");

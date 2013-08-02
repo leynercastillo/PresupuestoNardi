@@ -52,7 +52,7 @@
 							<combobox disabled="true"
 								model="@load(vm.listRifType)" readonly="false"
 								style="float: left"
-								value="@save(vm.quotation.rifType, before = 'save') @load(vm.quotation.rifType eq 'Z' ? vm.dash : vm.quotation.rifType) @validator(vm.noDash, component = self)"
+								value="@save(vm.quotation.rifType, before = 'confirmSave') @load(vm.quotation.rifType eq 'Z' ? vm.dash : vm.quotation.rifType) @validator(vm.noDash, component = self)"
 								width="24%">
 								<template name="model" var="rifType">
 									<comboitem
@@ -67,7 +67,7 @@
 								onChange="@command(vm.disableBeforeSearch ? '' : 'loadQuotationByField', field='rifPartner',val=self.value)"
 								onFocus="@command(vm.disableBeforeSearch ? '' : 'searchQuotationByField', field='rifPartner')"
 								style="float: right"
-								value="@save(vm.quotation.rifPartner, before = 'save') @load(vm.quotation.rifPartner) @validator(vm.noEmpty, component = self)"
+								value="@save(vm.quotation.rifPartner, before = 'confirmSave') @load(vm.quotation.rifPartner) @validator(vm.noEmpty, component = self)"
 								width="74%">
 							</combobox>
 						</div>
@@ -93,7 +93,7 @@
 							maxlength="100" model="@load(vm.listPartnerName)"
 							onChange="@command(vm.disableBeforeSearch  ? '':'loadQuotationByField', field='partnerName', val=self.value)"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='partnerName')"
-							value="@save(vm.quotation.partnerName, before = 'save') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)"
+							value="@save(vm.quotation.partnerName, before = 'confirmSave') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)"
 							width="99%">
 						</combobox>
 						<label sclass="formLabel" value="Fecha:"></label>
@@ -105,7 +105,7 @@
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
 						<combobox width="99%" buttonVisible="false"
-							value="@save(vm.quotation.construction, before = 'save') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)"
+							value="@save(vm.quotation.construction, before = 'confirmSave') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)"
 							autocomplete="true" model="@load(vm.listConstruction)"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='construction')"
@@ -127,13 +127,13 @@
 							value="Persona contacto:">
 						</label>
 						<textbox disabled="true" maxlength="100"
-							value="@save(vm.quotation.contactName, before = 'save') @load(vm.quotation.contactName) @validator(vm.noEmpty, component = self)"
+							value="@save(vm.quotation.contactName, before = 'confirmSave') @load(vm.quotation.contactName) @validator(vm.noEmpty, component = self)"
 							width="97%">
 						</textbox>
 						<label sclass="formLabel" value="Vendedor:">
 						</label>
 						<combobox width="97%" buttonVisible="false"
-							value="@save(vm.quotation.seller, before = 'save') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
+							value="@save(vm.quotation.seller, before = 'confirmSave') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
 							autocomplete="true" model="@load(vm.listSeller)"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='seller')"
@@ -146,7 +146,7 @@
 						<label sclass="formLabel" value="Equipos"></label>
 						<div>
 							<intbox disabled="true" style="float: left"
-								value="@save(vm.quotation.elevatorQuantity, before = 'save') @load(vm.quotation.elevatorQuantity) @validator(vm.noElevatorQuantity, component = self)"
+								value="@save(vm.quotation.elevatorQuantity, before = 'confirmSave') @load(vm.quotation.elevatorQuantity) @validator(vm.noElevatorQuantity, component = self)"
 								width="17%">
 							</intbox>
 							<combobox
@@ -568,7 +568,7 @@
 						</checkbox>
 						<label value="Comentario:" sclass="formLabel"></label>
 						<textbox multiline="true" disabled="true"
-							value="@load(vm.quotation.designSpecial ? vm.quotation.designSpecialComment : ' ') @save(vm.quotation.designSpecialComment, before = 'save') @validator(vm.noEmptyForFormica, component = self)"
+							value="@load(vm.quotation.designSpecial ? vm.quotation.designSpecialComment : ' ') @save(vm.quotation.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
 							maxlength="300" width="98%">
 						</textbox>
 						<space></space>
@@ -916,7 +916,7 @@
 						<doublebox disabled="@load(vm.disabledEdit)"
 							format="#,##0.00" onBlur="@command('priceUnit', val=self.value)"
 							style="text-align: right"
-							value="@save(vm.quotation.totalPrice, before = 'save') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
+							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
 							width="95%">
 						</doublebox>
 						<label value="Bs" sclass="formLabel"></label>
@@ -1025,7 +1025,7 @@
 					<row>
 						<space></space>
 						<radiogroup
-							selectedItem="@save(vm.quotation.status, before = 'save') @validator(vm.wasApproved, component = self, datebox = deliveryDate)">
+							selectedItem="@save(vm.quotation.status, before = 'confirmSave') @validator(vm.wasApproved, component = self, datebox = deliveryDate)">
 							<radio
 								checked="@load(vm.quotation.status eq 'A' ? 'true' : false)"
 								disabled="@load(vm.disabledEdit)" label="Aprobado"
@@ -1048,7 +1048,7 @@
 						<button
 							disabled="@load(vm.disabledBudgetNumber ? vm.disabledEdit : 'true')"
 							image="/resource/images/icons/save.png" label="Guardar"
-							onClick="@command('save')" sclass="formLabel">
+							onClick="@command('confirmSave')" sclass="formLabel">
 						</button>
 						<button
 							disabled="@load(vm.disabledEdit ? vm.disabledPrint : 'true')"
@@ -1057,7 +1057,8 @@
 						</button>
 						<button disabled="@load(vm.disabledPrint)"
 							image="/resource/images/icons/print.png" label="Imprimir"
-							onClick="@command('print', quotation = vm.quotation)" sclass="formLabel">
+							onClick="@command('print', quotation = vm.quotation)"
+							sclass="formLabel">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
@@ -1067,5 +1068,19 @@
 				</row>
 			</rows>
 		</grid>
+		<window title="Atencion" mode="modal" border="normal"
+			width="25%" visible="@load(not empty vm.modalMessage)">
+			<vbox hflex="true">
+				<hbox height="35%">
+					<image src="~./zul/img/msgbox/question-btn.png" />
+					<label value="@load(vm.modalMessage)" />
+				</hbox>
+				<hbox pack="center" hflex="true">
+					<button label="Si" onClick="@command('save')" />
+					<button label="No"
+						onClick="@command('cancelModal')" />
+				</hbox>
+			</vbox>
+		</window>
 	</window>
 </zk>

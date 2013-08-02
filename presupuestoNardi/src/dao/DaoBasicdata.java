@@ -37,12 +37,9 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
     public Boolean save(BasicData basicData) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(basicData);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -57,12 +54,9 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
     public Boolean update(BasicData basicData) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(basicData);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -77,12 +71,9 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
     public Boolean delete(BasicData basicData) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(basicData);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -90,8 +81,8 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
 
     @Transactional(readOnly = true)
     public List<BasicData> listByField(String table, String field) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BasicData.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.add(Restrictions.eq("editable", false));
 	criteria.add(Restrictions.eq("field", field).ignoreCase());
@@ -103,8 +94,8 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
 
     @Transactional(readOnly = true)
     public BasicData findByName(String table, String field, String name) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BasicData.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.add(Restrictions.eq("editable", false));
 	criteria.add(Restrictions.eq("field", field).ignoreCase());
@@ -117,8 +108,8 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
 
     @Transactional(readOnly = true)
     public List<BasicData> listByParent(BasicData parent) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BasicData.class);
 	criteria.add(Restrictions.eq("basicData", parent));
 	criteria.addOrder(Order.asc("priority"));
 	List<BasicData> list = criteria.list();
@@ -127,8 +118,8 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
 
     @Transactional(readOnly = true)
     public List<String> listStringByFields(String field) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BasicData.class);
 	criteria.setProjection(Projections.distinct(Projections.property("name")));
 	criteria.add(Restrictions.eq("dataBaseName", field));
 	criteria.addOrder(Order.asc("name"));
@@ -138,8 +129,8 @@ public class DaoBasicdata /* extends GenericDao<BasicData> */{
 
     @Transactional(readOnly = true)
     public List<BasicData> listByString(String field, String value) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BasicData.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BasicData.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	List<BasicData> list = criteria.list();
 	return list;

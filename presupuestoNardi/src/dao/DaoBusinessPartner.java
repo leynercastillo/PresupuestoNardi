@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import database.BusinessPartner;
 
 @Repository
-public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
+public class DaoBusinessPartner /* extends GenericDao<BusinessPartner> */{
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -34,12 +34,9 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
     public Boolean save(BusinessPartner businessPartner) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(businessPartner);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -54,12 +51,9 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
     public Boolean update(BusinessPartner businessPartner) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(businessPartner);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -74,12 +68,9 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
     public Boolean delete(BusinessPartner businessPartner) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(businessPartner);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -91,8 +82,8 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
 
     @Transactional(readOnly = true)
     public List<BusinessPartner> listActiveOrderByField(String field) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BusinessPartner.class);
 	criteria.add(Restrictions.eq("status", 'A'));
 	criteria.addOrder(Order.asc(field));
 	List<BusinessPartner> list = criteria.list();
@@ -100,9 +91,18 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
     }
 
     @Transactional(readOnly = true)
+    public BusinessPartner findById(BusinessPartner businessPartner) {
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BusinessPartner.class);
+	criteria.add(Restrictions.eq("idBusinessPartner", businessPartner.getIdBusinessPartner()));
+	Object object = criteria.uniqueResult();
+	return object != null ? (BusinessPartner) object : null;
+    }
+
+    @Transactional(readOnly = true)
     public BusinessPartner findByRif(String rif) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BusinessPartner.class);
 	criteria.add(Restrictions.eq("rif", rif));
 	Object object = criteria.uniqueResult();
 	return object != null ? (BusinessPartner) object : null;
@@ -110,8 +110,8 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
 
     @Transactional(readOnly = true)
     public BusinessPartner findActiveByRif(String rif) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BusinessPartner.class);
 	criteria.add(Restrictions.eq("rif", rif));
 	criteria.add(Restrictions.eq("status", 'A'));
 	Object object = criteria.uniqueResult();
@@ -120,8 +120,8 @@ public class DaoBusinessPartner /*extends GenericDao<BusinessPartner>*/ {
 
     @Transactional(readOnly = true)
     public List<String> listStringByFields(String field) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(BusinessPartner.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(BusinessPartner.class);
 	criteria.setProjection(Projections.distinct(Projections.property(field)));
 	criteria.addOrder(Order.asc(field));
 	List<String> list = criteria.list();

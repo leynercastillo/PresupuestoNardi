@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import database.Budget;
 
 @Repository
-public class DaoBudget /*extends GenericDao<Budget>*/ {
+public class DaoBudget /* extends GenericDao<Budget> */{
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -34,12 +34,9 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     public Boolean save(Budget budget) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(budget);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -54,12 +51,9 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     public Boolean update(Budget budget) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(budget);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -74,26 +68,21 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     public Boolean delete(Budget budget) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(budget);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
     }
+
     /*
-    @Autowired
-    public DaoBudget(SessionFactory sessionFactory) {
-	super(sessionFactory);
-    }*/
+     * @Autowired public DaoBudget(SessionFactory sessionFactory) { super(sessionFactory); }
+     */
 
     @Transactional(readOnly = true)
     public Budget findByNumber(int number) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.add(Restrictions.eq("number", number));
 	Object obj = criteria.uniqueResult();
@@ -103,7 +92,6 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     @Transactional(readOnly = true)
     public List<Budget> listOrderBudgetbyField(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.addOrder(Order.asc(field).ignoreCase());
 	criteria.addOrder(Order.desc("date"));
@@ -114,7 +102,6 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     @Transactional(readOnly = true)
     public List<Budget> listByString(String field, String value) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.add(Restrictions.eq(field, value).ignoreCase());
 	criteria.addOrder(Order.desc("idBudget"));
@@ -123,9 +110,17 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     }
 
     @Transactional(readOnly = true)
+    public Budget findById(Budget budget) {
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(Budget.class);
+	criteria.add(Restrictions.eq("idBudget", budget.getIdBudget()));
+	Object obj = criteria.uniqueResult();
+	return obj == null ? null : (Budget) obj;
+    }
+
+    @Transactional(readOnly = true)
     public Budget findByInteger(String field, Integer value) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.add(Restrictions.eq(field, value));
 	Object obj = criteria.uniqueResult();
@@ -135,7 +130,6 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     @Transactional(readOnly = true)
     public List<Budget> listAll() {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.addOrder(Order.asc("number"));
 	List<Budget> list = criteria.list();
@@ -145,7 +139,6 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     @Transactional(readOnly = true)
     public List<Integer> listByIntFields(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.setProjection(Projections.distinct(Projections.property(field)));
 	criteria.addOrder(Order.asc(field));
@@ -156,7 +149,6 @@ public class DaoBudget /*extends GenericDao<Budget>*/ {
     @Transactional(readOnly = true)
     public List<String> listStringByFields(String field) {
 	Session session = getCurrentSession();
-	session.beginTransaction();
 	Criteria criteria = session.createCriteria(Budget.class);
 	criteria.setProjection(Projections.distinct(Projections.property(field)));
 	criteria.addOrder(Order.asc(field));

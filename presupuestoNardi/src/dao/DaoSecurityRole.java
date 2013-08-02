@@ -35,12 +35,9 @@ public class DaoSecurityRole /* extends GenericDao<SecurityRole> */{
     public Boolean save(SecurityRole securityRole) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.save(securityRole);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -55,12 +52,9 @@ public class DaoSecurityRole /* extends GenericDao<SecurityRole> */{
     public Boolean update(SecurityRole securityRole) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.merge(securityRole);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -75,12 +69,9 @@ public class DaoSecurityRole /* extends GenericDao<SecurityRole> */{
     public Boolean delete(SecurityRole securityRole) {
 	Session session = getCurrentSession();
 	try {
-	    session.beginTransaction();
 	    session.delete(securityRole);
-	    session.getTransaction().commit();
 	    return true;
 	} catch (HibernateException e) {
-	    session.getTransaction().rollback();
 	    e.printStackTrace();
 	    return false;
 	}
@@ -88,16 +79,16 @@ public class DaoSecurityRole /* extends GenericDao<SecurityRole> */{
 
     @Transactional(readOnly = true)
     public List<SecurityRole> listRoles() {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(SecurityRole.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(SecurityRole.class);
 	List<SecurityRole> list = criteria.list();
 	return list;
     }
 
     @Transactional(readOnly = true)
     public SecurityRole findRoleById(Integer id) {
-	getCurrentSession().beginTransaction();
-	Criteria criteria = getCurrentSession().createCriteria(SecurityRole.class);
+	Session session = getCurrentSession();
+	Criteria criteria = session.createCriteria(SecurityRole.class);
 	criteria.add(Restrictions.eq("idSecurityRole", id));
 	Object bp = criteria.uniqueResult();
 	return bp != null ? (SecurityRole) bp : null;

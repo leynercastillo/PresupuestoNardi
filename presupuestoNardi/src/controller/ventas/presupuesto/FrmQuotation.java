@@ -36,14 +36,11 @@ import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.impl.InputElement;
@@ -77,6 +74,7 @@ public class FrmQuotation {
     private Boolean disabledBudgetNumber;
     private Boolean disabledPrint;
     private Boolean disabledEdit;
+    private String modalMessage;
     private BasicData cabinModel;
     private List<BasicData> listRifType;
     private List<BasicData> listElevatorType;
@@ -105,6 +103,14 @@ public class FrmQuotation {
     private ListModel<String> listPartnerName;
     private ListModel<String> listConstruction;
     private ListModel<String> listSeller;
+
+    public String getModalMessage() {
+	return modalMessage;
+    }
+
+    public void setModalMessage(String modalMessage) {
+	this.modalMessage = modalMessage;
+    }
 
     public Boolean getDisabledEdit() {
 	return disabledEdit;
@@ -511,6 +517,7 @@ public class FrmQuotation {
 	listControlType = daoBasicdata.listByField("BUDGET", "CONTROL TYPE");
 	listBoothDisplay = new ArrayList<BasicData>();
 	listFloorDisplay = new ArrayList<BasicData>();
+	modalMessage = null;
     }
 
     public void budgetToQuotation(Budget budget) {
@@ -791,7 +798,7 @@ public class FrmQuotation {
     @NotifyChange({ "quotation", "disabledPrint", "disableBeforeSearch", "disabledBudgetNumber" })
     @GlobalCommand
     public void selectedQuotation(@BindingParam("quotation") Quotation quotation) {
-	this.quotation = quotation;
+	this.quotation = daoQuotation.findById(quotation);
 	disableBeforeSearch = new Boolean(true);
 	disabledBudgetNumber = new Boolean(true);
 	disabledPrint = new Boolean(false);
@@ -942,31 +949,36 @@ public class FrmQuotation {
 
     @NotifyChange("*")
     @Command
-    public void save() {
-	Messagebox.show("El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?", "Atención", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener<Event>() {
-	    public void onEvent(Event e) throws Exception {
-		if (Messagebox.ON_YES.equals(e.getName())) {
-		    Quotation auxQuotation = daoQuotation.findById(quotation);
-		    if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
-			if (!daoQuotation.save(quotation)) {
-			    Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-			    return;
-			}
-		    } else if (quotation.getStatus() != auxQuotation.getStatus()) {
-			if (!daoQuotation.update(quotation)) {
-			    Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
-			    return;
-			}
-		    }
-		    if (quotation.getStatus() == 'A')
-			sendMail();
-		    Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
-		    restartForm();
-		} else if (Messagebox.ON_NO.equals(e.getName())) {
-		    return;
-		}
+    public void save() throws SQLException {
+	Quotation auxQuotation = daoQuotation.findById(quotation);
+	if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
+	    if (!daoQuotation.save(quotation)) {
+		Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+		return;
 	    }
-	});
+	} else if (quotation.getStatus() != auxQuotation.getStatus()) {
+	    if (!daoQuotation.update(quotation)) {
+		Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
+		return;
+	    }
+	}
+	if (quotation.getStatus() == 'A')
+	    sendMail();
+	Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
+	print(quotation);
+	restartForm();
+    }
+
+    @NotifyChange("modalMessage")
+    @Command
+    public void confirmSave() {
+	modalMessage = "El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?";
+    }
+
+    @NotifyChange("modalMessage")
+    @Command
+    public void cancelModal() {
+	modalMessage = null;
     }
 
     @NotifyChange({ "disabledEdit" })

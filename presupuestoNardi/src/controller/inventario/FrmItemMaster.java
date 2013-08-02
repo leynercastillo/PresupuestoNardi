@@ -28,7 +28,6 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.SimpleListModel;
-import org.zkoss.zul.Tab;
 import org.zkoss.zul.impl.InputElement;
 
 import dao.DaoBasicdata;
@@ -274,8 +273,7 @@ public class FrmItemMaster {
     @NotifyChange({ "item", "disableAll", "update" })
     @GlobalCommand
     public void selectedItem(@BindingParam("item") Item selectedItem) {
-	item = new Item();
-	item = selectedItem;
+	item = daoItem.findById(selectedItem);
 	disableAll = new Boolean(false);
 	update = new Boolean(true);
     }
