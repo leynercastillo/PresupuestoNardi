@@ -75,6 +75,7 @@ public class FrmQuotation {
 	private Boolean disabledPrint;
 	private Boolean disabledEdit;
 	private String modalMessage;
+	private String printMessage;
 	private BasicData cabinModel;
 	private List<BasicData> listRifType;
 	private List<BasicData> listElevatorType;
@@ -103,6 +104,14 @@ public class FrmQuotation {
 	private ListModel<String> listPartnerName;
 	private ListModel<String> listConstruction;
 	private ListModel<String> listSeller;
+
+	public String getPrintMessage() {
+		return printMessage;
+	}
+
+	public void setPrintMessage(String printMessage) {
+		this.printMessage = printMessage;
+	}
 
 	public String getModalMessage() {
 		return modalMessage;
@@ -521,6 +530,7 @@ public class FrmQuotation {
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		modalMessage = null;
+		printMessage = null;
 	}
 
 	public void budgetToQuotation(Budget budget) {
@@ -824,7 +834,7 @@ public class FrmQuotation {
 	}
 
 	@Command
-	public void createQuotationPdf(String quotationNumber, Quotation q) throws SQLException {
+	public void createQuotationPdf(String quotationNumber, Quotation q, String template) throws SQLException {
 		/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -835,7 +845,10 @@ public class FrmQuotation {
 		String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto");
 		JasperReport jasperReport;
 		try {
-			jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
+			if (template.compareTo("SI") == 0)
+				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
+			else
+				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotationTemp.jasper");
 		} catch (JRException e) {
 			jasperReport = null;
 			e.printStackTrace();
@@ -968,8 +981,7 @@ public class FrmQuotation {
 		if (quotation.getStatus() == 'A')
 			sendMail();
 		Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
-		print(quotation);
-		restartForm();
+		selectPrintTemplate();
 	}
 
 	@NotifyChange("modalMessage")
@@ -978,10 +990,21 @@ public class FrmQuotation {
 		modalMessage = "El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?";
 	}
 
-	@NotifyChange("modalMessage")
+	@NotifyChange("printMessage")
+	@Command
+	public void selectPrintTemplate() {
+		printMessage = "Escoja el formato para la impresion.";
+	}
+
+	@NotifyChange("*")
 	@Command
 	public void cancelModal() {
-		modalMessage = null;
+		if (modalMessage != null)
+			modalMessage = null;
+		if (printMessage != null) {
+			printMessage = null;
+			restartForm();
+		}
 	}
 
 	@NotifyChange({ "disabledEdit" })
@@ -992,19 +1015,20 @@ public class FrmQuotation {
 
 	@NotifyChange("*")
 	@Command
-	public void print(@BindingParam("quotation") Quotation q) throws SQLException {
+	public void print(@BindingParam("template") String template) throws SQLException {
 		String quotationNumber = new String();
-		if (q.isType())
-			quotationNumber = "1-" + q.getNewNumber() + "-" + q.getVersionNumber();
+		if (quotation.isType())
+			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
 		else
-			quotationNumber = "2-" + q.getModernizationNumber() + "-" + q.getVersionNumber();
-		createQuotationPdf(quotationNumber, q);
+			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
+		createQuotationPdf(quotationNumber, quotation, template);
 		String report = new String("/resource/reports/ventas/presupuesto/Ppt_" + quotationNumber + ".pdf");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto");
 		map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto") + "/Ppt_" + quotationNumber + ".pdf");
 		Executions.createComponents("system/frmReport.zul", null, map);
+		restartForm();
 	}
 
 	@Command

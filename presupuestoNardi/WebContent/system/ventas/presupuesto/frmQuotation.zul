@@ -1057,8 +1057,7 @@
 						</button>
 						<button disabled="@load(vm.disabledPrint)"
 							image="/resource/images/icons/print.png" label="Imprimir"
-							onClick="@command('print', quotation = vm.quotation)"
-							sclass="formLabel">
+							onClick="@command('selectPrintTemplate')" sclass="formLabel">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
@@ -1070,7 +1069,7 @@
 		</grid>
 		<window title="Atencion" mode="modal" border="normal"
 			width="25%" visible="@load(not empty vm.modalMessage)">
-			<vbox hflex="true">
+			<vbox align="center" hflex="true">
 				<hbox height="35%">
 					<image src="~./zul/img/msgbox/question-btn.png" />
 					<label value="@load(vm.modalMessage)" />
@@ -1078,6 +1077,31 @@
 				<hbox pack="center" hflex="true">
 					<button label="Si" onClick="@command('save')" />
 					<button label="No"
+						onClick="@command('cancelModal')" />
+				</hbox>
+			</vbox>
+		</window>
+		<window title="Atencion" mode="modal" border="normal"
+			width="25%" visible="@load(not empty vm.printMessage)">
+			<vbox align="center" hflex="true">
+				<hbox height="35%">
+					<image src="~./zul/img/msgbox/info-btn.png" />
+					<label value="@load(vm.printMessage)" />
+				</hbox>
+				<div align="center">
+					<radiogroup id="radioPrint">
+						<radio label="Con membrete" sclass="formLabel"
+							value="SI">
+						</radio>
+						<radio label="Sin membrete" sclass="formLabel"
+							value="NO">
+						</radio>
+					</radiogroup>
+				</div>
+				<hbox pack="center" hflex="true">
+					<button label="Aceptar"
+						onClick="@command('print', template = radioPrint.selectedItem.value)" />
+					<button label="Cancelar"
 						onClick="@command('cancelModal')" />
 				</hbox>
 			</vbox>

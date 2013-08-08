@@ -145,14 +145,15 @@
 		FROM
 			basic_data T1
 		WHERE
-			T1.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc "Martillado",CASE WHEN T0.doorframe_type IS NULL THEN '' ELSE
+			T1.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc "Martillado",
+	CASE WHEN T0.doorframe_type IS NULL THEN '' ELSE
 		(SELECT
 			T1.name
 		FROM
 			basic_data T1
 		WHERE
-			T1.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '. ' ELSE '' END || 'MARTILLADO ' ||
-		CASE WHEN T0.door_frame_hammered IS NULL THEN '' ELSE (SELECT
+			T1.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '.' ELSE '' END || ' ' ||
+		CASE WHEN T0.door_frame_hammered IS NULL THEN '' ELSE 'MARTILLADO '||(SELECT
 			T1.name
 		FROM
 			basic_data T1
