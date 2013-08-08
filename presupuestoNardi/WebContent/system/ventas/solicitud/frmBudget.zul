@@ -433,7 +433,7 @@
 											</label>
 											<intbox style="float: right"
 												width="55%"
-												value="@load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousNumber : '0') @save(vm.budget.stopSequenceContinuousNumber)"
+												value="@save(vm.budget.stopSequenceContinuousNumber, before = 'confirmSave') @load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousNumber : '0') @validator(vm.noZeroContinuous, component = self)"
 												disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')">
 											</intbox>
 										</div>
@@ -454,7 +454,7 @@
 											</label>
 											<intbox style="float: right"
 												width="55%"
-												value="@load(vm.budget.stopSequenceContinuous ? '0' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenNumber : '0') @save(vm.budget.stopSequenceEvenNumber)"
+												value="@save(vm.budget.stopSequenceEvenNumber, before = 'confirmSave') @load(vm.budget.stopSequenceContinuous ? '0' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenNumber : '0') @validator(vm.noZeroEven, component = self)"
 												disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')">
 											</intbox>
 										</div>
@@ -476,7 +476,7 @@
 											<intbox
 												disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceOdd ? 'false':'true')"
 												style="float: right"
-												value="@load(vm.budget.stopSequenceContinuous ? '0' : vm.budget.stopSequenceOdd ? vm.budget.stopSequenceOddNumber : '0') @save(vm.budget.stopSequenceOddNumber)"
+												value="@save(vm.budget.stopSequenceOddNumber, before = 'confirmSave') @load(vm.budget.stopSequenceContinuous ? '0' : vm.budget.stopSequenceOdd ? vm.budget.stopSequenceOddNumber : '0') @validator(vm.noZeroOdd, component = self)"
 												width="55%">
 											</intbox>
 										</div>
@@ -810,7 +810,7 @@
 							onChange="@command('isSpecial')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.budget.basicDataByDoorframeType)"
-							value="@load(vm.budget.basicDataByDoorframeType eq null ? vm.seleccione : vm.budget.basicDataByDoorframeType.name) @save(vm.budget.basicDataByDoorframeType.name, before = 'confirmSave') @validator(vm.validateDoorframeType, component = self)"
+							value="@load(vm.budget.basicDataByDoorframeType eq null ? vm.seleccione : vm.budget.basicDataByDoorframeType.name) @save(vm.seleccione, before = 'confirmSave') @validator(vm.validateDoorframeType, component = self)"
 							width="100%">
 							<template name="model"
 								var="DoorframeType">
@@ -1300,8 +1300,7 @@
 					<div>
 						<button disabled="@load(vm.disabledAll)"
 							image="/resource/images/icons/email.png" label="Enviar"
-							onClick="@command('confirmSave')"
-							sclass="formLabel">
+							onClick="@command('confirmSave')" sclass="formLabel">
 						</button>
 						<!-- disabled fue calculado en base a las probabilidades -->
 						<button
