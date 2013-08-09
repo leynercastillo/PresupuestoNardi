@@ -755,6 +755,8 @@ public class FrmBudget {
 				String str = inputElement.getText();
 				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("FORMICA") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para formica.");
+				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("OTRO") != -1 && str.trim().isEmpty())
+					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para otro.");
 				if (budget.getBasicDataByFloorType() != null && budget.getBasicDataByFloorType().getName().indexOf("OTROS") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion acabados de piso OTROS.");
 			}
@@ -1214,7 +1216,7 @@ public class FrmBudget {
 			cabinDesign = budget.getBasicDataByCabinDesign().getName();
 		if (budget.getBasicDataByFloorType() != null)
 			floorType = budget.getBasicDataByFloorType().getName();
-		if (cabinDesign.indexOf("FORMICA") != -1 || floorType.indexOf("OTROS") != -1)
+		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 ||floorType.indexOf("OTROS") != -1)
 			budget.setDesignSpecial(true);
 		/*
 		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto

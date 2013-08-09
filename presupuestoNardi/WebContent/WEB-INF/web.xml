@@ -88,6 +88,6 @@
 	</welcome-file-list>
 	<error-page>
 		<error-code>403</error-code>
-		<location>/security/authorized.jsp</location>
+		<location>/system/seguridad/authorized.jsp</location>
 	</error-page>
 </web-app>
