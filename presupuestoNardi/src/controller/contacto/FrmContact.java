@@ -26,81 +26,81 @@ import database.SecurityUser;
 
 public class FrmContact {
 
-    @WireVariable
-    private DaoSecurityUser daoSecurityUser;
-    @WireVariable
-    private DaoSecurityGroup daoSecurityGroup;
-    @WireVariable
-    private DaoContact daoContact;
-    @WireVariable
-    private Emails emails;
+	@WireVariable
+	private DaoSecurityUser daoSecurityUser;
+	@WireVariable
+	private DaoSecurityGroup daoSecurityGroup;
+	@WireVariable
+	private DaoContact daoContact;
+	@WireVariable
+	private Emails emails;
 
-    private List<SecurityUser> listSecurityUsers;
-    private Contact contact;
+	private List<SecurityUser> listSecurityUsers;
+	private Contact contact;
 
-    public Contact getContact() {
-	return contact;
-    }
-
-    public void setContact(Contact contact) {
-	this.contact = contact;
-    }
-
-    public List<SecurityUser> getListSecurityUsers() {
-	return listSecurityUsers;
-    }
-
-    public void setListSecurityUsers(List<SecurityUser> listSecurityUsers) {
-	this.listSecurityUsers = listSecurityUsers;
-    }
-
-    public Validator getNoEmpty() {
-	return new ValidateZK().getNoEmpty();
-    }
-
-    public Validator getNoSelect() {
-	return new ValidateZK().getNoSelect();
-    }
-
-    public Validator getNoEmail() {
-	return new ValidateZK().getNoEmail();
-    }
-
-    @Init
-    public void init() {
-	restartForm();
-    }
-
-    @NotifyChange({ "*" })
-    @Command
-    public void restartForm() {
-	contact = new Contact();
-	contact.setStatus('A');
-	contact.setDate(new Date());
-	SecurityGroup group = daoSecurityGroup.listByField("name", "SELLER");
-	listSecurityUsers = new ArrayList<SecurityUser>(group.getSecurityUsers());
-	group = daoSecurityGroup.listByField("name", "SALES COORDINATOR");
-	listSecurityUsers.addAll(group.getSecurityUsers());
-    }
-
-    public String mailMessage() {
-	String message = new String();
-	message = "Buenas...\n\nEste correo es enviado desde el sitio web por un cliente que desea contactar con usted. A continuacion los datos del cliente:\n\nEmpresa:  " + contact.getPartnerName() + "\n\nPersona de contacto: " + contact.getContactName() + "\n\nCiudad: " + contact.getCity() + "\n\nDireccion: " + contact.getAddress() + "\n\nTelefono: " + (contact.getPhone() == null ? "" : contact.getPhone()) + "\n\nDireccion de correo: " + (contact.getContactEmail() == null ? "" : contact.getContactEmail()) + "\n\nComentarios: " + contact.getComment() + "\n\nSaludos";
-	return message;
-    }
-
-    @NotifyChange({ "*" })
-    @Command
-    public void send(@BindingParam("component") Component component) {
-	List<String> list = new ArrayList<String>();
-	list.add(contact.getSecurityUser().getEmail());
-	list.add("sistemas@ascensoresnardi.com");
-	if (!daoContact.save(contact)) {
-	    Clients.showNotification("No se pudo enviar.", "error", component, "bottom_center", 2000);
-	    return;
+	public Contact getContact() {
+		return contact;
 	}
-	emails.sendMail("sistemas@ascensoresnardi.com", "Contactar", list, mailMessage(), null);
-	Clients.showNotification("Informacion enviada", "info", component, "bottom_center", 2000);
-	restartForm();
-    }
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
+	public List<SecurityUser> getListSecurityUsers() {
+		return listSecurityUsers;
+	}
+
+	public void setListSecurityUsers(List<SecurityUser> listSecurityUsers) {
+		this.listSecurityUsers = listSecurityUsers;
+	}
+
+	public Validator getNoEmpty() {
+		return new ValidateZK().getNoEmpty();
+	}
+
+	public Validator getNoSelect() {
+		return new ValidateZK().getNoSelect();
+	}
+
+	public Validator getNoEmail() {
+		return new ValidateZK().getNoEmail();
+	}
+
+	@Init
+	public void init() {
+		restartForm();
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void restartForm() {
+		contact = new Contact();
+		contact.setStatus('A');
+		contact.setDate(new Date());
+		SecurityGroup group = daoSecurityGroup.listByField("name", "SELLER");
+		listSecurityUsers = new ArrayList<SecurityUser>(group.getSecurityUsers());
+		group = daoSecurityGroup.listByField("name", "SALES COORDINATOR");
+		listSecurityUsers.addAll(group.getSecurityUsers());
+	}
+
+	public String mailMessage() {
+		String message = new String();
+		message = "Buenas...\n\nEste correo es enviado desde el sitio web por un cliente que desea contactar con usted. A continuacion los datos del cliente:\n\nEmpresa:  " + contact.getPartnerName() + "\n\nPersona de contacto: " + contact.getContactName() + "\n\nCiudad: " + contact.getCity() + "\n\nDireccion: " + contact.getAddress() + "\n\nTelefono: " + (contact.getPhone() == null ? "" : contact.getPhone()) + "\n\nDireccion de correo: " + (contact.getContactEmail() == null ? "" : contact.getContactEmail()) + "\n\nComentarios: " + contact.getComment() + "\n\nSaludos";
+		return message;
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void send(@BindingParam("component") Component component) {
+		List<String> list = new ArrayList<String>();
+		list.add(contact.getSecurityUser().getEmail());
+		list.add("sistemas@ascensoresnardi.com");
+		if (!daoContact.save(contact)) {
+			Clients.showNotification("No se pudo enviar.", "error", component, "bottom_center", 2000);
+			return;
+		}
+		emails.sendMail("sistemas@ascensoresnardi.com", "Contactar", list, mailMessage(), null);
+		Clients.showNotification("Informacion enviada", "info", component, "bottom_center", 2000);
+		restartForm();
+	}
 }

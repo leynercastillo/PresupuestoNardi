@@ -967,7 +967,7 @@ public class FrmQuotation {
 	@Command
 	public void save() throws SQLException {
 		Quotation auxQuotation = daoQuotation.findById(quotation);
-		if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice()) {
+		if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice() || quotation.getPayment() != auxQuotation.getPayment() || quotation.getWarranty() != auxQuotation.getWarranty() || quotation.getExtendedWarranty() != auxQuotation.getExtendedWarranty() || quotation.getDeliveryEstimate() != auxQuotation.getDeliveryEstimate() || quotation.getNotes() != auxQuotation.getNotes()) {
 			if (!daoQuotation.save(quotation)) {
 				Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
 				return;

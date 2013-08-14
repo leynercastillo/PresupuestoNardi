@@ -15,57 +15,64 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Window;
 
+import dao.DaoQuotation;
 import database.Quotation;
 
 public class FrmWindowQuotations {
 
-    @Wire("#windowQuotations")
-    private Window windowQuotations;
+	@WireVariable
+	private DaoQuotation daoQuotation;
 
-    private List<Quotation> listQuotations;
-    private Quotation selectedQuotation;
+	@Wire("#windowQuotations")
+	private Window windowQuotations;
 
-    public Quotation getSelectedQuotation() {
-	return selectedQuotation;
-    }
+	private List<Quotation> listQuotations;
+	private Quotation selectedQuotation;
 
-    public void setSelectedQuotation(Quotation selectedQuotation) {
-	this.selectedQuotation = selectedQuotation;
-    }
+	public Quotation getSelectedQuotation() {
+		return selectedQuotation;
+	}
 
-    public List<Quotation> getListQuotations() {
-	return listQuotations;
-    }
+	public void setSelectedQuotation(Quotation selectedQuotation) {
+		this.selectedQuotation = selectedQuotation;
+	}
 
-    public void setListQuotations(List<Quotation> listQuotations) {
-	this.listQuotations = listQuotations;
-    }
+	public List<Quotation> getListQuotations() {
+		return listQuotations;
+	}
 
-    @Init
-    public void init(@ExecutionArgParam("listQuotations") List<Quotation> listQuotations, @ContextParam(ContextType.VIEW) Component view) {
-	this.listQuotations = listQuotations;
-	Selectors.wireComponents(view, this, false);
-    }
+	public void setListQuotations(List<Quotation> listQuotations) {
+		this.listQuotations = listQuotations;
+	}
 
-    @NotifyChange("selectedQuotation")
-    @Command
-    public void sendQuotation(@BindingParam("quotation") Quotation quotation) {
-	Map<String, Object> map = new HashMap<String, Object>();
-	map.put("quotation", quotation);
-	windowQuotations.detach();
-	BindUtils.postGlobalCommand(null, null, "selectedQuotation", map);
-    }
+	@Init
+	public void init(@ExecutionArgParam("listQuotations") List<Quotation> listQuotations, @ContextParam(ContextType.VIEW) Component view) {
+		this.listQuotations = listQuotations;
+		Selectors.wireComponents(view, this, false);
+	}
 
-    public String getTeam(Quotation quotation){
-	return quotation.getElevatorQuantity()+" - "+quotation.getBasicDataByElevatorType().getName();
-    }
+	@NotifyChange("selectedQuotation")
+	@Command
+	public void sendQuotation(@BindingParam("quotation") Quotation quotation) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("quotation", quotation);
+		windowQuotations.detach();
+		BindUtils.postGlobalCommand(null, null, "selectedQuotation", map);
+	}
 
-    public String getQuotationNumber(Quotation quotation){
-	if (quotation.isType())
-	    return "1 - "+quotation.getNewNumber()+" - "+quotation.getVersionNumber();
-	else
-	    return "2 - "+quotation.getModernizationNumber()+" - "+quotation.getVersionNumber();
-    }
+	public String getTeam(Quotation quotation) {
+		/* sustituir por recargar toda la lista */
+		Quotation q = daoQuotation.findById(quotation);
+		return q.getElevatorQuantity() + " - " + q.getBasicDataByElevatorType().getName();
+	}
+
+	public String getQuotationNumber(Quotation quotation) {
+		if (quotation.isType())
+			return "1 - " + quotation.getNewNumber() + " - " + quotation.getVersionNumber();
+		else
+			return "2 - " + quotation.getModernizationNumber() + " - " + quotation.getVersionNumber();
+	}
 }

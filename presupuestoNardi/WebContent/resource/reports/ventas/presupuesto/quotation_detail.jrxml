@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_detail" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83ebc60b-d05e-4fa3-99bd-0f6e9ccca3b9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="147"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -31,7 +31,7 @@
 			basic_data T1
 		WHERE
 			T1.id_basic = T0.elevator_capacitance) "Capacidad",
-	T0.tour || ' mts APROXIMADOS.' "Recorrido",
+	ROUND(CAST(T0.tour AS NUMERIC), 2) || ' mts APROXIMADOS.' "Recorrido",
 	(SELECT
 			T1.name
 		FROM
@@ -227,7 +227,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[RECORRIDO:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="1f040889-eb98-40ae-83c5-931ee1ba67e8" x="144" y="100" width="468" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>

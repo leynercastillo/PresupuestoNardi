@@ -1090,7 +1090,7 @@
 				</hbox>
 				<div align="center">
 					<radiogroup id="radioPrint">
-						<radio label="Con membrete" sclass="formLabel"
+						<radio label="Con membrete" sclass="formLabel" selected="true"
 							value="SI">
 						</radio>
 						<radio label="Sin membrete" sclass="formLabel"
