@@ -377,7 +377,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
-				<text><![CDATA[meses aproximados despues de la firma del contrato.]]></text>
+				<text><![CDATA[meses aproximados despues de la firma del contrato y cancelacion de inicial.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="047784ec-7d1d-4f4d-9798-71173115b97e" x="0" y="339" width="281" height="15"/>

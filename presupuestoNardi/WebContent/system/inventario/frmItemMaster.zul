@@ -84,12 +84,11 @@
 											<label sclass="formLabel"
 												value="Característica:">
 											</label>
-											<combobox
-												autodrop="true" buttonVisible="false"
+											<combobox autodrop="true"
+												buttonVisible="false"
 												disabled="@load(vm.update ? 'true': vm.disableAll)"
 												hflex="1" maxlength="100" model="@load(vm.listComponents)"
 												onChange="@command(vm.disableAll ? '':'loadItemByField', input=self)"
-												onChanging="@command('toComplete', component = self)"
 												onFocus="@command(vm.disableAll ? '':'searchItemByField', field='componentName')"
 												value="@save(vm.elevatorComponent.name, before = 'addItem') @load(vm.elevatorComponent eq null ? '' : vm.elevatorComponent.name) @validator(vm.noEmpty, component = self)">
 											</combobox>

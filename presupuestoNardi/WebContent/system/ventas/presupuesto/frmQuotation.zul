@@ -996,7 +996,7 @@
 								value="@bind(vm.quotation.deliveryEstimate)">
 							</textbox>
 							<label
-								value="meses aproximados despues de la firma del contrato.">
+								value="meses aproximados despues de la firma del contrato y cancelacion de inicial.">
 							</label>
 						</div>
 					</row>
@@ -1090,7 +1090,7 @@
 				</hbox>
 				<div align="center">
 					<radiogroup id="radioPrint">
-						<radio label="Con membrete" sclass="formLabel" selected="true"
+						<radio label="Con membrete" sclass="formLabel"
 							value="SI">
 						</radio>
 						<radio label="Sin membrete" sclass="formLabel"

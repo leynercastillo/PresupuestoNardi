@@ -1,5 +1,6 @@
 package controller.ventas.solicitud;
 
+import general.SimpleListModelCustom;
 import general.ValidateZK;
 
 import java.io.File;
@@ -44,7 +45,6 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
@@ -117,11 +117,11 @@ public class FrmBudget {
 	private List<BasicData> listHallButtonType;
 	private List<BasicData> listRifType;
 	private List<Budget> listBudget;
-	private ListModel<String> listRifPartner;
-	private ListModel<String> listNumber;
-	private ListModel<String> listPartnerName;
-	private ListModel<String> listConstruction;
-	private ListModel<String> listSeller;
+	private ListModel<Object> listRifPartner;
+	private ListModel<Object> listNumber;
+	private ListModel<Object> listPartnerName;
+	private ListModel<Object> listConstruction;
+	private ListModel<Object> listSeller;
 	private BasicData cabinModel;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
@@ -147,35 +147,35 @@ public class FrmBudget {
 		this.modalMessage = modalMessage;
 	}
 
-	public ListModel<String> getListSeller() {
+	public ListModel<Object> getListSeller() {
 		return listSeller;
 	}
 
-	public void setListSeller(ListModel<String> listSeller) {
+	public void setListSeller(ListModel<Object> listSeller) {
 		this.listSeller = listSeller;
 	}
 
-	public ListModel<String> getListConstruction() {
+	public ListModel<Object> getListConstruction() {
 		return listConstruction;
 	}
 
-	public void setListConstruction(ListModel<String> listConstruction) {
+	public void setListConstruction(ListModel<Object> listConstruction) {
 		this.listConstruction = listConstruction;
 	}
 
-	public ListModel<String> getListPartnerName() {
+	public ListModel<Object> getListPartnerName() {
 		return listPartnerName;
 	}
 
-	public void setListPartnerName(ListModel<String> listPartnerName) {
+	public void setListPartnerName(ListModel<Object> listPartnerName) {
 		this.listPartnerName = listPartnerName;
 	}
 
-	public ListModel<String> getListNumber() {
+	public ListModel<Object> getListNumber() {
 		return listNumber;
 	}
 
-	public void setListNumber(ListModel<String> listNumber) {
+	public void setListNumber(ListModel<Object> listNumber) {
 		this.listNumber = listNumber;
 	}
 
@@ -191,11 +191,11 @@ public class FrmBudget {
 		this.listMachineBase = listMachineBase;
 	}
 
-	public ListModel<String> getListRifPartner() {
+	public ListModel<Object> getListRifPartner() {
 		return listRifPartner;
 	}
 
-	public void setListRifPartner(ListModel<String> listRifPartner) {
+	public void setListRifPartner(ListModel<Object> listRifPartner) {
 		this.listRifPartner = listRifPartner;
 	}
 
@@ -670,11 +670,11 @@ public class FrmBudget {
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		listRoofType = new ArrayList<BasicData>();
-		listRifPartner = new ListModelList<String>();
-		listNumber = new ListModelList<String>();
-		listPartnerName = new ListModelList<String>();
-		listConstruction = new ListModelList<String>();
-		listSeller = new ListModelList<String>();
+		listRifPartner = new ListModelList<Object>();
+		listNumber = new ListModelList<Object>();
+		listPartnerName = new ListModelList<Object>();
+		listConstruction = new ListModelList<Object>();
+		listSeller = new ListModelList<Object>();
 		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
 		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
 		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
@@ -915,19 +915,19 @@ public class FrmBudget {
 	@Command
 	public void loadBudgetByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModel<String>(daoBudget.listStringByFields(field));
+			listRifPartner = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
 			return;
 		} else if (field.compareTo("number") == 0) {
-			listNumber = new SimpleListModel<String>(daoBudget.listStringByFields(field));
+			listNumber = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
 			return;
 		} else if (field.compareTo("partnerName") == 0) {
-			listPartnerName = new SimpleListModel<String>(daoBudget.listStringByFields(field));
+			listPartnerName = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
 			return;
 		} else if (field.compareTo("construction") == 0) {
-			listConstruction = new SimpleListModel<String>(daoBudget.listStringByFields(field));
+			listConstruction = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
 			return;
 		} else if (field.compareTo("seller") == 0) {
-			listSeller = new SimpleListModel<String>(daoBudget.listStringByFields(field));
+			listSeller = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
 			return;
 		}
 		listBudget = daoBudget.listOrderBudgetbyField(field);
@@ -937,7 +937,7 @@ public class FrmBudget {
 	@Command
 	public void loadBusinessPartnerByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModel<String>(daoBusinessPartner.listStringByFields("rif"));
+			listRifPartner = new SimpleListModelCustom<Object>(daoBusinessPartner.listStringByFields("rif"));
 		}
 	}
 
@@ -1216,7 +1216,7 @@ public class FrmBudget {
 			cabinDesign = budget.getBasicDataByCabinDesign().getName();
 		if (budget.getBasicDataByFloorType() != null)
 			floorType = budget.getBasicDataByFloorType().getName();
-		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 ||floorType.indexOf("OTROS") != -1)
+		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 || floorType.indexOf("OTROS") != -1)
 			budget.setDesignSpecial(true);
 		/*
 		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto

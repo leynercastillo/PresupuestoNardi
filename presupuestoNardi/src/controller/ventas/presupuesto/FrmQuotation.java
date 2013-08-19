@@ -1,5 +1,6 @@
 package controller.ventas.presupuesto;
 
+import general.SimpleListModelCustom;
 import general.ValidateZK;
 
 import java.io.File;
@@ -42,7 +43,6 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Radiogroup;
-import org.zkoss.zul.SimpleListModel;
 import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
@@ -98,12 +98,12 @@ public class FrmQuotation {
 	private List<BasicData> listDoorframeHammered;
 	private List<BasicData> listControlType;
 	private List<BasicData> listRoofType;
-	private ListModel<String> listQuotationNumber;
-	private ListModel<String> listRifPartner;
-	private ListModel<String> listBudgetNumber;
-	private ListModel<String> listPartnerName;
-	private ListModel<String> listConstruction;
-	private ListModel<String> listSeller;
+	private ListModel<Object> listQuotationNumber;
+	private ListModel<Object> listRifPartner;
+	private ListModel<Object> listBudgetNumber;
+	private ListModel<Object> listPartnerName;
+	private ListModel<Object> listConstruction;
+	private ListModel<Object> listSeller;
 
 	public String getPrintMessage() {
 		return printMessage;
@@ -145,43 +145,43 @@ public class FrmQuotation {
 		this.disabledPrint = disabledPrint;
 	}
 
-	public ListModel<String> getListSeller() {
+	public ListModel<Object> getListSeller() {
 		return listSeller;
 	}
 
-	public void setListSeller(ListModel<String> listSeller) {
+	public void setListSeller(ListModel<Object> listSeller) {
 		this.listSeller = listSeller;
 	}
 
-	public ListModel<String> getListConstruction() {
+	public ListModel<Object> getListConstruction() {
 		return listConstruction;
 	}
 
-	public void setListConstruction(ListModel<String> listConstruction) {
+	public void setListConstruction(ListModel<Object> listConstruction) {
 		this.listConstruction = listConstruction;
 	}
 
-	public ListModel<String> getListPartnerName() {
+	public ListModel<Object> getListPartnerName() {
 		return listPartnerName;
 	}
 
-	public void setListPartnerName(ListModel<String> listPartnerName) {
+	public void setListPartnerName(ListModel<Object> listPartnerName) {
 		this.listPartnerName = listPartnerName;
 	}
 
-	public ListModel<String> getListBudgetNumber() {
+	public ListModel<Object> getListBudgetNumber() {
 		return listBudgetNumber;
 	}
 
-	public void setListBudgetNumber(ListModel<String> listBudgetNumber) {
+	public void setListBudgetNumber(ListModel<Object> listBudgetNumber) {
 		this.listBudgetNumber = listBudgetNumber;
 	}
 
-	public ListModel<String> getListRifPartner() {
+	public ListModel<Object> getListRifPartner() {
 		return listRifPartner;
 	}
 
-	public void setListRifPartner(ListModel<String> listRifPartner) {
+	public void setListRifPartner(ListModel<Object> listRifPartner) {
 		this.listRifPartner = listRifPartner;
 	}
 
@@ -353,11 +353,11 @@ public class FrmQuotation {
 		return seleccione;
 	}
 
-	public ListModel<String> getListQuotationNumber() {
+	public ListModel<Object> getListQuotationNumber() {
 		return listQuotationNumber;
 	}
 
-	public void setListQuotationNumber(ListModel<String> listQuotationNumber) {
+	public void setListQuotationNumber(ListModel<Object> listQuotationNumber) {
 		this.listQuotationNumber = listQuotationNumber;
 	}
 
@@ -502,12 +502,12 @@ public class FrmQuotation {
 		disabledBudgetNumber = new Boolean(false);
 		disabledPrint = new Boolean(true);
 		disabledEdit = new Boolean(true);
-		listQuotationNumber = new ListModelList<String>();
-		listRifPartner = new ListModelList<String>();
-		listBudgetNumber = new ListModelList<String>();
-		listPartnerName = new ListModelList<String>();
-		listConstruction = new ListModelList<String>();
-		listSeller = new ListModelList<String>();
+		listQuotationNumber = new ListModelList<Object>();
+		listRifPartner = new ListModelList<Object>();
+		listBudgetNumber = new ListModelList<Object>();
+		listPartnerName = new ListModelList<Object>();
+		listConstruction = new ListModelList<Object>();
+		listSeller = new ListModelList<Object>();
 		listDesign = new ArrayList<BasicData>();
 		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
 		listRoofType = daoBasicdata.listByField("", "");
@@ -653,27 +653,27 @@ public class FrmQuotation {
 	@Command
 	public void searchQuotationByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModel<String>(daoQuotation.listStringByFields(field));
+			listRifPartner = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
 			return;
 		} else if (field.compareTo("number") == 0) {
 			/*
 			 * Se cambia el nombre del field, ya que en el zul, se debe enviar una variable obligatoriamente
 			 * y se utilizan dos metodos.
 			 */
-			listBudgetNumber = new SimpleListModel<String>(daoQuotation.listStringByFields("budgetNumber"));
+			listBudgetNumber = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields("budgetNumber"));
 			return;
 		} else if (field.compareTo("partnerName") == 0) {
-			listPartnerName = new SimpleListModel<String>(daoQuotation.listStringByFields(field));
+			listPartnerName = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
 			return;
 		} else if (field.compareTo("quotationNumber") == 0) {
 			List<String> list = daoQuotation.listStringByFields("newNumber");
 			list.addAll(daoQuotation.listStringByFields("modernizationNumber"));
-			listQuotationNumber = new SimpleListModel<String>(list);
+			listQuotationNumber = new SimpleListModelCustom<Object>(list);
 		} else if (field.compareTo("construction") == 0) {
-			listConstruction = new SimpleListModel<String>(daoQuotation.listStringByFields(field));
+			listConstruction = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
 			return;
 		} else if (field.compareTo("seller") == 0) {
-			listSeller = new SimpleListModel<String>(daoQuotation.listStringByFields(field));
+			listSeller = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
 			return;
 		}
 	}
@@ -730,7 +730,7 @@ public class FrmQuotation {
 		for (Integer number : list) {
 			list2.add(number.toString());
 		}
-		listBudgetNumber = new SimpleListModel<String>(list2);
+		listBudgetNumber = new SimpleListModelCustom<Object>(list2);
 	}
 
 	@Command
@@ -845,7 +845,7 @@ public class FrmQuotation {
 		String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto");
 		JasperReport jasperReport;
 		try {
-			if (template.compareTo("SI") == 0)
+			if (template == null || template.compareTo("SI") == 0)
 				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
 			else
 				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotationTemp.jasper");
