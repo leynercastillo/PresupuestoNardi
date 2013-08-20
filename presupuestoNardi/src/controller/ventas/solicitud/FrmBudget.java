@@ -664,6 +664,7 @@ public class FrmBudget {
 		budget.setSistelWarrowPb(new Boolean(false));
 		budget.setRifType('-');
 		budget.setRifPartner(new String());
+		budget.setLightCurtain(true);
 		listBudget = new ArrayList<Budget>();
 		listDesign = new ArrayList<BasicData>();
 		listFan = new ArrayList<BasicData>();

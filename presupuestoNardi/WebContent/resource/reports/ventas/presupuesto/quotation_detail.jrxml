@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_detail" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83ebc60b-d05e-4fa3-99bd-0f6e9ccca3b9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="94"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -20,145 +20,145 @@
 	CASE WHEN T0.TYPE THEN '1-' || T0.new_number || '-' || T0.version_number ELSE '2-' || T0.modernization_number || '-' || T0.version_number END "Numero",
 	T0.elevator_quantity || CASE WHEN T0.elevator_quantity > 1 THEN ' - ASCENSORES ' ELSE ' - ASCENSOR ' END || (
 		SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.elevator_type) "Equipos",
+			T10.id_basic = T0.elevator_type) "Equipos",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.elevator_capacitance) "Capacidad",
+			T10.id_basic = T0.elevator_capacitance) "Capacidad",
 	ROUND(CAST(T0.tour AS NUMERIC), 2) || ' mts APROXIMADOS.' "Recorrido",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.speed) || ' m/s.' "Velocidad",
+			T10.id_basic = T0.speed) || ' m/s.' "Velocidad",
 	T0.stop_number "Pisos",
 	CASE WHEN T0.stop_sequence_continuous THEN T0.stop_sequence_continuous_number || ' ACCESOS CONTINUOS (' || T0.stop_sequence_continuous_q || ')'
 		ELSE T0.stop_sequence_even_number || ' ACCESOS PARES (' || T0.stop_sequence_even_q || '), ' || T0.stop_sequence_odd_number || ' ACCESOS IMPARES (' || T0.stop_sequence_odd_q || ')'  END "Accesos",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.maneuver_type) "Maniobra",
+			T10.id_basic = T0.maneuver_type) "Maniobra",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.control_type) "Control",
+			T10.id_basic = T0.control_type) "Control",
 	'EN CABINA: ' || (SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.booth_display) "Display cabina",
+			T10.id_basic = T0.booth_display) "Display cabina",
 	'EN PISO: ' || (SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.floor_display) "Display piso",
+			T10.id_basic = T0.floor_display) "Display piso",
 	'EN PASILLO: ' || (SELECT
-					T1.name
+					T10.name
 				FROM
-					basic_data T1
+					basic_data T10
 				WHERE
-					T1.id_basic = T0.hall_button)
+					T10.id_basic = T0.hall_button)
 			|| ' ' || (SELECT
-					T1.name
+					T10.name
 				FROM
-					basic_data T1
+					basic_data T10
 				WHERE
-					T1.id_basic = T0.hall_button_type) "Botonera pasillo",
+					T10.id_basic = T0.hall_button_type) "Botonera pasillo",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.machine_type) "Motor",
+			T10.id_basic = T0.machine_type) "Motor",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.electricity_type) "Voltaje corriente",
+			T10.id_basic = T0.electricity_type) "Voltaje corriente",
 	T0.width_hole "Ancho hueco",
 	T0.bottom_hole "Fondo hueco",
 	T0.fossa "Profundidad nivel 0",
 	T0.on_tour "Recorrido seguridad",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.cabin_design) "Diseno cabina",
+			T10.id_basic = T0.cabin_design) "Diseno cabina",
 	(SELECT
 			T2.name
 		FROM
-			basic_data T1 INNER JOIN basic_data T2 ON T1.parent_id_basic = T2.id_basic
+			basic_data T10 INNER JOIN basic_data T2 ON T10.parent_id_basic = T2.id_basic
 		WHERE
-			T1.id_basic = T0.cabin_design) "Modelo",
+			T10.id_basic = T0.cabin_design) "Modelo",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.floor_type) "Tipo de piso",
+			T10.id_basic = T0.floor_type) "Tipo de piso",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.railing) "Pasamano",
+			T10.id_basic = T0.railing) "Pasamano",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.roof_type) "Techo de cabina",
+			T10.id_basic = T0.roof_type) "Techo de cabina",
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.door_type) || ' DE ' ||
+			T10.id_basic = T0.door_type) || ' DE ' ||
 	(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.free_admission) || ' X ' || (SELECT
-			T1.name
+			T10.id_basic = T0.free_admission) || ' X ' || (SELECT
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.height) || '. ' || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip ELSE '' END "Puertas",
+			T10.id_basic = T0.height) || '. ' || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip ELSE '' END "Puertas",
 	'MARTILLADO ' || (SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc "Martillado",
+			T10.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc "Martillado",
 	CASE WHEN T0.doorframe_type IS NULL THEN '' ELSE
 		(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '.' ELSE '' END || ' ' ||
+			T10.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '.' ELSE '' END || ' ' ||
 		CASE WHEN T0.door_frame_hammered IS NULL THEN '' ELSE 'MARTILLADO '||(SELECT
-			T1.name
+			T10.name
 		FROM
-			basic_data T1
+			basic_data T10
 		WHERE
-			T1.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc END "Marco",
+			T10.id_basic = T0.door_frame_hammered) || ': ' || T0.door_frame_hammered_desc END "Marco",
 	CASE WHEN T0.phone THEN '- TELEFONO \n' ELSE '' END || '' ||
 	CASE WHEN T0.gom_system THEN '- SISTEMA GOM \n' ELSE '' END || '' ||
 	CASE WHEN T0.access_sytem THEN '- SISTEMA DE ACCESO \n' ELSE '' END || ''||
@@ -166,9 +166,17 @@
 	CASE WHEN T0.light_curtain THEN '- CORTINA LUMINOSA \n' ELSE '' END || '' ||
 	CASE WHEN T0.intercom THEN '- INTERCOMUNICADOR \n' ELSE '' END || '' ||
 	CASE WHEN T0.load_limiter THEN '- LIMITADOR DE CARGA \n' ELSE '' END || '' ||
-	CASE WHEN T0.firefighter_keychain THEN '- LLAVE DE BOMBERO' ELSE '' END "Incluye"
+	CASE WHEN T0.firefighter_keychain THEN '- LLAVE DE BOMBERO \n' ELSE '' END || '' ||
+	CASE WHEN T1.booth_button IS NOT NULL THEN '- BOTONERA CABINA CON ' || (
+		SELECT
+			T10.name
+		FROM
+			basic_data T10
+		WHERE
+			T10.id_basic = T1.booth_button)|| '\n' ELSE '' END || '' ||
+	'- PUSH BUTTON EN FOSA PARA MANTENIMIENTO SEGUN NORMA \n'"Incluye"
 FROM
-	quotation T0
+	quotation T0 INNER JOIN budget T1 ON T1.id_budget = T0.id_budget
 WHERE
 	T0.type = $P{TYPE}
 	AND CASE WHEN T0.type THEN T0.new_number = $P{NEW} ELSE T0.modernization_number = $P{MODERNIZATION} END
