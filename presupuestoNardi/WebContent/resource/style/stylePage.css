@@ -1,10 +1,11 @@
 .page {
-	padding: 5px;
+	padding: 0.5% 0%;
+	width: 100%
 }
 
 .aside {
 	float: left;
-	width: 180px;
+	width: 15%;
 	margin-right: 5px;
 	margin-bottom: 5px;
 }

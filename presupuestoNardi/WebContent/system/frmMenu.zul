@@ -72,6 +72,27 @@
 									</treecell>
 								</treerow>
 							</treeitem>
+							<treeitem open="false"
+								if="${sec:isAnyGranted('ROLE_EFFECTIVE_SALES')}">
+								<treerow>
+									<treecell>
+										<label value="Informes"></label>
+									</treecell>
+								</treerow>
+								<treechildren>
+									<treeitem
+										if="${sec:isAllGranted('ROLE_EFFECTIVE_SALES')}">
+										<treerow>
+											<treecell
+												onClick="@command('optionSelected', optionSelected='system/ventas/reportes/frmEffectiveSales.zul')">
+												<label
+													value="Ventas Efectivas">
+												</label>
+											</treecell>
+										</treerow>
+									</treeitem>
+								</treechildren>
+							</treeitem>
 						</treechildren>
 					</tree>
 				</tabpanel>
@@ -98,14 +119,6 @@
 										<label
 											value="Maestro de usuarios">
 										</label>
-									</treecell>
-								</treerow>
-							</treeitem>
-							<treeitem
-								if="${sec:isAllGranted('ROLE_SECURITY_GROUPS')}">
-								<treerow>
-									<treecell>
-										<label value="Grupos"></label>
 									</treecell>
 								</treerow>
 							</treeitem>

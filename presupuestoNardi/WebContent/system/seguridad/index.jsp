@@ -14,9 +14,9 @@
 	href="../../resource/style/bootstrap.min.css" />
 </head>
 <body>
-	<div class="navbar navbar-fixed-top background-header">
+	<div class="navbar navbar-fixed-top background-header header">
 		<div class="container">
-			<div class="row header">
+			<div class="row">
 				<div class="span7">
 					<img alt="Ascensores Nardi Logo"
 						src="../../resource/images/logo-web.jpg" />

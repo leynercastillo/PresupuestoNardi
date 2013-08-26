@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_detail" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83ebc60b-d05e-4fa3-99bd-0f6e9ccca3b9">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_detail" language="groovy" pageWidth="576" pageHeight="756" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83ebc60b-d05e-4fa3-99bd-0f6e9ccca3b9">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="94"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -213,7 +213,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="583" splitType="Stretch">
+		<band height="571" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="78859b01-862c-47f8-9b20-61bf00947a71" x="7" y="80" width="257" height="20"/>
 				<textElement>
@@ -222,7 +222,7 @@ WHERE
 				<text><![CDATA[CAPACIDAD:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b43b5e62-94c7-4579-86da-a73fc3669c15" x="144" y="80" width="468" height="20"/>
+				<reportElement uuid="b43b5e62-94c7-4579-86da-a73fc3669c15" x="144" y="80" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -236,7 +236,7 @@ WHERE
 				<text><![CDATA[RECORRIDO:]]></text>
 			</staticText>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement uuid="1f040889-eb98-40ae-83c5-931ee1ba67e8" x="144" y="100" width="468" height="20"/>
+				<reportElement uuid="1f040889-eb98-40ae-83c5-931ee1ba67e8" x="144" y="100" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -250,7 +250,7 @@ WHERE
 				<text><![CDATA[VELOCIDAD:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="591df5eb-9145-4e2d-b6c5-6a49ae07ace5" x="144" y="120" width="468" height="20"/>
+				<reportElement uuid="591df5eb-9145-4e2d-b6c5-6a49ae07ace5" x="144" y="120" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -264,7 +264,7 @@ WHERE
 				<text><![CDATA[PISOS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="a4eb9e14-00b7-4f04-8030-e59c933f49a4" x="144" y="140" width="468" height="20"/>
+				<reportElement uuid="a4eb9e14-00b7-4f04-8030-e59c933f49a4" x="144" y="140" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -278,7 +278,7 @@ WHERE
 				<text><![CDATA[ACCESOS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="49c16f83-e363-4c80-9bd2-761ec93bce05" x="144" y="160" width="468" height="20"/>
+				<reportElement uuid="49c16f83-e363-4c80-9bd2-761ec93bce05" x="144" y="160" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -292,7 +292,7 @@ WHERE
 				<text><![CDATA[MANIOBRA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="07259275-a463-4fa1-a8d3-049372f7d9c8" x="144" y="180" width="468" height="20"/>
+				<reportElement uuid="07259275-a463-4fa1-a8d3-049372f7d9c8" x="144" y="180" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -306,7 +306,7 @@ WHERE
 				<text><![CDATA[CONTROL:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9340c61c-7a08-4b77-8311-caf8a3d25dc1" x="144" y="200" width="468" height="20"/>
+				<reportElement uuid="9340c61c-7a08-4b77-8311-caf8a3d25dc1" x="144" y="200" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -320,21 +320,21 @@ WHERE
 				<text><![CDATA[SEÑALIZACION:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="92071b5b-f0be-4b27-86bb-5c667257ac2b" x="144" y="220" width="468" height="20"/>
+				<reportElement uuid="92071b5b-f0be-4b27-86bb-5c667257ac2b" x="144" y="220" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Display cabina}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="d7858550-6f00-4ab8-85c0-9d6ce58d9539" x="144" y="240" width="468" height="20"/>
+				<reportElement uuid="d7858550-6f00-4ab8-85c0-9d6ce58d9539" x="144" y="240" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Display piso}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="cfaf26d9-da9b-43e3-998f-b977a34d3a7e" x="144" y="260" width="468" height="20"/>
+				<reportElement uuid="cfaf26d9-da9b-43e3-998f-b977a34d3a7e" x="144" y="260" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -348,7 +348,7 @@ WHERE
 				<text><![CDATA[MOTOR:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="108a8ad1-4503-4826-a70b-3efdf341f1d8" x="144" y="280" width="468" height="20"/>
+				<reportElement uuid="108a8ad1-4503-4826-a70b-3efdf341f1d8" x="144" y="280" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -362,7 +362,7 @@ WHERE
 				<text><![CDATA[VOLTAJE CORRIENTE:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="12bd300f-578d-4eb9-844f-bbda1e25e4b0" x="144" y="300" width="468" height="20"/>
+				<reportElement uuid="12bd300f-578d-4eb9-844f-bbda1e25e4b0" x="144" y="300" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -411,7 +411,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Fondo hueco}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="805e95b9-66d3-4eb3-92f2-dc3456ef6d5f" x="365" y="320" width="241" height="20"/>
+				<reportElement uuid="805e95b9-66d3-4eb3-92f2-dc3456ef6d5f" x="365" y="320" width="211" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -425,7 +425,7 @@ WHERE
 				<text><![CDATA[PROFUNDIDAD NIVEL 0:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="293463dc-a688-4173-b96f-d892a1b74181" x="144" y="340" width="468" height="20"/>
+				<reportElement uuid="293463dc-a688-4173-b96f-d892a1b74181" x="144" y="340" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -446,7 +446,7 @@ WHERE
 				<text><![CDATA[RECORRIDO SEGURIDAD:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="7a7ed9ec-8bdf-48c0-a9a4-6b9ea2a0baca" x="144" y="360" width="468" height="20"/>
+				<reportElement uuid="7a7ed9ec-8bdf-48c0-a9a4-6b9ea2a0baca" x="144" y="360" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -467,7 +467,7 @@ WHERE
 				<text><![CDATA[CABINA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="534af32b-8bfc-4135-8fb4-de76d9137d31" x="198" y="400" width="414" height="20"/>
+				<reportElement uuid="534af32b-8bfc-4135-8fb4-de76d9137d31" x="198" y="400" width="378" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -488,7 +488,7 @@ WHERE
 				<text><![CDATA[MODELO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4467e4ca-c7ab-45f0-bbd2-de20aa98affd" x="198" y="380" width="414" height="20"/>
+				<reportElement uuid="4467e4ca-c7ab-45f0-bbd2-de20aa98affd" x="198" y="380" width="378" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -502,7 +502,7 @@ WHERE
 				<text><![CDATA[PISO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e831bb44-df6d-4c0e-8eb2-5c176716daed" x="198" y="420" width="414" height="20"/>
+				<reportElement uuid="e831bb44-df6d-4c0e-8eb2-5c176716daed" x="198" y="420" width="378" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -516,7 +516,7 @@ WHERE
 				<text><![CDATA[PASAMANO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="03fa9634-94a8-4278-8380-01a1f8cb9b98" x="144" y="440" width="468" height="20"/>
+				<reportElement uuid="03fa9634-94a8-4278-8380-01a1f8cb9b98" x="144" y="440" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -530,7 +530,7 @@ WHERE
 				<text><![CDATA[TECHO DE CABINA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="0e512fd7-d200-4be8-9965-8eb096b9f35b" x="144" y="460" width="468" height="20"/>
+				<reportElement uuid="0e512fd7-d200-4be8-9965-8eb096b9f35b" x="144" y="460" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -544,14 +544,14 @@ WHERE
 				<text><![CDATA[PUERTA PASILLO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e6890e15-765a-4251-a300-df0f309d976a" x="144" y="480" width="468" height="20"/>
+				<reportElement uuid="e6890e15-765a-4251-a300-df0f309d976a" x="144" y="480" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Puertas}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="40cf9c4d-1c73-48b0-aeb9-8cb4ed24f2b3" x="144" y="500" width="468" height="20"/>
+				<reportElement uuid="40cf9c4d-1c73-48b0-aeb9-8cb4ed24f2b3" x="144" y="500" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -565,7 +565,7 @@ WHERE
 				<text><![CDATA[MARCOS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="508a4b9c-5e64-413d-9faf-5d6abca15385" x="144" y="520" width="468" height="20"/>
+				<reportElement uuid="508a4b9c-5e64-413d-9faf-5d6abca15385" x="144" y="520" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -579,21 +579,21 @@ WHERE
 				<text><![CDATA[INCLUYE:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="bceea72f-dd9a-4812-aa4a-7aa055608106" x="144" y="551" width="468" height="20"/>
+				<reportElement uuid="bceea72f-dd9a-4812-aa4a-7aa055608106" x="144" y="551" width="432" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Incluye}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="c4471dd1-ea29-4e12-8e68-6295f877b299" x="396" y="10" width="174" height="20"/>
+				<reportElement uuid="c4471dd1-ea29-4e12-8e68-6295f877b299" x="355" y="10" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRESUPUESTO NRO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="1bed1f44-d3b1-4920-ba53-8fdeb089d7fc" x="505" y="10" width="140" height="20"/>
+				<reportElement uuid="1bed1f44-d3b1-4920-ba53-8fdeb089d7fc" x="464" y="10" width="112" height="15"/>
 				<textElement>
 					<font fontName="Serif"/>
 				</textElement>

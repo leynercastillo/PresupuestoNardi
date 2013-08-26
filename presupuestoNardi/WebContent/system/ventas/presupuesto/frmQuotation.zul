@@ -914,7 +914,7 @@
 							sclass="formLabel">
 						</label>
 						<doublebox disabled="@load(vm.disabledEdit)"
-							format="#,##0.00" onBlur="@command('priceUnit', val=self.value)"
+							format="#,##0.00" onChange="@command('priceUnit', val=self.value)"
 							style="text-align: right"
 							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
 							width="95%">

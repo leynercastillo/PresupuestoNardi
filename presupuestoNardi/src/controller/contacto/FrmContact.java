@@ -77,9 +77,9 @@ public class FrmContact {
 		contact = new Contact();
 		contact.setStatus('A');
 		contact.setDate(new Date());
-		SecurityGroup group = daoSecurityGroup.listByField("name", "SELLER");
+		SecurityGroup group = daoSecurityGroup.findByField("name", "SELLER");
 		listSecurityUsers = new ArrayList<SecurityUser>(group.getSecurityUsers());
-		group = daoSecurityGroup.listByField("name", "SALES COORDINATOR");
+		group = daoSecurityGroup.findByField("name", "SALES COORDINATOR");
 		listSecurityUsers.addAll(group.getSecurityUsers());
 	}
 

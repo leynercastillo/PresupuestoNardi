@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
-	<property name="ireport.zoom" value="1.1000000000000012"/>
+	<property name="ireport.zoom" value="0.9090909090909102"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="448"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -60,14 +60,15 @@ WHERE
 	<field name="nuevo" class="java.lang.Integer"/>
 	<field name="modernizacion" class="java.lang.Integer"/>
 	<field name="version" class="java.lang.Short"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<detail>
 		<band height="751" splitType="Stretch">
 			<image>
 				<reportElement uuid="07e748a9-5f7b-40b7-96a0-7948487a2bd5" x="0" y="0" width="190" height="64"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="24" width="154" height="40"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"liftTechnology.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="d1b9cf89-149d-4600-8117-3797ba88d7e5" x="340" y="100" width="174" height="15"/>
@@ -170,6 +171,10 @@ WHERE
 			<break>
 				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="739" width="576" height="1"/>
 			</break>
+			<image>
+				<reportElement uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9" x="10" y="693" width="566" height="46"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
+			</image>
 			<subreport>
 				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="740" width="576" height="6"/>
 				<subreportParameter name="NEW">
@@ -207,14 +212,6 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_payment.jasper"]]></subreportExpression>
 			</subreport>
-			<image>
-				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="24" width="154" height="40"/>
-				<imageExpression><![CDATA[$P{IMAGES_DIR}+"liftTechnology.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9" x="10" y="693" width="566" height="46"/>
-				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
-			</image>
 		</band>
 	</detail>
 </jasperReport>
