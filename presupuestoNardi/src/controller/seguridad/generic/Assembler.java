@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
+import model.database.SecurityGroup;
+import model.database.SecurityRole;
+import model.database.SecurityUser;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import database.SecurityGroup;
-import database.SecurityRole;
-import database.SecurityUser;
 
 @Service("assembler")
 public class Assembler {

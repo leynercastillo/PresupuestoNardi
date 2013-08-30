@@ -1,5 +1,8 @@
 package controller;
 
+import model.database.SecurityUser;
+import model.service.ServiceSecurityUser;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.annotation.BindingParam;
@@ -8,13 +11,10 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
-import dao.DaoSecurityUser;
-import database.SecurityUser;
-
 public class IndexCtrl {
 
 	@WireVariable
-	private DaoSecurityUser daoSecurityUser;
+	private ServiceSecurityUser serviceSecurityUser;
 
 	private String page;
 	private SecurityUser user;
@@ -42,7 +42,7 @@ public class IndexCtrl {
 		/*
 		 * Se busca por nombre, porque el objeto "auxUser" tipo "User" no almacena email
 		 */
-		user = daoSecurityUser.findByString("email", auxUser.getUsername());
+		user = serviceSecurityUser.findUser(auxUser.getUsername());
 	}
 
 	@NotifyChange("page")

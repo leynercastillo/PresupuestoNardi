@@ -1,6 +1,6 @@
 package controller.seguridad;
 
-import database.SecurityUser;
+import model.database.SecurityUser;
 
 /**
  * Clase desarrollada para lograr editar los objetos Security User dentro de 

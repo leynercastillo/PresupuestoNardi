@@ -59,7 +59,7 @@
 						<combobox autocomplete="true"
 							autodrop="@load(vm.disabledAll)" buttonVisible="false"
 							disabled="@load(vm.disabledNumber)" model="@load(vm.listNumber)"
-							onChange="@command(vm.disabledAll ? 'searchBudgetId':'', field='number', val=self.value)"
+							onChange="@command(vm.disabledAll ? 'searchBudgetNumber':'', field='number', val=self.value)"
 							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='number')"
 							value="@load(vm.budget.number)" width="50%">
 						</combobox>

@@ -108,8 +108,8 @@
 							value="@save(vm.quotation.construction, before = 'confirmSave') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)"
 							autocomplete="true" model="@load(vm.listConstruction)"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
-							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='construction')"
 							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='construction', val=self.value)"
+							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='construction')"
 							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
 						</combobox>
 						<label sclass="formLabel"
@@ -914,7 +914,8 @@
 							sclass="formLabel">
 						</label>
 						<doublebox disabled="@load(vm.disabledEdit)"
-							format="#,##0.00" onChange="@command('priceUnit', val=self.value)"
+							format="#,##0.00"
+							onChange="@command('priceUnit', val=self.value)"
 							style="text-align: right"
 							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
 							width="95%">

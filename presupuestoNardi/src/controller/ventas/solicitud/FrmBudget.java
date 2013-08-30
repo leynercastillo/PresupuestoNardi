@@ -13,6 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.database.BasicData;
+import model.database.Budget;
+import model.database.BusinessPartner;
+import model.database.Quotation;
+import model.database.SecurityUser;
+import model.service.ServiceBasicData;
+import model.service.ServiceBudget;
+import model.service.ServiceBusinessPartner;
+import model.service.ServiceQuotation;
+import model.service.ServiceSecurityUser;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -49,17 +59,6 @@ import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
 
-import dao.DaoBasicdata;
-import dao.DaoBudget;
-import dao.DaoBusinessPartner;
-import dao.DaoQuotation;
-import dao.DaoSecurityUser;
-import database.BasicData;
-import database.Budget;
-import database.BusinessPartner;
-import database.Quotation;
-import database.SecurityUser;
-
 /**
  * @author leyner.castillo
  * 
@@ -67,18 +66,17 @@ import database.SecurityUser;
 public class FrmBudget {
 
 	@WireVariable
-	private DaoBasicdata daoBasicdata;
+	private ServiceBasicData serviceBasicData;
 	@WireVariable
-	private DaoBudget daoBudget;
+	private ServiceBudget serviceBudget;
 	@WireVariable
-	private DaoSecurityUser daoSecurityUser;
+	private ServiceSecurityUser serviceSecurityUser;
 	@WireVariable
-	private DaoBusinessPartner daoBusinessPartner;
+	private ServiceBusinessPartner serviceBusinessPartner;
+	@WireVariable
+	private ServiceQuotation serviceQuotation;
 	@WireVariable
 	private Emails emails;
-	@WireVariable
-	private DaoQuotation daoQuotation;
-
 	private String seleccione;
 	private String modalMessage;
 	private final String dash = new String("--");
@@ -116,7 +114,6 @@ public class FrmBudget {
 	private List<BasicData> listHallButton;
 	private List<BasicData> listHallButtonType;
 	private List<BasicData> listRifType;
-	private List<Budget> listBudget;
 	private ListModel<Object> listRifPartner;
 	private ListModel<Object> listNumber;
 	private ListModel<Object> listPartnerName;
@@ -293,14 +290,6 @@ public class FrmBudget {
 
 	public void setDisableAfterSearch(Boolean disableAfterSearch) {
 		this.disableAfterSearch = disableAfterSearch;
-	}
-
-	public List<Budget> getListBudget() {
-		return listBudget;
-	}
-
-	public void setListBudget(List<Budget> listBudget) {
-		this.listBudget = listBudget;
 	}
 
 	public Boolean getDisabledAll() {
@@ -617,10 +606,11 @@ public class FrmBudget {
 		modalMessage = null;
 		budget = new Budget();
 		businessPartner = new BusinessPartner();
-		if (daoBudget.listAll().isEmpty())
+		List<Budget> listAllBudget = serviceBudget.listAll();
+		if (listAllBudget.isEmpty())
 			budget.setNumber(1);
 		else
-			budget.setNumber(daoBudget.listAll().get(daoBudget.listAll().size() - 1).getNumber() + 1);
+			budget.setNumber(listAllBudget.get(listAllBudget.size() - 1).getNumber() + 1);
 		disabledAll = new Boolean(false);
 		disableAfterSearch = new Boolean(false);
 		disabledNumber = new Boolean(true);
@@ -629,7 +619,7 @@ public class FrmBudget {
 		isSpecial = new Boolean(false);
 		cabinModel = new BasicData();
 		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		SecurityUser user = daoSecurityUser.findByString("email", auxUser.getUsername());
+		SecurityUser user = serviceSecurityUser.findUser(auxUser.getUsername());
 		budget.setSeller(user.getName());
 		budget.setSecurityUser(user);
 		budget.setDate(new Date());
@@ -665,7 +655,6 @@ public class FrmBudget {
 		budget.setRifType('-');
 		budget.setRifPartner(new String());
 		budget.setLightCurtain(true);
-		listBudget = new ArrayList<Budget>();
 		listDesign = new ArrayList<BasicData>();
 		listFan = new ArrayList<BasicData>();
 		listBoothDisplay = new ArrayList<BasicData>();
@@ -676,35 +665,35 @@ public class FrmBudget {
 		listPartnerName = new ListModelList<Object>();
 		listConstruction = new ListModelList<Object>();
 		listSeller = new ListModelList<Object>();
-		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
-		listBType = daoBasicdata.listByField("BUDGET", "BUILDING TYPE");
-		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
-		listElevatorCapa = daoBasicdata.listByField("BUDGET", "ELEVATOR CAPACITANCE");
-		listMachineType = daoBasicdata.listByField("BUDGET", "MACHINE TYPE");
-		listMachineBase = daoBasicdata.listByField("BUDGET", "MACHINE BASE");
-		listBEmbarque = daoBasicdata.listByField("BUDGET", "BUILDING EMBARQUE");
-		listElectricityType = daoBasicdata.listByField("BUDGET", "ELECTRICITY TYPE");
-		listSpeed = daoBasicdata.listByField("BUDGET", "SPEED");
-		listFrequency = daoBasicdata.listByField("BUDGET", "FREQUENCY");
-		listVoltageLighting = daoBasicdata.listByField("BUDGET", "VOLTAGE LIGHTING");
-		listHourMachine = daoBasicdata.listByField("BUDGET", "HOUR MACHINE");
-		listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
-		listButtonType = daoBasicdata.listByField("BUDGET", "BUTTON TYPE");
-		listRailing = daoBasicdata.listByField("BUDGET", "RAILING");
-		listMirror = daoBasicdata.listByField("BUDGET", "MIRROR");
-		listFloorType = daoBasicdata.listByField("BUDGET", "FLOOR TYPE");
-		listDoorType = daoBasicdata.listByField("BUDGET", "DOOR TYPE");
-		listDoorSystem = daoBasicdata.listByField("BUDGET", "DOOR SYSTEM");
-		listDoorframeType = daoBasicdata.listByField("BUDGET", "DOOR FRAME TYPE");
-		listDoorframeHammered = daoBasicdata.listByField("BUDGET", "DOOR FRAME HAMMERED");
-		listHallButton = daoBasicdata.listByField("BUDGET", "HALL BUTTON");
-		listHallButtonType = daoBasicdata.listByField("BUDGET", "HALL BUTTON TYPE");
-		listFreeAdmission = daoBasicdata.listByField("BUDGET", "FREE ADMISSION");
-		listHeight = daoBasicdata.listByField("BUDGET", "HEIGHT");
-		listControlType = daoBasicdata.listByField("BUDGET", "CONTROL TYPE");
-		listBoothButton = daoBasicdata.listByField("BUDGET", "BOOTH BUTTON");
-		listMotorTraction = daoBasicdata.listByField("BUDGET", "MOTOR TRACTION");
-		listCabinModel = daoBasicdata.listByField("BUDGET", "CABIN MODEL");
+		listRifType = serviceBasicData.listRifType();
+		listBType = serviceBasicData.listBuildingType();
+		listElevatorType = serviceBasicData.listElevatorType();
+		listElevatorCapa = serviceBasicData.listElevatorCapacitance();
+		listMachineType = serviceBasicData.listMachineType();
+		listMachineBase = serviceBasicData.listMachineBase();
+		listBEmbarque = serviceBasicData.listAccess();
+		listElectricityType = serviceBasicData.listElectricityType();
+		listSpeed = serviceBasicData.listSpeed();
+		listFrequency = serviceBasicData.listFrequency();
+		listVoltageLighting = serviceBasicData.listVoltageLighting();
+		listHourMachine = serviceBasicData.listHourMachine();
+		listManeuverType = serviceBasicData.listManeuverType();
+		listButtonType = serviceBasicData.listButtonType();
+		listRailing = serviceBasicData.listRailing();
+		listMirror = serviceBasicData.listMirror();
+		listFloorType = serviceBasicData.listFloorType();
+		listDoorType = serviceBasicData.listDoorType();
+		listDoorSystem = serviceBasicData.listDoorSystem();
+		listDoorframeType = serviceBasicData.listDoorframeType();
+		listDoorframeHammered = serviceBasicData.listDoorframeHammered();
+		listHallButton = serviceBasicData.listHallButton();
+		listHallButtonType = serviceBasicData.listHallButtonType();
+		listFreeAdmission = serviceBasicData.listFreeAdmission();
+		listHeight = serviceBasicData.listHeight();
+		listControlType = serviceBasicData.listControlType();
+		listBoothButton = serviceBasicData.listBoothButton();
+		listMotorTraction = serviceBasicData.listMotorTraction();
+		listCabinModel = serviceBasicData.listCabinModel();
 	}
 
 	/**
@@ -856,16 +845,9 @@ public class FrmBudget {
 		if (businessPartner.getIdBusinessPartner() != 0)
 			budget.setBusinessPartner(businessPartner);
 		/* Cambiar if a metodo de validacion tradicional */
-		if (budget.getIdBudget() == 0) {
-			if (!daoBudget.save(budget)) {
-				Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-				return;
-			}
-		} else {
-			if (!daoBudget.update(budget)) {
-				Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-				return;
-			}
+		if (!serviceBudget.save(budget)) {
+			Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
+			return;
 		}
 		/* Se envia si se guarda. Si se modifica o no se guarda, no se envia */
 		if (budget.getIdBudget() == 0)
@@ -890,7 +872,7 @@ public class FrmBudget {
 	@NotifyChange({ "disabledAll" })
 	@Command
 	public void edit(@BindingParam("component") Button button) {
-		List<Quotation> list = daoQuotation.listByInt("budgetNumber", budget.getNumber());
+		List<Quotation> list = serviceQuotation.listByBudget(budget.getNumber());
 		for (Quotation q : list) {
 			if (q.getStatus() == 'A') {
 				disabledAll = new Boolean(false);
@@ -916,50 +898,55 @@ public class FrmBudget {
 	@Command
 	public void loadBudgetByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
+			listRifPartner = new SimpleListModelCustom<Object>(serviceBudget.listRifPartner());
 			return;
 		} else if (field.compareTo("number") == 0) {
-			listNumber = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
+			listNumber = new SimpleListModelCustom<Object>(serviceBudget.listNumber());
 			return;
 		} else if (field.compareTo("partnerName") == 0) {
-			listPartnerName = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
+			listPartnerName = new SimpleListModelCustom<Object>(serviceBudget.listPartnerName());
 			return;
 		} else if (field.compareTo("construction") == 0) {
-			listConstruction = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
+			listConstruction = new SimpleListModelCustom<Object>(serviceBudget.listConstruction());
 			return;
 		} else if (field.compareTo("seller") == 0) {
-			listSeller = new SimpleListModelCustom<Object>(daoBudget.listStringByFields(field));
+			listSeller = new SimpleListModelCustom<Object>(serviceBudget.listSeller());
 			return;
 		}
-		listBudget = daoBudget.listOrderBudgetbyField(field);
 	}
 
 	@NotifyChange({ "listRifPartner" })
 	@Command
 	public void loadBusinessPartnerByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModelCustom<Object>(daoBusinessPartner.listStringByFields("rif"));
+			listRifPartner = new SimpleListModelCustom<Object>(serviceBusinessPartner.listRif());
 		}
 	}
 
 	@NotifyChange("*")
 	@Command
 	public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value) {
-		List<Budget> listBudget2 = daoBudget.listByString(field, value);
+		List<Budget> listBudget2 = new ArrayList<Budget>();
+		if (field.compareTo("partnerName") == 0)
+			listBudget2 = serviceBudget.listByPartnerName(value);
+		else if (field.compareTo("construction") == 0)
+			listBudget2 = serviceBudget.listByConstruction(value);
+		else if (field.compareTo("seller") == 0)
+			listBudget2 = serviceBudget.listBySeller(value);
 		searchGeneric(listBudget2);
 	}
 
 	@NotifyChange("*")
 	@Command
-	public void searchBudgetId(@BindingParam("field") String field, @BindingParam("val") String value) {
+	public void searchBudgetNumber(@BindingParam("field") String field, @BindingParam("val") String value) {
 		for (int i = 0; i < value.length(); i++) {
 			if (!Character.isDigit(value.charAt(i))) {
 				value = "0";
 				break;
 			}
 		}
-		Integer budgetId = Integer.parseInt(value);
-		Budget auxBudget = daoBudget.findByInteger(field, budgetId);
+		Integer budgetNumber = Integer.parseInt(value);
+		Budget auxBudget = serviceBudget.findByNumber(budgetNumber);
 		if (auxBudget != null) {
 			budget = auxBudget;
 			disableAfterSearch = new Boolean(true);
@@ -979,7 +966,7 @@ public class FrmBudget {
 	@NotifyChange("*")
 	@Command
 	public void searchBudgetBusinessPartner(@BindingParam("rif") String rif) {
-		List<Budget> listBudget2 = daoBudget.listByString("rifPartner", rif);
+		List<Budget> listBudget2 = serviceBudget.listByRifPartner(rif);
 		searchGeneric(listBudget2);
 	}
 
@@ -1009,7 +996,7 @@ public class FrmBudget {
 	@NotifyChange({ "budget", "budgetNumber", "disableAfterSearch", "disabledNumber", "disableSeller", "listRoofType", "listBoothDisplay", "listFloorDisplay", "cabinModel", "listDesign" })
 	@GlobalCommand
 	public void selectedBudget(@BindingParam("Budget") Budget budget) {
-		this.budget = daoBudget.findById(budget);
+		this.budget = serviceBudget.findByNumber(budget.getNumber());
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
 		disableSeller = new Boolean(true);
@@ -1108,7 +1095,7 @@ public class FrmBudget {
 	@NotifyChange({ "listDesign" })
 	@Command
 	public void loadCabinDesign() {
-		listDesign = daoBasicdata.listByParent(cabinModel);
+		listDesign = serviceBasicData.listDesignByModel(cabinModel);
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 		 */
@@ -1120,19 +1107,19 @@ public class FrmBudget {
 	public void loadFans() {
 		String elevatorCapacitance = new String(budget.getBasicDataByElevatorCapacitance().getName());
 		if (elevatorCapacitance.indexOf("320 Kg - 4 Pers") != -1 || elevatorCapacitance.indexOf("450 Kg - 6 Pers") != -1 || elevatorCapacitance.indexOf("600 Kg - 8 Pers") != -1) {
-			listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
-			listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());
+			listFan = serviceBasicData.listFan1();
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
 		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
-			listFan = daoBasicdata.listByField("BUDGET", "FAN 1");
-			listFan.addAll(daoBasicdata.listByField("BUDGET", "FAN 2"));
+			listFan = serviceBasicData.listFan1();
+			listFan.addAll(serviceBasicData.listFan2());
 			/*
 			 * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
 			 * asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
 			 */
-			listRoofType = daoBasicdata.listByParent(daoBasicdata.findByName("BUDGET", "ELEVATOR CAPACITANCE", "450 Kg - 6 Pers"));
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(serviceBasicData.findByElevatorCapacitance("450 Kg - 6 Pers"));
 		} else {
-			listFan = daoBasicdata.listByField("BUDGET", "FAN 2");
-			listRoofType = daoBasicdata.listByParent(budget.getBasicDataByElevatorCapacitance());
+			listFan = serviceBasicData.listFan2();
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
 		}
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
@@ -1148,11 +1135,11 @@ public class FrmBudget {
 	public void loadBoothFloorDisplay() {
 		String controlType = budget.getBasicDataByControlType().getName();
 		if (controlType.indexOf("SISTEL") != -1) {
-			listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY SISTEL");
-			listFloorDisplay = daoBasicdata.listByField("BUDGET", "FLOOR DISPLAY SISTEL");
+			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
+			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
 		} else if (controlType.indexOf("CF CONTROL") != -1) {
-			listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY CF");
-			listFloorDisplay = daoBasicdata.listByField("BUDGET", "FLOOR DISPLAY CF");
+			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
+			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
 		} else {
 			listBoothDisplay = new ArrayList<BasicData>();
 			listFloorDisplay = new ArrayList<BasicData>();
@@ -1232,7 +1219,7 @@ public class FrmBudget {
 
 	@Command
 	public void searchBusinessPartner(@BindingParam("rif") String rif) {
-		businessPartner = daoBusinessPartner.findActiveByRif(rif);
+		businessPartner = serviceBusinessPartner.findActiveByRif(rif);
 		if (businessPartner == null) {
 			Executions.createComponents("system/socios/frmBusinessPartner.zul", null, null);
 		} else {
@@ -1248,7 +1235,7 @@ public class FrmBudget {
 	@GlobalCommand
 	public void selectedBusinessPartner(@BindingParam("BusinessPartner") BusinessPartner businessPartner) {
 		if (businessPartner != null) {
-			this.businessPartner = daoBusinessPartner.findById(businessPartner);
+			this.businessPartner = serviceBusinessPartner.findById(businessPartner.getIdBusinessPartner());
 			budget.setPartnerName(this.businessPartner.getName());
 			budget.setRifPartner(this.businessPartner.getRif());
 			budget.setRifType(this.businessPartner.getBasicData().getName().charAt(0));

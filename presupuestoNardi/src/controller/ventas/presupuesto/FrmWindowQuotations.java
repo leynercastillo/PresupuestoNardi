@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.database.Quotation;
+import model.service.ServiceQuotation;
+
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -18,13 +21,10 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Window;
 
-import dao.DaoQuotation;
-import database.Quotation;
-
 public class FrmWindowQuotations {
 
 	@WireVariable
-	private DaoQuotation daoQuotation;
+	private ServiceQuotation serviceQuotation;
 
 	@Wire("#windowQuotations")
 	private Window windowQuotations;
@@ -65,7 +65,7 @@ public class FrmWindowQuotations {
 
 	public String getTeam(Quotation quotation) {
 		/* sustituir por recargar toda la lista */
-		Quotation q = daoQuotation.findById(quotation);
+		Quotation q = serviceQuotation.findById(quotation.getIdQuotation());
 		return q.getElevatorQuantity() + " - " + q.getBasicDataByElevatorType().getName();
 	}
 

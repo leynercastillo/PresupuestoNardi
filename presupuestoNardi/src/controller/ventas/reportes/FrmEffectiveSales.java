@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.database.SecurityGroup;
+import model.database.SecurityUser;
+import model.service.ServiceSecurityGroup;
+import model.service.ServiceSecurityUser;
+
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -17,17 +22,12 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.ListModelList;
 
-import dao.DaoSecurityGroup;
-import dao.DaoSecurityUser;
-import database.SecurityGroup;
-import database.SecurityUser;
-
 public class FrmEffectiveSales {
 
 	@WireVariable
-	private DaoSecurityUser daoSecurityUser;
+	private ServiceSecurityUser serviceSecurityUser;
 	@WireVariable
-	private DaoSecurityGroup daoSecurityGroup;
+	private ServiceSecurityGroup serviceSecurityGroup;
 	private Date beginDate;
 	private Date endDate;
 	private ListModelList<SecurityUser> listUsers;
@@ -82,10 +82,10 @@ public class FrmEffectiveSales {
 	@Command
 	public void restartForm() {
 		listSelectedUsers = new HashSet<SecurityUser>();
-		SecurityGroup group = daoSecurityGroup.findByField("name", "SELLER");
+		SecurityGroup group = serviceSecurityGroup.findGroupSeller();
 		listUsers = new ListModelList<SecurityUser>();
 		listUsers.setMultiple(true);
-		listUsers.addAll(daoSecurityUser.listByGroup(group.getIdSecurityGroup()));
+		listUsers.addAll(serviceSecurityUser.listByGroup(group.getIdSecurityGroup()));
 	}
 
 	@Command

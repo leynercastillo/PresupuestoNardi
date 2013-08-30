@@ -3,10 +3,16 @@ package controller.inventario;
 import general.SimpleListModelCustom;
 import general.ValidateZK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import model.database.BasicData;
+import model.database.Item;
+import model.service.ServiceBasicData;
+import model.service.ServiceItem;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
@@ -25,18 +31,12 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.impl.InputElement;
 
-import dao.DaoBasicdata;
-import dao.DaoItem;
-import database.BasicData;
-import database.Item;
-
 public class FrmItemMaster {
 
 	@WireVariable
-	private DaoItem daoItem;
+	private ServiceItem serviceItem;
 	@WireVariable
-	private DaoBasicdata daoBasicdata;
-
+	private ServiceBasicData serviceBasicData;
 	private String minCombo;
 	private String seleccione;
 	private Boolean disableAll;
@@ -137,7 +137,6 @@ public class FrmItemMaster {
 		this.item = item;
 	}
 
-	/* si */
 	public Validator getNoEmpty() {
 		return new ValidateZK().getNoEmpty();
 	}
@@ -157,7 +156,7 @@ public class FrmItemMaster {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				String string = inputElement.getText();
 				String str = null;
-				Item auxItem = daoItem.findByCode(string);
+				Item auxItem = serviceItem.findByCode(string);
 				if (auxItem != null && !update)
 					str = auxItem.getCode();
 				if (string.isEmpty())
@@ -177,14 +176,14 @@ public class FrmItemMaster {
 	@Command
 	public void restartForm() {
 		item = new Item();
-		minCombo = new String("--");
-		seleccione = new String("--Seleccione--");
-		disableAll = new Boolean(false);
-		disableBeforeSearch = new Boolean(true);
-		update = new Boolean(false);
+		minCombo = "--";
+		seleccione = "--Seleccione--";
+		disableAll = false;
+		disableBeforeSearch = true;
+		update = false;
 		item.setStatus('A');
 		elevatorComponent = new BasicData();
-		listPriceType = daoBasicdata.listByField("ITEM", "PRICE TYPE");
+		listPriceType = serviceBasicData.listPriceType();
 		listItemCode = new ListModelList<Object>();
 		listItemName = new ListModelList<Object>();
 		listComponents = new ListModelList<Object>();
@@ -194,21 +193,18 @@ public class FrmItemMaster {
 	@Command
 	public void searchItemByField(@BindingParam("field") String field) {
 		if (field.compareTo("code") == 0) {
-			listItemCode = new SimpleListModelCustom<Object>(daoItem.listStringByFields(field));
-			return;
+			listItemCode = new SimpleListModelCustom<Object>(serviceItem.listCodes());
 		} else if (field.compareTo("name") == 0) {
-			listItemName = new SimpleListModelCustom<Object>(daoItem.listStringByFields(field));
-			return;
+			listItemName = new SimpleListModelCustom<Object>(serviceItem.listNames());
 		} else if (field.compareTo("componentName") == 0) {
-			listComponents = new SimpleListModelCustom<Object>(daoBasicdata.listStringByFields("BUDGET"));
-			return;
+			listComponents = new SimpleListModelCustom<Object>(serviceBasicData.listNamesByBudgetComponent());
 		}
 	}
 
 	@NotifyChange("elevatorComponent")
 	@Command
 	public void loadItemByField(@BindingParam("input") InputElement input) {
-		List<BasicData> list = daoBasicdata.listByString("name", input.getText());
+		List<BasicData> list = serviceBasicData.listNames(input.getText());
 		int listSize = list.size();
 		if (listSize == 1) {
 			elevatorComponent = new BasicData();
@@ -224,13 +220,17 @@ public class FrmItemMaster {
 	@NotifyChange({ "item", "disableAll", "update", "listItem" })
 	@Command
 	public void loadItem(@BindingParam("field") String field, @BindingParam("val") String value) {
-		List<Item> listItemAux = daoItem.listByString(field, value);
+		List<Item> listItemAux = new ArrayList<Item>();
+		if (field.compareTo("code") == 0)
+			listItemAux = serviceItem.listByCodes(value);
+		else if (field.compareTo("name") == 0)
+			listItemAux = serviceItem.listByName(value);
 		int listSize = listItemAux.size();
 		if (listSize == 1) {
 			item = new Item();
 			item = listItemAux.get(0);
-			disableAll = new Boolean(false);
-			update = new Boolean(true);
+			disableAll = false;
+			update = true;
 			return;
 		} else if (listSize == 0) {
 			Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
@@ -244,13 +244,8 @@ public class FrmItemMaster {
 	@NotifyChange("*")
 	@Command
 	public void save() {
-		if (!update) {
-			if (!daoItem.save(item)) {
-				Clients.showNotification("Fallo guardado articulo", "error", null, "middle_center", 2000);
-				return;
-			}
-		} else if (!daoItem.update(item)) {
-			Clients.showNotification("Fallo actualizacion articulo", "error", null, "middle_center", 2000);
+		if (!serviceItem.save(item)) {
+			Clients.showNotification("Fallo guardado articulo", "error", null, "middle_center", 2000);
 			return;
 		}
 		Clients.showNotification("Articulo guardado correctamente", "info", null, "middle_center", 2000);
@@ -261,16 +256,16 @@ public class FrmItemMaster {
 	@Command
 	public void search() {
 		restartForm();
-		disableAll = new Boolean(true);
-		disableBeforeSearch = new Boolean(false);
+		disableAll = true;
+		disableBeforeSearch = false;
 	}
 
 	@NotifyChange({ "item", "disableAll", "update" })
 	@GlobalCommand
 	public void selectedItem(@BindingParam("item") Item selectedItem) {
-		item = daoItem.findById(selectedItem);
-		disableAll = new Boolean(false);
-		update = new Boolean(true);
+		item = serviceItem.findById(selectedItem.getIdItem());
+		disableAll = false;
+		update = true;
 	}
 
 	@NotifyChange({ "elevatorComponent" })
@@ -292,7 +287,6 @@ public class FrmItemMaster {
 	}
 
 	@Command
-	@NotifyChange({ "item", "disableDelItem" })
 	public void deleteItem() {
 		for (Iterator<BasicData> iterator = item.getBasicDatas().iterator(); iterator.hasNext();) {
 			BasicData componentAux = iterator.next();

@@ -9,6 +9,15 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+	<!-- Load beans in the classpath package -->
+	<context:component-scan base-package="model.dao">
+	</context:component-scan>
+	<context:component-scan base-package="model.service">
+	</context:component-scan>
+
+	<context:component-scan base-package="springBean">
+	</context:component-scan>
+
 	<bean id="userDetailsService" class="controller.seguridad.generic.UserDetailsServiceImpl">
 	</bean>
 
@@ -48,13 +57,6 @@
 			</props>
 		</property>
 	</bean>
-
-	<!-- Load beans in the classpath package -->
-	<context:component-scan base-package="dao">
-	</context:component-scan>
-
-	<context:component-scan base-package="springBean">
-	</context:component-scan>
 
 	<context:annotation-config />
 

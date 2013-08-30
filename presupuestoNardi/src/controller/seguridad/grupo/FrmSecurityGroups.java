@@ -5,14 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import model.dao.DaoSecurityRole;
+import model.database.SecurityGroup;
+import model.database.SecurityRole;
+
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
-import dao.DaoSecurityRole;
-import database.SecurityGroup;
-import database.SecurityRole;
 
 public class FrmSecurityGroups {
 

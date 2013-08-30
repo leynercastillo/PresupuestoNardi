@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.database.BasicData;
+import model.database.Budget;
+import model.database.Quotation;
+import model.service.ServiceBasicData;
+import model.service.ServiceBudget;
+import model.service.ServiceQuotation;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -47,21 +53,14 @@ import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
 
-import dao.DaoBasicdata;
-import dao.DaoBudget;
-import dao.DaoQuotation;
-import database.BasicData;
-import database.Budget;
-import database.Quotation;
-
 public class FrmQuotation {
 
 	@WireVariable
-	private DaoBasicdata daoBasicdata;
+	private ServiceBasicData serviceBasicData;
 	@WireVariable
-	private DaoQuotation daoQuotation;
+	private ServiceQuotation serviceQuotation;
 	@WireVariable
-	private DaoBudget daoBudget;
+	private ServiceBudget serviceBudget;
 	@WireVariable
 	private Emails emails;
 
@@ -442,7 +441,7 @@ public class FrmQuotation {
 						datebox.setDisabled(false);
 						throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
 					}
-					List<Quotation> list = daoQuotation.listByInt("budgetNumber", quotation.getBudgetNumber());
+					List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
 					for (Quotation q : list) {
 						if (q.getStatus() == 'A') {
 							quotation.setStatus('E');
@@ -509,24 +508,24 @@ public class FrmQuotation {
 		listConstruction = new ListModelList<Object>();
 		listSeller = new ListModelList<Object>();
 		listDesign = new ArrayList<BasicData>();
-		listRifType = daoBasicdata.listByField("BUSINESS PARTNER", "RIF TYPE");
-		listRoofType = daoBasicdata.listByField("", "");
-		listElevatorCapa = daoBasicdata.listByField("BUDGET", "ELEVATOR CAPACITANCE");
-		listSpeed = daoBasicdata.listByField("BUDGET", "SPEED");
-		listManeuverType = daoBasicdata.listByField("BUDGET", "MANEUVER TYPE");
-		listHallButton = daoBasicdata.listByField("BUDGET", "HALL BUTTON");
-		listMachineType = daoBasicdata.listByField("BUDGET", "MACHINE TYPE");
-		listElectricityType = daoBasicdata.listByField("BUDGET", "ELECTRICITY TYPE");
-		listCabinModel = daoBasicdata.listByField("BUDGET", "CABIN MODEL");
-		listRailing = daoBasicdata.listByField("BUDGET", "RAILING");
-		listFloorType = daoBasicdata.listByField("BUDGET", "FLOOR TYPE");
-		listDoorType = daoBasicdata.listByField("BUDGET", "DOOR TYPE");
-		listFreeAdmission = daoBasicdata.listByField("BUDGET", "FREE ADMISSION");
-		listHeight = daoBasicdata.listByField("BUDGET", "HEIGHT");
-		listDoorframeHammered = daoBasicdata.listByField("BUDGET", "DOOR FRAME HAMMERED");
-		listElevatorType = daoBasicdata.listByField("BUDGET", "ELEVATOR TYPE");
-		listHallButtonType = daoBasicdata.listByField("BUDGET", "HALL BUTTON TYPE");
-		listControlType = daoBasicdata.listByField("BUDGET", "CONTROL TYPE");
+		listRifType = serviceBasicData.listRifType();
+		listRoofType = serviceBasicData.listRoofType();
+		listElevatorCapa = serviceBasicData.listElevatorCapacitance();
+		listSpeed = serviceBasicData.listSpeed();
+		listManeuverType = serviceBasicData.listManeuverType();
+		listHallButton = serviceBasicData.listHallButton();
+		listMachineType = serviceBasicData.listMachineType();
+		listElectricityType = serviceBasicData.listElectricityType();
+		listCabinModel = serviceBasicData.listCabinModel();
+		listRailing = serviceBasicData.listRailing();
+		listFloorType = serviceBasicData.listFloorType();
+		listDoorType = serviceBasicData.listDoorType();
+		listFreeAdmission = serviceBasicData.listFreeAdmission();
+		listHeight = serviceBasicData.listHeight();
+		listDoorframeHammered = serviceBasicData.listDoorframeHammered();
+		listElevatorType = serviceBasicData.listElevatorType();
+		listHallButtonType = serviceBasicData.listHallButtonType();
+		listControlType = serviceBasicData.listControlType();
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		modalMessage = null;
@@ -598,13 +597,13 @@ public class FrmQuotation {
 
 	@Command
 	public void updateQuotationNumber(Integer num) {
-		List<Quotation> lisQuotations = daoQuotation.listByInt("budgetNumber", num);
+		List<Quotation> lisQuotations = serviceQuotation.listByBudget(num);
 		if (lisQuotations.size() == 0)
 			if (quotation.isType()) {
-				Integer number = daoQuotation.getMaxNumber("newNumber");
+				Integer number = serviceQuotation.findMaxNewNumber();
 				quotation.setNewNumber(number + 1);
 			} else {
-				Integer number = daoQuotation.getMaxNumber("modernizationNumber");
+				Integer number = serviceQuotation.findMaxModernizationNumber();
 				quotation.setModernizationNumber(number + 1);
 				BindUtils.postNotifyChange(null, null, quotation, "modernizationNumber");
 			}
@@ -624,7 +623,7 @@ public class FrmQuotation {
 			}
 		}
 		Integer budgetNumber = Integer.parseInt(value);
-		budget = daoBudget.findByInteger("number", budgetNumber);
+		budget = serviceBudget.findByNumber(budgetNumber);
 		if (budget != null) {
 			disableBeforeSearch = new Boolean(true);
 			disabledBudgetNumber = new Boolean(true);
@@ -632,7 +631,7 @@ public class FrmQuotation {
 			budgetToQuotation(budget);
 			if (quotation.getBasicDataByCabinDesign() != null) {
 				cabinModel = quotation.getBasicDataByCabinDesign().getBasicData();
-				listDesign = daoBasicdata.listByParent(cabinModel);
+				listDesign = serviceBasicData.listDesignByModel(cabinModel);
 			}
 			updateQuotationNumber(budgetNumber);
 			loadPayment();
@@ -653,28 +652,23 @@ public class FrmQuotation {
 	@Command
 	public void searchQuotationByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
-			return;
+			listRifPartner = new SimpleListModelCustom<Object>(serviceQuotation.listRifPartner());
 		} else if (field.compareTo("number") == 0) {
 			/*
 			 * Se cambia el nombre del field, ya que en el zul, se debe enviar una variable obligatoriamente
 			 * y se utilizan dos metodos.
 			 */
-			listBudgetNumber = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields("budgetNumber"));
-			return;
+			listBudgetNumber = new SimpleListModelCustom<Object>(serviceQuotation.listBudgetNumber());
 		} else if (field.compareTo("partnerName") == 0) {
-			listPartnerName = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
-			return;
+			listPartnerName = new SimpleListModelCustom<Object>(serviceQuotation.listPartnerName());
 		} else if (field.compareTo("quotationNumber") == 0) {
-			List<String> list = daoQuotation.listStringByFields("newNumber");
-			list.addAll(daoQuotation.listStringByFields("modernizationNumber"));
+			List<String> list = serviceQuotation.listNewNumber();
+			list.addAll(serviceQuotation.listModernizationNumber());
 			listQuotationNumber = new SimpleListModelCustom<Object>(list);
 		} else if (field.compareTo("construction") == 0) {
-			listConstruction = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
-			return;
+			listConstruction = new SimpleListModelCustom<Object>(serviceQuotation.listConstruction());
 		} else if (field.compareTo("seller") == 0) {
-			listSeller = new SimpleListModelCustom<Object>(daoQuotation.listStringByFields(field));
-			return;
+			listSeller = new SimpleListModelCustom<Object>(serviceQuotation.listSeller());
 		}
 	}
 
@@ -689,7 +683,7 @@ public class FrmQuotation {
 					break;
 				}
 			}
-			list = daoQuotation.listByInt(field, Integer.parseInt(value));
+			list = serviceQuotation.listByBudget(Integer.parseInt(value));
 		} else if (field.compareTo("quotationNumber") == 0) {
 			if (value.isEmpty())
 				value = "0";
@@ -699,10 +693,16 @@ public class FrmQuotation {
 					break;
 				}
 			}
-			list = daoQuotation.listByInt("newNumber", Integer.parseInt(value));
-			list.addAll(daoQuotation.listByInt("modernizationNumber", Integer.parseInt(value)));
-		} else {
-			list = daoQuotation.listByString(field, value);
+			list = serviceQuotation.listByNewNumber(Integer.parseInt(value));
+			list.addAll(serviceQuotation.listByModernizationNumber(Integer.parseInt(value)));
+		} else if (field.compareTo("rifPartner") == 0) {
+			list = serviceQuotation.listByRifPartner(value);
+		} else if (field.compareTo("partnerName") == 0) {
+			list = serviceQuotation.listByPartnerName(value);
+		} else if (field.compareTo("construction") == 0) {
+			list = serviceQuotation.listByConstruction(value);
+		} else if (field.compareTo("seller") == 0) {
+			list = serviceQuotation.listBySeller(value);
 		}
 		int listSize = list.size();
 		if (listSize == 1) {
@@ -725,12 +725,7 @@ public class FrmQuotation {
 	@NotifyChange({ "listBudgetNumber" })
 	@Command
 	public void searchBudgetByField(@BindingParam("field") String field) {
-		List<Integer> list = daoBudget.listByIntFields(field);
-		List<String> list2 = new ArrayList<String>();
-		for (Integer number : list) {
-			list2.add(number.toString());
-		}
-		listBudgetNumber = new SimpleListModelCustom<Object>(list2);
+		listBudgetNumber = new SimpleListModelCustom<Object>(serviceBudget.listNumber());
 	}
 
 	@Command
@@ -750,7 +745,7 @@ public class FrmQuotation {
 	@NotifyChange({ "listDesign" })
 	@Command
 	public void loadCabinDesign() {
-		listDesign = daoBasicdata.listByParent(cabinModel);
+		listDesign = serviceBasicData.listDesignByModel(cabinModel);
 		/*
 		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 		 */
@@ -784,11 +779,11 @@ public class FrmQuotation {
 		if (quotation.getBasicDataByControlType() != null) {
 			String controlType = quotation.getBasicDataByControlType().getName();
 			if (controlType.indexOf("SISTEL") != -1) {
-				listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY SISTEL");
-				listFloorDisplay = daoBasicdata.listByField("BUDGET", "FLOOR DISPLAY SISTEL");
+				listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
+				listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
 			} else if (controlType.indexOf("CF CONTROL") != -1) {
-				listBoothDisplay = daoBasicdata.listByField("BUDGET", "BOOTH DISPLAY CF");
-				listFloorDisplay = daoBasicdata.listByField("BUDGET", "FLOOR DISPLAY CF");
+				listBoothDisplay = serviceBasicData.listBoothDisplayCF();
+				listFloorDisplay = serviceBasicData.listFloorDisplayCF();
 			} else {
 				listBoothDisplay = new ArrayList<BasicData>();
 				listFloorDisplay = new ArrayList<BasicData>();
@@ -811,7 +806,7 @@ public class FrmQuotation {
 	@NotifyChange({ "quotation", "disabledPrint", "disableBeforeSearch", "disabledBudgetNumber" })
 	@GlobalCommand
 	public void selectedQuotation(@BindingParam("quotation") Quotation quotation) {
-		this.quotation = daoQuotation.findById(quotation);
+		this.quotation = serviceQuotation.findById(quotation.getIdQuotation());
 		disableBeforeSearch = new Boolean(true);
 		disabledBudgetNumber = new Boolean(true);
 		disabledPrint = new Boolean(false);
@@ -965,18 +960,10 @@ public class FrmQuotation {
 
 	@NotifyChange("*")
 	@Command
-	public void save() throws SQLException {
-		Quotation auxQuotation = daoQuotation.findById(quotation);
-		if (quotation.getIdQuotation() == 0 || quotation.getTotalPrice() != auxQuotation.getTotalPrice() || quotation.getPayment() != auxQuotation.getPayment() || quotation.getWarranty() != auxQuotation.getWarranty() || quotation.getExtendedWarranty() != auxQuotation.getExtendedWarranty() || quotation.getDeliveryEstimate() != auxQuotation.getDeliveryEstimate() || quotation.getNotes() != auxQuotation.getNotes()) {
-			if (!daoQuotation.save(quotation)) {
-				Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
-				return;
-			}
-		} else if (quotation.getStatus() != auxQuotation.getStatus()) {
-			if (!daoQuotation.update(quotation)) {
-				Clients.showNotification("No se pudo actualizar.", "error", null, "bottom_center", 2000);
-				return;
-			}
+	public void save() {
+		if (!serviceQuotation.save(quotation)) {
+			Clients.showNotification("No se pudo guardar el presupuest.", "error", null, "bottom_center", 2000);
+			return;
 		}
 		if (quotation.getStatus() == 'A')
 			sendMail();

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.database.Contact;
+import model.database.SecurityGroup;
+import model.database.SecurityUser;
+import model.service.ServiceContact;
+import model.service.ServiceSecurityGroup;
+
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -17,21 +23,12 @@ import org.zkoss.zk.ui.util.Clients;
 
 import springBean.Emails;
 
-import dao.DaoContact;
-import dao.DaoSecurityGroup;
-import dao.DaoSecurityUser;
-import database.Contact;
-import database.SecurityGroup;
-import database.SecurityUser;
-
 public class FrmContact {
 
 	@WireVariable
-	private DaoSecurityUser daoSecurityUser;
+	private ServiceSecurityGroup serviceSecurityGroup;
 	@WireVariable
-	private DaoSecurityGroup daoSecurityGroup;
-	@WireVariable
-	private DaoContact daoContact;
+	private ServiceContact serviceContact;
 	@WireVariable
 	private Emails emails;
 
@@ -77,9 +74,9 @@ public class FrmContact {
 		contact = new Contact();
 		contact.setStatus('A');
 		contact.setDate(new Date());
-		SecurityGroup group = daoSecurityGroup.findByField("name", "SELLER");
+		SecurityGroup group = serviceSecurityGroup.findGroupSeller();
 		listSecurityUsers = new ArrayList<SecurityUser>(group.getSecurityUsers());
-		group = daoSecurityGroup.findByField("name", "SALES COORDINATOR");
+		group = serviceSecurityGroup.findGroupSalesCoordinator();
 		listSecurityUsers.addAll(group.getSecurityUsers());
 	}
 
@@ -95,7 +92,7 @@ public class FrmContact {
 		List<String> list = new ArrayList<String>();
 		list.add(contact.getSecurityUser().getEmail());
 		list.add("sistemas@ascensoresnardi.com");
-		if (!daoContact.save(contact)) {
+		if (!serviceContact.save(contact)) {
 			Clients.showNotification("No se pudo enviar.", "error", component, "bottom_center", 2000);
 			return;
 		}

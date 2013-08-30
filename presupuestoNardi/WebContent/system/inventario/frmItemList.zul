@@ -3,7 +3,7 @@
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
 		closable="true" height="50%" id="window" mode="modal"
 		onClose="@command('close')"
-		viewModel="@id('vm') @init('controllers.articulos.FrmItemList')"
+		viewModel="@id('vm') @init('controller.inventario.FrmItemList')"
 		width="60%">
 		<style src="resource/style/styleZK.css"></style>
 		<caption label="Productos" zclass="formTitle"></caption>
