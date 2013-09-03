@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="7b83280b-79c7-4923-8689-e63e27bc65d3">
 	<property name="ireport.zoom" value="0.9090909090909102"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="181"/>
 	<parameter name="TYPE" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -60,125 +60,128 @@ WHERE
 	<field name="nuevo" class="java.lang.Integer"/>
 	<field name="modernizacion" class="java.lang.Integer"/>
 	<field name="version" class="java.lang.Short"/>
-	<detail>
-		<band height="751" splitType="Stretch">
+	<pageHeader>
+		<band height="85">
 			<image>
 				<reportElement uuid="07e748a9-5f7b-40b7-96a0-7948487a2bd5" x="0" y="0" width="190" height="64"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
 			</image>
-			<image>
-				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="24" width="154" height="40"/>
-				<imageExpression><![CDATA[$P{IMAGES_DIR}+"liftTechnology.jpg"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement uuid="d1b9cf89-149d-4600-8117-3797ba88d7e5" x="340" y="100" width="174" height="15"/>
+				<reportElement uuid="d1b9cf89-149d-4600-8117-3797ba88d7e5" x="340" y="70" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRESUPUESTO NRO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="449" y="100" width="127" height="15"/>
+				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="449" y="70" width="127" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Numero}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="24" width="154" height="40"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"liftTechnology.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="624" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3b8a5bf4-6626-4b28-996b-899020bf080d" x="340" y="115" width="174" height="15"/>
+				<reportElement uuid="3b8a5bf4-6626-4b28-996b-899020bf080d" x="340" y="0" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="32c9bf4d-f64c-4963-ac23-b34e3c998c44" x="449" y="115" width="127" height="15"/>
+				<reportElement uuid="32c9bf4d-f64c-4963-ac23-b34e3c998c44" x="449" y="0" width="127" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1b8e4098-de64-4e00-ba82-91034195ac61" x="60" y="334" width="179" height="20"/>
+				<reportElement uuid="1b8e4098-de64-4e00-ba82-91034195ac61" x="45" y="184" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLIENTE:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="d4765a2c-9d00-4788-bfb7-73846550bc88" x="160" y="334" width="416" height="20"/>
+				<reportElement uuid="d4765a2c-9d00-4788-bfb7-73846550bc88" x="145" y="184" width="416" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="93b654f1-27be-4d12-82de-6b9097243da6" x="60" y="354" width="179" height="20"/>
+				<reportElement uuid="93b654f1-27be-4d12-82de-6b9097243da6" x="45" y="204" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBRA:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="8b34cdcf-cfe5-4de9-a45b-29cb40baa81f" x="160" y="354" width="416" height="20"/>
+				<reportElement uuid="8b34cdcf-cfe5-4de9-a45b-29cb40baa81f" x="145" y="204" width="416" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Obra}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="beee4dfb-452b-4893-bb02-84b094aad4a9" x="60" y="374" width="179" height="20"/>
+				<reportElement uuid="beee4dfb-452b-4893-bb02-84b094aad4a9" x="45" y="224" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ATENCION:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="1fbf6522-16f6-4b9f-acb9-2c88d8c483eb" x="160" y="374" width="416" height="20"/>
+				<reportElement uuid="1fbf6522-16f6-4b9f-acb9-2c88d8c483eb" x="145" y="224" width="416" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Atencion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4068636d-d67d-46a4-aeec-8565a295b86a" x="60" y="394" width="179" height="20"/>
+				<reportElement uuid="4068636d-d67d-46a4-aeec-8565a295b86a" x="45" y="244" width="179" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EQUIPOS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="bf8f9319-4e06-4a95-b118-2067d2dbfb63" x="160" y="394" width="416" height="20"/>
+				<reportElement uuid="bf8f9319-4e06-4a95-b118-2067d2dbfb63" x="145" y="244" width="416" height="20"/>
 				<textElement>
 					<font fontName="Serif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1475ff05-cedc-4bba-b6d0-3505802c5126" x="125" y="661" width="324" height="15"/>
+				<reportElement uuid="1475ff05-cedc-4bba-b6d0-3505802c5126" x="125" y="541" width="324" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BARQUISIMETO - EDO. LARA]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="fdb18384-4782-49e4-9c17-45e7275f5764" x="0" y="676" width="576" height="15"/>
+				<reportElement uuid="fdb18384-4782-49e4-9c17-45e7275f5764" x="0" y="556" width="576" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Telefono}]]></textFieldExpression>
 			</textField>
 			<break>
-				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="739" width="576" height="1"/>
+				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="611" width="576" height="1"/>
 			</break>
-			<image>
-				<reportElement uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9" x="10" y="693" width="566" height="46"/>
-				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
-			</image>
 			<subreport>
-				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="740" width="576" height="6"/>
+				<reportElement uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5" stretchType="RelativeToTallestObject" x="0" y="612" width="576" height="6"/>
 				<subreportParameter name="NEW">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="IMAGES_DIR">
+					<subreportParameterExpression><![CDATA[$P{IMAGES_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="VERSION">
 					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
@@ -193,18 +196,21 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_detail.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="745" width="576" height="1"/>
+				<reportElement uuid="18e41af0-c9a7-47fb-9251-176d51bbae54" x="0" y="618" width="576" height="1"/>
 			</break>
 			<subreport>
-				<reportElement uuid="b636592c-0daf-4a80-860d-edc647b67c74" stretchType="RelativeToTallestObject" x="0" y="746" width="576" height="5"/>
+				<reportElement uuid="b636592c-0daf-4a80-860d-edc647b67c74" stretchType="RelativeToTallestObject" x="0" y="619" width="576" height="5"/>
 				<subreportParameter name="NEW">
 					<subreportParameterExpression><![CDATA[$F{nuevo}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="VERSION">
-					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
+				<subreportParameter name="IMAGES_DIR">
+					<subreportParameterExpression><![CDATA[$P{IMAGES_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="MODERNIZATION">
 					<subreportParameterExpression><![CDATA[$F{modernizacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VERSION">
+					<subreportParameterExpression><![CDATA[$F{version}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="TYPE">
 					<subreportParameterExpression><![CDATA[$F{tipo}]]></subreportParameterExpression>
@@ -212,6 +218,10 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_payment.jasper"]]></subreportExpression>
 			</subreport>
+			<image hAlign="Center">
+				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="21" y="572" width="540" height="40"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>

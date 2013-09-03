@@ -51,11 +51,11 @@
 				<row>
 					<space></space>
 					<div>
-						<button label="Generar"
-							onClick="@command('generateReport')">
+						<button image="resource/images/icons/save.png"
+							label="Generar" onClick="@command('generateReport')">
 						</button>
-						<button label="Cancelar"
-							onClick="@command('restartForm')">
+						<button image="resource/images/icons/cancel.png"
+							label="Cancelar" onClick="@command('restartForm')">
 						</button>
 					</div>
 				</row>

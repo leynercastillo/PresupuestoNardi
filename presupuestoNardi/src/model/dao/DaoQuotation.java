@@ -82,6 +82,7 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.add(Restrictions.eq(field, value));
+		criteria.addOrder(Order.desc("date"));
 		List<Quotation> list = criteria.list();
 		return list;
 	}
