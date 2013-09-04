@@ -80,38 +80,38 @@ public class DaoBudget {
 		return obj == null ? null : (Budget) obj;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Budget> listByField(String field, String value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Budget.class);
 		criteria.add(Restrictions.eq(field, value).ignoreCase());
 		criteria.addOrder(Order.desc("idBudget"));
-		List<Budget> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Budget> listAll() {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Budget.class);
 		criteria.addOrder(Order.asc("number"));
-		List<Budget> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Integer> listIntegerByFields(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Budget.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
-		List<Integer> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> listStringByFields(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Budget.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
-		List<String> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 }

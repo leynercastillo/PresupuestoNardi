@@ -843,7 +843,7 @@ public class FrmQuotation {
 			if (template == null || template.compareTo("SI") == 0)
 				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
 			else
-				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotationTemp.jasper");
+				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation_without.jasper");
 		} catch (JRException e) {
 			jasperReport = null;
 			e.printStackTrace();
@@ -870,8 +870,8 @@ public class FrmQuotation {
 		}
 		JRExporter jrExporter = new JRPdfExporter();
 		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppt_" + quotationNumber + ".pdf");
-		File file = new File(string + "/Ppt_" + quotationNumber + ".pdf");
+		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppto_" + quotationNumber + ".pdf");
+		File file = new File(string + "/Ppto_" + quotationNumber + ".pdf");
 		/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
 		if (file.isFile())
 			file.delete();
@@ -1009,7 +1009,7 @@ public class FrmQuotation {
 		else
 			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
 		createQuotationPdf(quotationNumber, quotation, template);
-		String report = new String("/resource/reports/ventas/presupuesto/Ppt_" + quotationNumber + ".pdf");
+		String report = new String("/resource/reports/ventas/presupuesto/Ppto_" + quotationNumber + ".pdf");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reportPath", report);
 		map.put("reportTitle", "Presupuesto");

@@ -16,6 +16,11 @@ public class ServiceBasicData {
 	private DaoBasicdata daoBasicdata;
 
 	@Transactional(readOnly = true)
+	public BasicData findByDoorSystem(String doorSystem) {
+		return daoBasicdata.findByName("BUDGET", "DOOR SYSTEM", doorSystem);
+	}
+
+	@Transactional(readOnly = true)
 	public BasicData findByElevatorCapacitance(String capacitance) {
 		return daoBasicdata.findByName("BUDGET", "ELEVATOR CAPACITANCE", capacitance);
 	}

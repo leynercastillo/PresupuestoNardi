@@ -80,14 +80,15 @@ public class DaoSecurityUser {
 		return su != null ? (SecurityUser) su : null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<SecurityUser> listAll() {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(SecurityUser.class);
 		criteria.addOrder(Order.asc("name"));
-		List<SecurityUser> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<SecurityUser> listByGroup(int idGroup) {
 		/*
 		 * Aca se hace uso de HQL para poder hacer unos de los inner join, que ahorran mucha memoria al momento

@@ -78,40 +78,40 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 		return obj == null ? null : (Quotation) obj;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Quotation> listByField(String field, Object value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.add(Restrictions.eq(field, value));
 		criteria.addOrder(Order.desc("date"));
-		List<Quotation> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Quotation> listByInt(String field, int value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.add(Restrictions.eq(field, value));
 		criteria.addOrder(Order.desc("date"));
-		List<Quotation> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Quotation> listQuotationOrderByField(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.addOrder(Order.asc(field).ignoreCase());
 		criteria.addOrder(Order.desc("date"));
-		List<Quotation> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> listStringByFields(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
-		List<String> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
 	/**
@@ -183,13 +183,13 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 	 *                field for which it ordered the list.
 	 * @return list of Quotation approved ordered by field.
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Quotation> listActiveOrderAscByField(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.addOrder(Order.asc(field));
-		List<Quotation> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
 	/**
@@ -197,12 +197,12 @@ public class DaoQuotation /* extends GenericDao<Quotation> */{
 	 *                field for which it ordered the list.
 	 * @return list of Quotation approved ordered by field.
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Quotation> listActiveOrderDescByField(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Quotation.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.addOrder(Order.desc(field));
-		List<Quotation> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 }

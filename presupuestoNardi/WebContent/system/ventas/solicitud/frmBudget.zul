@@ -554,6 +554,7 @@
 							value="Recorrido(m):">
 						</label>
 						<doublebox disabled="@load(vm.disabledAll)"
+							onChange="@command('changeTour', tour = self.value)"
 							value="@save(vm.budget.tour, before = 'confirmSave') @load(vm.budget.tour) @validator(vm.noZeroDouble, component = self)"
 							width="97%">
 						</doublebox>
@@ -771,12 +772,13 @@
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByDoorType eq null ? vm.seleccione : vm.budget.basicDataByDoorType.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listDoorType)"
-							selectedItem="@bind(vm.budget.basicDataByDoorType)"
+							onChange="@command('selectDoorType', doorType = self.value)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByDoorType)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByDoorType eq null ? vm.seleccione : vm.budget.basicDataByDoorType.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="DoorType">
 								<comboitem
 									label="@load(DoorType.name)">

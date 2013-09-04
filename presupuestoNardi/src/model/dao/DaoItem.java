@@ -80,6 +80,7 @@ public class DaoItem {
 		return bp != null ? (Item) bp : null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Item> listByString(String field, String value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Item.class);
@@ -87,12 +88,12 @@ public class DaoItem {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> listStringByFields(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(Item.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
-		List<String> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 }

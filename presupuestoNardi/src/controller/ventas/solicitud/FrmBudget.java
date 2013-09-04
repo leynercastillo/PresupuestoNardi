@@ -1102,6 +1102,24 @@ public class FrmBudget {
 		budget.setBasicDataByCabinDesign(null);
 	}
 
+	@Command
+	public void selectDoorType(@BindingParam("doorType") String doorType) {
+		if (doorType.compareTo("BATIENTE IZQUIERDA") == 0 || doorType.compareTo("BATIENTE DERECHA") == 0 || doorType.compareTo("GUILLOTINA") == 0 || doorType.compareTo("SANTA MARIA") == 0)
+			budget.setBasicDataByDoorSystem(serviceBasicData.findByDoorSystem("NO APLICA"));
+		else
+			budget.setBasicDataByDoorSystem(null);
+		BindUtils.postNotifyChange(null, null, budget, "basicDataByDoorSystem");
+	}
+
+	@Command
+	public void changeTour(@BindingParam("tour") Double tour) {
+		if (tour >= 24)
+			budget.setFirefighterKeychain(true);
+		else
+			budget.setFirefighterKeychain(false);
+		BindUtils.postNotifyChange(null, null, budget, "firefighterKeychain");
+	}
+
 	@NotifyChange({ "listFan", "listRoofType" })
 	@Command
 	public void loadFans() {

@@ -70,11 +70,11 @@ public class DaoSecurityRole {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<SecurityRole> listRoles() {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(SecurityRole.class);
-		List<SecurityRole> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
 	public SecurityRole findRoleById(Integer id) {

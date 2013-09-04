@@ -72,6 +72,7 @@ public class DaoBasicdata {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BasicData> listByFieldTable(String table, String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BasicData.class);
@@ -79,8 +80,7 @@ public class DaoBasicdata {
 		criteria.add(Restrictions.eq("field", field).ignoreCase());
 		criteria.add(Restrictions.eq("dataBaseName", table));
 		criteria.addOrder(Order.asc("priority"));
-		List<BasicData> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
 	public BasicData findByName(String table, String field, String name) {
@@ -96,30 +96,30 @@ public class DaoBasicdata {
 		return obj == null ? null : (BasicData) obj;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BasicData> listByParent(BasicData parent) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq("basicData", parent));
 		criteria.addOrder(Order.asc("priority"));
-		List<BasicData> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> listFieldByDataBase(String field, String database) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BasicData.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.add(Restrictions.eq(database, field));
 		criteria.addOrder(Order.asc(field));
-		List<String> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BasicData> listByFieldValue(String field, Object value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BasicData.class);
 		criteria.add(Restrictions.eq(field, value));
-		List<BasicData> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 }

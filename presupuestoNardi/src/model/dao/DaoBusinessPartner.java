@@ -72,13 +72,13 @@ public class DaoBusinessPartner {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BusinessPartner> listActiveOrderByField(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BusinessPartner.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.addOrder(Order.asc(field));
-		List<BusinessPartner> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 
 	public BusinessPartner findByField(String field, Object value) {
@@ -98,12 +98,12 @@ public class DaoBusinessPartner {
 		return object != null ? (BusinessPartner) object : null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> listStringByFields(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BusinessPartner.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
-		List<String> list = criteria.list();
-		return list;
+		return criteria.list();
 	}
 }
