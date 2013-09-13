@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 16-jul-2013 16:07:17 by Hibernate Tools 3.4.0.CR1
+// Generated 09-sep-2013 15:28:18 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,162 +25,162 @@ import javax.persistence.Table;
 @Table(name = "item", schema = "public")
 public class Item implements java.io.Serializable {
 
-    private static final long serialVersionUID = 794900053845942242L;
-    private int idItem;
-    private Item item;
-    private BasicData basicData;
-    private String code;
-    private String name;
-    private float cost;
-    private float price;
-    private float percentPrice;
-    private char status;
-    private Set<Quotation> quotations = new HashSet<Quotation>(0);
-    private Set<BasicData> basicDatas = new HashSet<BasicData>(0);
-    private Set<Item> items = new HashSet<Item>(0);
+	private static final long serialVersionUID = 794900053845942242L;
+	private int idItem;
+	private Item item;
+	private BasicData basicData;
+	private String code;
+	private String name;
+	private float cost;
+	private float price;
+	private float percentPrice;
+	private char status;
+	private Set<Quotation> quotations = new HashSet<Quotation>(0);
+	private Set<BasicData> basicDatas = new HashSet<BasicData>(0);
+	private Set<Item> items = new HashSet<Item>(0);
 
-    public Item() {
-    }
+	public Item() {
+	}
 
-    public Item(int idItem, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status) {
-	this.idItem = idItem;
-	this.basicData = basicData;
-	this.code = code;
-	this.name = name;
-	this.cost = cost;
-	this.price = price;
-	this.percentPrice = percentPrice;
-	this.status = status;
-    }
+	public Item(int idItem, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status) {
+		this.idItem = idItem;
+		this.basicData = basicData;
+		this.code = code;
+		this.name = name;
+		this.cost = cost;
+		this.price = price;
+		this.percentPrice = percentPrice;
+		this.status = status;
+	}
 
-    public Item(int idItem, Item item, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status, Set<Quotation> quotations, Set<BasicData> basicDatas, Set<Item> items) {
-	this.idItem = idItem;
-	this.item = item;
-	this.basicData = basicData;
-	this.code = code;
-	this.name = name;
-	this.cost = cost;
-	this.price = price;
-	this.percentPrice = percentPrice;
-	this.status = status;
-	this.quotations = quotations;
-	this.basicDatas = basicDatas;
-	this.items = items;
-    }
+	public Item(int idItem, Item item, BasicData basicData, String code, String name, float cost, float price, float percentPrice, char status, Set<Quotation> quotations, Set<BasicData> basicDatas, Set<Item> items) {
+		this.idItem = idItem;
+		this.item = item;
+		this.basicData = basicData;
+		this.code = code;
+		this.name = name;
+		this.cost = cost;
+		this.price = price;
+		this.percentPrice = percentPrice;
+		this.status = status;
+		this.quotations = quotations;
+		this.basicDatas = basicDatas;
+		this.items = items;
+	}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
-    @SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
-    @Column(name = "id_item", unique = true, nullable = false)
-    public int getIdItem() {
-	return this.idItem;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
+	@SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
+	@Column(name = "id_item", unique = true, nullable = false)
+	public int getIdItem() {
+		return this.idItem;
+	}
 
-    public void setIdItem(int idItem) {
-	this.idItem = idItem;
-    }
+	public void setIdItem(int idItem) {
+		this.idItem = idItem;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id_item")
-    public Item getItem() {
-	return this.item;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id_item")
+	public Item getItem() {
+		return this.item;
+	}
 
-    public void setItem(Item item) {
-	this.item = item;
-    }
+	public void setItem(Item item) {
+		this.item = item;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type", nullable = false)
-    public BasicData getBasicData() {
-	return this.basicData;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "type", nullable = false)
+	public BasicData getBasicData() {
+		return this.basicData;
+	}
 
-    public void setBasicData(BasicData basicData) {
-	this.basicData = basicData;
-    }
+	public void setBasicData(BasicData basicData) {
+		this.basicData = basicData;
+	}
 
-    @Column(name = "code", nullable = false, length = 15)
-    public String getCode() {
-	return this.code;
-    }
+	@Column(name = "code", nullable = false, length = 15)
+	public String getCode() {
+		return this.code;
+	}
 
-    public void setCode(String code) {
-	this.code = code;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    @Column(name = "name", nullable = false, length = 100)
-    public String getName() {
-	return this.name;
-    }
+	@Column(name = "name", nullable = false, length = 100)
+	public String getName() {
+		return this.name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Column(name = "cost", nullable = false, precision = 8, scale = 8)
-    public float getCost() {
-	return this.cost;
-    }
+	@Column(name = "cost", nullable = false, precision = 8, scale = 8)
+	public float getCost() {
+		return this.cost;
+	}
 
-    public void setCost(float cost) {
-	this.cost = cost;
-    }
+	public void setCost(float cost) {
+		this.cost = cost;
+	}
 
-    @Column(name = "price", nullable = false, precision = 8, scale = 8)
-    public float getPrice() {
-	return this.price;
-    }
+	@Column(name = "price", nullable = false, precision = 8, scale = 8)
+	public float getPrice() {
+		return this.price;
+	}
 
-    public void setPrice(float price) {
-	this.price = price;
-    }
+	public void setPrice(float price) {
+		this.price = price;
+	}
 
-    @Column(name = "percent_price", nullable = false, precision = 8, scale = 8)
-    public float getPercentPrice() {
-	return this.percentPrice;
-    }
+	@Column(name = "percent_price", nullable = false, precision = 8, scale = 8)
+	public float getPercentPrice() {
+		return this.percentPrice;
+	}
 
-    public void setPercentPrice(float percentPrice) {
-	this.percentPrice = percentPrice;
-    }
+	public void setPercentPrice(float percentPrice) {
+		this.percentPrice = percentPrice;
+	}
 
-    @Column(name = "status", nullable = false, length = 1)
-    public char getStatus() {
-	return this.status;
-    }
+	@Column(name = "status", nullable = false, length = 1)
+	public char getStatus() {
+		return this.status;
+	}
 
-    public void setStatus(char status) {
-	this.status = status;
-    }
+	public void setStatus(char status) {
+		this.status = status;
+	}
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "item_by_quotation", schema = "public", joinColumns = { @JoinColumn(name = "id_item", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_quotation", nullable = false, updatable = false) })
-    public Set<Quotation> getQuotations() {
-	return this.quotations;
-    }
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "item_by_quotation", schema = "public", joinColumns = { @JoinColumn(name = "id_item", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_quotation", nullable = false, updatable = false) })
+	public Set<Quotation> getQuotations() {
+		return this.quotations;
+	}
 
-    public void setQuotations(Set<Quotation> quotations) {
-	this.quotations = quotations;
-    }
+	public void setQuotations(Set<Quotation> quotations) {
+		this.quotations = quotations;
+	}
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "item_basic_data", schema = "public", joinColumns = { @JoinColumn(name = "id_item", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_basic", nullable = false, updatable = false) })
-    public Set<BasicData> getBasicDatas() {
-	return this.basicDatas;
-    }
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "item_basic_data", schema = "public", joinColumns = { @JoinColumn(name = "id_item", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_basic", nullable = false, updatable = false) })
+	public Set<BasicData> getBasicDatas() {
+		return this.basicDatas;
+	}
 
-    public void setBasicDatas(Set<BasicData> basicDatas) {
-	this.basicDatas = basicDatas;
-    }
+	public void setBasicDatas(Set<BasicData> basicDatas) {
+		this.basicDatas = basicDatas;
+	}
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-    public Set<Item> getItems() {
-	return this.items;
-    }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+	public Set<Item> getItems() {
+		return this.items;
+	}
 
-    public void setItems(Set<Item> items) {
-	this.items = items;
-    }
+	public void setItems(Set<Item> items) {
+		this.items = items;
+	}
 
 }

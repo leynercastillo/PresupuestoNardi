@@ -105,6 +105,13 @@
 			basic_data T10 INNER JOIN basic_data T2 ON T10.parent_id_basic = T2.id_basic
 		WHERE
 			T10.id_basic = T0.cabin_design) "Modelo",
+	CASE WHEN T0.cabin_width IS NULL THEN ''
+	     WHEN T0.cabin_width = 0 THEN ''
+	     WHEN T0.cabin_height IS NULL THEN ''
+	     WHEN T0.cabin_height = 0 THEN ''
+	     WHEN T0.cabin_background IS NULL THEN ''
+	     WHEN T0.cabin_background = 0 THEN ''
+	     ELSE 'Ancho: '|| round(cast(T0.cabin_width as numeric),2) || ' mts X Profundidad: ' || round(cast(T0.cabin_background as numeric),2) || ' mts X Alto: ' || round(cast(T0.cabin_height as numeric),2) || ' mts' END "Dimensiones",
 	(SELECT
 			T10.name
 		FROM
@@ -174,7 +181,7 @@
 			basic_data T10
 		WHERE
 			T10.id_basic = T1.booth_button)|| '\n' ELSE '' END || '' ||
-	'- PUSH BUTTON EN FOSA PARA MANTENIMIENTO SEGUN NORMA \n'"Incluye"
+	'- PUSH BUTTON EN FOSA PARA MANTENIMIENTO SEGUN NORMA \n' "Incluye"
 FROM
 	quotation T0 INNER JOIN budget T1 ON T1.id_budget = T0.id_budget
 WHERE
@@ -202,6 +209,7 @@ WHERE
 	<field name="Recorrido seguridad" class="java.lang.Double"/>
 	<field name="Diseno cabina" class="java.lang.String"/>
 	<field name="Modelo" class="java.lang.String"/>
+	<field name="Dimensiones" class="java.lang.String"/>
 	<field name="Tipo de piso" class="java.lang.String"/>
 	<field name="Pasamano" class="java.lang.String"/>
 	<field name="Techo de cabina" class="java.lang.String"/>
@@ -209,11 +217,14 @@ WHERE
 	<field name="Martillado" class="java.lang.String"/>
 	<field name="Marco" class="java.lang.String"/>
 	<field name="Incluye" class="java.lang.String"/>
+	<variable name="DIMENSIONES" class="java.lang.String">
+		<variableExpression><![CDATA[$F{Dimensiones}.compareTo("") == 0 ? null: "DIMENSIONES:"]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="454" splitType="Stretch">
+		<band height="470" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="78859b01-862c-47f8-9b20-61bf00947a71" x="0" y="59" width="257" height="15"/>
 				<textElement>
@@ -467,7 +478,7 @@ WHERE
 				<text><![CDATA[CABINA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="534af32b-8bfc-4135-8fb4-de76d9137d31" x="198" y="315" width="378" height="15"/>
+				<reportElement uuid="534af32b-8bfc-4135-8fb4-de76d9137d31" x="215" y="315" width="355" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -488,7 +499,7 @@ WHERE
 				<text><![CDATA[MODELO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4467e4ca-c7ab-45f0-bbd2-de20aa98affd" x="198" y="299" width="378" height="15"/>
+				<reportElement uuid="4467e4ca-c7ab-45f0-bbd2-de20aa98affd" x="215" y="299" width="355" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -502,84 +513,84 @@ WHERE
 				<text><![CDATA[PISO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e831bb44-df6d-4c0e-8eb2-5c176716daed" x="198" y="331" width="378" height="15"/>
+				<reportElement uuid="e831bb44-df6d-4c0e-8eb2-5c176716daed" x="214" y="331" width="356" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de piso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="86379bcf-b97b-4694-a3ed-7d49eb6c2859" x="0" y="347" width="257" height="15"/>
+				<reportElement uuid="86379bcf-b97b-4694-a3ed-7d49eb6c2859" x="0" y="363" width="257" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PASAMANO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="03fa9634-94a8-4278-8380-01a1f8cb9b98" x="144" y="347" width="432" height="15"/>
+				<reportElement uuid="03fa9634-94a8-4278-8380-01a1f8cb9b98" x="144" y="363" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Pasamano}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="3473f3d1-9407-4fba-8e06-01f916b455be" x="0" y="363" width="257" height="15"/>
+				<reportElement uuid="3473f3d1-9407-4fba-8e06-01f916b455be" x="0" y="379" width="257" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TECHO DE CABINA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="0e512fd7-d200-4be8-9965-8eb096b9f35b" x="144" y="363" width="432" height="15"/>
+				<reportElement uuid="0e512fd7-d200-4be8-9965-8eb096b9f35b" x="144" y="379" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Techo de cabina}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0a256918-a089-4fcf-8287-61a5becb0bd1" x="0" y="379" width="257" height="15"/>
+				<reportElement uuid="0a256918-a089-4fcf-8287-61a5becb0bd1" x="0" y="395" width="257" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PUERTA PASILLO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e6890e15-765a-4251-a300-df0f309d976a" x="144" y="379" width="432" height="15"/>
+				<reportElement uuid="e6890e15-765a-4251-a300-df0f309d976a" x="144" y="395" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Puertas}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="40cf9c4d-1c73-48b0-aeb9-8cb4ed24f2b3" x="144" y="395" width="432" height="15"/>
+				<reportElement uuid="40cf9c4d-1c73-48b0-aeb9-8cb4ed24f2b3" x="144" y="411" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Martillado}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1234cde5-6ae9-4eb2-bd1f-49e04fd8fc40" x="0" y="411" width="257" height="15"/>
+				<reportElement uuid="1234cde5-6ae9-4eb2-bd1f-49e04fd8fc40" x="0" y="427" width="257" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MARCOS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="508a4b9c-5e64-413d-9faf-5d6abca15385" x="144" y="411" width="432" height="15"/>
+				<reportElement uuid="508a4b9c-5e64-413d-9faf-5d6abca15385" x="144" y="427" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Marco}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="308e57e2-5c11-4795-876c-8d6456230e4a" x="0" y="439" width="257" height="15"/>
+				<reportElement uuid="308e57e2-5c11-4795-876c-8d6456230e4a" x="0" y="455" width="257" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INCLUYE:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="bceea72f-dd9a-4812-aa4a-7aa055608106" x="144" y="439" width="432" height="15"/>
+				<reportElement uuid="bceea72f-dd9a-4812-aa4a-7aa055608106" x="144" y="455" width="426" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -598,6 +609,20 @@ WHERE
 					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="63ed33ca-ed92-486f-85fd-0a3ecdca0a54" x="215" y="347" width="355" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Dimensiones}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="484acfa2-5065-4167-93e4-724aca465295" x="144" y="347" width="170" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="9" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DIMENSIONES}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

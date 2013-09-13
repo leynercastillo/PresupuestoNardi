@@ -75,7 +75,7 @@ public class DaoSecurityUser {
 	public SecurityUser findByField(String field, String value) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(SecurityUser.class);
-		criteria.add(Restrictions.eq(field, value));
+		criteria.add(Restrictions.eq(field, value).ignoreCase());
 		Object su = criteria.uniqueResult();
 		return su != null ? (SecurityUser) su : null;
 	}

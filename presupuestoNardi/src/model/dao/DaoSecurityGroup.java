@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.util.List;
+
 import model.database.SecurityGroup;
 
 import org.hibernate.Criteria;
@@ -74,5 +76,13 @@ public class DaoSecurityGroup {
 		criteria.add(Restrictions.eq(field, value));
 		Object obj = criteria.uniqueResult();
 		return obj == null ? null : (SecurityGroup) obj;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<SecurityGroup> listActive() {
+		Session session = getCurrentSession();
+		Criteria criteria = session.createCriteria(SecurityGroup.class);
+		criteria.add(Restrictions.eq("status", 'A'));
+		return criteria.list();
 	}
 }

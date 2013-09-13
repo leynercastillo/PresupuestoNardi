@@ -1010,6 +1010,40 @@ public class FrmBudget {
 	}
 
 	@Command
+	public void selectElevatorType() {
+		String elevatorType = budget.getBasicDataByElevatorType() != null ? budget.getBasicDataByElevatorType().getName() : "";
+		String elevatorCapacitance = budget.getBasicDataByElevatorCapacitance() != null ? budget.getBasicDataByElevatorCapacitance().getName() : "";
+		if (elevatorCapacitance.compareTo("800 Kg - 10 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
+			budget.setCabinWidth(1.4);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(1.4);
+		} else if (elevatorCapacitance.compareTo("1050 Kg - 13 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
+			budget.setCabinWidth(1.6);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(1.5);
+		} else if (elevatorCapacitance.compareTo("1200 Kg - 16 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
+			budget.setCabinWidth(1.8);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(1.5);
+		} else if (elevatorCapacitance.compareTo("1500 Kg - 20 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
+			budget.setCabinWidth(2.0);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(1.7);
+		} else if (elevatorCapacitance.compareTo("1050 Kg - 13 Pers") == 0 && elevatorType.compareTo("MONTACAMILLA") == 0) {
+			budget.setCabinWidth(1.2);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(2.3);
+		} else if (elevatorCapacitance.compareTo("1500 Kg - 20 Pers") == 0 && elevatorType.compareTo("MONTACAMILLA") == 0) {
+			budget.setCabinWidth(1.5);
+			budget.setCabinHeight(2.0);
+			budget.setCabinBackground(2.3);
+		}
+		BindUtils.postNotifyChange(null, null, budget, "cabinWidth");
+		BindUtils.postNotifyChange(null, null, budget, "cabinHeight");
+		BindUtils.postNotifyChange(null, null, budget, "cabinBackground");
+	}
+
+	@Command
 	public void close() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", "");
@@ -1146,6 +1180,7 @@ public class FrmBudget {
 		budget.setBasicDataByFan(null);
 		BindUtils.postNotifyChange(null, null, budget, "fan");
 		BindUtils.postNotifyChange(null, null, budget, "roofType");
+		selectElevatorType();
 	}
 
 	@NotifyChange({ "listBoothDisplay", "listFloorDisplay" })

@@ -33,9 +33,15 @@
 						pageSize="10" pagingPosition="both"
 						selectedItems="@bind(vm.listSelectedUsers)">
 						<listhead>
-							<listheader label="Vendedor"></listheader>
-							<listheader label="Teléfono"></listheader>
-							<listheader label="Activo/Inactivo"></listheader>
+							<listheader label="Vendedor"
+								sort="auto(name)">
+							</listheader>
+							<listheader label="Teléfono"
+								sort="auto(phone)">
+							</listheader>
+							<listheader label="Activo/Inactivo"
+								sort="auto(status)">
+							</listheader>
 						</listhead>
 						<template name="model" var="user">
 							<listitem label="@load(user.name)">

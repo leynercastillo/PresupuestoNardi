@@ -1,10 +1,11 @@
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
 	<style src="resource/style/styleZK.css"></style>
-	<window border="normal" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('controller.seguridad.perfil.FrmSecurityProfile')"
-		title="Perfil de usuario" closable="true"
-		onClose="@command('close')">
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.seguridad.perfil.FrmSecurityProfile')">
+		<caption label="Perfil de usuario" zclass="formTitleLabel">
+		</caption>
 		<grid zclass="grid">
 			<columns>
 				<column width="130px"></column>
@@ -12,21 +13,21 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre:" sclass="formLabel"></label>
-					<textbox sclass="txtGeneral"
-						value="@load(vm.user.name)" disabled="true">
+					<label sclass="formLabel" value="Nombre:"></label>
+					<textbox disabled="true" sclass="txtGeneral"
+						value="@load(vm.user.name)">
 					</textbox>
 				</row>
 				<row>
-					<label value="Teléfono:" sclass="formLabel"></label>
+					<label sclass="formLabel" value="Teléfono:"></label>
 					<textbox sclass="txtGeneral"
 						value="@load(vm.user.phone) @save(vm.user.phone, before = 'save') @validator(vm.noEmpty, component = self)">
 					</textbox>
 				</row>
 				<row>
-					<label value="Correo:" sclass="formLabel"></label>
-					<textbox sclass="txtGeneral"
-						value="@load(vm.user.email)" disabled="true">
+					<label sclass="formLabel" value="Correo:"></label>
+					<textbox disabled="true" sclass="txtGeneral"
+						value="@load(vm.user.email)">
 					</textbox>
 				</row>
 				<row>
@@ -37,9 +38,8 @@
 				</row>
 				<row>
 					<space></space>
-					<button label="Actualizar"
-						onClick="@command('save')"
-						image="/resource/images/icons/save.png">
+					<button image="/resource/images/icons/save.png"
+						label="Actualizar" onClick="@command('save')">
 					</button>
 				</row>
 			</rows>

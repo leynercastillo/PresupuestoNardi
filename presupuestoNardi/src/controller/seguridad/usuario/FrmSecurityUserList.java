@@ -1,4 +1,4 @@
-package controller.seguridad;
+package controller.seguridad.usuario;
 
 import general.ShaEncoding;
 
@@ -14,13 +14,17 @@ import model.service.ServiceSecurityUser;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 
-public class FrmSecurityUserMaster {
+import controller.seguridad.SecurityUserStatus;
+
+public class FrmSecurityUserList {
 
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
@@ -108,5 +112,16 @@ public class FrmSecurityUserMaster {
 			listUserStatus.add(new SecurityUserStatus(securityUser, false));
 		}
 		return listUserStatus;
+	}
+
+	@Command
+	public void addUser() {
+		Executions.createComponents("system/seguridad/usuario/frmAddUser.zul", null, null);
+	}
+
+	@NotifyChange("listUsers")
+	@GlobalCommand
+	public void userAdded() {
+		listUsers = generateListStatus();
 	}
 }

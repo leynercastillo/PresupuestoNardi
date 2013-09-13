@@ -56,7 +56,8 @@ public class ValidateZK {
 	}
 
 	/**
-	 * Metodo que valida que un string sea un Email valido. Solo aplica para componentes ZK
+	 * Metodo que valida que un string sea un Email valido. Debe ser un email, y no debe estar vacío. Solo aplica
+	 * para componentes ZK
 	 * 
 	 * @return {@link Validator}
 	 */

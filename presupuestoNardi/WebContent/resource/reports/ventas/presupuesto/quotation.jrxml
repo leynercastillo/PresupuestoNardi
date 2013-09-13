@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="21" bottomMargin="21" uuid="31586bca-fe1e-4d29-8b2d-dd013c1e3579">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="IMAGES_DIR" class="java.lang.String"/>
 	<parameter name="VERSION" class="java.lang.Short">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
@@ -64,9 +64,9 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="84" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="d1b9cf89-149d-4600-8117-3797ba88d7e5" x="341" y="69" width="174" height="15"/>
+				<reportElement uuid="d1b9cf89-149d-4600-8117-3797ba88d7e5" x="341" y="65" width="174" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
@@ -81,7 +81,7 @@ WHERE
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="450" y="69" width="127" height="15"/>
+				<reportElement uuid="375aea9b-13ef-47ca-9666-1de7d4af4a7e" x="450" y="65" width="127" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="10"/>
 				</textElement>

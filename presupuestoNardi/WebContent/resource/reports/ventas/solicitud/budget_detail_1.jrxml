@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_genera1_1" language="groovy" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="3bd75de0-205f-4086-846b-93752dd8996c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="145"/>
+	<property name="ireport.y" value="170"/>
 	<parameter name="NUMBER" class="java.lang.Integer">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -159,7 +159,10 @@
 		FROM
 			basic_data
 		WHERE
-			fan = id_basic) AS "Extractor:"
+			fan = id_basic) AS "Extractor:",
+	cabin_width AS "Ancho Cabina",
+	cabin_height AS "Altura Cabina",
+	cabin_background AS "Fondo Cabina"
 FROM
      budget
 WHERE
@@ -214,6 +217,9 @@ WHERE
 	<field name="Espejo:" class="java.lang.String"/>
 	<field name="Acabado de piso:" class="java.lang.String"/>
 	<field name="Extractor:" class="java.lang.String"/>
+	<field name="Ancho Cabina" class="java.lang.Double"/>
+	<field name="Altura Cabina" class="java.lang.Double"/>
+	<field name="Fondo Cabina" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -752,21 +758,21 @@ WHERE
 				<text><![CDATA[Diseño Cabina:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6aab4b9e-e5c2-4cdd-a04d-f7522fe25174" x="108" y="474" width="292" height="15"/>
+				<reportElement uuid="6aab4b9e-e5c2-4cdd-a04d-f7522fe25174" x="108" y="474" width="210" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Diseño Cabina:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1f42eb3a-51f7-468d-a116-0c97c944ee79" x="3" y="534" width="125" height="15"/>
+				<reportElement uuid="1f42eb3a-51f7-468d-a116-0c97c944ee79" x="3" y="549" width="125" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Diseño Especial:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c5f34566-4402-4637-8c6a-728281e434ee" x="108" y="534" width="442" height="15"/>
+				<reportElement uuid="c5f34566-4402-4637-8c6a-728281e434ee" x="108" y="549" width="462" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
@@ -815,42 +821,42 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Acabado de piso:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b3074ca8-a180-4203-91d5-c0c6b8895d28" x="313" y="489" width="120" height="15"/>
+				<reportElement uuid="b3074ca8-a180-4203-91d5-c0c6b8895d28" x="318" y="474" width="120" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de botonera:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="18ffc054-4787-474f-9fae-595d2628b83b" x="397" y="489" width="169" height="15"/>
+				<reportElement uuid="18ffc054-4787-474f-9fae-595d2628b83b" x="402" y="474" width="169" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de botonera:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b90421a1-3350-4485-aec3-eee2d4e5ac57" x="313" y="504" width="120" height="15"/>
+				<reportElement uuid="b90421a1-3350-4485-aec3-eee2d4e5ac57" x="318" y="489" width="120" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Espejo:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="18d6adf1-27ad-41b5-ba8a-1fb6ea8f1831" x="397" y="504" width="169" height="15"/>
+				<reportElement uuid="18d6adf1-27ad-41b5-ba8a-1fb6ea8f1831" x="402" y="489" width="169" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Espejo:}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="54bb8675-f290-496a-91b1-323e9c205b2e" x="313" y="519" width="120" height="15"/>
+				<reportElement uuid="54bb8675-f290-496a-91b1-323e9c205b2e" x="318" y="504" width="120" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Extractor:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6feff34a-072b-4d9a-a492-974a582db100" x="397" y="519" width="169" height="15"/>
+				<reportElement uuid="6feff34a-072b-4d9a-a492-974a582db100" x="402" y="504" width="169" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
@@ -873,7 +879,7 @@ WHERE
 				<text><![CDATA[Modelo:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9390411e-d970-4285-b427-8472aa7b2359" x="108" y="459" width="292" height="15"/>
+				<reportElement uuid="9390411e-d970-4285-b427-8472aa7b2359" x="108" y="459" width="210" height="15"/>
 				<textElement>
 					<font fontName="Serif" size="8"/>
 				</textElement>
@@ -953,6 +959,48 @@ WHERE
 				<reportElement uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9" x="3" y="591" width="569" height="49"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement uuid="7b48fde9-a21f-4b94-8a2f-0650011ce80d" x="318" y="519" width="125" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ancho Cabina:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8894b542-c229-4230-ab67-22fd316c8f84" x="402" y="519" width="168" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ancho Cabina}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8d1ec1e6-b04d-4104-9cf4-44306bf11ac2" x="318" y="534" width="120" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Altura Cabina:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ccc29250-6eff-45ed-bd06-f91dd93d2708" x="402" y="534" width="168" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Altura Cabina}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6be8c061-6bfd-4b4c-aeb1-c0b3ce8cc409" x="3" y="534" width="125" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fondo Cabina:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5249a724-eb4c-4d85-9686-6bdc1e818872" x="108" y="534" width="197" height="15"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fondo Cabina}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

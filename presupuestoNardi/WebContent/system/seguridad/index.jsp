@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Ascensores Nardi, C.A. - Login - Contacto</title>
+<title>Ascensores Nardi - Login</title>
 <link rel="icon" type="image/png"
 	href="../../resource/images/icons/logo.png" />
 <link rel="stylesheet" type="text/css"
@@ -40,7 +40,8 @@
 	<div class="footer">
 		<div class="container">
 			<p>Ascensores nardi, C.A.</p>
-			<p>Av. 20 Entre calles 14 y 15 Edif No 14-30. Piso 2, oficina 1. Barquisimeto, Estado Lara.</p>
+			<p>Av. 20 Entre calles 14 y 15 Edif No 14-30. Piso 2, oficina 1.
+				Barquisimeto, Estado Lara.</p>
 			<p>Todos los derechos reservados.</p>
 		</div>
 	</div>

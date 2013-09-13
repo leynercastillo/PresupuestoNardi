@@ -574,6 +574,27 @@
 						<space></space>
 					</row>
 					<row>
+						<label sclass="formLabel" value="Ancho (m):">
+						</label>
+						<doublebox disabled="true"
+							value="@bind(vm.quotation.cabinWidth)" width="96%">
+						</doublebox>
+						<label sclass="formLabel" value="Altura (m):">
+						</label>
+						<doublebox disabled="true"
+							value="@bind(vm.quotation.cabinHeight)" width="96%">
+						</doublebox>
+						<div width="100%">
+							<label sclass="formLabel" value="Fondo (m):"
+								width="50%">
+							</label>
+							<space></space>
+							<doublebox disabled="true"
+								value="@bind(vm.quotation.cabinBackground)" width="50%">
+							</doublebox>
+						</div>
+					</row>
+					<row>
 						<label sclass="formLabel"
 							value="Tipo de Techo:">
 						</label>
@@ -983,7 +1004,7 @@
 								value="@bind(vm.quotation.extendedWarranty)">
 							</textbox>
 							<label
-								value="meses mas con la suscripcion de un contrato de mantenimiento dentro de los 3 meses de garantia.">
+								value="meses con la suscripcion de un contrato de mantenimiento conjuntamente con la firma del acta de entrega.">
 							</label>
 						</div>
 					</row>
@@ -1001,7 +1022,7 @@
 							</label>
 						</div>
 					</row>
-					<!-- OCULTO POR SITUACION DEL MERCADO -->
+					<!-- OCULTO POR SITUACION DEL MERCADO VENEZOLANO -->
 					<row visible="false">
 						<label value="Válidez del presupuesto:"
 							sclass="formLabel">

@@ -16,6 +16,9 @@
 					if="${sec:isAnyGranted('ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS')}"
 					label="Usuarios">
 				</tab>
+				<tab if="${sec:isAnyGranted('ROLE_USER')}"
+					label="Ayuda">
+				</tab>
 			</tabs>
 			<tabpanels>
 				<tabpanel
@@ -115,9 +118,24 @@
 								if="${sec:isAllGranted('ROLE_SECURITY_USERS_MASTER')}">
 								<treerow>
 									<treecell
-										onClick="@command('optionSelected', optionSelected='system/seguridad/frmSecurityUserMaster.zul')">
+										onClick="@command('optionSelected', optionSelected='system/seguridad/usuario/frmSecurityUserList.zul')">
+										<label value="Usuarios"></label>
+									</treecell>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</tabpanel>
+				<tabpanel if="${sec:isAnyGranted('ROLE_USER')}">
+					<tree>
+						<treechildren>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_USER')}">
+								<treerow>
+									<treecell
+										onClick="@command('optionSelected', optionSelected='system/ayuda/index.html')">
 										<label
-											value="Maestro de usuarios">
+											value="Guía">
 										</label>
 									</treecell>
 								</treerow>

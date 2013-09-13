@@ -56,7 +56,7 @@ WHERE
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="30" width="154" height="40"/>
+				<reportElement uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b" x="422" y="24" width="154" height="40"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"liftTechnology.jpg"]]></imageExpression>
 			</image>
 		</band>

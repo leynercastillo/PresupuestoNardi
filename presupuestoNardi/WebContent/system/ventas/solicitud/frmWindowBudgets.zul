@@ -1,25 +1,38 @@
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
 <zk>
-	<window mode="modal" border="normal" width="90%"
-		apply="org.zkoss.bind.BindComposer"
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" id="windowBudgets" mode="modal"
+		title="Solicitudes de presupuestos"
 		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmWindowBudgets')"
-		id="windowBudgets" closable="true" title="Solicitudes de presupuestos">
-		<listbox model="@load(vm.listBudget)"
-			selectedItem="@bind(vm.selectedBudget)"
+		width="90%">
+		<listbox model="@load(vm.listBudget)" mold="paging"
 			onSelect="@command('sendBudget', Budget=vm.selectedBudget)"
-			mold="paging" pageSize="10" pagingPosition="both">
+			pageSize="10" pagingPosition="both"
+			selectedItem="@bind(vm.selectedBudget)">
 			<listhead>
-				<listheader label="Nro Pedido" width="10%"></listheader>
-				<listheader label="Cliente" width="35%"></listheader>
-				<listheader label="Fecha" width="15%"></listheader>
-				<listheader label="Ciudad" width="20%"></listheader>
-				<listheader label="Vendedor" width="20%"></listheader>
+				<listheader label="Nro Pedido" sort="auto(number)"
+					width="10%">
+				</listheader>
+				<listheader label="Cliente" sort="auto(partnerName)"
+					width="35%">
+				</listheader>
+				<listheader label="Fecha" sort="auto(date)"
+					width="15%">
+				</listheader>
+				<listheader label="Ciudad" sort="auto(constructionCity)"
+					width="20%">
+				</listheader>
+				<listheader label="Vendedor" sort="auto(seller)"
+					width="20%">
+				</listheader>
 			</listhead>
 			<template name="model" var="budget">
 				<listitem>
 					<listcell label="@load(budget.number)"></listcell>
 					<listcell label="@load(budget.partnerName)"></listcell>
-					<listcell label="@load(budget.date) @converter('formattedDate', format='dd/MM/yyyy')"></listcell>
+					<listcell
+						label="@load(budget.date) @converter('formattedDate', format='dd/MM/yyyy')">
+					</listcell>
 					<listcell label="@load(budget.constructionCity)">
 					</listcell>
 					<listcell label="@load(budget.seller)"></listcell>

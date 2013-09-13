@@ -1,5 +1,7 @@
 package model.service;
 
+import java.util.List;
+
 import model.dao.DaoSecurityGroup;
 import model.database.SecurityGroup;
 
@@ -21,5 +23,10 @@ public class ServiceSecurityGroup {
 	@Transactional(readOnly = true)
 	public SecurityGroup findGroupSalesCoordinator() {
 		return daoSecurityGroup.findByField("name", "SALES COORDINATOR");
+	}
+
+	@Transactional(readOnly = true)
+	public List<SecurityGroup> listActive() {
+		return daoSecurityGroup.listActive();
 	}
 }

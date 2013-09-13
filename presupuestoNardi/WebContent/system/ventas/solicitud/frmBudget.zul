@@ -241,6 +241,7 @@
 						</label>
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listElevatorType)"
+							onChange="@command('selectElevatorType')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.budget.basicDataByElevatorType)"
 							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByElevatorType eq null ? vm.seleccione: vm.budget.basicDataByElevatorType.name) @validator(vm.noSelect, component = self)"
@@ -254,9 +255,9 @@
 						<label sclass="formLabel"
 							value="Cantidad de motores:">
 						</label>
-						<intbox width="97%"
-							value="@bind(vm.budget.motorQuantity)"
-							disabled="@load(vm.budget.type ? 'true' : vm.disabledAll)">
+						<intbox
+							disabled="@load(vm.budget.type ? 'true' : vm.disabledAll)"
+							width="97%" value="@bind(vm.budget.motorQuantity)">
 						</intbox>
 						<space></space>
 					</row>
@@ -264,13 +265,13 @@
 						<label sclass="formLabel"
 							value="Capacidad (Kg - Cap.):">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.budget.basicDataByElevatorCapacitance.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listElevatorCapa)"
-							selectedItem="@bind(vm.budget.basicDataByElevatorCapacitance)"
+							onChange="@command('loadFans')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)"
-							onChange="@command('loadFans')">
+							selectedItem="@bind(vm.budget.basicDataByElevatorCapacitance)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.budget.basicDataByElevatorCapacitance.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="elevatorCapa">
 								<comboitem
 									label="@load(elevatorCapa.name)">
@@ -282,14 +283,14 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.budget.motorTraction)">
-							<radio value="1:1" label="1:1"
+							<radio
 								checked="@load(vm.budget.motorTraction eq '1:1' ? 'true':'false')"
-								disabled="@load(vm.disabledAll)">
+								disabled="@load(vm.disabledAll)" label="1:1" value="1:1">
 							</radio>
 							<space></space>
-							<radio value="2:1" label="2:1"
+							<radio
 								checked="@load(vm.budget.motorTraction eq '2:1' ? 'true':'false')"
-								disabled="@load(vm.disabledAll)">
+								disabled="@load(vm.disabledAll)" label="2:1" value="2:1">
 							</radio>
 						</radiogroup>
 						<space></space>
@@ -298,12 +299,12 @@
 						<label sclass="formLabel"
 							value="Tipo de Máquina:">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByMachineType eq null ? vm.seleccione : vm.budget.basicDataByMachineType.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listMachineType)"
-							selectedItem="@bind(vm.budget.basicDataByMachineType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByMachineType)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByMachineType eq null ? vm.seleccione : vm.budget.basicDataByMachineType.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="MachineType">
 								<comboitem
 									label="@load(MachineType.name)">
@@ -343,12 +344,12 @@
 						<label sclass="formLabel"
 							value="Velocidad M/S:">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataBySpeed eq null ? vm.seleccione : vm.budget.basicDataBySpeed.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listSpeed)"
-							selectedItem="@bind(vm.budget.basicDataBySpeed)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataBySpeed)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataBySpeed eq null ? vm.seleccione : vm.budget.basicDataBySpeed.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="Speed">
 								<comboitem label="@load(Speed.name)">
 								</comboitem>
@@ -376,12 +377,12 @@
 						<label sclass="formLabel"
 							value="Tensión de alumbrado:">
 						</label>
-						<combobox width="100%"
-							value="@load(vm.budget.basicDataByVoltageLighting eq null ? vm.seleccione : vm.budget.basicDataByVoltageLighting.name)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listVoltageLighting)"
-							selectedItem="@bind(vm.budget.basicDataByVoltageLighting)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByVoltageLighting)"
+							value="@load(vm.budget.basicDataByVoltageLighting eq null ? vm.seleccione : vm.budget.basicDataByVoltageLighting.name)"
+							width="100%">
 							<template name="model"
 								var="VoltageLighting">
 								<comboitem
@@ -393,12 +394,12 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Frecuencia:"></label>
-						<combobox width="100%"
-							value="@load(vm.budget.basicDataByFrequency eq null ? vm.seleccione : vm.budget.basicDataByFrequency.name)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listFrequency)"
-							selectedItem="@bind(vm.budget.basicDataByFrequency)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByFrequency)"
+							value="@load(vm.budget.basicDataByFrequency eq null ? vm.seleccione : vm.budget.basicDataByFrequency.name)"
+							width="100%">
 							<template name="model" var="Frequency">
 								<comboitem
 									label="@load(Frequency.name)">
@@ -417,36 +418,40 @@
 								</columns>
 								<rows>
 									<row>
-										<checkbox label="Continua:"
+										<checkbox
 											checked="@bind(vm.budget.stopSequenceContinuous)"
-											disabled="@load(vm.disabledAll)"
+											disabled="@load(vm.disabledAll)" label="Continua:"
 											onClick="@command('isStopSequenceContinuous')">
 										</checkbox>
-										<textbox width="100%"
+										<textbox
 											disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')"
+											maxlength="50"
 											value="@load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousQ : '') @save(vm.budget.stopSequenceContinuousQ)"
-											maxlength="50">
+											width="100%">
 										</textbox>
 										<div>
 											<label value="Nro Paradas:"
 												style="float: left" width="40%">
 											</label>
-											<intbox style="float: right"
-												width="55%"
+											<intbox
+												disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')"
+												style="float: right"
 												value="@save(vm.budget.stopSequenceContinuousNumber, before = 'confirmSave') @load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousNumber : '0') @validator(vm.noZeroContinuous, component = self)"
-												disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')">
+												width="55%">
 											</intbox>
 										</div>
 									</row>
 									<row>
-										<checkbox label="Par"
+										<checkbox
 											checked="@load(vm.budget.stopSequenceContinuous ? 'false' : vm.budget.stopSequenceEven) @save(vm.budget.stopSequenceEven)"
-											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)">
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)"
+											label="Par">
 										</checkbox>
-										<textbox width="100%"
+										<textbox
 											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')"
+											maxlength="50"
 											value="@load(vm.budget.stopSequenceContinuous ? '' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenQ : '') @save(vm.budget.stopSequenceEvenQ)"
-											maxlength="50">
+											width="100%">
 										</textbox>
 										<div>
 											<label value="Nro Paradas:"
@@ -747,6 +752,29 @@
 						</combobox>
 						<space></space>
 					</row>
+					<row>
+						<label sclass="formLabel" value="Ancho (m):"></label>
+						<div width="100%">
+							<doublebox disabled="@load(vm.disabledAll)"
+								hflex="1"
+								value="@save(vm.budget.cabinWidth) @load(vm.budget.cabinWidth) @validator(vm.noEmpty, component = self)">
+							</doublebox>
+						</div>
+						<label sclass="formLabel" value="Altura (m):"></label>
+						<div width="100%">
+							<doublebox disabled="@load(vm.disabledAll)"
+								hflex="1"
+								value="@save(vm.budget.cabinHeight) @load(vm.budget.cabinHeight) @validator(vm.noEmpty, component = self)">
+							</doublebox>
+						</div>
+						<label sclass="formLabel" value="Fondo (m):"></label>
+						<div width="100%">
+							<doublebox disabled="@load(vm.disabledAll)"
+								hflex="1"
+								value="@save(vm.budget.cabinBackground) @load(vm.budget.cabinBackground) @validator(vm.noEmpty, component = self)">
+							</doublebox>
+						</div>
+					</row>
 				</rows>
 			</grid>
 		</groupbox>
@@ -766,8 +794,8 @@
 						<label sclass="formLabel"
 							value="Numero de Puertas:">
 						</label>
-						<intbox value="@bind(vm.budget.doorOfNumber)"
-							disabled="@load(vm.disabledAll)" width="97%">
+						<intbox disabled="@load(vm.disabledAll)"
+							value="@bind(vm.budget.doorOfNumber)" width="97%">
 						</intbox>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
@@ -874,12 +902,12 @@
 							width="97%">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
-						<combobox width="100%"
-							value="@load(vm.budget.basicDataByDoorFrameHammered eq null ? vm.seleccione : vm.budget.basicDataByDoorFrameHammered.name)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listDoorframeHammered)"
-							selectedItem="@bind(vm.budget.basicDataByDoorFrameHammered)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByDoorFrameHammered)"
+							value="@load(vm.budget.basicDataByDoorFrameHammered eq null ? vm.seleccione : vm.budget.basicDataByDoorFrameHammered.name)"
+							width="100%">
 							<template name="model"
 								var="doorFrameHammered">
 								<comboitem
@@ -912,13 +940,13 @@
 						<label sclass="formLabel"
 							value="Control Modelo:">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listControlType)"
-							selectedItem="@bind(vm.budget.basicDataByControlType)"
+							onChange="@command('loadBoothFloorDisplay')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)"
-							onChange="@command('loadBoothFloorDisplay')">
+							selectedItem="@bind(vm.budget.basicDataByControlType)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="ControlType">
 								<comboitem
 									label="@load(ControlType.name)">
@@ -933,12 +961,12 @@
 						<label sclass="formLabel"
 							value="Botones de Cabina:">
 						</label>
-						<combobox width="100%"
-							value="@load(vm.budget.basicDataByBoothButton eq null ? vm.seleccione : vm.budget.basicDataByBoothButton.name)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listBoothButton)"
-							selectedItem="@bind(vm.budget.basicDataByBoothButton)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByBoothButton)"
+							value="@load(vm.budget.basicDataByBoothButton eq null ? vm.seleccione : vm.budget.basicDataByBoothButton.name)"
+							width="100%">
 							<template name="model" var="BoothButton">
 								<comboitem
 									label="@load(BoothButton.name)">
@@ -953,12 +981,12 @@
 						<label sclass="formLabel"
 							value="Botones de pasillo:">
 						</label>
-						<combobox width="100%"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByHallButton eq null ? vm.seleccione : vm.budget.basicDataByHallButton.name) @validator(vm.noSelect, component = self)"
+						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listHallButton)"
-							selectedItem="@bind(vm.budget.basicDataByHallButton)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							disabled="@load(vm.disabledAll)">
+							selectedItem="@bind(vm.budget.basicDataByHallButton)"
+							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByHallButton eq null ? vm.seleccione : vm.budget.basicDataByHallButton.name) @validator(vm.noSelect, component = self)"
+							width="100%">
 							<template name="model" var="HallButton">
 								<comboitem
 									label="@load(HallButton.name)">
@@ -1027,8 +1055,8 @@
 												value="Sistel con Display">
 											</label>
 											<hbox>
-												<label value="PB:"
-													sclass="formLabel">
+												<label
+													sclass="formLabel" value="PB:">
 												</label>
 												<checkbox
 													checked="@bind(vm.budget.sistelWdisplayPb)"
@@ -1049,8 +1077,8 @@
 												value="Sistel con Flecha">
 											</label>
 											<hbox>
-												<label value="PB:"
-													sclass="formLabel">
+												<label
+													sclass="formLabel" value="PB:">
 												</label>
 												<checkbox
 													checked="@bind(vm.budget.sistelWarrowPb)"
@@ -1304,18 +1332,21 @@
 							image="/resource/images/icons/email.png" label="Enviar"
 							onClick="@command('confirmSave')" sclass="formLabel">
 						</button>
-						<!-- disabled fue calculado en base a las probabilidades -->
 						<button
 							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
 							image="/resource/images/icons/edit.png" label="Editar"
 							onClick="@command('edit', component = self)"
 							sclass="formLabel">
 						</button>
-						<!-- disabled fue calculado en base a las probabilidades -->
 						<button
 							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
 							image="/resource/images/icons/print.png" label="Imprimir"
 							onClick="@command('print')" sclass="formLabel">
+						</button>
+						<button
+							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
+							image="/resource/images/icons/copy.png" label="Copiar"
+							onClick="@command()" sclass="formLabel">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
