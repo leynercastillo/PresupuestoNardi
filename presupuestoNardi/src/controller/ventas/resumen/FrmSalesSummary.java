@@ -76,7 +76,7 @@ public class FrmSalesSummary {
 	}
 
 	public String getDateFormat(Date date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		return dateFormat.format(date);
 	}
 

@@ -28,30 +28,37 @@
 	{
 	opacity: .8;
 	-moz-opacity: .8;
-	filter: alpha(opacity =   80);
+	filter: alpha(opacity =     80);
 }
 /*====================================================================================*/
 
 /*======================Eliminar los borders a los grid===============================*/
-div.z-grid{
+div.z-grid {
 	border: none;
 }
 /*======================Eliminar los colores a los grid===============================*/
 
 /*====================================================================================*/
-tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell, tr.z-grid-odd{
+tr.z-grid-odd td.z-row-inner,tr.z-grid-odd .z-cell,tr.z-grid-odd {
 	background: white;
 }
 /*====================================================================================*/
 
 /*===================Eliminar el efecto hover sobre los grid==========================*/
-tr.z-row-over td.z-row-inner, tr.z-row-over .z-cell {
-    background-image: none;
-    /*border-bottom: 1px solid white;
+tr.z-row-over td.z-row-inner,tr.z-row-over .z-cell {
+	background-image: none;
+	/*border-bottom: 1px solid white;
     border-top: 1px solid white;*/
 }
-tr.z-row td.z-row-inner, tr.z-row-over .z-cell, tr.z-row .z-cell {
-    background-image: none;
-    border:none;
+
+tr.z-row td.z-row-inner,tr.z-row-over .z-cell,tr.z-row .z-cell {
+	background-image: none;
+	border: none;
+}
+/*====================================================================================*/
+
+/*==================Eliminar el efecto roto de boton upload===========================*/
+.z-button .z-button-tl {
+	font-size: 0px;
 }
 /*====================================================================================*/

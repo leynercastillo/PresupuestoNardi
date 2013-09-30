@@ -1,12 +1,10 @@
 package controller.ventas.presupuesto;
 
+import general.GenericReport;
 import general.SimpleListModelCustom;
 import general.ValidateZK;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,16 +19,7 @@ import model.database.Quotation;
 import model.service.ServiceBasicData;
 import model.service.ServiceBudget;
 import model.service.ServiceQuotation;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.hibernate.HibernateException;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -436,11 +425,6 @@ public class FrmQuotation {
 			public void validate(ValidationContext ctx) {
 				Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
 				if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
-					if (quotation.getDeliveryDate() == null) {
-						Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
-						datebox.setDisabled(false);
-						throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
-					}
 					List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
 					for (Quotation q : list) {
 						if (q.getStatus() == 'A') {
@@ -456,6 +440,11 @@ public class FrmQuotation {
 					 * aprobacion
 					 */
 					quotation.setApprovedDate(new Date());
+					if (quotation.getDeliveryDate() == null) {
+						Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
+						datebox.setDisabled(false);
+						throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
+					}
 				} else {
 					quotation.setApprovedDate(null);
 					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
@@ -666,10 +655,6 @@ public class FrmQuotation {
 		if (field.compareTo("rifPartner") == 0) {
 			listRifPartner = new SimpleListModelCustom<Object>(serviceQuotation.listRifPartner());
 		} else if (field.compareTo("number") == 0) {
-			/*
-			 * Se cambia el nombre del field, ya que en el zul, se debe enviar una variable obligatoriamente
-			 * y se utilizan dos metodos.
-			 */
 			listBudgetNumber = new SimpleListModelCustom<Object>(serviceQuotation.listBudgetNumber());
 		} else if (field.compareTo("partnerName") == 0) {
 			listPartnerName = new SimpleListModelCustom<Object>(serviceQuotation.listPartnerName());
@@ -826,6 +811,30 @@ public class FrmQuotation {
 		disabledEdit = new Boolean(true);
 	}
 
+	@Command
+	public void selectStatus(@BindingParam("radioGroup") Radiogroup radiogroup, @BindingParam("datebox") Datebox datebox) {
+		if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
+			List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
+			for (Quotation q : list) {
+				if (q.getStatus() == 'A') {
+					quotation.setStatus('E');
+					quotation.setApprovedDate(null);
+					BindUtils.postNotifyChange(null, null, quotation, "status");
+					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+					throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
+				}
+			}
+			quotation.setApprovedDate(new Date());
+			if (quotation.getDeliveryDate() == null) {
+				datebox.setDisabled(false);
+				throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
+			}
+		} else {
+			quotation.setApprovedDate(null);
+			BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+		}
+	}
+
 	@NotifyChange({ "quotation", "disableBeforeSearch", "disabledBudgetNumber", "disabledEdit" })
 	@Command
 	public void search() {
@@ -841,116 +850,21 @@ public class FrmQuotation {
 		return (quotation.getElevatorQuantity() > 1 ? "ASCENSORES " : "ASCENSOR ") + str;
 	}
 
-	@Command
-	public void createQuotationPdf(String quotationNumber, Quotation q, String template) throws SQLException {
-		/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e2) {
-			e2.printStackTrace();
-		}
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-		String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto");
-		JasperReport jasperReport;
-		try {
-			if (template == null || template.compareTo("SI") == 0)
-				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation.jasper");
-			else
-				jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/quotation_without.jasper");
-		} catch (JRException e) {
-			jasperReport = null;
-			e.printStackTrace();
-		}
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("TYPE", q.isType());
-		parameters.put("NEW", q.getNewNumber());
-		parameters.put("MODERNIZATION", q.getModernizationNumber());
-		parameters.put("VERSION", q.getVersionNumber());
-		/*
-		 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
-		 */
-		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
-		JasperPrint jasperPrint;
-		try {
-			jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
-		} catch (HibernateException e1) {
-			jasperPrint = null;
-			e1.printStackTrace();
-		} catch (JRException e1) {
-			jasperPrint = null;
-			e1.printStackTrace();
-		}
-		JRExporter jrExporter = new JRPdfExporter();
-		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/Ppto_" + quotationNumber + ".pdf");
-		File file = new File(string + "/Ppto_" + quotationNumber + ".pdf");
-		/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
-		if (file.isFile())
-			file.delete();
-		try {
-			jrExporter.exportReport();
-		} catch (JRException e) {
-			System.out.println("Report wasn't export.");
-		}
-		connection.close();
-	}
-
-	@Command
-	public void createBudgetPdf(Quotation q) throws SQLException {
-		Integer number = q.getBudgetNumber();
-		/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e2) {
-			e2.printStackTrace();
-		}
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-		String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
-		JasperReport jasperReport;
-		try {
-			jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
-		} catch (JRException e) {
-			jasperReport = null;
-			e.printStackTrace();
-		}
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("REPORT_TITLE", "Resumen de Venta");
-		parameters.put("NUMBER", number);
-		/*
-		 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
-		 */
-		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
-		JasperPrint jasperPrint;
-		try {
-			jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
-		} catch (HibernateException e1) {
-			jasperPrint = null;
-			System.out.println("Connection wasn't obtained.");
-		} catch (JRException e1) {
-			jasperPrint = null;
-			e1.printStackTrace();
-		}
-		JRExporter jrExporter = new JRPdfExporter();
-		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + number + ".pdf");
-		try {
-			jrExporter.exportReport();
-		} catch (JRException e) {
-			e.printStackTrace();
-		}
-		connection.close();
-	}
-
 	public List<File> mailAttach() {
 		List<File> listAttach = new ArrayList<File>();
-		try {
-			createBudgetPdf(quotation);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/presupuesto" + quotation.getBudgetNumber() + ".pdf"));
+		GenericReport report = new GenericReport();
+		String quotationNumber = new String();
+		if (quotation.isType())
+			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
+		else
+			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("REPORT_TITLE", "Resumen de Venta");
+		parameters.put("NUMBER", quotation.getBudgetNumber());
+		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
+		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "ppto_" + quotationNumber + ".pdf");
+		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/ppto_" + quotationNumber + ".pdf"));
 		listAttach.add(file);
 		return listAttach;
 	}
@@ -986,8 +900,9 @@ public class FrmQuotation {
 
 	@NotifyChange("modalMessage")
 	@Command
-	public void confirmSave() {
+	public void confirmSave(@BindingParam("radioGroup") Radiogroup radiogroup, @BindingParam("datebox") Datebox datebox) {
 		modalMessage = "El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?";
+		selectStatus(radiogroup, datebox);
 	}
 
 	@NotifyChange("printMessage")
@@ -1015,19 +930,26 @@ public class FrmQuotation {
 
 	@NotifyChange("*")
 	@Command
-	public void print(@BindingParam("template") String template) throws SQLException {
+	public void print(@BindingParam("template") String template) {
+		GenericReport report = new GenericReport();
 		String quotationNumber = new String();
 		if (quotation.isType())
 			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
 		else
 			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
-		createQuotationPdf(quotationNumber, quotation, template);
-		String report = new String("/resource/reports/ventas/presupuesto/Ppto_" + quotationNumber + ".pdf");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportPath", report);
-		map.put("reportTitle", "Presupuesto");
-		map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/presupuesto") + "/Ppt_" + quotationNumber + ".pdf");
-		Executions.createComponents("system/frmReport.zul", null, map);
+		if (template == null || template.compareTo("SI") == 0)
+			template = "quotation.jasper";
+		else
+			template = "quotation_without.jasper";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("TYPE", quotation.isType());
+		parameters.put("NEW", quotation.getNewNumber());
+		parameters.put("MODERNIZATION", quotation.getModernizationNumber());
+		parameters.put("VERSION", quotation.getVersionNumber());
+		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
+		report.createPdf("/resource/reports/ventas/presupuesto", template, parameters, "ppto_" + quotationNumber + ".pdf");
+		report.viewPdf("/resource/reports/ventas/presupuesto/ppto_" + quotationNumber + ".pdf", "Presupuesto");
 		restartForm();
 	}
 

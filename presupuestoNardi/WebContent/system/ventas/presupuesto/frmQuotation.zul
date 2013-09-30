@@ -115,8 +115,9 @@
 						<label sclass="formLabel"
 							value="Fecha Entrega:">
 						</label>
-						<datebox disabled="true" format="dd/MM/yyyy"
-							id="deliveryDate"
+						<datebox
+							disabled="@load(vm.quotation.status eq 'A' ? 'false':'true')"
+							format="dd/MM/yyyy" id="deliveryDate" readonly="true"
 							value="@save(vm.quotation.deliveryDate) @load(vm.quotation.deliveryDate)"
 							width="97%">
 						</datebox>
@@ -1046,8 +1047,9 @@
 					</row>
 					<row>
 						<space></space>
-						<radiogroup
-							selectedItem="@save(vm.quotation.status, before = 'confirmSave') @validator(vm.wasApproved, component = self, datebox = deliveryDate)">
+						<radiogroup id="radio"
+							onCheck="@command('selectStatus', radioGroup = self, datebox = deliveryDate)"
+							selectedItem="@save(vm.quotation.status)">
 							<radio
 								checked="@load(vm.quotation.status eq 'A' ? 'true' : false)"
 								disabled="@load(vm.disabledEdit)" label="Aprobado"
@@ -1070,7 +1072,8 @@
 						<button
 							disabled="@load(vm.disabledBudgetNumber ? vm.disabledEdit : 'true')"
 							image="/resource/images/icons/save.png" label="Guardar"
-							onClick="@command('confirmSave')" sclass="formLabel">
+							onClick="@command('confirmSave', radioGroup = radio, datebox = deliveryDate)"
+							sclass="formLabel">
 						</button>
 						<button
 							disabled="@load(vm.disabledEdit ? vm.disabledPrint : 'true')"

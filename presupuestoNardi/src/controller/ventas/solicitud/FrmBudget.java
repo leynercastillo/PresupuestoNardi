@@ -1,12 +1,10 @@
 package controller.ventas.solicitud;
 
+import general.GenericReport;
 import general.SimpleListModelCustom;
 import general.ValidateZK;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,16 +21,7 @@ import model.service.ServiceBudget;
 import model.service.ServiceBusinessPartner;
 import model.service.ServiceQuotation;
 import model.service.ServiceSecurityUser;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.hibernate.HibernateException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.zkoss.bind.BindUtils;
@@ -588,12 +577,6 @@ public class FrmBudget {
 		this.listBType = listBType;
 	}
 
-	/**
-	 * Metodo que inicializa la pantalla frmIndex. Se ejecuta antes de finalizar la carga del archivo DOM que
-	 * muestra el navegador.
-	 * 
-	 * Inicializa cada una de la variables insertadas en zul.
-	 */
 	@Init
 	public void init() {
 		restartForm();
@@ -822,11 +805,14 @@ public class FrmBudget {
 
 	public List<File> mailAttach() {
 		List<File> listAttach = new ArrayList<File>();
-		try {
-			createPdf();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		GenericReport report = new GenericReport();
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		int number = budget.getNumber();
+		parameters.put("NUMBER", number);
+		parameters.put("REPORT_TITLE", "Solicitud Presupuesto");
+		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
+		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "solicitud_" + number + ".pdf");
 		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/presupuesto" + budget.getNumber() + ".pdf"));
 		listAttach.add(file);
 		return listAttach;
@@ -841,7 +827,7 @@ public class FrmBudget {
 
 	@NotifyChange({ "*" })
 	@Command
-	public void save(@BindingParam("component") InputElement component) throws SQLException {
+	public void save(@BindingParam("component") InputElement component) {
 		if (businessPartner.getIdBusinessPartner() != 0)
 			budget.setBusinessPartner(businessPartner);
 		/* Cambiar if a metodo de validacion tradicional */
@@ -939,12 +925,15 @@ public class FrmBudget {
 	@NotifyChange("*")
 	@Command
 	public void searchBudgetNumber(@BindingParam("field") String field, @BindingParam("val") String value) {
-		for (int i = 0; i < value.length(); i++) {
-			if (!Character.isDigit(value.charAt(i))) {
-				value = "0";
-				break;
+		if (!value.isEmpty())
+			for (int i = 0; i < value.length(); i++) {
+				if (!Character.isDigit(value.charAt(i))) {
+					value = "0";
+					break;
+				}
 			}
-		}
+		else
+			value = "0";
 		Integer budgetNumber = Integer.parseInt(value);
 		Budget auxBudget = serviceBudget.findByNumber(budgetNumber);
 		if (auxBudget != null) {
@@ -1065,65 +1054,16 @@ public class FrmBudget {
 	}
 
 	@Command
-	public void createPdf() throws SQLException {
-		/* Se debe tomar la sesion a partir de Hibernate CORREGIR */
-		Integer number = budget.getNumber();
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e2) {
-			e2.printStackTrace();
-		}
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ascensor_nardi", "ascensor_admin", "leyner.18654277");
-		String string = Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud");
-		JasperReport jasperReport;
-		try {
-			jasperReport = (JasperReport) JRLoader.loadObjectFromFile(string + "/budget.jasper");
-		} catch (JRException e) {
-			jasperReport = null;
-			System.out.println("budget.jasper didn't find");
-		}
+	public void print() {
+		GenericReport report = new GenericReport();
 		Map<String, Object> parameters = new HashMap<String, Object>();
+		int number = budget.getNumber();
 		parameters.put("NUMBER", number);
-		/*
-		 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
-		 */
 		parameters.put("REPORT_TITLE", "Solicitud Presupuesto");
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
-		JasperPrint jasperPrint;
-		try {
-			jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
-		} catch (HibernateException e1) {
-			jasperPrint = null;
-			System.out.println("Connection wasn't obtained.");
-		} catch (JRException e1) {
-			jasperPrint = null;
-			e1.printStackTrace();
-		}
-		JRExporter jrExporter = new JRPdfExporter();
-		jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		jrExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, string + "/presupuesto" + number + ".pdf");
-		File file = new File(string + "/presupuesto" + number + ".pdf");
-		/* Eliminamos el pdf si ya existia, puesto que no se sobreescribe. */
-		if (file.isFile())
-			file.delete();
-		try {
-			jrExporter.exportReport();
-		} catch (JRException e) {
-			System.out.println("Report wasn't export.");
-		}
-		connection.close();
-	}
-
-	@Command
-	public void print() throws SQLException {
-		createPdf();
-		String report = new String("/resource/reports/ventas/solicitud/presupuesto" + budget.getNumber() + ".pdf");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportPath", report);
-		map.put("reportTitle", "Solicitud de presupuesto");
-		map.put("absolutePath", Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/") + "/presupuesto" + budget.getNumber() + ".pdf");
-		Executions.createComponents("system/frmReport.zul", null, map);
+		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "solicitud_" + number + ".pdf");
+		report.viewPdf("/resource/reports/ventas/solicitud/solicitud_" + number + ".pdf", "Solicitud de presupuesto");
 	}
 
 	@NotifyChange({ "listDesign" })
@@ -1300,5 +1240,49 @@ public class FrmBudget {
 		BindUtils.postNotifyChange(null, null, budget, "partnerName");
 		BindUtils.postNotifyChange(null, null, budget, "rifType");
 		BindUtils.postNotifyChange(null, null, budget, "rifPartner");
+	}
+
+	@NotifyChange("*")
+	@Command
+	public void copy() {
+		Budget auxBudget = this.budget;
+		restartForm();
+		this.budget = auxBudget;
+		List<Budget> listAllBudget = serviceBudget.listAll();
+		budget.setNumber(0);
+		budget.setNumber(listAllBudget.get(listAllBudget.size() - 1).getNumber() + 1);
+		budget.setDate(new Date());
+		/* Recargamos todas las listas dependientes de lo seleccionado en el budget */
+		if (this.budget.getBasicDataByCabinDesign() != null) {
+			cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
+			listDesign = serviceBasicData.listDesignByModel(cabinModel);
+		}
+		String elevatorCapacitance = new String(budget.getBasicDataByElevatorCapacitance().getName());
+		if (elevatorCapacitance.indexOf("320 Kg - 4 Pers") != -1 || elevatorCapacitance.indexOf("450 Kg - 6 Pers") != -1 || elevatorCapacitance.indexOf("600 Kg - 8 Pers") != -1) {
+			listFan = serviceBasicData.listFan1();
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
+		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
+			listFan = serviceBasicData.listFan1();
+			listFan.addAll(serviceBasicData.listFan2());
+			/*
+			 * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
+			 * asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
+			 */
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(serviceBasicData.findByElevatorCapacitance("450 Kg - 6 Pers"));
+		} else {
+			listFan = serviceBasicData.listFan2();
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
+		}
+		String controlType = budget.getBasicDataByControlType().getName();
+		if (controlType.indexOf("SISTEL") != -1) {
+			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
+			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
+		} else if (controlType.indexOf("CF CONTROL") != -1) {
+			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
+			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+		} else {
+			listBoothDisplay = new ArrayList<BasicData>();
+			listFloorDisplay = new ArrayList<BasicData>();
+		}
 	}
 }

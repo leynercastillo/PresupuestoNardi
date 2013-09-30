@@ -16,7 +16,8 @@
 					if="${sec:isAnyGranted('ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS')}"
 					label="Usuarios">
 				</tab>
-				<tab if="${sec:isAnyGranted('ROLE_USER')}"
+				<tab
+					if="${sec:isAnyGranted('ROLE_ITEM_MASTER,ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS,ROLE_GENERIC_HELP')}"
 					label="Ayuda">
 				</tab>
 			</tabs>
@@ -28,11 +29,8 @@
 							<treeitem
 								if="${sec:isAllGranted('ROLE_ITEM_MASTER')}">
 								<treerow>
-									<treecell
+									<treecell label="Maestro articulos"
 										onClick="@command('optionSelected', optionSelected='system/inventario/frmItemMaster.zul')">
-										<label
-											value="Maestro artículos">
-										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
@@ -47,39 +45,31 @@
 								if="${sec:isAllGranted('ROLE_BUDGET')}">
 								<treerow>
 									<treecell
+										label="Solicitud de Presupuesto"
 										onClick="@command('optionSelected', optionSelected='system/ventas/solicitud/frmBudget.zul')">
-										<label
-											value="Solicitud de Presupuesto">
-										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
 							<treeitem
 								if="${sec:isAllGranted('ROLE_QUOTATION')}">
 								<treerow>
-									<treecell
+									<treecell label="Presupuesto"
 										onClick="@command('optionSelected', optionSelected='system/ventas/presupuesto/frmQuotation.zul')">
-										<label value="Presupuesto">
-										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
 							<treeitem
 								if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
 								<treerow>
-									<treecell
+									<treecell label="Resumenes de venta"
 										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSalesSummary.zul')">
-										<label
-											value="Resumenes de venta">
-										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
 							<treeitem open="false"
 								if="${sec:isAnyGranted('ROLE_EFFECTIVE_SALES')}">
 								<treerow>
-									<treecell>
-										<label value="Informes"></label>
+									<treecell label="Informes">
 									</treecell>
 								</treerow>
 								<treechildren>
@@ -87,10 +77,8 @@
 										if="${sec:isAllGranted('ROLE_EFFECTIVE_SALES')}">
 										<treerow>
 											<treecell
+												label="Ventas Efectivas"
 												onClick="@command('optionSelected', optionSelected='system/ventas/reportes/frmEffectiveSales.zul')">
-												<label
-													value="Ventas Efectivas">
-												</label>
 											</treecell>
 										</treerow>
 									</treeitem>
@@ -106,37 +94,31 @@
 							<treeitem
 								if="${sec:isAllGranted('ROLE_SECURITY_PROFILE')}">
 								<treerow>
-									<treecell
+									<treecell label="Perfil de Usuario"
 										onClick="@command('optionSelected', optionSelected='system/seguridad/perfil/frmSecurityProfile.zul')">
-										<label
-											value="Perfil de Usuario">
-										</label>
 									</treecell>
 								</treerow>
 							</treeitem>
 							<treeitem
 								if="${sec:isAllGranted('ROLE_SECURITY_USERS_MASTER')}">
 								<treerow>
-									<treecell
+									<treecell label="Usuarios"
 										onClick="@command('optionSelected', optionSelected='system/seguridad/usuario/frmSecurityUserList.zul')">
-										<label value="Usuarios"></label>
 									</treecell>
 								</treerow>
 							</treeitem>
 						</treechildren>
 					</tree>
 				</tabpanel>
-				<tabpanel if="${sec:isAnyGranted('ROLE_USER')}">
+				<tabpanel
+					if="${sec:isAnyGranted('ROLE_ITEM_MASTER,ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS,ROLE_GENERIC_HELP')}">
 					<tree>
 						<treechildren>
 							<treeitem
-								if="${sec:isAllGranted('ROLE_USER')}">
+								if="${sec:isAllGranted('ROLE_GENERIC_HELP')}">
 								<treerow>
-									<treecell
-										onClick="@command('optionSelected', optionSelected='system/ayuda/index.html')">
-										<label
-											value="Guía">
-										</label>
+									<treecell label="Nuevo tutorial"
+										onClick="@command('optionSelected', optionSelected='system/ayuda/tutorial/frmNewGenericTutorial.zul')">
 									</treecell>
 								</treerow>
 							</treeitem>

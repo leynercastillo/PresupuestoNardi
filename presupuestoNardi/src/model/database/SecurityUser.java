@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 09-sep-2013 15:28:18 by Hibernate Tools 4.0.0
+// Generated 17-sep-2013 13:42:25 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +30,7 @@ public class SecurityUser implements java.io.Serializable {
 	private String email;
 	private String password;
 	private String phone;
+	private Boolean newFeature;
 	private char status;
 	private Set<Budget> budgets = new HashSet<Budget>(0);
 	private Set<SecurityGroup> securityGroups = new HashSet<SecurityGroup>(0);
@@ -47,12 +48,13 @@ public class SecurityUser implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public SecurityUser(int idSecurityUser, String name, String email, String password, String phone, char status, Set<Budget> budgets, Set<SecurityGroup> securityGroups, Set<Contact> contacts) {
+	public SecurityUser(int idSecurityUser, String name, String email, String password, String phone, Boolean newFeature, char status, Set<Budget> budgets, Set<SecurityGroup> securityGroups, Set<Contact> contacts) {
 		this.idSecurityUser = idSecurityUser;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
+		this.newFeature = newFeature;
 		this.status = status;
 		this.budgets = budgets;
 		this.securityGroups = securityGroups;
@@ -105,6 +107,15 @@ public class SecurityUser implements java.io.Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@Column(name = "new_feature")
+	public Boolean getNewFeature() {
+		return this.newFeature;
+	}
+
+	public void setNewFeature(Boolean newFeature) {
+		this.newFeature = newFeature;
 	}
 
 	@Column(name = "status", nullable = false, length = 1)

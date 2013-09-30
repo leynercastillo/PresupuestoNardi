@@ -1,4 +1,4 @@
-package controller.seguridad;
+package controller.seguridad.usuario;
 
 import model.database.SecurityUser;
 

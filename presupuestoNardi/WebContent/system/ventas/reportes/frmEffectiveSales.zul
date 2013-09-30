@@ -15,17 +15,25 @@
 			</columns>
 			<rows>
 				<row>
-					<label value="Fecha inicio:"></label>
+					<label sclass="formLabel" value="Fecha inicio:"></label>
 					<datebox format="dd/MM/yyyy" hflex="1"
 						id="dtbxBegin" readonly="true"
 						value="@save(vm.beginDate, before = 'generateReport') @validator(vm.noEmpty, component = self)">
 					</datebox>
-					<label value="Fecha inicio:"></label>
+					<label sclass="formLabel" value="Fecha inicio:"></label>
 					<datebox format="dd/MM/yyyy" hflex="1"
 						readonly="true"
 						value="@save(vm.endDate, before = 'generateReport') @validator(vm.noBeforeDate, component = self, otherDate = dtbxBegin.value)">
 					</datebox>
 					<space></space>
+				</row>
+				<row>
+					<checkbox checked="@bind(vm.newSales)"
+						label="Ventas nuevas">
+					</checkbox>
+					<checkbox checked="@bind(vm.modernization)"
+						label="Modernizacion">
+					</checkbox>
 				</row>
 				<row spans="5">
 					<listbox checkmark="true"
@@ -55,15 +63,12 @@
 					</listbox>
 				</row>
 				<row>
-					<space></space>
-					<div>
-						<button image="resource/images/icons/save.png"
-							label="Generar" onClick="@command('generateReport')">
-						</button>
-						<button image="resource/images/icons/cancel.png"
-							label="Cancelar" onClick="@command('restartForm')">
-						</button>
-					</div>
+					<button image="resource/images/icons/save.png"
+						label="Generar" onClick="@command('generateReport')">
+					</button>
+					<button image="resource/images/icons/cancel.png"
+						label="Cancelar" onClick="@command('restartForm')">
+					</button>
 				</row>
 			</rows>
 		</grid>

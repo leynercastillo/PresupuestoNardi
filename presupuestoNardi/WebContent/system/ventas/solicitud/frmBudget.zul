@@ -1346,7 +1346,7 @@
 						<button
 							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
 							image="/resource/images/icons/copy.png" label="Copiar"
-							onClick="@command()" sclass="formLabel">
+							onClick="@command('copy')" sclass="formLabel">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
