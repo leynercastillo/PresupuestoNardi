@@ -5,10 +5,13 @@ import general.SimpleListModelCustom;
 import general.ValidateZK;
 
 import java.io.File;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import model.database.BasicData;
@@ -793,7 +796,24 @@ public class FrmBudget {
 	}
 
 	public Validator getNoZeroDouble() {
-		return new ValidateZK().getNoZeroDouble();
+		return new AbstractValidator() {
+			@Override
+			public void validate(ValidationContext ctx) {
+				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
+				NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+				Double number = new Double(0);
+				try {
+					number = format.parse(inputElement.getText()).doubleValue();
+				} catch (WrongValueException e) {
+					e.printStackTrace();
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (number <= 0 && budget.isType()) {
+					throw new WrongValueException(inputElement, "Ingrese una cantidad valida.");
+				}
+			}
+		};
 	}
 
 	public String mailMessage() {
@@ -813,7 +833,7 @@ public class FrmBudget {
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
 		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "solicitud_" + number + ".pdf");
-		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/presupuesto" + budget.getNumber() + ".pdf"));
+		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/solicitud_" + number + ".pdf"));
 		listAttach.add(file);
 		return listAttach;
 	}
@@ -828,15 +848,17 @@ public class FrmBudget {
 	@NotifyChange({ "*" })
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
+		boolean sendMail = false;
+		// Se envia si se guarda. Si se modifica o no se guarda, no se envia
+		if (budget.getIdBudget() == 0)
+			sendMail = true;
 		if (businessPartner.getIdBusinessPartner() != 0)
 			budget.setBusinessPartner(businessPartner);
-		/* Cambiar if a metodo de validacion tradicional */
 		if (!serviceBudget.save(budget)) {
 			Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
 			return;
 		}
-		/* Se envia si se guarda. Si se modifica o no se guarda, no se envia */
-		if (budget.getIdBudget() == 0)
+		if (sendMail)
 			sendMail();
 		Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
 		print();
@@ -1070,9 +1092,7 @@ public class FrmBudget {
 	@Command
 	public void loadCabinDesign() {
 		listDesign = serviceBasicData.listDesignByModel(cabinModel);
-		/*
-		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
-		 */
+		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 		budget.setBasicDataByCabinDesign(null);
 	}
 
@@ -1104,18 +1124,14 @@ public class FrmBudget {
 		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
 			listFan = serviceBasicData.listFan1();
 			listFan.addAll(serviceBasicData.listFan2());
-			/*
-			 * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
-			 * asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
-			 */
+			// Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
+			// asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
 			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(serviceBasicData.findByElevatorCapacitance("450 Kg - 6 Pers"));
 		} else {
 			listFan = serviceBasicData.listFan2();
 			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
 		}
-		/*
-		 * No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
-		 */
+		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
 		budget.setBasicDataByRoofType(null);
 		budget.setBasicDataByFan(null);
 		BindUtils.postNotifyChange(null, null, budget, "fan");
@@ -1176,10 +1192,8 @@ public class FrmBudget {
 
 	@Command
 	public void updateMotorQuantity(@ContextParam(ContextType.TRIGGER_EVENT) InputEvent event) {
-		/*
-		 * Con la linea superior enlazo el evento sobre el input con el controlador Ver: http://forum.zkoss
-		 * .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
-		 */
+		// Con la linea superior enlazo el evento sobre el input con el controlador Ver: http://forum.zkoss
+		// .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
 		if (budget.isType()) {
 			Integer value = new Integer(0);
 			if (!event.getValue().isEmpty())
@@ -1199,9 +1213,7 @@ public class FrmBudget {
 			floorType = budget.getBasicDataByFloorType().getName();
 		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 || floorType.indexOf("OTROS") != -1)
 			budget.setDesignSpecial(true);
-		/*
-		 * IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
-		 */
+		// IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
 		BindUtils.postNotifyChange(null, null, budget, "designSpecial");
 	}
 
@@ -1249,10 +1261,10 @@ public class FrmBudget {
 		restartForm();
 		this.budget = auxBudget;
 		List<Budget> listAllBudget = serviceBudget.listAll();
-		budget.setNumber(0);
+		budget.setIdBudget(0);
 		budget.setNumber(listAllBudget.get(listAllBudget.size() - 1).getNumber() + 1);
 		budget.setDate(new Date());
-		/* Recargamos todas las listas dependientes de lo seleccionado en el budget */
+		// Recargamos todas las listas dependientes de lo seleccionado en el budget
 		if (this.budget.getBasicDataByCabinDesign() != null) {
 			cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
 			listDesign = serviceBasicData.listDesignByModel(cabinModel);
@@ -1264,10 +1276,8 @@ public class FrmBudget {
 		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
 			listFan = serviceBasicData.listFan1();
 			listFan.addAll(serviceBasicData.listFan2());
-			/*
-			 * Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
-			 * asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
-			 */
+			// Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
+			// asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
 			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(serviceBasicData.findByElevatorCapacitance("450 Kg - 6 Pers"));
 		} else {
 			listFan = serviceBasicData.listFan2();
