@@ -8,6 +8,9 @@
 				<tab if="${sec:isAnyGranted('ROLE_ITEM_MASTER')}"
 					label="Inventario">
 				</tab>
+				<tab if="${sec:isAnyGranted('ROLE_BUSINESS_PARTNER')}"
+					label="Clientes">
+				</tab>
 				<tab
 					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}"
 					label="Ventas">
@@ -38,6 +41,21 @@
 					</tree>
 				</tabpanel>
 				<tabpanel
+					if="${sec:isAnyGranted('ROLE_BUSINESS_PARTNER')}">
+					<tree>
+						<treechildren>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_BUSINESS_PARTNER')}">
+								<treerow>
+									<treecell label="Clientes"
+										onClick="@command('optionSelected', optionSelected='system/socios/frmBusinessPartnerList.zul')">
+									</treecell>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</tabpanel>
+				<tabpanel
 					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}">
 					<tree>
 						<treechildren>
@@ -61,7 +79,7 @@
 							<treeitem
 								if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
 								<treerow>
-									<treecell label="Resumenes de venta"
+									<treecell label="Resumen de ventas"
 										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSalesSummary.zul')">
 									</treecell>
 								</treerow>

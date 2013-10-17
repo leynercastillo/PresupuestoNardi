@@ -4,9 +4,9 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="UbuntuNardiPostgreSql" />
+   <property key="Logical" value="LocalNardi" />
    <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://192.168.10.125:5432/ascensor_nardi" />
+   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
    <property key="UID" value="ascensor_admin" />
    <property key="PWD" value="leyner.18654277" />
    <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
@@ -16,9 +16,9 @@
    <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
   <data-source id="DS0">
-   <property key="Logical" value="UbuntuNardiPostgreSql" />
+   <property key="Logical" value="LocalNardi" />
    <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://192.168.10.125:5432/ascensor_nardi" />
+   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/ascensor_nardi" />
    <property key="UID" value="ascensor_admin" />
    <property key="PWD" value="leyner.18654277" />
    <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
@@ -29,7 +29,7 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="70ce2b78-622f-4d73-a8f3-23fbdc6fbc0e" dbcs-ref="DS0" name="UbuntuNardiPostgreSql" physicalName="PostgresNardi" >
+  <database id="DB0" populated="true" UUID="70ce2b78-622f-4d73-a8f3-23fbdc6fbc0e" dbcs-ref="DS0" name="LocalNardi" physicalName="PostgresNardi" >
    <catalog id="CAT1" populated="true" UUID="e42b1d25-9f35-469c-88a9-03b7fd000636" name="ascensor_nardi" nativeTerm="database" physicalName="ascensor_nardi" >
     <schema id="SCH2" populated="false" UUID="65c7f993-e754-406b-8241-18b882ae4376" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -1191,7 +1191,7 @@
   <table-link relationship-ref="REL397" pkConnection="0.3008849557522124" fkConnection="0.045771916214119475" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
   <table-link relationship-ref="REL347" pkConnection="0.0" fkConnection="1.0" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
   <table-link relationship-ref="REL281" pkConnection="1.0" fkConnection="0.2602739726027397" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="65"/>
-  <table-link relationship-ref="REL409" pkConnection="0.4424778761061947" fkConnection="0.0383586083853702" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL409" pkConnection="0.46017699115044247" fkConnection="0.0383586083853702" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
   <table-link relationship-ref="REL349" pkConnection="0.9382716049382716" fkConnection="0.01694915254237288" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="40"/>
   <table-link relationship-ref="REL351" pkConnection="0.8148148148148148" fkConnection="0.07136563876651983" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="40"/>
   <table-link relationship-ref="REL353" pkConnection="0.8451612903225807" fkConnection="0.0" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>

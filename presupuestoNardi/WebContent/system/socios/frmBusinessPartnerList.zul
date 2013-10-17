@@ -1,0 +1,51 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" id="win" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.socios.FrmBusinessPartnerList')">
+		<style src="resource/style/styleZK.css"></style>
+		<caption label="Clientes"></caption>
+		<grid>
+			<rows>
+				<row>
+					<listbox model="@load(vm.listBusinessPartner)"
+						mold="paging"
+						onSelect="@command('viewFrmBusinessPartner', newPartner = false)"
+						pageSize="10" pagingPosition="both"
+						selectedItem="@bind(vm.selectedBP)">
+						<listhead>
+							<listheader label="Rif" sort="auto(rif)"
+								width="15%">
+							</listheader>
+							<listheader label="Cliente"
+								sort="auto(name)" width="50%">
+							</listheader>
+							<listheader label="Direccion"
+								sort="auto(address)" width="35%">
+							</listheader>
+						</listhead>
+						<template name="model" var="businessPartner">
+							<listitem>
+								<listcell
+									label="@load(vm.getRif(businessPartner))">
+								</listcell>
+								<listcell
+									label="@load(businessPartner.name)">
+								</listcell>
+								<listcell
+									label="@load(businessPartner.address)">
+								</listcell>
+							</listitem>
+						</template>
+					</listbox>
+				</row>
+				<row>
+					<button image="/resource/images/icons/add.png"
+						label="Nuevo"
+						onClick="@command('viewFrmBusinessPartner', newPartner = true)">
+					</button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -860,7 +860,7 @@ public class FrmBudget {
 		}
 		if (sendMail)
 			sendMail();
-		Clients.showNotification("Presupuesto enviado", "info", null, "bottom_center", 2000);
+		Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
 		print();
 		restartForm();
 	}
@@ -923,11 +923,13 @@ public class FrmBudget {
 		}
 	}
 
-	@NotifyChange({ "listRifPartner" })
+	@NotifyChange({ "listRifPartner", "listPartnerName" })
 	@Command
 	public void loadBusinessPartnerByField(@BindingParam("field") String field) {
 		if (field.compareTo("rifPartner") == 0) {
 			listRifPartner = new SimpleListModelCustom<Object>(serviceBusinessPartner.listRif());
+		} else {
+			listPartnerName = new SimpleListModelCustom<Object>(serviceBusinessPartner.listName());
 		}
 	}
 
@@ -941,43 +943,22 @@ public class FrmBudget {
 			listBudget2 = serviceBudget.listByConstruction(value);
 		else if (field.compareTo("seller") == 0)
 			listBudget2 = serviceBudget.listBySeller(value);
-		searchGeneric(listBudget2);
-	}
-
-	@NotifyChange("*")
-	@Command
-	public void searchBudgetNumber(@BindingParam("field") String field, @BindingParam("val") String value) {
-		if (!value.isEmpty())
+		else if (field.compareTo("rif") == 0)
+			listBudget2 = serviceBudget.listByRifPartner(value);
+		else if (field.compareTo("number") == 0) {
+			if (value.isEmpty())
+				value = "0";
 			for (int i = 0; i < value.length(); i++) {
 				if (!Character.isDigit(value.charAt(i))) {
 					value = "0";
 					break;
 				}
 			}
-		else
-			value = "0";
-		Integer budgetNumber = Integer.parseInt(value);
-		Budget auxBudget = serviceBudget.findByNumber(budgetNumber);
-		if (auxBudget != null) {
-			budget = auxBudget;
-			disableAfterSearch = new Boolean(true);
-			disabledNumber = new Boolean(true);
-			disableSeller = new Boolean(true);
-			if (budget.getBasicDataByCabinDesign() != null) {
-				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
-				listDesign.add(budget.getBasicDataByCabinDesign());
-				listRoofType.add(budget.getBasicDataByRoofType());
-				listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
-				listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
-			}
-		} else
-			Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
-	}
-
-	@NotifyChange("*")
-	@Command
-	public void searchBudgetBusinessPartner(@BindingParam("rif") String rif) {
-		List<Budget> listBudget2 = serviceBudget.listByRifPartner(rif);
+			Integer budgetNumber = Integer.parseInt(value);
+			Budget auxBudget = serviceBudget.findByNumber(budgetNumber);
+			if (auxBudget != null)
+				listBudget2.add(auxBudget);
+		}
 		searchGeneric(listBudget2);
 	}
 
@@ -1223,8 +1204,11 @@ public class FrmBudget {
 	}
 
 	@Command
-	public void searchBusinessPartner(@BindingParam("rif") String rif) {
-		businessPartner = serviceBusinessPartner.findActiveByRif(rif);
+	public void searchBusinessPartner(@BindingParam("field") String field, @BindingParam("val") String val) {
+		if (field.compareTo("rif") == 0)
+			businessPartner = serviceBusinessPartner.findActiveByRif(val);
+		else if (field.compareTo("partnerName") == 0)
+			businessPartner = serviceBusinessPartner.findActiveByName(val);
 		if (businessPartner == null) {
 			Executions.createComponents("system/socios/frmBusinessPartner.zul", null, null);
 		} else {
@@ -1260,6 +1244,10 @@ public class FrmBudget {
 		Budget auxBudget = this.budget;
 		restartForm();
 		this.budget = auxBudget;
+		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SecurityUser user = serviceSecurityUser.findUser(auxUser.getUsername());
+		this.budget.setSecurityUser(user);
+		this.budget.setSeller(user.getName());
 		List<Budget> listAllBudget = serviceBudget.listAll();
 		budget.setIdBudget(0);
 		budget.setNumber(listAllBudget.get(listAllBudget.size() - 1).getNumber() + 1);

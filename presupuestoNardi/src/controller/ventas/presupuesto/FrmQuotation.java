@@ -419,38 +419,72 @@ public class FrmQuotation {
 		};
 	}
 
-	public Validator getWasApproved() {
+	// public Validator getWasApproved() {
+	// return new AbstractValidator() {
+	// @Override
+	// public void validate(ValidationContext ctx) {
+	// Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
+	// if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
+	// List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
+	// for (Quotation q : list) {
+	// if (q.getStatus() == 'A') {
+	// quotation.setStatus('E');
+	// quotation.setApprovedDate(null);
+	// BindUtils.postNotifyChange(null, null, quotation, "status");
+	// BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+	// throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
+	// }
+	// }
+	// /*
+	// * Si no hay ninguna aprobada, excepto la actual, entonces se asigna fecha de
+	// * aprobacion
+	// */
+	// quotation.setApprovedDate(new Date());
+	// if (quotation.getDeliveryDate() == null) {
+	// Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
+	// throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
+	// }
+	// } else {
+	// quotation.setApprovedDate(null);
+	// BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+	// }
+	// }
+	// };
+	// }
+
+	public Validator getNoApprovedDate() {
 		return new AbstractValidator() {
 			@Override
 			public void validate(ValidationContext ctx) {
-				Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
-				if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
-					List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
-					for (Quotation q : list) {
-						if (q.getStatus() == 'A') {
-							quotation.setStatus('E');
-							quotation.setApprovedDate(null);
-							BindUtils.postNotifyChange(null, null, quotation, "status");
-							BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-							throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
-						}
-					}
-					/*
-					 * Si no hay ninguna aprobada, excepto la actual, entonces se asigna fecha de
-					 * aprobacion
-					 */
-					quotation.setApprovedDate(new Date());
-					if (quotation.getDeliveryDate() == null) {
-						Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
-						datebox.setDisabled(false);
-						throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
-					}
-				} else {
+				Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
+				if (datebox.getValue() == null)
+					throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
+				else {
 					quotation.setApprovedDate(null);
 					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
 				}
 			}
 		};
+	}
+
+	@Command
+	public void selectStatus(@BindingParam("radioGroup") Radiogroup radiogroup) {
+		if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
+			List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
+			for (Quotation q : list) {
+				if (q.getStatus() == 'A') {
+					quotation.setStatus('E');
+					quotation.setApprovedDate(null);
+					BindUtils.postNotifyChange(null, null, quotation, "status");
+					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+					throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
+				}
+			}
+			quotation.setApprovedDate(new Date());
+		} else {
+			quotation.setApprovedDate(null);
+			BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
+		}
 	}
 
 	@Init
@@ -645,7 +679,7 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("6");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- En caso de daño oculto será presupuestado el mismo al momento de ser detectado y por separado.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
 		}
 	}
 
@@ -811,30 +845,6 @@ public class FrmQuotation {
 		disabledEdit = new Boolean(true);
 	}
 
-	@Command
-	public void selectStatus(@BindingParam("radioGroup") Radiogroup radiogroup, @BindingParam("datebox") Datebox datebox) {
-		if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
-			List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
-			for (Quotation q : list) {
-				if (q.getStatus() == 'A') {
-					quotation.setStatus('E');
-					quotation.setApprovedDate(null);
-					BindUtils.postNotifyChange(null, null, quotation, "status");
-					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-					throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
-				}
-			}
-			quotation.setApprovedDate(new Date());
-			if (quotation.getDeliveryDate() == null) {
-				datebox.setDisabled(false);
-				throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
-			}
-		} else {
-			quotation.setApprovedDate(null);
-			BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-		}
-	}
-
 	@NotifyChange({ "quotation", "disableBeforeSearch", "disabledBudgetNumber", "disabledEdit" })
 	@Command
 	public void search() {
@@ -880,7 +890,7 @@ public class FrmQuotation {
 		List<String> listRecipient = new ArrayList<String>();
 		listRecipient.add("ventas@ascensoresnardi.com");
 		listRecipient.add("logistica@ascensoresnardi.com");
-		listRecipient.add(quotation.getBudget().getSecurityUser().getEmail());
+		listRecipient.add(serviceBudget.findByNumber(quotation.getBudget().getNumber()).getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mailMessage(), mailAttach());
 	}
@@ -902,7 +912,7 @@ public class FrmQuotation {
 	@Command
 	public void confirmSave(@BindingParam("radioGroup") Radiogroup radiogroup, @BindingParam("datebox") Datebox datebox) {
 		modalMessage = "El proceso de guardado es irreversible. ¿Esta seguro de guardar el presupuesto?";
-		selectStatus(radiogroup, datebox);
+		selectStatus(radiogroup);
 	}
 
 	@NotifyChange("printMessage")

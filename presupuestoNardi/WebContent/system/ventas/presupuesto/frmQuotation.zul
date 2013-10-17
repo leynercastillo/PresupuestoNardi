@@ -74,9 +74,8 @@
 						<label sclass="formLabel"
 							value="Nro Solicitud:">
 						</label>
-						<combobox buttonVisible="false"
-							autocomplete="true" autodrop="true"
-							disabled="@load(vm.disabledBudgetNumber)"
+						<combobox autocomplete="true" autodrop="true"
+							buttonVisible="false" disabled="@load(vm.disabledBudgetNumber)"
 							model="@load(vm.listBudgetNumber)"
 							onChange="@command(vm.disableBeforeSearch ? 'loadBudgetId':'loadQuotationByField', field='budgetNumber',val=self.value)"
 							onFocus="@command(vm.disableBeforeSearch ? 'searchBudgetByField':'searchQuotationByField', field='number')"
@@ -90,11 +89,10 @@
 						<combobox autocomplete="true"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
 							buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
-							maxlength="100" model="@load(vm.listPartnerName)"
+							hflex="1" maxlength="100" model="@load(vm.listPartnerName)"
 							onChange="@command(vm.disableBeforeSearch  ? '':'loadQuotationByField', field='partnerName', val=self.value)"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='partnerName')"
-							value="@save(vm.quotation.partnerName, before = 'confirmSave') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)"
-							width="99%">
+							value="@save(vm.quotation.partnerName, before = 'confirmSave') @load(vm.quotation.partnerName) @validator(vm.noEmpty, component = self)">
 						</combobox>
 						<label sclass="formLabel" value="Fecha:"></label>
 						<datebox disabled="true" format="dd/MM/yyyy"
@@ -104,21 +102,21 @@
 					</row>
 					<row>
 						<label sclass="formLabel" value="Obra:"></label>
-						<combobox width="99%" buttonVisible="false"
-							value="@save(vm.quotation.construction, before = 'confirmSave') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)"
-							autocomplete="true" model="@load(vm.listConstruction)"
+						<combobox autocomplete="true"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
+							hflex="1" maxlength="100" model="@load(vm.listConstruction)"
 							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='construction', val=self.value)"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='construction')"
-							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
+							value="@save(vm.quotation.construction, before = 'confirmSave') @load(vm.quotation.construction) @validator(vm.noEmpty, component = self)">
 						</combobox>
 						<label sclass="formLabel"
 							value="Fecha Entrega:">
 						</label>
 						<datebox
-							disabled="@load(vm.quotation.status eq 'A' ? 'false':'true')"
-							format="dd/MM/yyyy" id="deliveryDate" readonly="true"
-							value="@save(vm.quotation.deliveryDate) @load(vm.quotation.deliveryDate)"
+							disabled="@load(vm.disabledEdit ? 'true' : vm.quotation.status eq 'A' ? 'false' : 'true')"
+							format="dd/MM/yyyy"
+							value="@save(vm.quotation.deliveryDate, before = 'confirmSave') @load(vm.quotation.deliveryDate) @validator(vm.noApprovedDate, datebox = self)"
 							width="97%">
 						</datebox>
 						<space></space>
@@ -133,13 +131,14 @@
 						</textbox>
 						<label sclass="formLabel" value="Vendedor:">
 						</label>
-						<combobox width="97%" buttonVisible="false"
-							value="@save(vm.quotation.seller, before = 'confirmSave') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
-							autocomplete="true" model="@load(vm.listSeller)"
+						<combobox autocomplete="true"
 							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
+							maxlength="100" model="@load(vm.listSeller)"
 							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='seller')"
 							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='seller', val=self.value)"
-							disabled="@load(vm.disableBeforeSearch)" maxlength="100">
+							value="@save(vm.quotation.seller, before = 'confirmSave') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
+							width="97%">
 						</combobox>
 						<space></space>
 					</row>
@@ -150,11 +149,11 @@
 								value="@save(vm.quotation.elevatorQuantity, before = 'confirmSave') @load(vm.quotation.elevatorQuantity) @validator(vm.noElevatorQuantity, component = self)"
 								width="17%">
 							</intbox>
-							<combobox
-								value="@load(vm.quotation.basicDataByElevatorType eq null ? vm.seleccione : vm.quotation.basicDataByElevatorType.name)"
-								model="@load(vm.listElevatorType)"
+							<combobox disabled="true"
+								model="@load(vm.listElevatorType)" readonly="false"
 								selectedItem="@bind(vm.quotation.basicDataByElevatorType)"
-								style="float: right" readonly="false" disabled="true"
+								style="float: right"
+								value="@load(vm.quotation.basicDataByElevatorType eq null ? vm.seleccione : vm.quotation.basicDataByElevatorType.name)"
 								width="77%">
 								<template name="model"
 									var="elevatorType">
@@ -198,11 +197,11 @@
 						<label sclass="formLabel"
 							value="Capacidad (Kg - Cap.):">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.quotation.basicDataByElevatorCapacitance.name)"
-							model="@load(vm.listElevatorCapa)"
+						<combobox disabled="true"
+							model="@load(vm.listElevatorCapa)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByElevatorCapacitance)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByElevatorCapacitance eq null ? vm.seleccione : vm.quotation.basicDataByElevatorCapacitance.name)"
+							width="99%">
 							<template name="model" var="elevatorCapa">
 								<comboitem
 									label="@load(elevatorCapa.name)">
@@ -248,35 +247,35 @@
 								</columns>
 								<rows>
 									<row>
-										<checkbox label="Continua:"
+										<checkbox
 											checked="@bind(vm.quotation.stopSequenceContinuous)"
-											disabled="true"
+											disabled="true" label="Continua:"
 											onClick="@command('isStopSequenceContinuous')">
 										</checkbox>
-										<textbox width="97%"
-											disabled="true"
+										<textbox disabled="true"
+											maxlength="50"
 											value="@load(vm.quotation.stopSequenceContinuous ? vm.quotation.stopSequenceContinuousQ : '') @save(vm.quotation.stopSequenceContinuousQ)"
-											maxlength="50">
+											width="97%">
 										</textbox>
 										<hbox>
 											<label
 												value="Nro Paradas:">
 											</label>
 											<intbox disabled="true"
-												width="98%"
-												value="@load(vm.quotation.stopSequenceContinuous ? vm.quotation.stopSequenceContinuousNumber : '0') @save(vm.quotation.stopSequenceContinuousNumber)">
+												value="@load(vm.quotation.stopSequenceContinuous ? vm.quotation.stopSequenceContinuousNumber : '0') @save(vm.quotation.stopSequenceContinuousNumber)"
+												width="98%">
 											</intbox>
 										</hbox>
 									</row>
 									<row>
-										<checkbox label="Par:"
+										<checkbox
 											checked="@load(vm.quotation.stopSequenceContinuous ? 'false' : vm.quotation.stopSequenceEven) @save(vm.quotation.stopSequenceEven)"
-											disabled="true">
+											disabled="true" label="Par:">
 										</checkbox>
-										<textbox width="97%"
-											disabled="true"
+										<textbox disabled="true"
+											maxlength="50"
 											value="@load(vm.quotation.stopSequenceContinuous ? '' : vm.quotation.stopSequenceEven ? vm.quotation.stopSequenceEvenQ : '') @save(vm.quotation.stopSequenceEvenQ)"
-											maxlength="50">
+											width="97%">
 										</textbox>
 										<hbox>
 											<label
@@ -289,22 +288,22 @@
 										</hbox>
 									</row>
 									<row>
-										<checkbox label="Impar:"
+										<checkbox
 											checked="@load(vm.quotation.stopSequenceContinuous ? 'false' : vm.quotation.stopSequenceOdd) @save(vm.quotation.stopSequenceOdd)"
-											disabled="true">
+											disabled="true" label="Impar:">
 										</checkbox>
-										<textbox width="97%"
-											disabled="true"
+										<textbox disabled="true"
+											maxlength="50"
 											value="@load(vm.quotation.stopSequenceContinuous ? '' : vm.quotation.stopSequenceOdd ? vm.quotation.stopSequenceOddQ : '') @save(vm.quotation.stopSequenceOddQ)"
-											maxlength="50">
+											width="97%">
 										</textbox>
 										<hbox>
 											<label
 												value="Nro Paradas:">
 											</label>
 											<intbox disabled="true"
-												width="100%"
-												value="@load(vm.quotation.stopSequenceContinuous ? '0' : vm.quotation.stopSequenceOdd ? vm.quotation.stopSequenceOddNumber : '0') @save(vm.quotation.stopSequenceOddNumber)">
+												value="@load(vm.quotation.stopSequenceContinuous ? '0' : vm.quotation.stopSequenceOdd ? vm.quotation.stopSequenceOddNumber : '0') @save(vm.quotation.stopSequenceOddNumber)"
+												width="100%">
 											</intbox>
 										</hbox>
 									</row>
@@ -317,11 +316,11 @@
 						<label sclass="formLabel"
 							value="Tipo de Máquina:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByMachineType eq null ? vm.seleccione : vm.quotation.basicDataByMachineType.name)"
-							model="@load(vm.listMachineType)"
+						<combobox disabled="true"
+							model="@load(vm.listMachineType)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByMachineType)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByMachineType eq null ? vm.seleccione : vm.quotation.basicDataByMachineType.name)"
+							width="99%">
 							<template name="model" var="MachineType">
 								<comboitem
 									label="@load(MachineType.name)">
@@ -331,11 +330,11 @@
 						<label sclass="formLabel"
 							value="Tipo de Corriente:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByElectricityType eq null ? vm.seleccione : vm.quotation.basicDataByElectricityType.name)"
-							model="@load(vm.listElectricityType)"
+						<combobox disabled="true"
+							model="@load(vm.listElectricityType)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByElectricityType)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByElectricityType eq null ? vm.seleccione : vm.quotation.basicDataByElectricityType.name)"
+							width="99%">
 							<template name="model"
 								var="ElectricityType">
 								<comboitem
@@ -349,11 +348,11 @@
 						<label sclass="formLabel"
 							value="Tipo de Maniobra:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByManeuverType eq null ? vm.seleccione : vm.quotation.basicDataByManeuverType.name)"
-							model="@load(vm.listManeuverType)"
+						<combobox disabled="true"
+							model="@load(vm.listManeuverType)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByManeuverType)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByManeuverType eq null ? vm.seleccione : vm.quotation.basicDataByManeuverType.name)"
+							width="99%">
 							<template name="model" var="ManeuverType">
 								<comboitem
 									label="@load(ManeuverType.name)">
@@ -367,7 +366,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="HUECO" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -420,7 +419,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="CONTROL" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -435,12 +434,12 @@
 						<label sclass="formLabel"
 							value="Control Modelo:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByControlType eq null ? vm.seleccione : vm.quotation.basicDataByControlType.name)"
+						<combobox disabled="true"
 							model="@load(vm.listControlType)"
+							onChange="@command('loadBoothFloorDisplay')" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByControlType)"
-							readonly="false" disabled="true"
-							onChange="@command('loadBoothFloorDisplay')" width="99%">
+							value="@load(vm.quotation.basicDataByControlType eq null ? vm.seleccione : vm.quotation.basicDataByControlType.name)"
+							width="99%">
 							<template name="model" var="ControlType">
 								<comboitem
 									label="@load(ControlType.name)">
@@ -455,11 +454,11 @@
 						<label sclass="formLabel"
 							value="Display Cabina:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByBoothDisplay eq null ? vm.seleccione : vm.quotation.basicDataByBoothDisplay.name)"
-							model="@load(vm.listBoothDisplay)"
+						<combobox disabled="true"
+							model="@load(vm.listBoothDisplay)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByBoothDisplay)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByBoothDisplay eq null ? vm.seleccione : vm.quotation.basicDataByBoothDisplay.name)"
+							width="99%">
 							<template name="model" var="BoothDisplay">
 								<comboitem
 									label="@load(BoothDisplay.name)">
@@ -469,11 +468,11 @@
 						<label sclass="formLabel"
 							value="Display Piso:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByFloorDisplay eq null ? vm.seleccione : vm.quotation.basicDataByFloorDisplay.name)"
-							model="@load(vm.listFloorDisplay)"
+						<combobox disabled="true"
+							model="@load(vm.listFloorDisplay)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByFloorDisplay)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByFloorDisplay eq null ? vm.seleccione : vm.quotation.basicDataByFloorDisplay.name)"
+							width="99%">
 							<template name="model" var="FloorDisplay">
 								<comboitem
 									label="@load(FloorDisplay.name)">
@@ -486,11 +485,11 @@
 						<label sclass="formLabel"
 							value="Botones de pasillo:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByHallButton eq null ? vm.seleccione : vm.quotation.basicDataByHallButton.name)"
-							model="@load(vm.listHallButton)"
+						<combobox disabled="true"
+							model="@load(vm.listHallButton)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByHallButton)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByHallButton eq null ? vm.seleccione : vm.quotation.basicDataByHallButton.name)"
+							width="99%">
 							<template name="model" var="HallButton">
 								<comboitem
 									label="@load(HallButton.name)">
@@ -500,17 +499,17 @@
 						<label sclass="formLabel"
 							value="Tipo de botonera de pasillo:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByHallButtonType eq null ? vm.seleccione : vm.quotation.basicDataByHallButtonType.name)"
+						<combobox disabled="true"
 							model="@load(vm.listHallButtonType)"
+							onChange="@command('disabledSistelsHall')" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByHallButtonType)"
-							readonly="false" disabled="true"
-							onChange="@command('disabledSistelsHall')" width="99%">
+							value="@load(vm.quotation.basicDataByHallButtonType eq null ? vm.seleccione : vm.quotation.basicDataByHallButtonType.name)"
+							width="99%">
 							<template name="model"
 								var="hallButtonType">
 								<comboitem
-									label="@load(hallButtonType.name)"
-									image="@load(hallButtonType.imageurl)">
+									image="@load(hallButtonType.imageurl)"
+									label="@load(hallButtonType.name)">
 								</comboitem>
 							</template>
 						</combobox>
@@ -519,7 +518,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="CABINA" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -533,11 +532,11 @@
 					<row>
 						<label sclass="formLabel" value="Modelo:">
 						</label>
-						<combobox
-							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name)"
+						<combobox disabled="true"
 							model="@load(vm.listCabinModel)"
-							selectedItem="@bind(vm.cabinModel)" readonly="false"
-							disabled="true" onChange="@command('loadCabinDesign')"
+							onChange="@command('loadCabinDesign')" readonly="false"
+							selectedItem="@bind(vm.cabinModel)"
+							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name)"
 							width="99%">
 							<template name="model" var="cabinModel">
 								<comboitem
@@ -546,12 +545,12 @@
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Diseño:"></label>
-						<combobox
-							value="@load(vm.quotation.basicDataByCabinDesign eq null ? vm.seleccione : vm.quotation.basicDataByCabinDesign.name)"
+						<combobox disabled="true"
 							model="@load(vm.listDesign)"
+							onChange="@command('activeDesignComment')" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByCabinDesign)"
-							readonly="false" disabled="true"
-							onChange="@command('activeDesignComment')" width="99%">
+							value="@load(vm.quotation.basicDataByCabinDesign eq null ? vm.seleccione : vm.quotation.basicDataByCabinDesign.name)"
+							width="99%">
 							<template name="model" var="Design">
 								<comboitem label="@load(Design.name)">
 								</comboitem>
@@ -568,9 +567,10 @@
 							onCheck="@command('isDesignSpecial')">
 						</checkbox>
 						<label value="Comentario:" sclass="formLabel"></label>
-						<textbox multiline="true" disabled="true"
+						<textbox disabled="true" multiline="true"
+							maxlength="300"
 							value="@load(vm.quotation.designSpecial ? vm.quotation.designSpecialComment : ' ') @save(vm.quotation.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
-							maxlength="300" width="98%">
+							width="98%">
 						</textbox>
 						<space></space>
 					</row>
@@ -599,11 +599,11 @@
 						<label sclass="formLabel"
 							value="Tipo de Techo:">
 						</label>
-						<combobox width="99%"
-							value="@load(vm.quotation.basicDataByRoofType eq null ? vm.seleccione : vm.quotation.basicDataByRoofType.name)"
-							model="@load(vm.listRoofType)"
+						<combobox disabled="true"
+							model="@load(vm.listRoofType)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByRoofType)"
-							readonly="false" disabled="true">
+							value="@load(vm.quotation.basicDataByRoofType eq null ? vm.seleccione : vm.quotation.basicDataByRoofType.name)"
+							width="99%">
 							<template name="model" var="RoofType">
 								<comboitem
 									label="@load(RoofType.name)">
@@ -611,11 +611,11 @@
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Pasamano:"></label>
-						<combobox
-							value="@load(vm.quotation.basicDataByRailing eq null ? vm.seleccione : vm.quotation.basicDataByRailing.name)"
-							model="@load(vm.listRailing)"
+						<combobox disabled="true"
+							model="@load(vm.listRailing)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByRailing)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByRailing eq null ? vm.seleccione : vm.quotation.basicDataByRailing.name)"
+							width="99%">
 							<template name="model" var="Railing">
 								<comboitem
 									label="@load(Railing.name)">
@@ -628,12 +628,12 @@
 						<label sclass="formLabel"
 							value="Acabado de Piso:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByFloorType eq null ? vm.seleccione : vm.quotation.basicDataByFloorType.name)"
+						<combobox disabled="true"
 							model="@load(vm.listFloorType)"
+							onChange="@command('activeDesignComment')" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByFloorType)"
-							readonly="false" disabled="true"
-							onChange="@command('activeDesignComment')" width="99%">
+							value="@load(vm.quotation.basicDataByFloorType eq null ? vm.seleccione : vm.quotation.basicDataByFloorType.name)"
+							width="99%">
 							<template name="model" var="FloorType">
 								<comboitem
 									label="@load(FloorType.name)">
@@ -647,7 +647,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="MARCOS Y PUERTAS" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -662,11 +662,11 @@
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByDoorType eq null ? vm.seleccione : vm.quotation.basicDataByDoorType.name)"
-							model="@load(vm.listDoorType)"
+						<combobox disabled="true"
+							model="@load(vm.listDoorType)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByDoorType)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByDoorType eq null ? vm.seleccione : vm.quotation.basicDataByDoorType.name)"
+							width="99%">
 							<template name="model" var="DoorType">
 								<comboitem
 									label="@load(DoorType.name)">
@@ -681,11 +681,11 @@
 						<label sclass="formLabel"
 							value="Entrada Libre:">
 						</label>
-						<combobox
-							value="@load(vm.quotation.basicDataByFreeAdmission eq null ? vm.seleccione : vm.quotation.basicDataByFreeAdmission.name)"
-							model="@load(vm.listFreeAdmission)"
+						<combobox disabled="true"
+							model="@load(vm.listFreeAdmission)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByFreeAdmission)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByFreeAdmission eq null ? vm.seleccione : vm.quotation.basicDataByFreeAdmission.name)"
+							width="99%">
 							<template name="model"
 								var="FreeAdmission">
 								<comboitem
@@ -694,11 +694,11 @@
 							</template>
 						</combobox>
 						<label sclass="formLabel" value="Altura:"></label>
-						<combobox
-							value="@load(vm.quotation.basicDataByHeight eq null ? vm.seleccione : vm.quotation.basicDataByHeight.name)"
-							model="@load(vm.listHeight)"
+						<combobox disabled="true"
+							model="@load(vm.listHeight)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByHeight)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByHeight eq null ? vm.seleccione : vm.quotation.basicDataByHeight.name)"
+							width="99%">
 							<template name="model" var="Height">
 								<comboitem label="@load(Height.name)">
 								</comboitem>
@@ -707,20 +707,20 @@
 						<space></space>
 					</row>
 					<row>
-						<checkbox sclass="formLabel" label="Acero Inox."
-							checked="@bind(vm.quotation.doorFrameStainless)"
-							disabled="true">
+						<checkbox
+							checked="@bind(vm.quotation.doorFrameStainless)" disabled="true"
+							label="Acero Inox." sclass="formLabel">
 						</checkbox>
 						<textbox disabled="true"
 							value="@load(vm.quotation.doorFrameStainless ? vm.quotation.doorFrameStainlessDescrip : '') @save(vm.quotation.doorFrameStainlessDescrip)"
 							maxlength="100" width="96.5%">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
-						<combobox
-							value="@load(vm.quotation.basicDataByDoorFrameHammered eq null ? vm.seleccione : vm.quotation.basicDataByDoorFrameHammered.name)"
-							model="@load(vm.listDoorframeHammered)"
+						<combobox disabled="true"
+							model="@load(vm.listDoorframeHammered)" readonly="false"
 							selectedItem="@bind(vm.quotation.basicDataByDoorFrameHammered)"
-							readonly="false" disabled="true" width="99%">
+							value="@load(vm.quotation.basicDataByDoorFrameHammered eq null ? vm.seleccione : vm.quotation.basicDataByDoorFrameHammered.name)"
+							width="99%">
 							<template name="model"
 								var="doorFrameHammered">
 								<comboitem
@@ -728,15 +728,14 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<textbox disabled="true"
-							value="@bind(vm.quotation.doorFrameHammeredDesc)" maxlength="100"
-							width="98%">
+						<textbox disabled="true" maxlength="100"
+							value="@bind(vm.quotation.doorFrameHammeredDesc)" width="98%">
 						</textbox>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="ADICIONALES" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -753,13 +752,13 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.lightCurtain)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.lightCurtain? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.lightCurtain? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -767,13 +766,13 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.loadLimiter)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.loadLimiter ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.loadLimiter ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<space></space>
@@ -784,13 +783,13 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.speechSynthesizer)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.speechSynthesizer ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.speechSynthesizer ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -798,13 +797,13 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.gomSystem)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.gomSystem ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.gomSystem ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<space></space>
@@ -815,42 +814,42 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.intercom)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.intercom ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.intercom ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel" value="Teléfono:"></label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.phone)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.phone ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.phone ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<space></space>
 					</row>
 					<row>
 						<label sclass="formLabel"
-							value="Sistema de Acceso:" style="font-weight:bold;">
+							style="font-weight:bold;" value="Sistema de Acceso:">
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.accessSytem)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.accessSytem ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.accessSytem ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<label sclass="formLabel"
@@ -858,13 +857,13 @@
 						</label>
 						<radiogroup
 							selectedItem="@save(vm.quotation.firefighterKeychain)">
-							<radio value="true" label="Si"
+							<radio
 								checked="@load(vm.quotation.firefighterKeychain ? 'true':'false')"
-								disabled="true">
+								disabled="true" label="Si" value="true">
 							</radio>
-							<radio value="false" label="No"
+							<radio
 								checked="@load(vm.quotation.firefighterKeychain ? 'false':'true')"
-								disabled="true">
+								disabled="true" label="No" value="false">
 							</radio>
 						</radiogroup>
 						<space></space>
@@ -885,20 +884,20 @@
 							value="Comentarios:">
 						</label>
 						<cell colspan="2">
-							<textbox width="98%" rows="4" vflex="1"
-								value="@bind(vm.quotation.comment)" disabled="true"
-								multiline="true" maxlength="700">
+							<textbox disabled="true" maxlength="700"
+								multiline="true" rows="4" value="@bind(vm.quotation.comment)"
+								vflex="1" width="98%">
 							</textbox>
 						</cell>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="PRECIO" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
-					<column width="15%" align="center"></column>
+					<column align="center" width="15%"></column>
 					<column width="30%"></column>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -906,34 +905,33 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="60%" sclass="formLabel"></label>
-						<label value="Material Importado:"
-							sclass="formLabel">
+						<label sclass="formLabel" value="60%"></label>
+						<label sclass="formLabel"
+							value="Material Importado:">
 						</label>
 						<doublebox disabled="true" format="#,##0.00"
 							style="text-align: right"
 							value="@bind(vm.quotation.priceImportedMaterial)" width="95%">
 						</doublebox>
-						<label value="Bs" sclass="formLabel"></label>
+						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
 					<row>
-						<label value="40%" sclass="formLabel"></label>
-						<label
-							value="Material Nacional y Mano de Obra de fabricacion:"
-							sclass="formLabel">
+						<label sclass="formLabel" value="40%"></label>
+						<label sclass="formLabel"
+							value="Material Nacional y Mano de Obra de fabricacion:">
 						</label>
 						<doublebox disabled="true" format="#,##0.00"
 							style="text-align: right"
 							value="@bind(vm.quotation.priceNationalMaterial)" width="95%">
 						</doublebox>
-						<label value="Bs" sclass="formLabel"></label>
+						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
 					<row>
-						<label value="100%" sclass="formLabel"></label>
-						<label value="Precio Unitario Total:"
-							sclass="formLabel">
+						<label sclass="formLabel" value="100%"></label>
+						<label sclass="formLabel"
+							value="Precio Unitario Total:">
 						</label>
 						<doublebox disabled="@load(vm.disabledEdit)"
 							format="#,##0.00"
@@ -942,7 +940,7 @@
 							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
 							width="95%">
 						</doublebox>
-						<label value="Bs" sclass="formLabel"></label>
+						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
 					<row>
@@ -961,12 +959,12 @@
 							value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
 							width="95%">
 						</doublebox>
-						<label value="Bs:" sclass="formLabel"></label>
+						<label sclass="formLabel" value="Bs:"></label>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
-		<groupbox mold="3d" closable="false">
+		<groupbox closable="false" mold="3d">
 			<caption label="CONDICIONES" sclass="formLabel"></caption>
 			<grid zclass="grid">
 				<columns>
@@ -978,13 +976,13 @@
 						<label value="Condiciones de pago:"
 							sclass="formLabel">
 						</label>
-						<textbox width="60%" rows="7"
-							disabled="@load(vm.disabledEdit)" maxlength="700"
-							value="@bind(vm.quotation.payment)">
+						<textbox disabled="@load(vm.disabledEdit)"
+							maxlength="700" rows="7" value="@bind(vm.quotation.payment)"
+							width="60%">
 						</textbox>
 					</row>
 					<row>
-						<label value="Garantía:" sclass="formLabel"></label>
+						<label sclass="formLabel" value="Garantía:"></label>
 						<div>
 							<textbox cols="2"
 								disabled="@load(vm.disabledEdit)" maxlength="120"
@@ -996,8 +994,8 @@
 						</div>
 					</row>
 					<row>
-						<label value="Garantía extendida:"
-							sclass="formLabel">
+						<label sclass="formLabel"
+							value="Garantía extendida:">
 						</label>
 						<div>
 							<textbox cols="2"
@@ -1010,8 +1008,8 @@
 						</div>
 					</row>
 					<row>
-						<label value="Plazo de entrega:"
-							sclass="formLabel">
+						<label sclass="formLabel"
+							value="Plazo de entrega:">
 						</label>
 						<div>
 							<textbox cols="2"
@@ -1025,8 +1023,8 @@
 					</row>
 					<!-- OCULTO POR SITUACION DEL MERCADO VENEZOLANO -->
 					<row visible="false">
-						<label value="Válidez del presupuesto:"
-							sclass="formLabel">
+						<label sclass="formLabel"
+							value="Válidez del presupuesto:">
 						</label>
 						<div>
 							<textbox cols="2"
@@ -1040,15 +1038,15 @@
 					</row>
 					<row>
 						<label value="Nota:" sclass="formLabel"></label>
-						<textbox width="60%" rows="8"
-							disabled="@load(vm.disabledEdit)" maxlength="1000"
-							value="@bind(vm.quotation.notes)">
+						<textbox disabled="@load(vm.disabledEdit)"
+							maxlength="1000" rows="8" value="@bind(vm.quotation.notes)"
+							width="60%">
 						</textbox>
 					</row>
 					<row>
 						<space></space>
 						<radiogroup id="radio"
-							onCheck="@command('selectStatus', radioGroup = self, datebox = deliveryDate)"
+							onCheck="@command('selectStatus', radioGroup = self)"
 							selectedItem="@save(vm.quotation.status)">
 							<radio
 								checked="@load(vm.quotation.status eq 'A' ? 'true' : false)"
@@ -1072,7 +1070,7 @@
 						<button
 							disabled="@load(vm.disabledBudgetNumber ? vm.disabledEdit : 'true')"
 							image="/resource/images/icons/save.png" label="Guardar"
-							onClick="@command('confirmSave', radioGroup = radio, datebox = deliveryDate)"
+							onClick="@command('confirmSave', radioGroup = radio)"
 							sclass="formLabel">
 						</button>
 						<button
@@ -1092,22 +1090,22 @@
 				</row>
 			</rows>
 		</grid>
-		<window title="Atencion" mode="modal" border="normal"
-			width="25%" visible="@load(not empty vm.modalMessage)">
+		<window border="normal" mode="modal" title="Atencion"
+			visible="@load(not empty vm.modalMessage)" width="25%">
 			<vbox align="center" hflex="true">
 				<hbox height="35%">
 					<image src="~./zul/img/msgbox/question-btn.png" />
 					<label value="@load(vm.modalMessage)" />
 				</hbox>
-				<hbox pack="center" hflex="true">
+				<hbox hflex="true" pack="center">
 					<button label="Si" onClick="@command('save')" />
 					<button label="No"
 						onClick="@command('cancelModal')" />
 				</hbox>
 			</vbox>
 		</window>
-		<window title="Atencion" mode="modal" border="normal"
-			width="25%" visible="@load(not empty vm.printMessage)">
+		<window border="normal" mode="modal" title="Atencion"
+			visible="@load(not empty vm.printMessage)" width="25%">
 			<vbox align="center" hflex="true">
 				<hbox height="35%">
 					<image src="~./zul/img/msgbox/info-btn.png" />
@@ -1123,7 +1121,7 @@
 						</radio>
 					</radiogroup>
 				</div>
-				<hbox pack="center" hflex="true">
+				<hbox hflex="true" pack="center">
 					<button label="Aceptar"
 						onClick="@command('print', template = radioPrint.selectedItem.value)" />
 					<button label="Cancelar"

@@ -39,6 +39,21 @@ public class ServiceBusinessPartner {
 	}
 
 	@Transactional(readOnly = true)
+	public BusinessPartner findActiveByName(String name) {
+		return daoBusinessPartner.findActiveByField("name", name);
+	}
+
+	@Transactional(readOnly = true)
+	public List<BusinessPartner> listAll(){
+		return daoBusinessPartner.listAll();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<String> listName() {
+		return daoBusinessPartner.listStringByFields("name");
+	}
+
+	@Transactional(readOnly = true)
 	public List<String> listRif() {
 		return daoBusinessPartner.listStringByFields("rif");
 	}

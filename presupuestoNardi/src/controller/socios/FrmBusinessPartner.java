@@ -17,7 +17,9 @@ import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
@@ -89,16 +91,21 @@ public class FrmBusinessPartner {
 	}
 
 	@Init
-	public void init(@ContextParam(ContextType.VIEW) Component view) {
+	public void init(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("businessPartner") BusinessPartner bp) {
 		Selectors.wireComponents(view, this, false);
-		Clients.showNotification("Agregar el cliente si no existe en el sistema.", "info", win, "middle_right", 3500);
-		restartForm();
+		if (bp == null)
+			Clients.showNotification("Agregar el cliente si no existe en el sistema.", "info", win, "middle_right", 3500);
+		restartForm(bp);
 	}
 
+	@NotifyChange("*")
 	@Command
-	public void restartForm() {
-		businessPartner = new BusinessPartner();
-		businessPartner.setStatus('A');
+	public void restartForm(BusinessPartner bp) {
+		if (bp == null) {
+			businessPartner = new BusinessPartner();
+			businessPartner.setStatus('A');
+		} else
+			this.businessPartner = serviceBusinessPartner.findById(bp.getIdBusinessPartner());
 		listRifType = serviceBasicData.listRifType();
 	}
 
@@ -119,7 +126,7 @@ public class FrmBusinessPartner {
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("BusinessPartner", businessPartner);
-			restartForm();
+			restartForm(null);
 			win.detach();
 			BindUtils.postGlobalCommand(null, null, "selectedBusinessPartner", map);
 		}
