@@ -419,45 +419,12 @@ public class FrmQuotation {
 		};
 	}
 
-	// public Validator getWasApproved() {
-	// return new AbstractValidator() {
-	// @Override
-	// public void validate(ValidationContext ctx) {
-	// Radiogroup radiogroup = (Radiogroup) ctx.getBindContext().getValidatorArg("component");
-	// if (radiogroup.getSelectedItem().getValue().charAt(0) == 'A') {
-	// List<Quotation> list = serviceQuotation.listByBudget(quotation.getBudgetNumber());
-	// for (Quotation q : list) {
-	// if (q.getStatus() == 'A') {
-	// quotation.setStatus('E');
-	// quotation.setApprovedDate(null);
-	// BindUtils.postNotifyChange(null, null, quotation, "status");
-	// BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-	// throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
-	// }
-	// }
-	// /*
-	// * Si no hay ninguna aprobada, excepto la actual, entonces se asigna fecha de
-	// * aprobacion
-	// */
-	// quotation.setApprovedDate(new Date());
-	// if (quotation.getDeliveryDate() == null) {
-	// Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
-	// throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
-	// }
-	// } else {
-	// quotation.setApprovedDate(null);
-	// BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-	// }
-	// }
-	// };
-	// }
-
 	public Validator getNoApprovedDate() {
 		return new AbstractValidator() {
 			@Override
 			public void validate(ValidationContext ctx) {
 				Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
-				if (datebox.getValue() == null)
+				if (quotation.getStatus() == 'A' && datebox.getValue() == null)
 					throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
 				else {
 					quotation.setApprovedDate(null);
