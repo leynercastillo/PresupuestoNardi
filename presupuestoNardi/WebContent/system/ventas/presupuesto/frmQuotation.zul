@@ -575,7 +575,7 @@
 						</checkbox>
 						<label value="Comentario:" sclass="formLabel"></label>
 						<textbox disabled="true" multiline="true"
-							maxlength="300"
+							maxlength="500"
 							value="@load(vm.quotation.designSpecial ? vm.quotation.designSpecialComment : ' ') @save(vm.quotation.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
 							width="98%">
 						</textbox>
@@ -891,7 +891,7 @@
 							value="Comentarios:">
 						</label>
 						<cell colspan="2">
-							<textbox disabled="true" maxlength="700"
+							<textbox disabled="true" maxlength="1500"
 								multiline="true" rows="4" value="@bind(vm.quotation.comment)"
 								vflex="1" width="98%">
 							</textbox>
@@ -1046,7 +1046,7 @@
 					<row>
 						<label value="Nota:" sclass="formLabel"></label>
 						<textbox disabled="@load(vm.disabledEdit)"
-							maxlength="1000" rows="8" value="@bind(vm.quotation.notes)"
+							maxlength="1500" rows="8" value="@bind(vm.quotation.notes)"
 							width="60%">
 						</textbox>
 					</row>

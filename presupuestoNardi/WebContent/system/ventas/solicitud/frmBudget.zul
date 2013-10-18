@@ -686,7 +686,7 @@
 						<cell rowspan="3">
 							<textbox
 								disabled="@load(vm.disabledAll ? 'true' : vm.budget.designSpecial ? 'false':'true')"
-								maxlength="300" multiline="true"
+								maxlength="500" multiline="true"
 								onChange="@command('updateDesignSpecialComment', comment = self.value)"
 								rows="5"
 								value="@load(vm.budget.designSpecialComment) @save(vm.budget.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
@@ -819,7 +819,7 @@
 						</label>
 						<cell rowspan="3">
 							<textbox disabled="@load(vm.disabledAll)"
-								hflex="1" maxlength="200" rows="5"
+								hflex="1" maxlength="500" rows="5"
 								value="@bind(vm.budget.doorframeTypeComment)">
 							</textbox>
 						</cell>
@@ -1318,7 +1318,7 @@
 						</label>
 						<cell colspan="2">
 							<textbox disabled="@load(vm.disabledAll)"
-								maxlength="700" multiline="true" rows="4"
+								maxlength="1500" multiline="true" rows="4"
 								value="@bind(vm.budget.comment)" width="99%">
 							</textbox>
 						</cell>

@@ -171,7 +171,7 @@
     <column id="COL48" populated="true" UUID="5d87ebe9-c744-4d7e-b7c6-9ea65e7775ff" autoIncrement="false" autoIncrementSequenceName="budget_design_special_seq" defaultValue="" name="design_special" nullable="1" physicalName="design_special" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
      <remarks></remarks>
     </column>
-    <column id="COL49" populated="true" UUID="fbe1975f-5b01-4c87-a7b1-93968bb0f49f" autoIncrement="false" autoIncrementSequenceName="budget_design_special_comment_seq" defaultValue="" name="design_special_comment" nullable="1" physicalName="design_special_comment" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL49" populated="true" UUID="fbe1975f-5b01-4c87-a7b1-93968bb0f49f" autoIncrement="false" autoIncrementSequenceName="budget_design_special_comment_seq" defaultValue="" name="design_special_comment" nullable="1" physicalName="design_special_comment" precision="500" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL50" populated="true" UUID="6f5b10bd-6309-4dd1-adce-8b35f885f316" autoIncrement="false" autoIncrementSequenceName="budget_roof_type_seq" defaultValue="" name="roof_type" nullable="1" physicalName="roof_type" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -321,7 +321,7 @@
     <column id="COL98" populated="true" UUID="21bf47ff-aa59-486d-8a7a-a4721e28ce6e" autoIncrement="false" autoIncrementSequenceName="budget_hall_button_seq" defaultValue="" name="hall_button" nullable="1" physicalName="hall_button" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL99" populated="true" UUID="40ae2bff-9046-4979-9cac-fdb902bab31d" autoIncrement="false" autoIncrementSequenceName="budget_comment_seq" defaultValue="" name="comment" nullable="1" physicalName="comment" precision="700" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL99" populated="true" UUID="40ae2bff-9046-4979-9cac-fdb902bab31d" autoIncrement="false" autoIncrementSequenceName="budget_comment_seq" defaultValue="" name="comment" nullable="1" physicalName="comment" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL100" populated="true" UUID="e6ee911d-c260-4c3a-ae7c-6a38e07164c1" autoIncrement="false" autoIncrementSequenceName="budget_status_seq" defaultValue="" name="status" nullable="0" physicalName="status" precision="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
@@ -1137,7 +1137,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0" viewportX="0" viewportY="641" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB7" x="48" y="47" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB103" x="368" y="337" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB115" x="1073" y="71" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
