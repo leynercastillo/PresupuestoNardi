@@ -120,7 +120,6 @@ public class FrmBudget {
 	private Boolean disabledNumber;
 	private Boolean disableSeller;
 	private Boolean disableSistelHall;
-	private Boolean isSpecial;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
@@ -234,14 +233,6 @@ public class FrmBudget {
 
 	public void setListDoorframeHammered(List<BasicData> listDoorframeHammered) {
 		this.listDoorframeHammered = listDoorframeHammered;
-	}
-
-	public Boolean getIsSpecial() {
-		return isSpecial;
-	}
-
-	public void setIsSpecial(Boolean isSpecial) {
-		this.isSpecial = isSpecial;
 	}
 
 	public List<BasicData> getListDesign() {
@@ -602,7 +593,6 @@ public class FrmBudget {
 		disabledNumber = new Boolean(true);
 		disableSeller = new Boolean(true);
 		disableSistelHall = new Boolean(true);
-		isSpecial = new Boolean(false);
 		cabinModel = new BasicData();
 		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		SecurityUser user = serviceSecurityUser.findUser(auxUser.getUsername());
@@ -730,9 +720,9 @@ public class FrmBudget {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				String str = inputElement.getText();
 				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("FORMICA") != -1 && str.trim().isEmpty())
-					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para formica.");
+					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para el diseño formica.");
 				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("OTRO") != -1 && str.trim().isEmpty())
-					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para otro.");
+					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para el diseño OTRO.");
 				if (budget.getBasicDataByFloorType() != null && budget.getBasicDataByFloorType().getName().indexOf("OTROS") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion acabados de piso OTROS.");
 			}
@@ -859,8 +849,8 @@ public class FrmBudget {
 			return;
 		}
 		if (sendMail)
-			sendMail();
-		Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
+			/* sendMail(); */
+			Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
 		print();
 		restartForm();
 	}
@@ -1138,18 +1128,6 @@ public class FrmBudget {
 		budget.setBasicDataByFloorDisplay(null);
 	}
 
-	@NotifyChange({ "isSpecial" })
-	@Command
-	public void isSpecial() {
-		if (budget.getBasicDataByDoorframeType() != null)
-			if (budget.getBasicDataByDoorframeType().getName().indexOf("ESPECIAL") != -1)
-				isSpecial = new Boolean(true);
-			else {
-				isSpecial = new Boolean(false);
-				budget.setDoorframeTypeComment(new String());
-			}
-	}
-
 	@Command
 	public void checkWidthDoorFrame(@BindingParam("component") InputElement component) {
 		if (budget.getBasicDataByDoorframeType() != null && budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && budget.getHallButtonPlace().indexOf("MARCO") != -1) {
@@ -1199,8 +1177,16 @@ public class FrmBudget {
 	}
 
 	@Command
-	public void isDesignSpecial() {
-		budget.setDesignSpecialComment(" ");
+	public void updateDesignSpecialComment(@BindingParam("comment") String comment) {
+		budget.setDesignSpecialComment(comment);
+		BindUtils.postNotifyChange(null, null, budget, "designSpecialComment");
+	}
+
+	@Command
+	public void isDesignSpecial(@BindingParam("check") Boolean checked) {
+		if (!checked)
+			budget.setDesignSpecialComment(new String());
+		BindUtils.postNotifyChange(null, null, budget, "designSpecialComment");
 	}
 
 	@Command

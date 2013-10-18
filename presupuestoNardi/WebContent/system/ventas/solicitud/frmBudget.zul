@@ -648,7 +648,7 @@
 						<checkbox
 							checked="@bind(vm.budget.designSpecial)"
 							disabled="@load(vm.disabledAll)"
-							onCheck="@command('isDesignSpecial')">
+							onCheck="@command('isDesignSpecial', check = self.checked)">
 						</checkbox>
 					</row>
 					<row>
@@ -684,11 +684,13 @@
 						</combobox>
 						<label value="Comentario:" sclass="formLabel"></label>
 						<cell rowspan="3">
-							<textbox rows="5" width="97%"
-								multiline="true"
+							<textbox
 								disabled="@load(vm.disabledAll ? 'true' : vm.budget.designSpecial ? 'false':'true')"
-								value="@load(vm.budget.designSpecial ? vm.budget.designSpecialComment : ' ') @save(vm.budget.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
-								maxlength="300">
+								maxlength="300" multiline="true"
+								onChange="@command('updateDesignSpecialComment', comment = self.value)"
+								rows="5"
+								value="@load(vm.budget.designSpecialComment) @save(vm.budget.designSpecialComment, before = 'confirmSave') @validator(vm.noEmptyForFormica, component = self)"
+								width="97%">
 							</textbox>
 						</cell>
 					</row>
@@ -785,7 +787,7 @@
 					<column width="17%"></column>
 					<column width="17%"></column>
 					<column width="17%"></column>
-					<column width="17%"></column>
+					<column width="10%"></column>
 					<column></column>
 				</columns>
 				<rows>
@@ -794,7 +796,7 @@
 							value="Numero de Puertas:">
 						</label>
 						<intbox disabled="@load(vm.disabledAll)"
-							value="@bind(vm.budget.doorOfNumber)" width="97%">
+							value="@bind(vm.budget.doorOfNumber)" hflex="1">
 						</intbox>
 						<label sclass="formLabel"
 							value="Tipo de Puerta:">
@@ -812,8 +814,15 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel"
+							value="Comentarios:">
+						</label>
+						<cell rowspan="3">
+							<textbox disabled="@load(vm.disabledAll)"
+								hflex="1" maxlength="200" rows="5"
+								value="@bind(vm.budget.doorframeTypeComment)">
+							</textbox>
+						</cell>
 					</row>
 					<row>
 						<label sclass="formLabel"
@@ -836,7 +845,6 @@
 						</label>
 						<combobox disabled="@load(vm.disabledAll)"
 							id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
-							onChange="@command('isSpecial')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.budget.basicDataByDoorframeType)"
 							value="@load(vm.budget.basicDataByDoorframeType eq null ? vm.seleccione : vm.budget.basicDataByDoorframeType.name) @save(vm.seleccione, before = 'confirmSave') @validator(vm.validateDoorframeType, component = self)"
@@ -848,12 +856,6 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<textbox
-							disabled="@load(vm.disabledAll ? 'true' : vm.isSpecial ? 'false' : 'true')"
-							maxlength="200"
-							value="@load(vm.isSpecial ? vm.budget.doorframeTypeComment : '') @save(vm.budget.doorframeTypeComment)"
-							width="97%">
-						</textbox>
 						<space></space>
 					</row>
 					<row>
@@ -886,7 +888,6 @@
 							</template>
 						</combobox>
 						<space></space>
-						<space></space>
 					</row>
 					<row>
 						<checkbox
@@ -914,12 +915,13 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<textbox
-							disabled="@load(vm.disabledAll ? 'true' : vm.budget.basicDataByDoorFrameHammered eq null ? 'true' : 'false')"
-							maxlength="100" value="@bind(vm.budget.doorFrameHammeredDesc)"
-							width="97%">
-						</textbox>
-						<space></space>
+						<cell colspan="2">
+							<textbox
+								disabled="@load(vm.disabledAll ? 'true' : vm.budget.basicDataByDoorFrameHammered eq null ? 'true' : 'false')"
+								hflex="1" maxlength="100"
+								value="@bind(vm.budget.doorFrameHammeredDesc)">
+							</textbox>
+						</cell>
 					</row>
 				</rows>
 			</grid>

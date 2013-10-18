@@ -419,17 +419,13 @@ public class FrmQuotation {
 		};
 	}
 
-	public Validator getNoApprovedDate() {
+	public Validator getNoValidDate() {
 		return new AbstractValidator() {
 			@Override
 			public void validate(ValidationContext ctx) {
 				Datebox datebox = (Datebox) ctx.getBindContext().getValidatorArg("datebox");
 				if (quotation.getStatus() == 'A' && datebox.getValue() == null)
-					throw new WrongValueException(datebox, "Ingrese una fecha de entrega estimada.");
-				else {
-					quotation.setApprovedDate(null);
-					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
-				}
+					throw new WrongValueException(datebox, "Ingrese una fecha valida.");
 			}
 		};
 	}
@@ -441,16 +437,10 @@ public class FrmQuotation {
 			for (Quotation q : list) {
 				if (q.getStatus() == 'A') {
 					quotation.setStatus('E');
-					quotation.setApprovedDate(null);
 					BindUtils.postNotifyChange(null, null, quotation, "status");
-					BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
 					throw new WrongValueException(radiogroup, "Esta solicitud ya tiene presupuesto aprobado.");
 				}
 			}
-			quotation.setApprovedDate(new Date());
-		} else {
-			quotation.setApprovedDate(null);
-			BindUtils.postNotifyChange(null, null, quotation, "approvedDate");
 		}
 	}
 
