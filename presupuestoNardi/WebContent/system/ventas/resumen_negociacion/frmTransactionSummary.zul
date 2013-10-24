@@ -1,0 +1,397 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.ventas.resumen_negociacion.FrmTransactionSummary')">
+		<caption label="RESUMEN DE NEGOCIACION"
+			zclass="formTitleLabel">
+		</caption>
+		<groupbox closable="false">
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel" value="Rif:"></label>
+						<div>
+							<combobox buttonVisible="false"
+								disabled="@load(vm.disableAll)"
+								readonly="@load(not vm.disableAll)" style="float: left"
+								value="@load(vm.transactionSummary.quotation.rifType)"
+								width="24%">
+							</combobox>
+							<combobox
+								autocomplete="@load(vm.disableAll)"
+								autodrop="@load(vm.disableAll)" buttonVisible="false"
+								maxlength="15" model="@load(vm.listRif)"
+								onChange="@command('loadQuotationByField', field = 'rif', val = self.value)"
+								onFocus="@command('searchQuotationByField', field = 'rif')"
+								readonly="@load(not vm.disableAll)" style="float: right"
+								value="@load(vm.transactionSummary.quotation.rifPartner)"
+								width="74%">
+							</combobox>
+						</div>
+						<label sclass="formLabel"
+							value="Nro. Presupuesto:">
+						</label>
+						<div width="100%">
+							<intbox disabled="@load(vm.disableAll)"
+								readonly="@load(not vm.disableAll)" style="float: left"
+								value="@load(vm.transactionSummary.quotation eq null ? null : vm.transactionSummary.quotation.type ? 1 : 2)"
+								width="10%">
+							</intbox>
+							<combobox
+								autocomplete="@load(vm.disableAll)"
+								autodrop="@load(vm.disableAll)" buttonVisible="false"
+								model="@load(vm.listQuotationNumber)"
+								onChange="@command('loadQuotationByField', field = 'quotationNumber', val = self.value)"
+								onFocus="@command('searchQuotationByField', field = 'quotationNumber')"
+								readonly="@load(not vm.disableAll)" style="margin-left: 1%"
+								value="@load(vm.transactionSummary.quotation.type ? vm.transactionSummary.quotation.newNumber : vm.transactionSummary.quotation.modernizationNumber)"
+								width="67%">
+							</combobox>
+							<intbox disabled="@load(vm.disableAll)"
+								readonly="@load(not vm.disableAll)"
+								value="@load(vm.transactionSummary.quotation.versionNumber)"
+								width="10%">
+							</intbox>
+						</div>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Cliente:"></label>
+						<combobox autocomplete="@load(vm.disableAll)"
+							autodrop="@load(vm.disableAll)" buttonVisible="false" hflex="1"
+							maxlength="100" model="@load(vm.listPartnerName)"
+							onChange="@command('loadQuotationByField', field = 'partnerName', val = self.value)"
+							onFocus="@command('searchQuotationByField', field = 'partnerName')"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.partnerName)">
+						</combobox>
+						<label sclass="formLabel"
+							value="Nro Solicitud:">
+						</label>
+						<combobox autocomplete="@load(vm.disableAll)"
+							autodrop="@load(vm.disableAll)" buttonVisible="false" hflex="1"
+							model="@load(vm.listBudgetNumber)"
+							onChange="@command('loadQuotationByField', field = 'budgetNumber', val = self.value)"
+							onFocus="@command('searchQuotationByField', field = 'budgetNumber')"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.budgetNumber)">
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Obra:"></label>
+						<combobox autocomplete="@load(vm.disableAll)"
+							autodrop="@load(vm.disableAll)" buttonVisible="false" hflex="1"
+							maxlength="100" model="@load(vm.listConstruction)"
+							onChange="@command('loadQuotationByField', field = 'construction', val = self.value)"
+							onFocus="@command('searchQuotationByField', field = 'construction')"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.construction)">
+						</combobox>
+						<label sclass="formLabel" value="Direccion:"></label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.budget.constructionAddress)">
+						</textbox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Persona contacto:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							maxlength="100" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.contactName)"
+							width="97%">
+						</textbox>
+						<label sclass="formLabel" value="Vendedor:">
+						</label>
+						<combobox autocomplete="@load(vm.disableAll)"
+							autodrop="@load(vm.disableAll)" buttonVisible="false" hflex="1"
+							maxlength="100" model="@load(vm.listSeller)"
+							onChange="@command('loadQuotationByField', field = 'seller', val = self.value)"
+							onFocus="@command('searchQuotationByField', field = 'seller')"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.seller)">
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Equipos"></label>
+						<div>
+							<intbox disabled="@load(vm.disableAll)"
+								readonly="@load(not vm.disableAll)" style="float: left"
+								value="@load(vm.transactionSummary.quotation.elevatorQuantity)"
+								width="17%">
+							</intbox>
+							<textbox disabled="@load(vm.disableAll)"
+								readonly="@load(not vm.disableAll)" style="float: right"
+								value="@load(vm.transactionSummary.quotation.basicDataByElevatorType.name)"
+								width="77%">
+							</textbox>
+						</div>
+						<label sclass="formLabel"
+							value="Fecha aprobacion:">
+						</label>
+						<datebox buttonVisible="false"
+							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.approvedDate)">
+						</datebox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Tipo presupuesto:">
+						</label>
+						<radiogroup>
+							<radio disabled="true" label="Nuevo"
+								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : vm.transactionSummary.quotation.type)"
+								value="true">
+							</radio>
+							<radio disabled="true" label="Modernizacion"
+								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : not vm.transactionSummary.quotation.type)"
+								value="false">
+							</radio>
+						</radiogroup>
+						<label sclass="formLabel"
+							value="Fecha entrega:">
+						</label>
+						<datebox buttonVisible="false"
+							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.deliveryDate)">
+						</datebox>
+						<space></space>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox closable="false" mold="3d">
+			<caption label="PRECIO" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column align="center" width="15%"></column>
+					<column width="30%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel" value="60%"></label>
+						<label sclass="formLabel"
+							value="Material Importado:">
+						</label>
+						<doublebox disabled="@load(vm.disableAll)"
+							format="#,##0.00" readonly="@load(not vm.disableAll)"
+							style="text-align: right"
+							value="@load(vm.transactionSummary.quotation.priceImportedMaterial)"
+							width="95%">
+						</doublebox>
+						<label sclass="formLabel" value="Bs"></label>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="40%"></label>
+						<label sclass="formLabel"
+							value="Material Nacional y Mano de Obra de fabricacion:">
+						</label>
+						<doublebox disabled="@load(vm.disableAll)"
+							format="#,##0.00" readonly="@load(not vm.disableAll)"
+							style="text-align: right"
+							value="@load(vm.transactionSummary.quotation.priceNationalMaterial)"
+							width="95%">
+						</doublebox>
+						<label sclass="formLabel" value="Bs"></label>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="100%"></label>
+						<label sclass="formLabel"
+							value="Precio Unitario Total:">
+						</label>
+						<doublebox disabled="@load(vm.disableAll)"
+							format="#,##0.00" readonly="@load(not vm.disableAll)"
+							style="text-align: right"
+							value="@load(vm.transactionSummary.quotation.totalPrice)"
+							width="95%">
+						</doublebox>
+						<label sclass="formLabel" value="Bs"></label>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="@load(vm.transactionSummary.quotation.elevatorQuantity)">
+						</label>
+						<label sclass="formLabel"
+							value="@load(vm.transactionSummary.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.transactionSummary.quotation.basicDataByElevatorType.name))">
+						</label>
+						<doublebox disabled="@load(vm.disableAll)"
+							format="#,##0.00" readonly="@load(not vm.disableAll)"
+							style="text-align: right"
+							value="@load(vm.transactionSummary.quotation.totalPrice)"
+							width="95%">
+						</doublebox>
+						<doublebox disabled="@load(vm.disableAll)"
+							format="#,##0.00" readonly="@load(not vm.disableAll)"
+							style="text-align: right"
+							value="@load(vm.transactionSummary.quotation.totalPrice * vm.transactionSummary.quotation.elevatorQuantity)"
+							width="95%">
+						</doublebox>
+						<label sclass="formLabel" value="Bs:"></label>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox closable="false" mold="3d">
+			<caption label="CONDICIONES" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel"
+							value="Condiciones de pago:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							maxlength="700" readonly="@load(not vm.disableAll)" rows="7"
+							value="@load(vm.transactionSummary.quotation.payment)"
+							width="60%">
+						</textbox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Garantía:">
+						</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disableAll)" maxlength="120"
+								readonly="@load(not vm.disableAll)"
+								value="@load(vm.transactionSummary.quotation.warranty)">
+							</textbox>
+							<label
+								value="meses de garantía y mantenimiento gratuito.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Garantía extendida:">
+						</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disableAll)" maxlength="120"
+								readonly="@load(not vm.disableAll)"
+								value="@load(vm.transactionSummary.quotation.extendedWarranty)">
+							</textbox>
+							<label
+								value="meses con la suscripcion de un contrato de mantenimiento conjuntamente con la firma del acta de entrega.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Plazo de entrega:">
+						</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disableAll)" maxlength="120"
+								readonly="@load(not vm.disableAll)"
+								value="@load(vm.transactionSummary.quotation.deliveryEstimate)">
+							</textbox>
+							<label
+								value="meses aproximados despues de la firma del contrato y cancelacion de inicial.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Nota:"></label>
+						<textbox disabled="@load(vm.disableAll)"
+							maxlength="1500" readonly="@load(not vm.disableAll)" rows="8"
+							value="@load(vm.transactionSummary.quotation.notes)"
+							width="60%">
+						</textbox>
+					</row>
+					<row>
+						<space></space>
+						<radiogroup>
+							<radio disabled="true" label="Aprobado"
+								checked="@load(vm.transactionSummary.quotation.status eq 'A')"
+								sclass="formLabel">
+							</radio>
+							<radio disabled="true" label="Pendiente"
+								checked="@load(vm.transactionSummary.quotation.status eq 'E')"
+								sclass="formLabel">
+							</radio>
+						</radiogroup>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox closable="false" mold="3d">
+			<caption label="CONDICIONES DE PAGO" sclass="formLabel"></caption>
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column width="80%"></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel" value="1ra Opcion:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="1500" rows="5"
+							value="@save(vm.transactionSummary.paymentTerms) @load(vm.transactionSummary.paymentTerms)">
+						</textbox>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="2da Opcion (Permuta):">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="1500" rows="5"
+							value="@save(vm.transactionSummary.barterTerms) @load(vm.transactionSummary.barterTerms)">
+						</textbox>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Notas:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="2000" rows="5"
+							value="@save(vm.transactionSummary.notes, before = 'save') @load(vm.transactionSummary.notes) @validator(vm.noEmpty, component = self)">
+						</textbox>
+					</row>
+					<row>
+						<cell colspan="2">
+							<button
+								image="/resource/images/icons/save.png" label="Guardar"
+								onClick="@command('save')">
+							</button>
+							<space></space>
+							<button
+								image="/resource/images/icons/print.png" label="Imprimir"
+								onClick="@command('print')">
+							</button>
+							<space></space>
+							<button
+								image="/resource/images/icons/cancel.png" label="Cancelar"
+								onClick="@command('restartForm')">
+							</button>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

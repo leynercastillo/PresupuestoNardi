@@ -1,6 +1,7 @@
 package controller.socios;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.database.BusinessPartner;
@@ -13,15 +14,22 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.ListModel;
-import org.zkoss.zul.ListModelArray;
 
 public class FrmBusinessPartnerList {
 
 	@WireVariable
 	private ServiceBusinessPartner serviceBusinessPartner;
-	private ListModel<BusinessPartner> listBusinessPartner;
+	private List<BusinessPartner> listBusinessPartner;
 	private BusinessPartner selectedBP;
+	private BusinessPartnerFilter partnerFilter;
+
+	public BusinessPartnerFilter getPartnerFilter() {
+		return partnerFilter;
+	}
+
+	public void setPartnerFilter(BusinessPartnerFilter partnerFilter) {
+		this.partnerFilter = partnerFilter;
+	}
 
 	public BusinessPartner getSelectedBP() {
 		return selectedBP;
@@ -31,11 +39,11 @@ public class FrmBusinessPartnerList {
 		this.selectedBP = selectedBP;
 	}
 
-	public ListModel<BusinessPartner> getListBusinessPartner() {
+	public List<BusinessPartner> getListBusinessPartner() {
 		return listBusinessPartner;
 	}
 
-	public void setListBusinessPartner(ListModel<BusinessPartner> listBusinessPartner) {
+	public void setListBusinessPartner(List<BusinessPartner> listBusinessPartner) {
 		this.listBusinessPartner = listBusinessPartner;
 	}
 
@@ -47,8 +55,9 @@ public class FrmBusinessPartnerList {
 	@NotifyChange("*")
 	@Command
 	public void restartForm() {
-		listBusinessPartner = new ListModelArray<BusinessPartner>(serviceBusinessPartner.listAll());
+		listBusinessPartner = serviceBusinessPartner.listAll();
 		selectedBP = new BusinessPartner();
+		partnerFilter = new BusinessPartnerFilter();
 	}
 
 	@NotifyChange({ "selectedBP" })
@@ -71,5 +80,11 @@ public class FrmBusinessPartnerList {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", "");
 		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
+	}
+
+	@NotifyChange({ "listBusinessPartner" })
+	@Command
+	public void dataFilter() {
+		listBusinessPartner = partnerFilter.getFilter(partnerFilter);
 	}
 }

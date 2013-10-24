@@ -612,7 +612,7 @@ public class Budget implements java.io.Serializable {
 		this.date = date;
 	}
 
-	@Column(name = "rif_type", nullable = false, length = 1)
+	@Column(name = "rif_type", length = 1)
 	public char getRifType() {
 		return this.rifType;
 	}
@@ -621,7 +621,7 @@ public class Budget implements java.io.Serializable {
 		this.rifType = rifType;
 	}
 
-	@Column(name = "rif_partner", nullable = false, length = 15)
+	@Column(name = "rif_partner", length = 15)
 	public String getRifPartner() {
 		return this.rifPartner;
 	}
@@ -675,7 +675,7 @@ public class Budget implements java.io.Serializable {
 		this.constructionCity = constructionCity;
 	}
 
-	@Column(name = "contact_phone", nullable = false, length = 15)
+	@Column(name = "contact_phone", nullable = false, length = 30)
 	public String getContactPhone() {
 		return this.contactPhone;
 	}
@@ -972,7 +972,7 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceContinuous = stopSequenceContinuous;
 	}
 
-	@Column(name = "stop_sequence_continuous_q", length = 50)
+	@Column(name = "stop_sequence_continuous_q", length = 150)
 	public String getStopSequenceContinuousQ() {
 		return this.stopSequenceContinuousQ;
 	}
@@ -999,7 +999,7 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceEven = stopSequenceEven;
 	}
 
-	@Column(name = "stop_sequence_even_q", length = 50)
+	@Column(name = "stop_sequence_even_q", length = 150)
 	public String getStopSequenceEvenQ() {
 		return this.stopSequenceEvenQ;
 	}
@@ -1026,7 +1026,7 @@ public class Budget implements java.io.Serializable {
 		this.stopSequenceOdd = stopSequenceOdd;
 	}
 
-	@Column(name = "stop_sequence_odd_q", length = 50)
+	@Column(name = "stop_sequence_odd_q", length = 150)
 	public String getStopSequenceOddQ() {
 		return this.stopSequenceOddQ;
 	}
@@ -1062,7 +1062,7 @@ public class Budget implements java.io.Serializable {
 		this.doorFrameStainless = doorFrameStainless;
 	}
 
-	@Column(name = "door_frame_stainless_descrip", length = 50)
+	@Column(name = "door_frame_stainless_descrip", length = 100)
 	public String getDoorFrameStainlessDescrip() {
 		return this.doorFrameStainlessDescrip;
 	}

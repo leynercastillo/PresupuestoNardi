@@ -12,7 +12,7 @@
 					label="Clientes">
 				</tab>
 				<tab
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}"
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY')}"
 					label="Ventas">
 				</tab>
 				<tab
@@ -56,7 +56,7 @@
 					</tree>
 				</tabpanel>
 				<tabpanel
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY')}">
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY')}">
 					<tree>
 						<treechildren>
 							<treeitem
@@ -73,6 +73,15 @@
 								<treerow>
 									<treecell label="Presupuesto"
 										onClick="@command('optionSelected', optionSelected='system/ventas/presupuesto/frmQuotation.zul')">
+									</treecell>
+								</treerow>
+							</treeitem>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_TRANSACTION_SUMMARY')}">
+								<treerow>
+									<treecell
+										label="Resumen de negociacion"
+										onClick="@command('optionSelected', optionSelected='system/ventas/resumen_negociacion/frmTransactionSummary.zul')">
 									</treecell>
 								</treerow>
 							</treeitem>

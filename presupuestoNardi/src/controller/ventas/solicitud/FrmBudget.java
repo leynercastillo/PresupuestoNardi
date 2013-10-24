@@ -959,12 +959,19 @@ public class FrmBudget {
 			disableAfterSearch = new Boolean(true);
 			disabledNumber = new Boolean(true);
 			disableSeller = new Boolean(true);
-			listRoofType.add(budget.getBasicDataByRoofType());
-			listBoothDisplay.add(budget.getBasicDataByBoothDisplay());
-			listFloorDisplay.add(budget.getBasicDataByFloorDisplay());
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
+			listFan = serviceBasicData.listFan1();
+			listFan.addAll(serviceBasicData.listFan2());
+			if (budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
+				listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
+				listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
+			} else {
+				listBoothDisplay = serviceBasicData.listBoothDisplayCF();
+				listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+			}
 			if (budget.getBasicDataByCabinDesign() != null) {
 				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
-				listDesign.add(budget.getBasicDataByCabinDesign());
+				listDesign = serviceBasicData.listDesignByModel(cabinModel);
 			}
 		} else if (listSize == 0) {
 			Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
@@ -982,12 +989,19 @@ public class FrmBudget {
 		disableAfterSearch = new Boolean(true);
 		disabledNumber = new Boolean(true);
 		disableSeller = new Boolean(true);
-		listRoofType.add(this.budget.getBasicDataByRoofType());
-		listBoothDisplay.add(this.budget.getBasicDataByBoothDisplay());
-		listFloorDisplay.add(this.budget.getBasicDataByFloorDisplay());
+		listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(this.budget.getBasicDataByElevatorCapacitance());
+		listFan = serviceBasicData.listFan1();
+		listFan.addAll(serviceBasicData.listFan2());
+		if (this.budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
+			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
+			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
+		} else {
+			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
+			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+		}
 		if (this.budget.getBasicDataByCabinDesign() != null) {
 			cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
-			listDesign.add(this.budget.getBasicDataByCabinDesign());
+			listDesign = serviceBasicData.listDesignByModel(cabinModel);
 		}
 	}
 

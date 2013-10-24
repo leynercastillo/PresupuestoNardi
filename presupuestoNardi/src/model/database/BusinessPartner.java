@@ -68,7 +68,7 @@ public class BusinessPartner implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rif_type", nullable = false)
+	@JoinColumn(name = "rif_type")
 	public BasicData getBasicData() {
 		return this.basicData;
 	}
@@ -77,7 +77,7 @@ public class BusinessPartner implements java.io.Serializable {
 		this.basicData = basicData;
 	}
 
-	@Column(name = "rif", nullable = false, length = 15)
+	@Column(name = "rif", length = 15)
 	public String getRif() {
 		return this.rif;
 	}

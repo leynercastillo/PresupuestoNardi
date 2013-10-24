@@ -16,6 +16,7 @@
 		<property name="hibernate.search.autoregister_listeners">false</property>
 		<mapping class="model.database.SecurityRole" />
 		<mapping class="model.database.Budget" />
+		<mapping class="model.database.TransactionSummary" />
 		<mapping class="model.database.SecurityUser" />
 		<mapping class="model.database.SecurityGroup" />
 		<mapping class="model.database.Item" />

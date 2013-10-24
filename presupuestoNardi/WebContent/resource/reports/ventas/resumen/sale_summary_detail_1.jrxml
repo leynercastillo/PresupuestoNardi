@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_genera1_1" language="groovy" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="3bd75de0-205f-4086-846b-93752dd8996c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="204"/>
+	<property name="ireport.y" value="170"/>
 	<parameter name="NUMBER" class="java.lang.Integer">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -677,7 +677,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ancho de Hueco (mm):]]></text>
+				<text><![CDATA[Ancho de Hueco (M):]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="411ff9dd-6367-433f-b72a-9e39933d0aa6" x="388" y="396" width="100" height="15"/>
@@ -691,7 +691,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fondo de Hueco (mm):]]></text>
+				<text><![CDATA[Fondo de Hueco (M):]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="23653b62-e68c-4835-898a-7514cfef3d73" x="388" y="411" width="100" height="15"/>
@@ -705,7 +705,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sobre recorrido (mm):]]></text>
+				<text><![CDATA[Sobre recorrido (M):]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f16c6e0e-9bb6-48ae-95ce-b7ec1388950b" x="108" y="411" width="100" height="15"/>
@@ -719,7 +719,7 @@ WHERE
 				<textElement>
 					<font fontName="Serif" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fosa (mm):]]></text>
+				<text><![CDATA[Fosa (M):]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="9f3b1684-0c46-41c1-b10e-3fc30e2340a7" x="108" y="426" width="100" height="15"/>

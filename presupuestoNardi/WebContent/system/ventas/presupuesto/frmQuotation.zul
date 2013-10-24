@@ -6,7 +6,7 @@
 		viewModel="@id('vm') @init('controller.ventas.presupuesto.FrmQuotation')">
 		<caption label="PRESUPUESTO" zclass="formTitleLabel"></caption>
 		<groupbox closable="false">
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -36,7 +36,7 @@
 								onChange="@command(vm.disableBeforeSearch ? '' : 'loadQuotationByField', field='rifPartner',val=self.value)"
 								onFocus="@command(vm.disableBeforeSearch ? '' : 'searchQuotationByField', field='rifPartner')"
 								style="float: right"
-								value="@save(vm.quotation.rifPartner, before = 'confirmSave') @load(vm.quotation.rifPartner) @validator(vm.noEmpty, component = self)"
+								value="@save(vm.quotation.rifPartner, before = 'confirmSave') @load(vm.quotation.rifPartner)"
 								width="74%">
 							</combobox>
 						</div>
@@ -191,7 +191,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="GENERAL" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -246,7 +246,7 @@
 							value="Secuencia de Paradas:">
 						</label>
 						<cell colspan="3">
-							<grid width="99%" zclass="grid">
+							<grid width="99%">
 								<columns>
 									<column width="20%"></column>
 									<column width="35%"></column>
@@ -375,7 +375,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="HUECO" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -428,7 +428,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="CONTROL" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -527,7 +527,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="CABINA" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -656,7 +656,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="MARCOS Y PUERTAS" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="20%"></column>
@@ -744,7 +744,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="ADICIONALES" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="20%"></column>
 					<column width="10%"></column>
@@ -879,7 +879,7 @@
 			</grid>
 		</groupbox>
 		<groupbox>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column width="60%"></column>
@@ -902,7 +902,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="PRECIO" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column align="center" width="15%"></column>
 					<column width="30%"></column>
@@ -973,7 +973,7 @@
 		</groupbox>
 		<groupbox closable="false" mold="3d">
 			<caption label="CONDICIONES" sclass="formLabel"></caption>
-			<grid zclass="grid">
+			<grid>
 				<columns>
 					<column width="15%"></column>
 					<column></column>
@@ -1070,7 +1070,7 @@
 				</rows>
 			</grid>
 		</groupbox>
-		<grid zclass="grid">
+		<grid>
 			<rows>
 				<row>
 					<hbox>

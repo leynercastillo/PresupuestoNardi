@@ -49,7 +49,7 @@
 								onChange="@command(vm.disabledAll ? 'searchBudget' : 'searchBusinessPartner', field='rif', val=self.value)"
 								onFocus="@command(vm.disabledAll ? 'loadBudgetByField' : 'loadBusinessPartnerByField', field='rifPartner')"
 								style="float: right"
-								value="@save(vm.budget.rifPartner, before = 'confirmSave') @load(vm.budget.rifPartner) @validator(vm.noEmpty, component = self)"
+								value="@save(vm.budget.rifPartner, before = 'confirmSave') @load(vm.budget.rifPartner)"
 								width="75%">
 							</combobox>
 						</div>
@@ -141,7 +141,7 @@
 							value="Teléfono contacto:">
 						</label>
 						<textbox disabled="@load(vm.disabledAll)"
-							maxlength="15"
+							maxlength="30"
 							value="@save(vm.budget.contactPhone, before = 'confirmSave') @load(vm.budget.contactPhone) @validator(vm.noEmpty, component = self)"
 							width="97%">
 						</textbox>
@@ -408,7 +408,7 @@
 						<label sclass="formLabel"
 							value="Secuencia de Paradas:">
 						</label>
-						<cell rowspan="3" colspan="2">
+						<cell colspan="2" rowspan="3">
 							<grid>
 								<columns>
 									<column width="20%"></column>
@@ -424,13 +424,13 @@
 										</checkbox>
 										<textbox
 											disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')"
-											maxlength="50"
+											maxlength="150"
 											value="@load(vm.budget.stopSequenceContinuous ? vm.budget.stopSequenceContinuousQ : '') @save(vm.budget.stopSequenceContinuousQ)"
 											width="100%">
 										</textbox>
 										<div>
-											<label value="Nro Paradas:"
-												style="float: left" width="40%">
+											<label style="float: left"
+												value="Nro Paradas:" width="40%">
 											</label>
 											<intbox
 												disabled="@load(vm.disabledAll ?  'true' : vm.budget.stopSequenceContinuous ? 'false':'true')"
@@ -448,34 +448,37 @@
 										</checkbox>
 										<textbox
 											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')"
-											maxlength="50"
+											maxlength="150"
 											value="@load(vm.budget.stopSequenceContinuous ? '' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenQ : '') @save(vm.budget.stopSequenceEvenQ)"
 											width="100%">
 										</textbox>
 										<div>
-											<label value="Nro Paradas:"
-												style="float: left" width="40%">
+											<label style="float: left"
+												value="Nro Paradas:" width="40%">
 											</label>
-											<intbox style="float: right"
-												width="55%"
+											<intbox
+												disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')"
+												style="float: right"
 												value="@save(vm.budget.stopSequenceEvenNumber, before = 'confirmSave') @load(vm.budget.stopSequenceContinuous ? '0' : vm.budget.stopSequenceEven ? vm.budget.stopSequenceEvenNumber : '0') @validator(vm.noZeroEven, component = self)"
-												disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceEven ? 'false':'true')">
+												width="55%">
 											</intbox>
 										</div>
 									</row>
 									<row>
-										<checkbox label="Impar"
+										<checkbox
 											checked="@load(vm.budget.stopSequenceContinuous ? 'false' : vm.budget.stopSequenceOdd) @save(vm.budget.stopSequenceOdd)"
-											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)">
+											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous)"
+											label="Impar">
 										</checkbox>
-										<textbox width="100%"
+										<textbox
 											disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceOdd ? 'false':'true')"
+											maxlength="150"
 											value="@load(vm.budget.stopSequenceContinuous ? '' : vm.budget.stopSequenceOdd ? vm.budget.stopSequenceOddQ : '') @save(vm.budget.stopSequenceOddQ)"
-											maxlength="50">
+											width="100%">
 										</textbox>
 										<div>
-											<label value="Nro Paradas:"
-												style="float: left" width="40%">
+											<label style="float: left"
+												value="Nro Paradas:" width="40%">
 											</label>
 											<intbox
 												disabled="@load(vm.disabledAll ? 'true' : vm.budget.stopSequenceContinuous ? 'true' : vm.budget.stopSequenceOdd ? 'false':'true')"
@@ -754,21 +757,23 @@
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel" value="Ancho (m):"></label>
+						<label sclass="formLabel" value="Ancho (mm):"></label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
 								value="@save(vm.budget.cabinWidth) @load(vm.budget.cabinWidth) @validator(vm.noEmpty, component = self)">
 							</doublebox>
 						</div>
-						<label sclass="formLabel" value="Fondo (m):"></label>
+						<label sclass="formLabel" value="Fondo (mm):"></label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
 								value="@save(vm.budget.cabinBackground) @load(vm.budget.cabinBackground) @validator(vm.noEmpty, component = self)">
 							</doublebox>
 						</div>
-						<label sclass="formLabel" value="Altura (m):"></label>
+						<label sclass="formLabel"
+							value="Altura (mm):">
+						</label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
@@ -1128,7 +1133,7 @@
 							model="@load(vm.listFloorDisplay)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.budget.basicDataByFloorDisplay)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicDataByFloorDisplay.name) @validator(vm.noSelect, component = self)"
+							value="@save(vm.seleccione) @load(vm.budget.basicDataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicDataByFloorDisplay.name)"
 							width="100%">
 							<template name="model" var="FloorDisplay">
 								<comboitem
@@ -1152,16 +1157,15 @@
 							</radiogroup>
 							<space></space>
 							<radio
-								checked="@load(vm.budget.displayPlaceFloor eq 'Ninguno' ? 'true':'false')"
-								disabled="@load(vm.disabledAll)" label="Ninguno"
-								radiogroup="radBDisplayPlaceFloor" value="Ninguno">
-							</radio>
-							<space></space>
-							<radio
 								checked="@load(vm.budget.displayPlaceFloor eq 'Otros' ? 'true':'false')"
 								disabled="@load(vm.disabledAll)" label="Otros"
 								radiogroup="radBDisplayPlaceFloor" value="Otros">
 							</radio>
+							<space></space>
+							<textbox
+								disabled="@load(vm.disabledAll ? 'true' : vm.budget.displayPlaceFloor eq 'Otros' ? 'false' : 'true')" hflex="1" maxlength="50"
+								value="@save(vm.budget.displayPlaceFloor eq 'Otros' ? vm.budget.displayPlaceFloor : '')">
+							</textbox>
 						</cell>
 						<space></space>
 					</row>

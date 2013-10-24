@@ -629,7 +629,7 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("12");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- Este presupuesto NO incluye montaje, el mismo será presupuestado en el momento que se vaya a ejecutar.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
 		} else {
 			quotation.setPayment("60% de inicial al momento de la firma del contrato.\n" + "20% para el desarme  de los equipos en  la obra.\n" + "15% para el despacho de los equipos y comenzar el trabajo de armado.\n" + "5% para la entrega de los equipos funcionando.");
 			quotation.setWarranty("3");
@@ -665,6 +665,8 @@ public class FrmQuotation {
 	public void loadQuotationByField(@BindingParam("field") String field, @BindingParam("val") String value) {
 		List<Quotation> list = new ArrayList<Quotation>();
 		if (field.compareTo("budgetNumber") == 0) {
+			if (value.isEmpty())
+				value = "0";
 			for (int i = 0; i < value.length(); i++) {
 				if (!Character.isDigit(value.charAt(i))) {
 					value = "0";
@@ -856,7 +858,7 @@ public class FrmQuotation {
 	@Command
 	public void save() {
 		if (!serviceQuotation.save(quotation)) {
-			Clients.showNotification("No se pudo guardar el presupuest.", "error", null, "bottom_center", 2000);
+			Clients.showNotification("No se pudo guardar el presupuesto", "error", null, "bottom_center", 2000);
 			return;
 		}
 		if (quotation.getStatus() == 'A')

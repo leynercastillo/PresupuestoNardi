@@ -13,6 +13,27 @@
 						onSelect="@command('viewFrmBusinessPartner', newPartner = false)"
 						pageSize="10" pagingPosition="both"
 						selectedItem="@bind(vm.selectedBP)">
+						<auxhead>
+							<auxheader colspan="1">
+								<image
+									src="/resource/images/icons/filter.png">
+								</image>
+								<textbox instant="true"
+									onChange="@command('dataFilter')" value="@bind(vm.partnerFilter.rif)">
+								</textbox>
+							</auxheader>
+							<auxheader colspan="1">
+								<image
+									src="/resource/images/icons/filter.png">
+								</image>
+								<textbox instant="true"
+									onChange="@command('dataFilter')" value="@bind(vm.partnerFilter.name)">
+								</textbox>
+							</auxheader>
+							<auxheader>
+								<space></space>
+							</auxheader>
+						</auxhead>
 						<listhead>
 							<listheader label="Rif" sort="auto(rif)"
 								width="15%">
