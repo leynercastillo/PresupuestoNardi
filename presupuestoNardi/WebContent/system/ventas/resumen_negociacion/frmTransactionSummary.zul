@@ -11,7 +11,7 @@
 			<grid>
 				<columns>
 					<column width="15%"></column>
-					<column width="20%"></column>
+					<column width="30%"></column>
 					<column width="15%"></column>
 					<column width="20%"></column>
 					<column></column>
@@ -54,10 +54,10 @@
 								onFocus="@command('searchQuotationByField', field = 'quotationNumber')"
 								readonly="@load(not vm.disableAll)" style="margin-left: 1%"
 								value="@load(vm.transactionSummary.quotation.type ? vm.transactionSummary.quotation.newNumber : vm.transactionSummary.quotation.modernizationNumber)"
-								width="67%">
+								width="70%">
 							</combobox>
 							<intbox disabled="@load(vm.disableAll)"
-								readonly="@load(not vm.disableAll)"
+								readonly="@load(not vm.disableAll)" style="float: right"
 								value="@load(vm.transactionSummary.quotation.versionNumber)"
 								width="10%">
 							</intbox>
@@ -97,21 +97,41 @@
 							readonly="@load(not vm.disableAll)"
 							value="@load(vm.transactionSummary.quotation.construction)">
 						</combobox>
+						<label sclass="formLabel" value="Fecha:"></label>
+						<datebox buttonVisible="false"
+							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.date)">
+						</datebox>
+						<space></space>
+					</row>
+					<row>
 						<label sclass="formLabel" value="Direccion:"></label>
 						<textbox disabled="@load(vm.disableAll)"
 							hflex="1" readonly="@load(not vm.disableAll)"
 							value="@load(vm.transactionSummary.quotation.budget.constructionAddress)">
 						</textbox>
+						<label sclass="formLabel"
+							value="Tipo presupuesto:">
+						</label>
+						<radiogroup>
+							<radio disabled="true" label="Nuevo"
+								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : vm.transactionSummary.quotation.type)"
+								value="true">
+							</radio>
+							<radio disabled="true" label="Modernizacion"
+								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : not vm.transactionSummary.quotation.type)"
+								value="false">
+							</radio>
+						</radiogroup>
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel"
-							value="Persona contacto:">
+						<label sclass="formLabel" value="Ciudad:">
 						</label>
 						<textbox disabled="@load(vm.disableAll)"
-							maxlength="100" readonly="@load(not vm.disableAll)"
-							value="@load(vm.transactionSummary.quotation.contactName)"
-							width="97%">
+							hflex="1" maxlength="100" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.budget.constructionCity)">
 						</textbox>
 						<label sclass="formLabel" value="Vendedor:">
 						</label>
@@ -124,6 +144,22 @@
 							value="@load(vm.transactionSummary.quotation.seller)">
 						</combobox>
 						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Persona contacto:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="100" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.contactName)">
+						</textbox>
+						<label sclass="formLabel"
+							value="Telefono contacto:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="100" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.budget.contactPhone)">
+						</textbox>
 					</row>
 					<row>
 						<label sclass="formLabel" value="Equipos"></label>
@@ -139,30 +175,17 @@
 								width="77%">
 							</textbox>
 						</div>
-						<label sclass="formLabel"
-							value="Fecha aprobacion:">
+						<label sclass="formLabel" value="Correo:">
 						</label>
-						<datebox buttonVisible="false"
-							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
-							readonly="@load(not vm.disableAll)"
-							value="@load(vm.transactionSummary.quotation.approvedDate)">
-						</datebox>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" maxlength="100" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.budget.email)">
+						</textbox>
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel"
-							value="Tipo presupuesto:">
-						</label>
-						<radiogroup>
-							<radio disabled="true" label="Nuevo"
-								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : vm.transactionSummary.quotation.type)"
-								value="true">
-							</radio>
-							<radio disabled="true" label="Modernizacion"
-								checked="@load(vm.transactionSummary.quotation eq null ? 'false' : not vm.transactionSummary.quotation.type)"
-								value="false">
-							</radio>
-						</radiogroup>
+						<space></space>
+						<space></space>
 						<label sclass="formLabel"
 							value="Fecha entrega:">
 						</label>
@@ -170,6 +193,19 @@
 							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
 							readonly="@load(not vm.disableAll)"
 							value="@load(vm.transactionSummary.quotation.deliveryDate)">
+						</datebox>
+						<space></space>
+					</row>
+					<row>
+						<space></space>
+						<space></space>
+						<label sclass="formLabel"
+							value="Fecha aprobacion:">
+						</label>
+						<datebox buttonVisible="false"
+							disabled="@load(vm.disableAll)" format="dd/MM/yyyy" hflex="1"
+							readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.approvedDate)">
 						</datebox>
 						<space></space>
 					</row>
@@ -188,6 +224,19 @@
 				</columns>
 				<rows>
 					<row>
+						<label sclass="formLabel"
+							value="Tipo precio:">
+						</label>
+						<textbox disabled="@load(vm.disableAll)"
+							hflex="1" readonly="@load(not vm.disableAll)"
+							value="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name)">
+						</textbox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="60%"></label>
 						<label sclass="formLabel"
 							value="Material Importado:">
@@ -195,13 +244,14 @@
 						<doublebox disabled="@load(vm.disableAll)"
 							format="#,##0.00" readonly="@load(not vm.disableAll)"
 							style="text-align: right"
-							value="@load(vm.transactionSummary.quotation.priceImportedMaterial)"
+							value="@bind(vm.transactionSummary.quotation.priceImportedMaterial)"
 							width="95%">
 						</doublebox>
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="40%"></label>
 						<label sclass="formLabel"
 							value="Material Nacional y Mano de Obra de fabricacion:">
@@ -209,13 +259,14 @@
 						<doublebox disabled="@load(vm.disableAll)"
 							format="#,##0.00" readonly="@load(not vm.disableAll)"
 							style="text-align: right"
-							value="@load(vm.transactionSummary.quotation.priceNationalMaterial)"
+							value="@bind(vm.transactionSummary.quotation.priceNationalMaterial)"
 							width="95%">
 						</doublebox>
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="100%"></label>
 						<label sclass="formLabel"
 							value="Precio Unitario Total:">
@@ -223,13 +274,14 @@
 						<doublebox disabled="@load(vm.disableAll)"
 							format="#,##0.00" readonly="@load(not vm.disableAll)"
 							style="text-align: right"
-							value="@load(vm.transactionSummary.quotation.totalPrice)"
+							value="@save(vm.transactionSummary.quotation.totalPrice, before = 'confirmSave') @load(vm.transactionSummary.quotation.totalPrice)"
 							width="95%">
 						</doublebox>
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel"
 							value="@load(vm.transactionSummary.quotation.elevatorQuantity)">
 						</label>
@@ -250,6 +302,146 @@
 						</doublebox>
 						<label sclass="formLabel" value="Bs:"></label>
 					</row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE IMPORTADA" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario $"></column>
+									<column label="Subtotal $"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.transactionSummary.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.transactionSummary.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.transactionSummary.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@save(vm.transactionSummary.quotation.priceImportedMaterial, before = 'confirmSave') @load(vm.transactionSummary.quotation.priceImportedMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@load(vm.transactionSummary.quotation.priceImportedMaterial * vm.transactionSummary.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@load(vm.transactionSummary.quotation.priceImportedMaterial * vm.transactionSummary.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disableAll)" maxlength="700"
+												readonly="@load(not vm.disableAll)" rows="7"
+												value="@bind(vm.transactionSummary.quotation.paymentForeign)"
+												width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE NACIONAL" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column
+										label="Precio unitario Bs">
+									</column>
+									<column label="Subtotal Bs"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.transactionSummary.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.transactionSummary.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.transactionSummary.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@save(vm.transactionSummary.quotation.priceNationalMaterial, before = 'confirmSave') @load(vm.transactionSummary.quotation.priceNationalMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@load(vm.transactionSummary.quotation.priceNationalMaterial * vm.transactionSummary.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox
+											disabled="@load(vm.disableAll)" format="#,##0.00"
+											readonly="@load(not vm.disableAll)" style="text-align: right"
+											value="@load(vm.transactionSummary.quotation.priceNationalMaterial * vm.transactionSummary.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disableAll)" maxlength="700"
+												readonly="@load(not vm.disableAll)" rows="7"
+												value="@bind(vm.transactionSummary.quotation.payment)"
+												width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
 				</rows>
 			</grid>
 		</groupbox>
@@ -261,7 +453,8 @@
 					<column></column>
 				</columns>
 				<rows>
-					<row>
+					<row
+						visible="@load(vm.transactionSummary.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel"
 							value="Condiciones de pago:">
 						</label>

@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.0.12
 -- Dumped by pg_dump version 9.2.2
--- Started on 2013-09-18 15:55:34
+-- Started on 2013-09-18 15:56:50
 
 SET statement_timeout = 0;
 SET client_encoding = 'WIN1252';
@@ -2223,7 +2223,7 @@ SELECT pg_catalog.setval('security_role_id_security_role_seq', 8, true);
 SELECT pg_catalog.setval('security_user_id_security_user_seq', 9, true);
 
 
--- Completed on 2013-09-18 15:55:34
+-- Completed on 2013-09-18 15:56:50
 
 --
 -- PostgreSQL database dump complete

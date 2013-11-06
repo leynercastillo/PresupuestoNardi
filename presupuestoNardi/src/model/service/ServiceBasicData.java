@@ -229,4 +229,9 @@ public class ServiceBasicData {
 	public List<BasicData> listDesignByModel(BasicData model) {
 		return daoBasicdata.listByParent(model);
 	}
+
+	@Transactional(readOnly = true)
+	public List<BasicData> listQuotationTypeMoney() {
+		return daoBasicdata.listByFieldTable("QUOTATION", "QUOTATION TYPE MONEY");
+	}
 }

@@ -17,7 +17,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
-public class FrmSalesSummary {
+public class FrmSaleSummaryList {
 
 	@WireVariable
 	private ServiceQuotation serviceQuotation;

@@ -69,6 +69,13 @@ public class FrmWindowQuotations {
 		return q.getElevatorQuantity() + " - " + q.getBasicDataByElevatorType().getName();
 	}
 
+	public String getPrice(Quotation quotation) {
+		if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+			return quotation.getTotalPrice()+ " Bs";
+		else
+			return quotation.getPriceImportedMaterial() + " $";
+	}
+
 	public String getQuotationNumber(Quotation quotation) {
 		if (quotation.isType())
 			return "1 - " + quotation.getNewNumber() + " - " + quotation.getVersionNumber();

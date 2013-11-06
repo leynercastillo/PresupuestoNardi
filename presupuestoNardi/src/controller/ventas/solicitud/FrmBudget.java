@@ -17,7 +17,6 @@ import java.util.Map;
 import model.database.BasicData;
 import model.database.Budget;
 import model.database.BusinessPartner;
-import model.database.Quotation;
 import model.database.SecurityUser;
 import model.service.ServiceBasicData;
 import model.service.ServiceBudget;
@@ -44,7 +43,6 @@ import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.impl.InputElement;
@@ -865,19 +863,6 @@ public class FrmBudget {
 	@Command
 	public void cancelModal() {
 		modalMessage = null;
-	}
-
-	@NotifyChange({ "disabledAll" })
-	@Command
-	public void edit(@BindingParam("component") Button button) {
-		List<Quotation> list = serviceQuotation.listByBudget(budget.getNumber());
-		for (Quotation q : list) {
-			if (q.getStatus() == 'A') {
-				disabledAll = new Boolean(false);
-				return;
-			}
-		}
-		throw new WrongValueException(button, "Esta solicitud no tiene ningun presupuesto aprobado. No puede ser editada.");
 	}
 
 	@NotifyChange({ "disabledAll", "budgetNumber", "budget", "disableAfterSearch", "disabledNumber" })

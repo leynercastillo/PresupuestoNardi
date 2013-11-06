@@ -89,7 +89,7 @@
 								if="${sec:isAllGranted('ROLE_SALES_SUMMARY')}">
 								<treerow>
 									<treecell label="Resumen de ventas"
-										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSalesSummary.zul')">
+										onClick="@command('optionSelected', optionSelected='system/ventas/resumen/frmSaleSummaryList.zul')">
 									</treecell>
 								</treerow>
 							</treeitem>

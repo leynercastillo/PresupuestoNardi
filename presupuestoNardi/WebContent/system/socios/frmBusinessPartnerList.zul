@@ -4,7 +4,7 @@
 		closable="true" id="win" onClose="@command('close')"
 		viewModel="@id('vm') @init('controller.socios.FrmBusinessPartnerList')">
 		<style src="resource/style/styleZK.css"></style>
-		<caption label="Clientes"></caption>
+		<caption label="Clientes" zclass="formTitleLabel"></caption>
 		<grid>
 			<rows>
 				<row>

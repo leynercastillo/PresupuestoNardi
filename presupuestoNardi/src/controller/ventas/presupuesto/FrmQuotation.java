@@ -86,12 +86,21 @@ public class FrmQuotation {
 	private List<BasicData> listDoorframeHammered;
 	private List<BasicData> listControlType;
 	private List<BasicData> listRoofType;
+	private List<BasicData> listQuotationType;
 	private ListModel<Object> listQuotationNumber;
 	private ListModel<Object> listRifPartner;
 	private ListModel<Object> listBudgetNumber;
 	private ListModel<Object> listPartnerName;
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
+
+	public List<BasicData> getListQuotationType() {
+		return listQuotationType;
+	}
+
+	public void setListQuotationType(List<BasicData> listQuotationType) {
+		this.listQuotationType = listQuotationType;
+	}
 
 	public String getPrintMessage() {
 		return printMessage;
@@ -506,6 +515,7 @@ public class FrmQuotation {
 		listElevatorType = serviceBasicData.listElevatorType();
 		listHallButtonType = serviceBasicData.listHallButtonType();
 		listControlType = serviceBasicData.listControlType();
+		listQuotationType = serviceBasicData.listQuotationTypeMoney();
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		modalMessage = null;
@@ -617,26 +627,46 @@ public class FrmQuotation {
 				listDesign = serviceBasicData.listDesignByModel(cabinModel);
 			}
 			updateQuotationNumber(budgetNumber);
-			loadPayment();
 		} else
 			Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
 	}
 
+	@NotifyChange({ "quotation" })
+	@Command
 	public void loadPayment() {
-		if (quotation.isType()) {
-			quotation.setPayment("60% de Inicial pagadera a la firma del contrato de venta.\n" + "15% a los 30 días.\n" + "15% a los 60 días.\n" + "5% para el despacho del equipo a la obra.\n" + "5% para la entrega del equipo y puesta en marcha.");
+		if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
+			quotation.setPayment("80% de Inicial pagadera a la firma del contrato de venta.\n" + "20% a los 30 días.\n");
 			quotation.setWarranty("3");
 			quotation.setExtendedWarranty("12");
-			quotation.setDeliveryEstimate("8");
+			quotation.setDeliveryEstimate("6");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- Este presupuesto NO incluye montaje, el mismo será presupuestado en el momento que se vaya a ejecutar.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- El precio por instalacion del equipo sera ajustado al momento de la ejecución y culminacion del montaje.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
-		} else {
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- Este presupuesto NO incluye montaje, el mismo será presupuestado en el momento que se vaya a ejecutar.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setPriceImportedMaterial(0);
+			quotation.setPriceNationalMaterial(0);
+			quotation.setTotalPrice(0);
+		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
 			quotation.setPayment("60% de inicial al momento de la firma del contrato.\n" + "20% para el desarme  de los equipos en  la obra.\n" + "15% para el despacho de los equipos y comenzar el trabajo de armado.\n" + "5% para la entrega de los equipos funcionando.");
 			quotation.setWarranty("3");
 			quotation.setExtendedWarranty("6");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
 			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- En caso de daño oculto será presupuestado el mismo al momento de ser detectado y por separado.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setPriceImportedMaterial(0);
+			quotation.setPriceNationalMaterial(0);
+			quotation.setTotalPrice(0);
+		} else if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
+			quotation.setPaymentForeign("100% para la orden produccion y firma del contrato.");
+			quotation.setPayment("20% para la orden de produccion y firma del contrato.\n" + "80% para nacionalizar los equipos al llegar a puerto venezolano.\n");
+			quotation.setWarranty("3");
+			quotation.setExtendedWarranty("12");
+			quotation.setDeliveryEstimate("6");
+			quotation.setQuotationValidity("07");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio del equipo NO incluye montaje, el mismo sera calculado al momento de la instalacion.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setPriceImportedMaterial(0);
+			quotation.setPriceNationalMaterial(0);
+			quotation.setTotalPrice(0);
+		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
+
 		}
 	}
 
@@ -793,6 +823,17 @@ public class FrmQuotation {
 		BindUtils.postNotifyChange(null, null, quotation, "totalPrice");
 	}
 
+	@Command
+	public void setPrice(@BindingParam("price") Double value, @BindingParam("type") String type) {
+		if (type.contains("national")) {
+			quotation.setPriceNationalMaterial(value);
+			BindUtils.postNotifyChange(null, null, quotation, "priceNationalMaterial");
+		} else if (type.contains("foreign")) {
+			quotation.setPriceImportedMaterial(value);
+			BindUtils.postNotifyChange(null, null, quotation, "priceImportedMaterial");
+		}
+	}
+
 	@NotifyChange({ "quotation", "disabledPrint", "disableBeforeSearch", "disabledBudgetNumber", "cabinModel" })
 	@GlobalCommand
 	public void selectedQuotation(@BindingParam("quotation") Quotation quotation) {
@@ -906,10 +947,16 @@ public class FrmQuotation {
 			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
 		else
 			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
-		if (template == null || template.compareTo("SI") == 0)
-			template = "quotation.jasper";
-		else
-			template = "quotation_without.jasper";
+		if (template == null || template.compareTo("SI") == 0) {
+			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+				template = "quotation.jasper";
+			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
+				template = "quotation_foreign.jasper";
+		} else if (template.contains("NO"))
+			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+				template = "quotation_without.jasper";
+			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
+				template = "quotation_foreign_without.jasper";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("TYPE", quotation.isType());
 		parameters.put("NEW", quotation.getNewNumber());

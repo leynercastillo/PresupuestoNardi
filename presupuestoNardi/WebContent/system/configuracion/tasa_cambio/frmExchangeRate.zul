@@ -1,0 +1,11 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer" border="normal" closable="true"
+		mode="modal" title="Socios de Negocios"
+		viewModel="@id('vm') @init('controller.socios.FrmBusinessPartner')"
+		width="60%">
+		<style src="resource/style/styleZK.css"></style>
+		<caption label="Clientes" zclass="formTitleLabel"></caption>
+		
+	</window>
+</zk>

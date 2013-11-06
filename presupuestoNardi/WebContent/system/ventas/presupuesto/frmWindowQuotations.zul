@@ -46,7 +46,7 @@
 					<listcell
 						label="@load(quotation.date) @converter('formattedDate', format='dd/MM/yyyy')">
 					</listcell>
-					<listcell label="@load(quotation.totalPrice)"></listcell>
+					<listcell label="@load(vm.getPrice(quotation))"></listcell>
 					<listcell label="@load(quotation.seller)"></listcell>
 				</listitem>
 			</template>

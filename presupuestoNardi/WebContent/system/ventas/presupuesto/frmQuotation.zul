@@ -9,7 +9,7 @@
 			<grid>
 				<columns>
 					<column width="15%"></column>
-					<column width="20%"></column>
+					<column width="30%"></column>
 					<column width="15%"></column>
 					<column width="20%"></column>
 					<column></column>
@@ -17,7 +17,7 @@
 				<rows>
 					<row>
 						<label sclass="formLabel" value="Rif:"></label>
-						<div>
+						<div hflex="1">
 							<combobox disabled="true"
 								model="@load(vm.listRifType)" readonly="false"
 								style="float: left"
@@ -41,7 +41,7 @@
 							</combobox>
 						</div>
 						<label sclass="formLabel"
-							value="Nro. Presupuesto:">
+							value="Nro Presupuesto:">
 						</label>
 						<div width="100%">
 							<intbox disabled="true" style="float: left"
@@ -55,9 +55,9 @@
 								onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='quotationNumber')"
 								style="margin-left: 1%"
 								value="@load(vm.quotation.type ? vm.quotation.newNumber : vm.quotation.modernizationNumber)"
-								width="67%">
+								width="70%">
 							</combobox>
-							<intbox disabled="true"
+							<intbox disabled="true" style="float: right"
 								value="@load(vm.quotation.versionNumber)" width="10%">
 							</intbox>
 						</div>
@@ -83,11 +83,10 @@
 						</label>
 						<combobox autocomplete="true" autodrop="true"
 							buttonVisible="false" disabled="@load(vm.disabledBudgetNumber)"
-							model="@load(vm.listBudgetNumber)"
+							hflex="1" model="@load(vm.listBudgetNumber)"
 							onChange="@command(vm.disableBeforeSearch ? 'loadBudgetId':'loadQuotationByField', field='budgetNumber',val=self.value)"
 							onFocus="@command(vm.disableBeforeSearch ? 'searchBudgetByField':'searchQuotationByField', field='number')"
-							value="@load(vm.quotation.budgetNumber eq 0 ? '' : vm.quotation.budgetNumber)"
-							width="50%">
+							value="@load(vm.quotation.budgetNumber eq 0 ? '' : vm.quotation.budgetNumber)">
 						</combobox>
 						<space></space>
 					</row>
@@ -103,27 +102,65 @@
 						</combobox>
 						<label sclass="formLabel" value="Fecha:"></label>
 						<datebox disabled="true" format="dd/MM/yyyy"
-							value="@load(vm.quotation.date)" width="97%">
+							hflex="1" value="@load(vm.quotation.date)">
 						</datebox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Direccion:"></label>
+						<textbox disabled="true" hflex="1"
+							maxlength="200"
+							value="@load(vm.quotation.budget.constructionAddress)">
+						</textbox>
+						<label sclass="formLabel"
+							value="Tipo presupuesto:">
+						</label>
+						<radiogroup
+							selectedItem="@save(vm.quotation.type)">
+							<radio
+								checked="@load(vm.quotation.type ? 'true':'false')"
+								disabled="true" label="Nuevo" value="true">
+							</radio>
+							<radio
+								checked="@load(vm.quotation.type ? 'false':'true')"
+								disabled="true" label="Modernizacion" value="false">
+							</radio>
+						</radiogroup>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Ciudad:"></label>
+						<textbox disabled="true" hflex="1"
+							maxlength="200"
+							value="@load(vm.quotation.budget.constructionCity)">
+						</textbox>
+						<label sclass="formLabel" value="Vendedor:">
+						</label>
+						<combobox autocomplete="true"
+							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
+							buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
+							hflex="1" maxlength="100" model="@load(vm.listSeller)"
+							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='seller')"
+							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='seller', val=self.value)"
+							value="@save(vm.quotation.seller, before = 'confirmSave') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)">
+						</combobox>
 						<space></space>
 					</row>
 					<row>
 						<label sclass="formLabel"
 							value="Persona contacto:">
 						</label>
-						<textbox disabled="true" maxlength="100"
-							value="@save(vm.quotation.contactName, before = 'confirmSave') @load(vm.quotation.contactName) @validator(vm.noEmpty, component = self)"
-							width="97%">
+						<textbox disabled="true" hflex="1"
+							maxlength="100"
+							value="@save(vm.quotation.contactName, before = 'confirmSave') @load(vm.quotation.contactName) @validator(vm.noEmpty, component = self)">
 						</textbox>
 						<label sclass="formLabel"
-							value="Fecha aprobacion:">
+							value="Telefono contacto:">
 						</label>
-						<datebox
-							disabled="@load(vm.disabledEdit ? 'true' : vm.quotation.status eq 'A' ? 'false' : 'true')"
-							format="dd/MM/yyyy"
-							value="@save(vm.quotation.approvedDate, before = 'confirmSave') @load(vm.quotation.approvedDate) @validator(vm.noValidDate, datebox = self)"
-							width="97%">
-						</datebox>
+						<textbox disabled="true" hflex="1"
+							maxlength="100"
+							value="@load(vm.quotation.budget.contactPhone)">
+						</textbox>
 						<space></space>
 					</row>
 					<row>
@@ -147,43 +184,37 @@
 								</template>
 							</combobox>
 						</div>
+						<label sclass="formLabel" value="Correo:">
+						</label>
+						<textbox disabled="true" hflex="1"
+							maxlength="100" value="@load(vm.quotation.budget.email)">
+						</textbox>
+						<space></space>
+					</row>
+					<row>
+						<space></space>
+						<space></space>
 						<label sclass="formLabel"
 							value="Fecha entrega:">
 						</label>
 						<datebox
 							disabled="@load(vm.disabledEdit ? 'true' : vm.quotation.status eq 'A' ? 'false' : 'true')"
-							format="dd/MM/yyyy"
-							value="@save(vm.quotation.deliveryDate, before = 'confirmSave') @load(vm.quotation.deliveryDate) @validator(vm.noValidDate, datebox = self)"
-							width="97%">
+							format="dd/MM/yyyy" hflex="1"
+							value="@save(vm.quotation.deliveryDate, before = 'confirmSave') @load(vm.quotation.deliveryDate) @validator(vm.noValidDate, datebox = self)">
 						</datebox>
 						<space></space>
 					</row>
 					<row>
+						<space></space>
+						<space></space>
 						<label sclass="formLabel"
-							value="Tipo presupuesto:">
+							value="Fecha aprobacion:">
 						</label>
-						<radiogroup
-							selectedItem="@save(vm.quotation.type)">
-							<radio
-								checked="@load(vm.quotation.type ? 'true':'false')"
-								disabled="true" label="Nuevo" value="true">
-							</radio>
-							<radio
-								checked="@load(vm.quotation.type ? 'false':'true')"
-								disabled="true" label="Modernizacion" value="false">
-							</radio>
-						</radiogroup>
-						<label sclass="formLabel" value="Vendedor:">
-						</label>
-						<combobox autocomplete="true"
-							autodrop="@load(vm.disableBeforeSearch ? 'false' : 'true')"
-							buttonVisible="false" disabled="@load(vm.disableBeforeSearch)"
-							maxlength="100" model="@load(vm.listSeller)"
-							onFocus="@command(vm.disableBeforeSearch ? '':'searchQuotationByField', field='seller')"
-							onChange="@command(vm.disableBeforeSearch ? '':'loadQuotationByField', field='seller', val=self.value)"
-							value="@save(vm.quotation.seller, before = 'confirmSave') @load(vm.quotation.seller) @validator(vm.noEmpty, component = self)"
-							width="97%">
-						</combobox>
+						<datebox
+							disabled="@load(vm.disabledEdit ? 'true' : vm.quotation.status eq 'A' ? 'false' : 'true')"
+							format="dd/MM/yyyy" hflex="1"
+							value="@save(vm.quotation.approvedDate, before = 'confirmSave') @load(vm.quotation.approvedDate) @validator(vm.noValidDate, datebox = self)">
+						</datebox>
 						<space></space>
 					</row>
 				</rows>
@@ -912,6 +943,29 @@
 				</columns>
 				<rows>
 					<row>
+						<label sclass="formLabel"
+							value="Tipo precio:">
+						</label>
+						<combobox disabled="@load(vm.disabledEdit)"
+							model="@load(vm.listQuotationType)"
+							onChange="@command('loadPayment')"
+							readonly="@load(not vm.disabledEdit)"
+							selectedItem="@bind(vm.quotation.basicDataByQuotationType)"
+							value="@load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name)"
+							width="99%">
+							<template name="model"
+								var="quotationType">
+								<comboitem
+									label="@load(quotationType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="60%"></label>
 						<label sclass="formLabel"
 							value="Material Importado:">
@@ -923,7 +977,8 @@
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="40%"></label>
 						<label sclass="formLabel"
 							value="Material Nacional y Mano de Obra de fabricacion:">
@@ -935,7 +990,8 @@
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel" value="100%"></label>
 						<label sclass="formLabel"
 							value="Precio Unitario Total:">
@@ -944,13 +1000,14 @@
 							format="#,##0.00"
 							onChange="@command('priceUnit', val=self.value)"
 							style="text-align: right"
-							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice) @validator(vm.noZeroDouble, component = self)"
+							value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice)"
 							width="95%">
 						</doublebox>
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label sclass="formLabel"
 							value="@load(vm.quotation.elevatorQuantity)">
 						</label>
@@ -968,6 +1025,138 @@
 						</doublebox>
 						<label sclass="formLabel" value="Bs:"></label>
 					</row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE IMPORTADA" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario $"></column>
+									<column label="Subtotal $"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('setPrice', price = self.value, type = 'foreign')"
+											style="text-align: right"
+											value="@save(vm.quotation.priceImportedMaterial, before = 'confirmSave') @load(vm.quotation.priceImportedMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceImportedMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceImportedMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disabledEdit)" maxlength="700" rows="7"
+												value="@bind(vm.quotation.paymentForeign)" width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE NACIONAL" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario Bs"></column>
+									<column label="Subtotal Bs"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('setPrice', price = self.value, type = 'national')"
+											style="text-align: right"
+											value="@save(vm.quotation.priceNationalMaterial, before = 'confirmSave') @load(vm.quotation.priceNationalMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceNationalMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceNationalMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disabledEdit)" maxlength="700" rows="7"
+												value="@bind(vm.quotation.payment)" width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
 				</rows>
 			</grid>
 		</groupbox>
@@ -979,7 +1168,8 @@
 					<column></column>
 				</columns>
 				<rows>
-					<row>
+					<row
+						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label value="Condiciones de pago:"
 							sclass="formLabel">
 						</label>
@@ -1077,21 +1267,20 @@
 						<button
 							disabled="@load(vm.disabledBudgetNumber ? vm.disabledEdit : 'true')"
 							image="/resource/images/icons/save.png" label="Guardar"
-							onClick="@command('confirmSave', radioGroup = radio)"
-							sclass="formLabel">
+							onClick="@command('confirmSave', radioGroup = radio)">
 						</button>
 						<button
 							disabled="@load(vm.disabledEdit ? vm.disabledPrint : 'true')"
 							image="/resource/images/icons/edit.png" label="Editar"
-							onClick="@command('edit')" sclass="formLabel">
+							onClick="@command('edit')">
 						</button>
 						<button disabled="@load(vm.disabledPrint)"
 							image="/resource/images/icons/print.png" label="Imprimir"
-							onClick="@command('selectPrintTemplate')" sclass="formLabel">
+							onClick="@command('selectPrintTemplate')">
 						</button>
 						<button
 							image="/resource/images/icons/cancel.png" label="Cancelar"
-							onClick="@command('restartForm')" sclass="formLabel">
+							onClick="@command('restartForm')">
 						</button>
 					</hbox>
 				</row>

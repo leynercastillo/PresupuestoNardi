@@ -64,11 +64,11 @@
 					<space></space>
 				</row>
 				<row>
-					<button label="Guardar"
-						onClick="@command('save')">
+					<button image="/resource/images/icons/save.png"
+						label="Guardar" onClick="@command('save')">
 					</button>
-					<button label="Cancelar"
-						onClick="@command('cancel')">
+					<button image="/resource/images/icons/cancel.png"
+						label="Cancelar" onClick="@command('cancel')">
 					</button>
 					<space></space>
 				</row>
