@@ -2,54 +2,107 @@
 <zk>
 	<style src="resource/style/styleZK.css"></style>
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
-		closable="true" onClose="@command('close')"
-		viewModel="@id('vm') @init('controller.ventas.resumen.FrmSaleSummaryList')">
+		closable="true" id="win" mode="modal"
+		viewModel="@id('vm') @init('controller.ventas.resumen.FrmSaleSummaryList')"
+		width="95%">
 		<caption label="RESUMENES DE VENTAS" zclass="formTitleLabel"></caption>
-		<listbox model="@load(vm.listQuotations)" mold="paging"
-			onSelect="@command('pdfQuotation')" pageSize="10"
-			pagingPosition="both" selectedItem="@bind(vm.quotation)">
+		<listbox model="@load(vm.listSaleSummary)" mold="paging"
+			onSelect="@command('sendSaleSummary', window = win)" pageSize="10"
+			pagingPosition="both" selectedItem="@bind(vm.saleSummary)">
+			<auxhead>
+				<auxheader>
+					<hlayout hflex="1">
+						<image
+							src="/resource/images/icons/filter.png">
+						</image>
+						<textbox hflex="1" instant="true"
+							onChange="@command('dataFilter')"
+							value="@bind(vm.saleSummaryFilter.number)">
+						</textbox>
+					</hlayout>
+				</auxheader>
+				<auxheader>
+					<hlayout hflex="1">
+						<image
+							src="/resource/images/icons/filter.png">
+						</image>
+						<textbox hflex="1" instant="true"
+							onChange="@command('dataFilter')"
+							value="@bind(vm.saleSummaryFilter.partnerName)">
+						</textbox>
+					</hlayout>
+				</auxheader>
+				<auxheader>
+					<hlayout hflex="1">
+						<image
+							src="/resource/images/icons/filter.png">
+						</image>
+						<textbox hflex="1" instant="true"
+							onChange="@command('dataFilter')"
+							value="@bind(vm.saleSummaryFilter.construction)">
+						</textbox>
+					</hlayout>
+				</auxheader>
+				<auxheader></auxheader>
+				<auxheader></auxheader>
+				<auxheader></auxheader>
+				<auxheader>
+					<hlayout hflex="1">
+						<image
+							src="/resource/images/icons/filter.png">
+						</image>
+						<textbox hflex="1" instant="true"
+							onChange="@command('dataFilter')"
+							value="@bind(vm.saleSummaryFilter.seller)">
+						</textbox>
+					</hlayout>
+				</auxheader>
+			</auxhead>
 			<listhead>
-				<listheader label="Nro Presupuesto"
-					sort="auto(type, modernizationNumber, newNumber,  versionNumber)"
-					width="12%">
+				<listheader label="Nro Resumen Venta"
+					sort="auto(number, version)" width="10%">
 				</listheader>
-				<listheader label="Cliente" sort="auto(partnerName)"
-					width="18%">
+				<listheader label="Cliente"
+					sort="auto(quotation.partnerName)" width="20%">
 				</listheader>
 				<listheader label="Obra" sort="auto(construction)"
-					width="19%">
+					width="20%">
 				</listheader>
 				<listheader label="Equipo"
 					sort="auto(elevatorQuantity, basicDataByElevatorType.name)"
 					width="10%">
 				</listheader>
 				<listheader label="Fecha aprobacion"
-					sort="auto(approvedDate)" width="13%">
+					sort="auto(quotation.approvedDate)" width="15%">
 				</listheader>
 				<listheader label="Fecha entrega"
-					sort="auto(deliveryDate)" width="13%">
+					sort="auto(deliveryDate)" width="15%">
 				</listheader>
-				<listheader label="Vendedor" sort="auto(seller)"
-					width="15%">
+				<listheader label="Vendedor"
+					sort="auto(quotation.seller)" width="10%">
 				</listheader>
 			</listhead>
 			<template name="model" var="salesSummary">
 				<listitem>
 					<listcell
-						label="@load(vm.getQuotationNumber(salesSummary))">
+						label="@load(vm.getSaleSummaryNumber(salesSummary))">
 					</listcell>
-					<listcell label="@load(salesSummary.partnerName)"></listcell>
+					<listcell
+						label="@load(salesSummary.quotation.partnerName)">
+					</listcell>
 					<listcell
 						label="@load(salesSummary.construction)">
 					</listcell>
 					<listcell label="@load(vm.getTeam(salesSummary))"></listcell>
 					<listcell
-						label="@load(vm.getDateFormat(salesSummary.approvedDate))">
+						label="@load(vm.getDateFormat(salesSummary.quotation.approvedDate))">
 					</listcell>
 					<listcell
 						label="@load(vm.getDateFormat(salesSummary.deliveryDate))">
 					</listcell>
-					<listcell label="@load(salesSummary.seller)"></listcell>
+					<listcell
+						label="@load(salesSummary.quotation.seller)">
+					</listcell>
 				</listitem>
 			</template>
 		</listbox>

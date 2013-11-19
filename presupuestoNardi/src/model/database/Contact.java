@@ -1,8 +1,9 @@
 package model.database;
 
-// Generated 09-sep-2013 15:28:18 by Hibernate Tools 4.0.0
+// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

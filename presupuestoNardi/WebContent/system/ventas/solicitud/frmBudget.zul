@@ -1150,17 +1150,6 @@
 								</radio>
 							</radiogroup>
 							<space></space>
-							<radio
-								checked="@load(vm.budget.displayPlaceFloor eq 'Otros' ? 'true':'false')"
-								disabled="@load(vm.disabledAll)" label="Otros"
-								radiogroup="radBDisplayPlaceFloor" value="Otros">
-							</radio>
-							<space></space>
-							<textbox
-								disabled="@load(vm.disabledAll ? 'true' : vm.budget.displayPlaceFloor eq 'Otros' ? 'false' : 'true')"
-								hflex="1" maxlength="50"
-								value="@save(vm.budget.displayPlaceFloor eq 'Otros' ? vm.budget.displayPlaceFloor : '')">
-							</textbox>
 						</cell>
 						<space></space>
 					</row>

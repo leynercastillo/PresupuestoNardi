@@ -15,14 +15,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import model.database.BasicData;
-import model.database.Budget;
-import model.database.BusinessPartner;
-import model.database.Quotation;
+import model.database.SaleSummary;
 import model.database.SecurityUser;
 import model.service.ServiceBasicData;
-import model.service.ServiceBudget;
 import model.service.ServiceBusinessPartner;
 import model.service.ServiceQuotation;
+import model.service.ServiceSaleSummary;
 import model.service.ServiceSecurityUser;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +44,6 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModel;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
@@ -60,7 +57,7 @@ public class FrmSaleSummary {
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
 	@WireVariable
-	private ServiceBudget serviceBudget;
+	private ServiceSaleSummary serviceSaleSummary;
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
 	@WireVariable
@@ -108,6 +105,7 @@ public class FrmSaleSummary {
 	private List<BasicData> listRifType;
 	private ListModel<Object> listRifPartner;
 	private ListModel<Object> listNumber;
+	private ListModel<Object> listQuotationNumber;
 	private ListModel<Object> listPartnerName;
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
@@ -115,17 +113,39 @@ public class FrmSaleSummary {
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
-	private Boolean disabledAll;
-	private Boolean disableAfterSearch;
-	private Boolean disabledNumber;
-	private Boolean disableSeller;
+	private Boolean searching;
+	private Boolean editing;
 	private Boolean disableSistelHall;
 	private Integer sistelWDisplayFloor;
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
-	private Budget budget;
-	private BusinessPartner businessPartner;
+	private SaleSummary saleSummary;
+	private SecurityUser user;
+
+	public ListModel<Object> getListQuotationNumber() {
+		return listQuotationNumber;
+	}
+
+	public void setListQuotationNumber(ListModel<Object> listQuotationNumber) {
+		this.listQuotationNumber = listQuotationNumber;
+	}
+
+	public Boolean getEditing() {
+		return editing;
+	}
+
+	public void setEditing(Boolean editing) {
+		this.editing = editing;
+	}
+
+	public Boolean getSearching() {
+		return searching;
+	}
+
+	public void setSearching(Boolean searching) {
+		this.searching = searching;
+	}
 
 	public String getModalMessage() {
 		return modalMessage;
@@ -203,14 +223,6 @@ public class FrmSaleSummary {
 		this.disableSistelHall = disableSistelHall;
 	}
 
-	public Boolean getDisableSeller() {
-		return disableSeller;
-	}
-
-	public void setDisableSeller(Boolean disableSeller) {
-		this.disableSeller = disableSeller;
-	}
-
 	public List<BasicData> getListHallButton() {
 		return listHallButton;
 	}
@@ -257,30 +269,6 @@ public class FrmSaleSummary {
 
 	public void setListCabinModel(List<BasicData> listCabinModel) {
 		this.listCabinModel = listCabinModel;
-	}
-
-	public Boolean getDisabledNumber() {
-		return disabledNumber;
-	}
-
-	public void setDisabledNumber(Boolean disabledNumber) {
-		this.disabledNumber = disabledNumber;
-	}
-
-	public Boolean getDisableAfterSearch() {
-		return disableAfterSearch;
-	}
-
-	public void setDisableAfterSearch(Boolean disableAfterSearch) {
-		this.disableAfterSearch = disableAfterSearch;
-	}
-
-	public Boolean getDisabledAll() {
-		return disabledAll;
-	}
-
-	public void setDisabledAll(Boolean disabledAll) {
-		this.disabledAll = disabledAll;
 	}
 
 	public String getSeleccione() {
@@ -347,12 +335,12 @@ public class FrmSaleSummary {
 		this.sistelWArrowPB = sistelWArrowPB;
 	}
 
-	public Budget getBudget() {
-		return budget;
+	public SaleSummary getSaleSummary() {
+		return saleSummary;
 	}
 
-	public void setBudget(Budget budget) {
-		this.budget = budget;
+	public void setSaleSummary(SaleSummary saleSummary) {
+		this.saleSummary = saleSummary;
 	}
 
 	public List<BasicData> getListMotorTraction() {
@@ -581,66 +569,35 @@ public class FrmSaleSummary {
 	public void restartForm() {
 		seleccione = new String("--Seleccione--");
 		modalMessage = null;
-		budget = new Budget();
-		businessPartner = new BusinessPartner();
-		List<Budget> listAllBudget = serviceBudget.listAll();
-		if (listAllBudget.isEmpty())
-			budget.setNumber(1);
-		else
-			budget.setNumber(listAllBudget.get(listAllBudget.size() - 1).getNumber() + 1);
-		disabledAll = new Boolean(false);
-		disableAfterSearch = new Boolean(false);
-		disabledNumber = new Boolean(true);
-		disableSeller = new Boolean(true);
-		disableSistelHall = new Boolean(true);
+		saleSummary = new SaleSummary();
+		saleSummary.setPlaneC(false);
+		saleSummary.setPlaneP(false);
+		saleSummary.setStopSequenceContinuous(false);
+		saleSummary.setStopSequenceEven(false);
+		saleSummary.setStopSequenceOdd(false);
+		saleSummary.setDesignSpecial(false);
+		saleSummary.setDoorFrameStainless(false);
+		saleSummary.setSistelWarrowPb(false);
+		saleSummary.setSistelWdisplayPb(false);
+		saleSummary.setLightCurtain(true);
+		saleSummary.setLoadLimiter(false);
+		saleSummary.setSpeechSynthesizer(false);
+		saleSummary.setGomSystem(false);
+		saleSummary.setIntercom(false);
+		saleSummary.setPhone(false);
+		saleSummary.setAccessSytem(false);
+		saleSummary.setFirefighterKeychain(false);
+		searching = true;
+		editing = false;
+		disableSistelHall = true;
 		cabinModel = new BasicData();
 		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		SecurityUser user = serviceSecurityUser.findUser(auxUser.getUsername());
-		budget.setSeller(user.getName());
-		budget.setSecurityUser(user);
-		budget.setDate(new Date());
-		budget.setType(true);
-		budget.setPlaneC(false);
-		budget.setPlaneP(false);
-		budget.setLightCurtain(false);
-		budget.setLoadLimiter(false);
-		budget.setSpeechSynthesizer(false);
-		budget.setGomSystem(false);
-		budget.setIntercom(false);
-		budget.setPhone(false);
-		budget.setAccessSytem(false);
-		budget.setFirefighterKeychain(false);
-		budget.setDesignSpecial(false);
-		budget.setMotorTraction(new String());
-		budget.setHallButtonPlace(new String());
-		budget.setDisplayPlaceFloor(new String());
-		budget.setStatus('A');
-		budget.setStopSequenceContinuous(false);
-		budget.setStopSequenceEven(false);
-		budget.setStopSequenceOdd(false);
-		budget.setDoorFrameStainless(false);
-		budget.setSistelWarrowFloor(0);
-		budget.setElevatorQuantity(0);
-		budget.setMotorQuantity(0);
-		budget.setStopSequenceContinuousNumber(0);
-		budget.setStopSequenceEvenNumber(0);
-		budget.setStopSequenceOddNumber(0);
-		budget.setSistelWdisplayPb(new Boolean(false));
-		budget.setSistelWdisplayFloor(0);
-		budget.setSistelWarrowPb(new Boolean(false));
-		budget.setRifType('-');
-		budget.setRifPartner(new String());
-		budget.setLightCurtain(true);
+		this.user = serviceSecurityUser.findUser(auxUser.getUsername());
 		listDesign = new ArrayList<BasicData>();
 		listFan = new ArrayList<BasicData>();
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		listRoofType = new ArrayList<BasicData>();
-		listRifPartner = new ListModelList<Object>();
-		listNumber = new ListModelList<Object>();
-		listPartnerName = new ListModelList<Object>();
-		listConstruction = new ListModelList<Object>();
-		listSeller = new ListModelList<Object>();
 		listRifType = serviceBasicData.listRifType();
 		listBType = serviceBasicData.listBuildingType();
 		listElevatorType = serviceBasicData.listElevatorType();
@@ -702,7 +659,7 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				Integer quantity = Integer.parseInt(inputElement.getText());
-				if (budget.isType() && (quantity < 1))
+				if (saleSummary.getQuotation().isType() && (quantity < 1))
 					throw new WrongValueException(inputElement, "Debe ingresar al menos un ascensor.");
 			}
 		};
@@ -719,11 +676,11 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				String str = inputElement.getText();
-				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("FORMICA") != -1 && str.trim().isEmpty())
+				if (saleSummary.getBasicDataByCabinDesign() != null && saleSummary.getBasicDataByCabinDesign().getName().indexOf("FORMICA") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para el diseño formica.");
-				if (budget.getBasicDataByCabinDesign() != null && budget.getBasicDataByCabinDesign().getName().indexOf("OTRO") != -1 && str.trim().isEmpty())
+				if (saleSummary.getBasicDataByCabinDesign() != null && saleSummary.getBasicDataByCabinDesign().getName().indexOf("OTRO") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion para el diseño OTRO.");
-				if (budget.getBasicDataByFloorType() != null && budget.getBasicDataByFloorType().getName().indexOf("OTROS") != -1 && str.trim().isEmpty())
+				if (saleSummary.getBasicDataByFloorType() != null && saleSummary.getBasicDataByFloorType().getName().indexOf("OTROS") != -1 && str.trim().isEmpty())
 					throw new WrongValueException(inputElement, "Debe ingresar una descripcion acabados de piso OTROS.");
 			}
 		};
@@ -735,7 +692,7 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				Integer value = Integer.valueOf(inputElement.getText());
-				if (budget.getStopSequenceContinuous() && value <= 0)
+				if (saleSummary.getStopSequenceContinuous() && value <= 0)
 					throw new WrongValueException(inputElement, "Debe ingresar cantidad de paradas.");
 			}
 		};
@@ -747,7 +704,7 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				Integer value = Integer.valueOf(inputElement.getText());
-				if (budget.getStopSequenceEven() && value <= 0)
+				if (saleSummary.getStopSequenceEven() && value <= 0)
 					throw new WrongValueException(inputElement, "Debe ingresar cantidad de paradas.");
 			}
 		};
@@ -759,7 +716,7 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				Integer value = Integer.valueOf(inputElement.getText());
-				if (budget.getStopSequenceOdd() && value <= 0)
+				if (saleSummary.getStopSequenceOdd() && value <= 0)
 					throw new WrongValueException(inputElement, "Debe ingresar cantidad de paradas.");
 			}
 		};
@@ -771,7 +728,7 @@ public class FrmSaleSummary {
 			public void validate(ValidationContext ctx) {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				String str = inputElement.getText();
-				if (budget.getBasicDataByDoorframeType() != null && (str.indexOf("RECTO - 30X150") != -1) && (budget.getHallButtonPlace().indexOf("MARCO") != -1))
+				if (saleSummary.getBasicDataByDoorframeType() != null && (str.indexOf("RECTO - 30X150") != -1) && (saleSummary.getHallButtonPlace().indexOf("MARCO") != -1))
 					throw new WrongValueException(inputElement, "Este tipo no puede ser ubicado en el Marco.");
 			}
 		};
@@ -799,7 +756,7 @@ public class FrmSaleSummary {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				if (number <= 0 && budget.isType()) {
+				if (number <= 0 && saleSummary.getQuotation().isType()) {
 					throw new WrongValueException(inputElement, "Ingrese una cantidad valida.");
 				}
 			}
@@ -807,9 +764,9 @@ public class FrmSaleSummary {
 	}
 
 	public String mailMessage() {
-		String seller = new String(budget.getSeller());
+		String seller = new String(saleSummary.getQuotation().getSeller());
 		String message = new String();
-		message = "Solicitud de presupuesto enviada por " + seller + "\n\nCliente: " + budget.getPartnerName() + "\n\nCantidad ascensores: " + budget.getElevatorQuantity() + "\n\nCiudad: " + budget.getConstructionCity();
+		message = "Modificación de resumen de venta enviada por " + seller + "\n\nCliente: " + saleSummary.getQuotation().getPartnerName() + "\n\nCantidad ascensores: " + saleSummary.getElevatorQuantity() + "\n\nCiudad: " + saleSummary.getConstructionCity();
 		return message;
 	}
 
@@ -817,48 +774,39 @@ public class FrmSaleSummary {
 		List<File> listAttach = new ArrayList<File>();
 		GenericReport report = new GenericReport();
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		int number = budget.getNumber();
-		parameters.put("NUMBER", number);
-		parameters.put("REPORT_TITLE", "Solicitud Presupuesto");
+		parameters.put("ID_SALE_SUMMARY", saleSummary.getIdSaleSummary());
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
-		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "solicitud_" + number + ".pdf");
-		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/solicitud_" + number + ".pdf"));
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
+		Long time = new Date().getTime();
+		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "Resumen_venta_" + time + ".pdf");
+		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/resumen/Resumen_venta_" + time + ".pdf"));
 		listAttach.add(file);
 		return listAttach;
 	}
 
 	public void sendMail() {
 		List<String> listRecipient = new ArrayList<String>();
-		listRecipient.add("ventas@ascensoresnardi.com");
+		/* listRecipient.add("logistica@ascensoresnardi.com"); */
 		listRecipient.add("sistemas@ascensoresnardi.com");
-		emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
+		emails.sendMail("sistemas@ascensoresnardi.com", "Modificacion resumen de venta obra " + saleSummary.getConstruction(), listRecipient, mailMessage(), mailAttach());
 	}
 
 	@NotifyChange({ "*" })
 	@Command
 	public void save(@BindingParam("component") InputElement component) {
-		boolean sendMail = false;
-		// Se envia si se guarda. Si se modifica o no se guarda, no se envia
-		if (budget.getIdBudget() == 0)
-			sendMail = true;
-		if (businessPartner.getIdBusinessPartner() != 0)
-			budget.setBusinessPartner(businessPartner);
-		if (!serviceBudget.save(budget)) {
+		if (!serviceSaleSummary.save(saleSummary)) {
 			Clients.showNotification("No se pudo guardar.", "error", null, "bottom_center", 2000);
 			return;
 		}
-		if (sendMail)
-			/* sendMail(); */
-			Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
-		print();
+		sendMail();
+		Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
 		restartForm();
 	}
 
 	@NotifyChange("modalMessage")
 	@Command
 	public void confirmSave() {
-		modalMessage = "¿Esta seguro de guardar la solicitud?";
+		modalMessage = "¿Esta seguro de actualizar el resumen de venta?";
 	}
 
 	@NotifyChange("modalMessage")
@@ -867,74 +815,51 @@ public class FrmSaleSummary {
 		modalMessage = null;
 	}
 
-	@NotifyChange({ "disabledAll" })
+	@NotifyChange({ "editing" })
 	@Command
 	public void edit(@BindingParam("component") Button button) {
-		List<Quotation> list = serviceQuotation.listByBudget(budget.getNumber());
-		for (Quotation q : list) {
-			if (q.getStatus() == 'A') {
-				disabledAll = new Boolean(false);
-				return;
-			}
-		}
+		editing = true;
 	}
 
-	@NotifyChange({ "disabledAll", "budgetNumber", "budget", "disableAfterSearch", "disabledNumber" })
+	@NotifyChange({ "listRifPartner", "listNumber", "listPartnerName", "listConstruction", "listSeller", "listQuotationNumber" })
 	@Command
-	public void search() {
-		restartForm();
-		budget.setNumber(0);
-		budget.setSeller(new String());
-		disabledAll = new Boolean(true);
-		disableAfterSearch = new Boolean(false);
-		disabledNumber = new Boolean(false);
-		disableSeller = new Boolean(false);
-	}
-
-	@NotifyChange({ "listRifPartner", "listNumber", "listPartnerName", "listConstruction", "listSeller" })
-	@Command
-	public void loadBudgetByField(@BindingParam("field") String field) {
-		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModelCustom<Object>(serviceBudget.listRifPartner());
+	public void searchSaleSummaryByField(@BindingParam("field") String field) {
+		if (field.equals("rifPartner")) {
+			listRifPartner = new SimpleListModelCustom<Object>(serviceSaleSummary.listRifPartner(this.user));
 			return;
-		} else if (field.compareTo("number") == 0) {
-			listNumber = new SimpleListModelCustom<Object>(serviceBudget.listNumber());
+		} else if (field.equals("number")) {
+			listNumber = new SimpleListModelCustom<Object>(serviceSaleSummary.listNumber(this.user));
 			return;
-		} else if (field.compareTo("partnerName") == 0) {
-			listPartnerName = new SimpleListModelCustom<Object>(serviceBudget.listPartnerName());
+		} else if (field.equals("partnerName")) {
+			listPartnerName = new SimpleListModelCustom<Object>(serviceSaleSummary.listPartnerName(this.user));
 			return;
-		} else if (field.compareTo("construction") == 0) {
-			listConstruction = new SimpleListModelCustom<Object>(serviceBudget.listConstruction());
+		} else if (field.equals("construction")) {
+			listConstruction = new SimpleListModelCustom<Object>(serviceSaleSummary.listConstruction(this.user));
 			return;
-		} else if (field.compareTo("seller") == 0) {
-			listSeller = new SimpleListModelCustom<Object>(serviceBudget.listSeller());
+		} else if (field.equals("seller")) {
+			listSeller = new SimpleListModelCustom<Object>(serviceSaleSummary.listSeller(this.user));
 			return;
-		}
-	}
-
-	@NotifyChange({ "listRifPartner", "listPartnerName" })
-	@Command
-	public void loadBusinessPartnerByField(@BindingParam("field") String field) {
-		if (field.compareTo("rifPartner") == 0) {
-			listRifPartner = new SimpleListModelCustom<Object>(serviceBusinessPartner.listRif());
-		} else {
-			listPartnerName = new SimpleListModelCustom<Object>(serviceBusinessPartner.listName());
+		} else if (field.equals("quotationNumber")) {
+			listQuotationNumber = new SimpleListModelCustom<Object>(serviceSaleSummary.listQuotationNumber(this.user));
+			return;
 		}
 	}
 
 	@NotifyChange("*")
 	@Command
-	public void searchBudget(@BindingParam("field") String field, @BindingParam("val") String value) {
-		List<Budget> listBudget2 = new ArrayList<Budget>();
-		if (field.compareTo("partnerName") == 0)
-			listBudget2 = serviceBudget.listByPartnerName(value);
+	public void loadSaleSummary(@BindingParam("field") String field, @BindingParam("val") String value) {
+		List<SaleSummary> listSummary = new ArrayList<SaleSummary>();
+		if (field.equals("partnerName"))
+			listSummary = serviceSaleSummary.listByPartnerName(value, this.user);
 		else if (field.compareTo("construction") == 0)
-			listBudget2 = serviceBudget.listByConstruction(value);
+			listSummary = serviceSaleSummary.listByConstruction(value, this.user);
 		else if (field.compareTo("seller") == 0)
-			listBudget2 = serviceBudget.listBySeller(value);
-		else if (field.compareTo("rif") == 0)
-			listBudget2 = serviceBudget.listByRifPartner(value);
-		else if (field.compareTo("number") == 0) {
+			listSummary = serviceSaleSummary.listBySeller(value, this.user);
+		else if (field.equals("rifPartner"))
+			listSummary = serviceSaleSummary.listByRifPartner(value, this.user);
+		else if (field.equals("number"))
+			listSummary = serviceSaleSummary.listByNumber(value, this.user);
+		else if (field.equals("quotationNumber")) {
 			if (value.isEmpty())
 				value = "0";
 			for (int i = 0; i < value.length(); i++) {
@@ -943,99 +868,93 @@ public class FrmSaleSummary {
 					break;
 				}
 			}
-			Integer budgetNumber = Integer.parseInt(value);
-			Budget auxBudget = serviceBudget.findByNumber(budgetNumber);
-			if (auxBudget != null)
-				listBudget2.add(auxBudget);
+			Integer quotationNumber = Integer.parseInt(value);
+			listSummary = serviceSaleSummary.listByQuotationNumber(quotationNumber, this.user);
 		}
-		searchGeneric(listBudget2);
+		searchGeneric(listSummary);
 	}
 
-	public void searchGeneric(List<Budget> list) {
+	public void searchGeneric(List<SaleSummary> list) {
 		int listSize = list.size();
 		if (listSize == 1) {
-			budget = list.get(0);
-			disableAfterSearch = new Boolean(true);
-			disabledNumber = new Boolean(true);
-			disableSeller = new Boolean(true);
-			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
+			saleSummary = list.get(0);
+			searching = false;
+			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(saleSummary.getBasicDataByElevatorCapacitance());
 			listFan = serviceBasicData.listFan1();
 			listFan.addAll(serviceBasicData.listFan2());
-			if (budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
+			if (saleSummary.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
 				listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
 				listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
 			} else {
 				listBoothDisplay = serviceBasicData.listBoothDisplayCF();
 				listFloorDisplay = serviceBasicData.listFloorDisplayCF();
 			}
-			if (budget.getBasicDataByCabinDesign() != null) {
-				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
+			if (saleSummary.getBasicDataByCabinDesign() != null) {
+				cabinModel = saleSummary.getBasicDataByCabinDesign().getBasicData();
 				listDesign = serviceBasicData.listDesignByModel(cabinModel);
 			}
 		} else if (listSize == 0) {
 			Clients.showNotification("Ningun registro coincide", "info", null, "top_center", 2000);
 		} else {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("listBudget", list);
-			Executions.createComponents("system/ventas/solicitud/frmWindowBudgets.zul", null, map);
+			map.put("listSaleSummary", list);
+			Executions.createComponents("system/ventas/resumen/frmSaleSummaryList.zul", null, map);
 		}
 	}
 
-	@NotifyChange({ "budget", "budgetNumber", "disableAfterSearch", "disabledNumber", "disableSeller", "listRoofType", "listBoothDisplay", "listFloorDisplay", "cabinModel", "listDesign" })
+	@NotifyChange({ "searching", "saleSummary", "listRoofType", "listBoothDisplay", "listFloorDisplay", "cabinModel", "listDesign", "listFan" })
 	@GlobalCommand
-	public void selectedBudget(@BindingParam("Budget") Budget budget) {
-		this.budget = serviceBudget.findByNumber(budget.getNumber());
-		disableAfterSearch = new Boolean(true);
-		disabledNumber = new Boolean(true);
-		disableSeller = new Boolean(true);
-		listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(this.budget.getBasicDataByElevatorCapacitance());
+	public void selectedSaleSummary(@BindingParam("saleSummary") SaleSummary saleSummary) {
+		this.saleSummary = serviceSaleSummary.findById(saleSummary.getIdSaleSummary());
+		searching = false;
+		listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(this.saleSummary.getBasicDataByElevatorCapacitance());
 		listFan = serviceBasicData.listFan1();
 		listFan.addAll(serviceBasicData.listFan2());
-		if (this.budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
+		if (this.saleSummary.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
 			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
 			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
 		} else {
 			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
 			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
 		}
-		if (this.budget.getBasicDataByCabinDesign() != null) {
-			cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
+		if (this.saleSummary.getBasicDataByCabinDesign() != null) {
+			cabinModel = this.saleSummary.getBasicDataByCabinDesign().getBasicData();
 			listDesign = serviceBasicData.listDesignByModel(cabinModel);
 		}
 	}
 
 	@Command
 	public void selectElevatorType() {
-		String elevatorType = budget.getBasicDataByElevatorType() != null ? budget.getBasicDataByElevatorType().getName() : "";
-		String elevatorCapacitance = budget.getBasicDataByElevatorCapacitance() != null ? budget.getBasicDataByElevatorCapacitance().getName() : "";
+		String elevatorType = saleSummary.getBasicDataByElevatorType() != null ? saleSummary.getBasicDataByElevatorType().getName() : "";
+		String elevatorCapacitance = saleSummary.getBasicDataByElevatorCapacitance() != null ? saleSummary.getBasicDataByElevatorCapacitance().getName() : "";
 		if (elevatorCapacitance.compareTo("800 Kg - 10 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
-			budget.setCabinWidth(1.4);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(1.4);
+			saleSummary.setCabinWidth(1.4);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(1.4);
 		} else if (elevatorCapacitance.compareTo("1050 Kg - 13 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
-			budget.setCabinWidth(1.6);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(1.5);
+			saleSummary.setCabinWidth(1.6);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(1.5);
 		} else if (elevatorCapacitance.compareTo("1200 Kg - 16 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
-			budget.setCabinWidth(1.8);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(1.5);
+			saleSummary.setCabinWidth(1.8);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(1.5);
 		} else if (elevatorCapacitance.compareTo("1500 Kg - 20 Pers") == 0 && (elevatorType.compareTo("PASAJERO") == 0 || elevatorType.compareTo("PANORAMICO") == 0)) {
-			budget.setCabinWidth(2.0);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(1.7);
+			saleSummary.setCabinWidth(2.0);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(1.7);
 		} else if (elevatorCapacitance.compareTo("1050 Kg - 13 Pers") == 0 && elevatorType.compareTo("MONTACAMILLA") == 0) {
-			budget.setCabinWidth(1.2);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(2.3);
+			saleSummary.setCabinWidth(1.2);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(2.3);
 		} else if (elevatorCapacitance.compareTo("1500 Kg - 20 Pers") == 0 && elevatorType.compareTo("MONTACAMILLA") == 0) {
-			budget.setCabinWidth(1.5);
-			budget.setCabinHeight(2.0);
-			budget.setCabinBackground(2.3);
+			saleSummary.setCabinWidth(1.5);
+			saleSummary.setCabinHeight(2.0);
+			saleSummary.setCabinBackground(2.3);
 		}
-		BindUtils.postNotifyChange(null, null, budget, "cabinWidth");
-		BindUtils.postNotifyChange(null, null, budget, "cabinHeight");
-		BindUtils.postNotifyChange(null, null, budget, "cabinBackground");
+		BindUtils.postNotifyChange(null, null, saleSummary, "cabinWidth");
+		BindUtils.postNotifyChange(null, null, saleSummary, "cabinHeight");
+		BindUtils.postNotifyChange(null, null, saleSummary, "cabinBackground");
 	}
 
 	@Command
@@ -1047,15 +966,15 @@ public class FrmSaleSummary {
 
 	@Command
 	public void isStopSequenceContinuous() {
-		budget.setStopSequenceEven(false);
-		budget.setStopSequenceOdd(false);
-		budget.setStopSequenceEvenNumber(0);
-		budget.setStopSequenceOddNumber(0);
-		budget.setStopSequenceEvenQ(new String());
-		budget.setStopSequenceOddQ(new String());
-		if (!budget.getStopSequenceContinuous()) {
-			budget.setStopSequenceContinuousQ(new String());
-			budget.setStopSequenceContinuousNumber(0);
+		saleSummary.setStopSequenceEven(false);
+		saleSummary.setStopSequenceOdd(false);
+		saleSummary.setStopSequenceEvenNumber(0);
+		saleSummary.setStopSequenceOddNumber(0);
+		saleSummary.setStopSequenceEvenQ(new String());
+		saleSummary.setStopSequenceOddQ(new String());
+		if (!saleSummary.getStopSequenceContinuous()) {
+			saleSummary.setStopSequenceContinuousQ(new String());
+			saleSummary.setStopSequenceContinuousNumber(0);
 		}
 	}
 
@@ -1063,13 +982,12 @@ public class FrmSaleSummary {
 	public void print() {
 		GenericReport report = new GenericReport();
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		int number = budget.getNumber();
-		parameters.put("NUMBER", number);
-		parameters.put("REPORT_TITLE", "Solicitud Presupuesto");
+		parameters.put("ID_SALE_SUMMARY", saleSummary.getIdSaleSummary());
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
-		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "solicitud_" + number + ".pdf");
-		report.viewPdf("/resource/reports/ventas/solicitud/solicitud_" + number + ".pdf", "Solicitud de presupuesto");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
+		Long time = new Date().getTime();
+		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "Resumen_venta_" + time + ".pdf");
+		report.viewPdf("/resource/reports/ventas/resumen/Resumen_venta_" + time + ".pdf", "Solicitud de presupuesto");
 	}
 
 	@NotifyChange({ "listDesign" })
@@ -1077,56 +995,52 @@ public class FrmSaleSummary {
 	public void loadCabinDesign() {
 		listDesign = serviceBasicData.listDesignByModel(cabinModel);
 		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
-		budget.setBasicDataByCabinDesign(null);
+		saleSummary.setBasicDataByCabinDesign(null);
 	}
 
 	@Command
 	public void selectDoorType(@BindingParam("doorType") String doorType) {
 		if (doorType.compareTo("BATIENTE IZQUIERDA") == 0 || doorType.compareTo("BATIENTE DERECHA") == 0 || doorType.compareTo("GUILLOTINA") == 0 || doorType.compareTo("SANTA MARIA") == 0)
-			budget.setBasicDataByDoorSystem(serviceBasicData.findByDoorSystem("NO APLICA"));
+			saleSummary.setBasicDataByDoorSystem(serviceBasicData.findByDoorSystem("NO APLICA"));
 		else
-			budget.setBasicDataByDoorSystem(null);
-		BindUtils.postNotifyChange(null, null, budget, "basicDataByDoorSystem");
+			saleSummary.setBasicDataByDoorSystem(null);
+		BindUtils.postNotifyChange(null, null, saleSummary, "basicDataByDoorSystem");
 	}
 
 	@Command
 	public void changeTour(@BindingParam("tour") Double tour) {
 		if (tour >= 24)
-			budget.setFirefighterKeychain(true);
+			saleSummary.setFirefighterKeychain(true);
 		else
-			budget.setFirefighterKeychain(false);
-		BindUtils.postNotifyChange(null, null, budget, "firefighterKeychain");
+			saleSummary.setFirefighterKeychain(false);
+		BindUtils.postNotifyChange(null, null, saleSummary, "firefighterKeychain");
 	}
 
 	@NotifyChange({ "listFan", "listRoofType" })
 	@Command
 	public void loadFans() {
-		String elevatorCapacitance = new String(budget.getBasicDataByElevatorCapacitance().getName());
+		String elevatorCapacitance = new String(saleSummary.getBasicDataByElevatorCapacitance().getName());
 		if (elevatorCapacitance.indexOf("320 Kg - 4 Pers") != -1 || elevatorCapacitance.indexOf("450 Kg - 6 Pers") != -1 || elevatorCapacitance.indexOf("600 Kg - 8 Pers") != -1) {
 			listFan = serviceBasicData.listFan1();
-			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
 		} else if (elevatorCapacitance.indexOf("OTRA") != -1) {
 			listFan = serviceBasicData.listFan1();
 			listFan.addAll(serviceBasicData.listFan2());
-			// Escogemos el basicdata con name "450-6" puesto que es el que tiene todos los roofType
-			// asignados. Esto se hace porque no se sabra que tipo de Capacidad se anadira.
-			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(serviceBasicData.findByElevatorCapacitance("450 Kg - 6 Pers"));
 		} else {
 			listFan = serviceBasicData.listFan2();
-			listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(budget.getBasicDataByElevatorCapacitance());
 		}
+		listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(saleSummary.getBasicDataByElevatorCapacitance());
 		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
-		budget.setBasicDataByRoofType(null);
-		budget.setBasicDataByFan(null);
-		BindUtils.postNotifyChange(null, null, budget, "fan");
-		BindUtils.postNotifyChange(null, null, budget, "roofType");
+		saleSummary.setBasicDataByRoofType(null);
+		saleSummary.setBasicDataByFan(null);
+		BindUtils.postNotifyChange(null, null, saleSummary, "fan");
+		BindUtils.postNotifyChange(null, null, saleSummary, "roofType");
 		selectElevatorType();
 	}
 
 	@NotifyChange({ "listBoothDisplay", "listFloorDisplay" })
 	@Command
 	public void loadBoothFloorDisplay() {
-		String controlType = budget.getBasicDataByControlType().getName();
+		String controlType = saleSummary.getBasicDataByControlType().getName();
 		if (controlType.indexOf("SISTEL") != -1) {
 			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
 			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
@@ -1137,13 +1051,13 @@ public class FrmSaleSummary {
 			listBoothDisplay = new ArrayList<BasicData>();
 			listFloorDisplay = new ArrayList<BasicData>();
 		}
-		budget.setBasicDataByBoothDisplay(null);
-		budget.setBasicDataByFloorDisplay(null);
+		saleSummary.setBasicDataByBoothDisplay(null);
+		saleSummary.setBasicDataByFloorDisplay(null);
 	}
 
 	@Command
 	public void checkWidthDoorFrame(@BindingParam("component") InputElement component) {
-		if (budget.getBasicDataByDoorframeType() != null && budget.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && budget.getHallButtonPlace().indexOf("MARCO") != -1) {
+		if (saleSummary.getBasicDataByDoorframeType() != null && saleSummary.getBasicDataByDoorframeType().getName().indexOf("RECTO - 30X150") != -1 && saleSummary.getHallButtonPlace().indexOf("MARCO") != -1) {
 			throw new WrongValueException(component, "Este tipo no puede ser ubicado en el Marco.");
 		}
 	}
@@ -1151,14 +1065,14 @@ public class FrmSaleSummary {
 	@NotifyChange("disableSistelHall")
 	@Command
 	public void disabledSistelsHall() {
-		if (budget.getBasicDataByHallButtonType().getName().indexOf("SISTEL") != -1)
+		if (saleSummary.getBasicDataByHallButtonType().getName().indexOf("SISTEL") != -1)
 			disableSistelHall = false;
 		else {
 			disableSistelHall = true;
-			budget.setSistelWarrowPb(false);
-			budget.setSistelWarrowFloor(0);
-			budget.setSistelWdisplayPb(false);
-			budget.setSistelWdisplayFloor(0);
+			saleSummary.setSistelWarrowPb(false);
+			saleSummary.setSistelWarrowFloor(0);
+			saleSummary.setSistelWdisplayPb(false);
+			saleSummary.setSistelWdisplayFloor(0);
 		}
 	}
 
@@ -1166,12 +1080,12 @@ public class FrmSaleSummary {
 	public void updateMotorQuantity(@ContextParam(ContextType.TRIGGER_EVENT) InputEvent event) {
 		// Con la linea superior enlazo el evento sobre el input con el controlador Ver: http://forum.zkoss
 		// .org/question/79590/textbox-onchanging-event-doesnt-work-properly/
-		if (budget.isType()) {
+		if (saleSummary.getQuotation().isType()) {
 			Integer value = new Integer(0);
 			if (!event.getValue().isEmpty())
 				value = Integer.parseInt(event.getValue());
-			budget.setMotorQuantity(value);
-			BindUtils.postNotifyChange(null, null, budget, "motorQuantity");
+			saleSummary.setMotorQuantity(value);
+			BindUtils.postNotifyChange(null, null, saleSummary, "motorQuantity");
 		}
 	}
 
@@ -1179,61 +1093,26 @@ public class FrmSaleSummary {
 	public void activeDesignComment() {
 		String cabinDesign = new String();
 		String floorType = new String();
-		if (budget.getBasicDataByCabinDesign() != null)
-			cabinDesign = budget.getBasicDataByCabinDesign().getName();
-		if (budget.getBasicDataByFloorType() != null)
-			floorType = budget.getBasicDataByFloorType().getName();
+		if (saleSummary.getBasicDataByCabinDesign() != null)
+			cabinDesign = saleSummary.getBasicDataByCabinDesign().getName();
+		if (saleSummary.getBasicDataByFloorType() != null)
+			floorType = saleSummary.getBasicDataByFloorType().getName();
 		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 || floorType.indexOf("OTROS") != -1)
-			budget.setDesignSpecial(true);
+			saleSummary.setDesignSpecial(true);
 		// IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
-		BindUtils.postNotifyChange(null, null, budget, "designSpecial");
+		BindUtils.postNotifyChange(null, null, saleSummary, "designSpecial");
 	}
 
 	@Command
 	public void updateDesignSpecialComment(@BindingParam("comment") String comment) {
-		budget.setDesignSpecialComment(comment);
-		BindUtils.postNotifyChange(null, null, budget, "designSpecialComment");
+		saleSummary.setDesignSpecialComment(comment);
+		BindUtils.postNotifyChange(null, null, saleSummary, "designSpecialComment");
 	}
 
 	@Command
 	public void isDesignSpecial(@BindingParam("check") Boolean checked) {
 		if (!checked)
-			budget.setDesignSpecialComment(new String());
-		BindUtils.postNotifyChange(null, null, budget, "designSpecialComment");
-	}
-
-	@Command
-	public void searchBusinessPartner(@BindingParam("field") String field, @BindingParam("val") String val) {
-		if (field.compareTo("rif") == 0)
-			businessPartner = serviceBusinessPartner.findActiveByRif(val);
-		else if (field.compareTo("partnerName") == 0)
-			businessPartner = serviceBusinessPartner.findActiveByName(val);
-		if (businessPartner == null) {
-			Executions.createComponents("system/socios/frmBusinessPartner.zul", null, null);
-		} else {
-			budget.setPartnerName(businessPartner.getName());
-			budget.setRifPartner(businessPartner.getRif());
-			budget.setRifType(businessPartner.getBasicData().getName().charAt(0));
-			BindUtils.postNotifyChange(null, null, budget, "partnerName");
-			BindUtils.postNotifyChange(null, null, budget, "rifType");
-			BindUtils.postNotifyChange(null, null, budget, "rifPartner");
-		}
-	}
-
-	@GlobalCommand
-	public void selectedBusinessPartner(@BindingParam("BusinessPartner") BusinessPartner businessPartner) {
-		if (businessPartner != null) {
-			this.businessPartner = serviceBusinessPartner.findById(businessPartner.getIdBusinessPartner());
-			budget.setPartnerName(this.businessPartner.getName());
-			budget.setRifPartner(this.businessPartner.getRif());
-			budget.setRifType(this.businessPartner.getBasicData().getName().charAt(0));
-		} else {
-			budget.setPartnerName(null);
-			budget.setRifPartner("");
-			budget.setRifType('-');
-		}
-		BindUtils.postNotifyChange(null, null, budget, "partnerName");
-		BindUtils.postNotifyChange(null, null, budget, "rifType");
-		BindUtils.postNotifyChange(null, null, budget, "rifPartner");
+			saleSummary.setDesignSpecialComment(new String());
+		BindUtils.postNotifyChange(null, null, saleSummary, "designSpecialComment");
 	}
 }

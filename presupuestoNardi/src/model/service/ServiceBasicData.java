@@ -15,6 +15,10 @@ public class ServiceBasicData {
 	@Autowired
 	private DaoBasicdata daoBasicdata;
 
+	public BasicData findById(int id){
+		return daoBasicdata.findByField("idBasic", id);
+	}
+	
 	@Transactional(readOnly = true)
 	public BasicData findByDoorSystem(String doorSystem) {
 		return daoBasicdata.findByName("BUDGET", "DOOR SYSTEM", doorSystem);
@@ -222,7 +226,10 @@ public class ServiceBasicData {
 
 	@Transactional(readOnly = true)
 	public List<BasicData> listRoofTypeByElevatorCapacitance(BasicData elevatorCapacitance) {
-		return daoBasicdata.listByParent(elevatorCapacitance);
+		if (elevatorCapacitance.getName().equals("OTRA"))
+			return daoBasicdata.listByParent(findByElevatorCapacitance("450 Kg - 6 Pers"));
+		else
+			return daoBasicdata.listByParent(elevatorCapacitance);
 	}
 
 	@Transactional(readOnly = true)

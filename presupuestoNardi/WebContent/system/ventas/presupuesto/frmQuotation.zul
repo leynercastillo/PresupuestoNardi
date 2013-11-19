@@ -951,7 +951,7 @@
 							onChange="@command('loadPayment')"
 							readonly="@load(not vm.disabledEdit)"
 							selectedItem="@bind(vm.quotation.basicDataByQuotationType)"
-							value="@load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name)"
+							value="@load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name) @save(vm.seleccione, before = 'confirmSave') @validator(vm.noSelect, component = self)"
 							width="99%">
 							<template name="model"
 								var="quotationType">
@@ -1103,7 +1103,9 @@
 								<columns>
 									<column label="Cantidad"></column>
 									<column label="Equipo"></column>
-									<column label="Precio unitario Bs"></column>
+									<column
+										label="Precio unitario Bs">
+									</column>
 									<column label="Subtotal Bs"></column>
 								</columns>
 								<rows>

@@ -1,65 +1,71 @@
 package controller.ventas.resumen;
 
-import general.GenericReport;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.database.Quotation;
+import model.database.SaleSummary;
 import model.service.ServiceQuotation;
 
 import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zul.Window;
 
 public class FrmSaleSummaryList {
 
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
 
-	private List<Quotation> listQuotations;
-	private Quotation quotation;
+	private List<SaleSummary> listSaleSummary;
+	private SaleSummary saleSummary;
+	private SaleSummaryFilter saleSummaryFilter;
 
-	public List<Quotation> getListQuotations() {
-		return listQuotations;
+	public SaleSummaryFilter getSaleSummaryFilter() {
+		return saleSummaryFilter;
 	}
 
-	public void setListQuotations(List<Quotation> listQuotations) {
-		this.listQuotations = listQuotations;
+	public void setSaleSummaryFilter(SaleSummaryFilter saleSummaryFilter) {
+		this.saleSummaryFilter = saleSummaryFilter;
 	}
 
-	public Quotation getQuotation() {
-		return quotation;
+	public SaleSummary getSaleSummary() {
+		return saleSummary;
 	}
 
-	public void setQuotation(Quotation quotation) {
-		this.quotation = quotation;
+	public void setSaleSummary(SaleSummary saleSummary) {
+		this.saleSummary = saleSummary;
+	}
+
+	public List<SaleSummary> getListSaleSummary() {
+		return listSaleSummary;
+	}
+
+	public void setListSaleSummary(List<SaleSummary> listSaleSummary) {
+		this.listSaleSummary = listSaleSummary;
 	}
 
 	@Init
-	public void init() {
-		restartForm();
+	public void init(@ExecutionArgParam("listSaleSummary") List<SaleSummary> listSummary, @ContextParam(ContextType.VIEW) Component view) {
+		this.listSaleSummary = listSummary;
+		saleSummaryFilter = new SaleSummaryFilter(listSaleSummary);
 	}
 
-	@NotifyChange({ "*" })
-	public void restartForm() {
-		listQuotations = serviceQuotation.listOrderedByDate();
+	public String getSaleSummaryNumber(SaleSummary saleSummary) {
+		return saleSummary.getNumber() + "-" + saleSummary.getVersion();
 	}
 
-	public String getQuotationNumber(Quotation quotation) {
-		if (quotation.isType())
-			return "1 - " + quotation.getNewNumber() + " - " + quotation.getVersionNumber();
-		else
-			return "2 - " + quotation.getModernizationNumber() + " - " + quotation.getVersionNumber();
-	}
-
-	public String getTeam(Quotation quotation) {
-		return quotation.getElevatorQuantity() + " - " + quotation.getBasicDataByElevatorType().getName();
+	public String getTeam(SaleSummary saleSummary) {
+		return saleSummary.getElevatorQuantity() + " - " + saleSummary.getBasicDataByElevatorType().getName();
 	}
 
 	public String getDateFormat(Date date) {
@@ -68,24 +74,16 @@ public class FrmSaleSummaryList {
 	}
 
 	@Command
-	public void pdfQuotation() {
-		GenericReport report = new GenericReport();
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("REPORT_TITLE", "Resumen de Venta");
-		parameters.put("NUMBER", quotation.getBudgetNumber());
-		/*
-		 * Enviamos por parametro a ireport la ruta de la ubicacion de los subreportes e imagenes.
-		 */
-		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
-		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "presupuesto" + quotation.getBudgetNumber() + ".pdf");
-		report.viewPdf("/resource/reports/ventas/resumen/presupuesto" + quotation.getBudgetNumber() + ".pdf", "Resumen de venta");
+	public void sendSaleSummary(@BindingParam("window") Window win) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("saleSummary", saleSummary);
+		win.detach();
+		BindUtils.postGlobalCommand(null, null, "selectedSaleSummary", map);
 	}
 
+	@NotifyChange({ "listSaleSummary" })
 	@Command
-	public void close() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("page", "");
-		BindUtils.postGlobalCommand(null, null, "selectedPage", map);
+	public void dataFilter() {
+		listSaleSummary = saleSummaryFilter.getFilter(saleSummaryFilter);
 	}
 }

@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 23-oct-2013 13:40:15 by Hibernate Tools 4.0.0
+// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -103,4 +103,5 @@ public class TransactionSummary implements java.io.Serializable {
 	public void setStatus(char status) {
 		this.status = status;
 	}
+
 }

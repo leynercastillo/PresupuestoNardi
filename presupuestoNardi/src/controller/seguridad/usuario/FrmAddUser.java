@@ -1,8 +1,6 @@
 package controller.seguridad.usuario;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
@@ -34,25 +32,7 @@ public class FrmAddUser {
 	private ServiceSecurityGroup serviceSecurityGroup;
 	private SecurityUser securityUser;
 	private String repeatPassword;
-	private Set<SecurityGroup> listGroupsToAdd;
-	private Set<SecurityGroup> listGroupsToDel;
 	private List<SecurityGroup> listGroups;
-
-	public Set<SecurityGroup> getListGroupsToAdd() {
-		return listGroupsToAdd;
-	}
-
-	public void setListGroupsToAdd(Set<SecurityGroup> listGroupsToAdd) {
-		this.listGroupsToAdd = listGroupsToAdd;
-	}
-
-	public Set<SecurityGroup> getListGroupsToDel() {
-		return listGroupsToDel;
-	}
-
-	public void setListGroupsToDel(Set<SecurityGroup> listGroupsToDel) {
-		this.listGroupsToDel = listGroupsToDel;
-	}
 
 	public List<SecurityGroup> getListGroups() {
 		return listGroups;
@@ -112,6 +92,10 @@ public class FrmAddUser {
 		};
 	}
 
+	public Validator getNoSelect() {
+		return new ValidateZK().getNoSelect();
+	}
+
 	@Init
 	public void init() {
 		restartForm();
@@ -121,40 +105,16 @@ public class FrmAddUser {
 	@NotifyChange({ "securityUser", "repeatPassword", "listGroupsToDel", "listGroupsToAdd" })
 	@Command
 	public void restartForm() {
-		listGroupsToAdd = new HashSet<SecurityGroup>();
-		listGroupsToDel = new HashSet<SecurityGroup>();
 		securityUser = new SecurityUser();
 		securityUser.setStatus('A');
 		repeatPassword = new String();
 	}
 
-	@NotifyChange({ "listGroupsToAdd", "listGroups" })
-	@Command
-	public void addUserGroups() {
-		for (SecurityGroup group : listGroupsToAdd) {
-			listGroups.remove(group);
-			securityUser.getSecurityGroups().add(group);
-		}
-		listGroupsToAdd.clear();
-		BindUtils.postNotifyChange(null, null, securityUser, "securityGroups");
-	}
-
-	@NotifyChange({ "listGroupsToDel", "listGroups" })
-	@Command
-	public void delUserGroups() {
-		for (SecurityGroup group : listGroupsToDel) {
-			securityUser.getSecurityGroups().remove(group);
-			listGroups.add(group);
-		}
-		listGroupsToDel.clear();
-		BindUtils.postNotifyChange(null, null, securityUser, "securityGroups");
-	}
-
 	@NotifyChange({ "securityUser", "repeatPassword" })
 	@Command
 	public void save(@BindingParam("list") Component component, @BindingParam("window") Window window) {
-		if (securityUser.getSecurityGroups().isEmpty()) {
-			throw new WrongValueException(component, "El usuario debe pertenecer al menos a un grupo.");
+		if (securityUser.getSecurityGroup() == null) {
+			throw new WrongValueException(component, "El usuario debe pertenecer a un grupo.");
 		}
 		if (!serviceSecurityUser.save(securityUser)) {
 			Clients.showNotification("No se pudo agregar el usuario", "error", null, "end_center", 2000);

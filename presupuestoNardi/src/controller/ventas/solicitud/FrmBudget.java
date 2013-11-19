@@ -847,8 +847,8 @@ public class FrmBudget {
 			return;
 		}
 		if (sendMail)
-			/* sendMail(); */
-			Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
+			sendMail();
+		Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
 		print();
 		restartForm();
 	}

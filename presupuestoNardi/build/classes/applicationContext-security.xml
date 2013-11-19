@@ -20,6 +20,8 @@
 		<intercept-url access="ROLE_QUOTATION"
 			pattern="/system/ventas/presupuesto/frmWindowQuotations.zul" />
 		<intercept-url access="ROLE_SALES_SUMMARY"
+			pattern="/system/ventas/resumen/frmSaleSummary.zul" />
+		<intercept-url access="ROLE_SALES_SUMMARY"
 			pattern="/system/ventas/resumen/frmSaleSummaryList.zul" />
 		<intercept-url access="ROLE_TRANSACTION_SUMMARY"
 			pattern="/system/ventas/resumen_negociacion/frmTransactionSummary.zul" />

@@ -16,9 +16,11 @@ import java.util.Map;
 import model.database.BasicData;
 import model.database.Budget;
 import model.database.Quotation;
+import model.database.SaleSummary;
 import model.service.ServiceBasicData;
 import model.service.ServiceBudget;
 import model.service.ServiceQuotation;
+import model.service.ServiceSaleSummary;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
@@ -50,6 +52,8 @@ public class FrmQuotation {
 	private ServiceQuotation serviceQuotation;
 	@WireVariable
 	private ServiceBudget serviceBudget;
+	@WireVariable
+	private ServiceSaleSummary serviceSaleSummary;
 	@WireVariable
 	private Emails emails;
 
@@ -390,6 +394,10 @@ public class FrmQuotation {
 		this.listElevatorType = listElevatorType;
 	}
 
+	public Validator getNoSelect(){
+		return new ValidateZK().getNoSelect();
+	}
+	
 	public Validator getNoDash() {
 		return new ValidateZK().getNoDash();
 	}
@@ -522,7 +530,7 @@ public class FrmQuotation {
 		printMessage = null;
 	}
 
-	public void budgetToQuotation(Budget budget) {
+	private void budgetToQuotation(Budget budget) {
 		quotation.setBudget(budget);
 		quotation.setBusinessPartner(budget.getBusinessPartner());
 		quotation.setRifType(budget.getRifType());
@@ -586,6 +594,10 @@ public class FrmQuotation {
 		quotation.setAccessSytem(budget.getAccessSytem());
 		quotation.setFirefighterKeychain(budget.getFirefighterKeychain());
 		quotation.setComment(budget.getComment());
+	}
+
+	private SaleSummary quotationToSaleSummary(Quotation auxQuotation) {
+		return new SaleSummary(0, auxQuotation.getBasicDataByElectricityType(), auxQuotation.getBudget().getBasicDataByHourMachine(), auxQuotation.getBasicDataByHallButton(), auxQuotation.getBasicDataByRoofType(), auxQuotation.getBasicDataBySpeed(), auxQuotation.getBudget().getBasicDataByVoltageLighting(), auxQuotation.getBasicDataByDoorframeType(), auxQuotation.getBasicDataByRailing(), auxQuotation.getBudget().getBasicDataByBoothButton(), auxQuotation.getBasicDataByMirror(), auxQuotation.getBasicDataByElevatorCapacitance(), auxQuotation.getBasicDataByBoothDisplay(), auxQuotation.getBasicDataByElevatorType(), auxQuotation.getBudget().getBasicDataByDoorSystem(), auxQuotation.getBudget().getBasicDataByFrequency(), auxQuotation.getBasicDataByHallButtonType(), auxQuotation.getBudget().getBasicDataByFan(), auxQuotation.getBasicDataByCabinDesign(), auxQuotation.getBasicDataByMachineType(), auxQuotation.getBudget().getBasicDataByBuildingType(), auxQuotation.getBasicDataByManeuverType(), auxQuotation.getBasicDataByDoorFrameHammered(), auxQuotation.getBasicDataByFloorType(), auxQuotation.getBudget().getBasicDataByMachineBase(), auxQuotation, auxQuotation.getBasicDataByHeight(), auxQuotation.getBasicDataByDoorType(), auxQuotation.getBudget().getBasicDataByButtonType(), auxQuotation.getBasicDataByControlType(), auxQuotation.getBasicDataByFreeAdmission(), auxQuotation.getBasicDataByFloorDisplay(), auxQuotation.getBudget().getBasicDataByAccess(), 0, null, new Date(), auxQuotation.getDeliveryDate(), auxQuotation.getConstruction(), auxQuotation.getBudget().getConstructionCity(), auxQuotation.getBudget().getConstructionAddress(), auxQuotation.getContactName(), auxQuotation.getBudget().getContactPhone(), auxQuotation.getBudget().getEmail(), auxQuotation.getBudget().getPlaneC(), auxQuotation.getBudget().getPlaneP(), auxQuotation.isType(), auxQuotation.getElevatorQuantity(), auxQuotation.getBudget().getMotorQuantity(), auxQuotation.getBudget().getMotorTraction(), auxQuotation.getStopNumber(), auxQuotation.getTour(), auxQuotation.getOnTour(), auxQuotation.getWidthHole(), auxQuotation.getFossa(), auxQuotation.getBottomHole(), auxQuotation.getDesignSpecial(), auxQuotation.getDesignSpecialComment(), auxQuotation.getCabinWidth(), auxQuotation.getCabinBackground(), auxQuotation.getCabinHeight(), auxQuotation.getBudget().getDoorOfNumber(), auxQuotation.getDoorframeTypeComment(), auxQuotation.getBudget().getHallButtonPlace(), auxQuotation.getLightCurtain(), auxQuotation.getLoadLimiter(), auxQuotation.getSpeechSynthesizer(), auxQuotation.getGomSystem(), auxQuotation.getIntercom(), auxQuotation.getPhone(), auxQuotation.getAccessSytem(), auxQuotation.getFirefighterKeychain(), auxQuotation.getBudget().getDisplayPlaceFloor(), auxQuotation.getStopSequenceContinuous(), auxQuotation.getStopSequenceContinuousQ(), auxQuotation.getStopSequenceContinuousNumber(), auxQuotation.getStopSequenceEven(), auxQuotation.getStopSequenceEvenQ(), auxQuotation.getStopSequenceEvenNumber(), auxQuotation.getStopSequenceOdd(), auxQuotation.getStopSequenceOddQ(), auxQuotation.getStopSequenceOddNumber(), auxQuotation.getDoorFrameHammeredDesc(), auxQuotation.getDoorFrameStainless(), auxQuotation.getDoorFrameStainlessDescrip(), auxQuotation.getBudget().getSistelWdisplayPb(), auxQuotation.getBudget().getSistelWdisplayFloor(), auxQuotation.getBudget().getSistelWarrowPb(), auxQuotation.getBudget().getSistelWarrowFloor(), auxQuotation.getComment(), auxQuotation.getStatus());
 	}
 
 	@Command
@@ -860,7 +872,7 @@ public class FrmQuotation {
 		return (quotation.getElevatorQuantity() > 1 ? "ASCENSORES " : "ASCENSOR ") + str;
 	}
 
-	public List<File> mailAttach() {
+	private List<File> mailAttach() {
 		List<File> listAttach = new ArrayList<File>();
 		GenericReport report = new GenericReport();
 		String quotationNumber = new String();
@@ -879,14 +891,14 @@ public class FrmQuotation {
 		return listAttach;
 	}
 
-	public String mailMessage() {
+	private String mailMessage() {
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String message = new String();
 		message = "Presupuesto aprobado el dia " + formatter.format(quotation.getApprovedDate()) + "\n\nPresupuesto nro:" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber() + "\n\nCliente: " + quotation.getPartnerName() + "\n\nCantidad ascensores: " + quotation.getElevatorQuantity() + "\n\nCiudad: " + quotation.getConstruction();
 		return message;
 	}
 
-	public void sendMail() {
+	private void sendMail() {
 		List<String> listRecipient = new ArrayList<String>();
 		listRecipient.add("ventas@ascensoresnardi.com");
 		listRecipient.add("logistica@ascensoresnardi.com");
@@ -902,8 +914,14 @@ public class FrmQuotation {
 			Clients.showNotification("No se pudo guardar el presupuesto", "error", null, "bottom_center", 2000);
 			return;
 		}
-		if (quotation.getStatus() == 'A')
-			sendMail();
+		if (quotation.getStatus() == 'A') {
+			/*sendMail();*/
+			SaleSummary saleSummary = quotationToSaleSummary(quotation);
+			if (!serviceSaleSummary.save(saleSummary)) {
+				Clients.showNotification("No se pudo guardar el presupuesto", "error", null, "bottom_center", 2000);
+				return;
+			}
+		}
 		Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
 		selectPrintTemplate();
 	}

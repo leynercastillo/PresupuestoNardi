@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sale_summary_2" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9f251271-930b-41f8-adf0-325b174ef1c5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_SALE_SUMMARY" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+	T0.door_of_number AS "Numero de puertas:",
+	T1.name AS "Tipo de puerta:",
+	T2.name AS "Sistema de puerta:",
+	T3.name AS "Tipo de marco:",
+	T0.doorframe_type_comment AS "Comentario Marco:",
+	T1.name AS "Entrada libre:",
+	T5.name AS "Altura:",
+	CASE WHEN T0.door_frame_stainless THEN T0.door_frame_stainless_descrip ELSE '' END AS "Acero Inox:",
+	T6.name AS "Martillado:",
+	T0.door_frame_hammered_desc AS "Desc Martillado:",
+	T7.name AS "Tipo de control:",
+	T8.name AS "Botones de cabina:",
+	T0.hall_button_place AS "Lugar Botonera:",
+	CASE WHEN T0.sistel_wdisplay_pb THEN 'SI' ELSE 'NO' END AS "Sistel con Display PB:",
+	T0.sistel_wdisplay_floor AS "Sistel con Display Piso:",
+	CASE WHEN T0.sistel_warrow_pb THEN 'SI' ELSE 'NO' END AS "Sistel con Flecha PB:",
+	T0.sistel_warrow_floor AS "Sistel con Flecha Piso:",
+	T0.hall_button_type AS "Tipo de botonera de pasillo:",
+	T10.name AS "Boton de pasillo:",
+	T11.name AS "Display Cabina:",
+	T12.name AS "Display Piso:",
+	T0.display_place_floor AS "Lugar display piso:",
+	CASE WHEN T0.light_curtain = TRUE THEN 'SI' ELSE 'NO' END AS "Cortina luminosa:",
+	CASE WHEN T0.load_limiter = TRUE THEN 'SI' ELSE 'NO' END AS "Limitador de carga:",
+	CASE WHEN T0.speech_synthesizer = TRUE THEN 'SI' ELSE 'NO' END AS "Sintetizador de voz:",
+	CASE WHEN T0.gom_system = TRUE THEN 'SI' ELSE 'NO' END AS "Sistema de GOM en Piso:",
+	CASE WHEN T0.intercom = TRUE THEN 'SI' ELSE 'NO' END AS "Intercomunicador:",
+	CASE WHEN T0.phone = TRUE THEN 'SI' ELSE 'NO' END AS "Teléfono:",
+	CASE WHEN T0.access_sytem = TRUE THEN 'SI' ELSE 'NO' END AS "Sistema de acceso:",
+	CASE WHEN T0.firefighter_keychain = TRUE THEN 'SI' ELSE 'NO' END AS "Llave de bombero:",
+	T0.comment AS "Comentarios:"
+FROM
+	public.sale_summary T0 LEFT JOIN public.basic_data T1 ON T1.id_basic = T0.door_type
+	LEFT JOIN public.basic_data T2 ON T2.id_basic = T0.door_system
+	LEFT JOIN public.basic_data T3 ON T3.id_basic = T0.doorframe_type
+	LEFT JOIN public.basic_data T4 ON T4.id_basic = T0.free_admission
+	LEFT JOIN public.basic_data T5 ON T5.id_basic = T0.height
+	LEFT JOIN public.basic_data T6 ON T6.id_basic = T0.door_frame_hammered
+	LEFT JOIN public.basic_data T7 ON T7.id_basic = T0.control_type
+	LEFT JOIN public.basic_data T8 ON T8.id_basic = T0.booth_button
+	LEFT JOIN public.basic_data T9 ON T9.id_basic = T0.hall_button_type
+	LEFT JOIN public.basic_data T10 ON T10.id_basic = T0.hall_button_type
+	LEFT JOIN public.basic_data T11 ON T11.id_basic = T0.booth_display
+	LEFT JOIN public.basic_data T12 ON T12.id_basic = T0.floor_display
+WHERE
+	T0.id_sale_summary = $P{ID_SALE_SUMMARY}]]>
+	</queryString>
+	<field name="Numero de puertas:" class="java.lang.Integer"/>
+	<field name="Tipo de puerta:" class="java.lang.String"/>
+	<field name="Sistema de puerta:" class="java.lang.String"/>
+	<field name="Tipo de marco:" class="java.lang.String"/>
+	<field name="Comentario Marco:" class="java.lang.String"/>
+	<field name="Entrada libre:" class="java.lang.String"/>
+	<field name="Altura:" class="java.lang.String"/>
+	<field name="Acero Inox:" class="java.lang.String"/>
+	<field name="Martillado:" class="java.lang.String"/>
+	<field name="Desc Martillado:" class="java.lang.String"/>
+	<field name="Tipo de control:" class="java.lang.String"/>
+	<field name="Botones de cabina:" class="java.lang.String"/>
+	<field name="Lugar Botonera:" class="java.lang.String"/>
+	<field name="Sistel con Display PB:" class="java.lang.String"/>
+	<field name="Sistel con Display Piso:" class="java.lang.Integer"/>
+	<field name="Sistel con Flecha PB:" class="java.lang.String"/>
+	<field name="Sistel con Flecha Piso:" class="java.lang.Integer"/>
+	<field name="Tipo de botonera de pasillo:" class="java.lang.Integer"/>
+	<field name="Boton de pasillo:" class="java.lang.String"/>
+	<field name="Display Cabina:" class="java.lang.String"/>
+	<field name="Display Piso:" class="java.lang.String"/>
+	<field name="Lugar display piso:" class="java.lang.String"/>
+	<field name="Cortina luminosa:" class="java.lang.String"/>
+	<field name="Limitador de carga:" class="java.lang.String"/>
+	<field name="Sintetizador de voz:" class="java.lang.String"/>
+	<field name="Sistema de GOM en Piso:" class="java.lang.String"/>
+	<field name="Intercomunicador:" class="java.lang.String"/>
+	<field name="Teléfono:" class="java.lang.String"/>
+	<field name="Sistema de acceso:" class="java.lang.String"/>
+	<field name="Llave de bombero:" class="java.lang.String"/>
+	<field name="Comentarios:" class="java.lang.String"/>
+	<detail>
+		<band height="422" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="355" width="135" height="15" uuid="f5b26aa9-f7f7-4417-9432-f3a6ca3cbe03"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Teléfono:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="142" y="227" width="174" height="15" uuid="e14d631a-451f-44a5-bc81-5742664691c9"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistel con Flecha PB:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="339" width="134" height="15" uuid="d3c8b945-2d6f-489b-83c3-9772f707603e"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sintetizador de voz:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="212" width="145" height="15" uuid="61eb819c-a480-4259-b6b5-6d3891e7682a"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistel con Display Piso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="10" width="186" height="20" uuid="156213ab-a052-4b4b-8054-810a548a51b1"/>
+				<textElement>
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUERTAS Y MARCOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="30" width="124" height="15" uuid="4962b337-c649-4aaf-a3e3-8a7a8d52f859"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero de puertas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="212" width="150" height="15" uuid="b191bd57-9b4e-4482-80f9-a3642be03b9c"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Botones de pasillo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="160" y="20" width="411" height="1" forecolor="#CCCCCC" uuid="f104d3f1-1391-4789-94b4-762c99448217"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="167" width="461" height="15" uuid="f0461816-8d08-4971-acf2-af292c68ac58"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Botones de cabina:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="325" width="163" height="15" uuid="8cf62fbe-2362-44d8-b731-609ca1b264d2"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Limitador de carga:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="257" width="204" height="15" uuid="f960c5a1-baa2-474a-9d23-6431dd0c4018"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lugar display piso:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="30" width="130" height="15" uuid="b164f627-9a18-4769-946a-b08b7984544e"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de puerta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="45" width="130" height="15" uuid="4aea83db-be63-4ab1-90bc-7724ba302f14"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de marco:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="30" width="192" height="15" uuid="64368eb2-3f7d-4a8a-872a-953bbd99a736"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de puerta:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="197" width="145" height="15" uuid="88694e6e-0960-48c5-86ce-d798d2e2e31b"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="182" width="174" height="15" uuid="dcfd7a75-2b5c-40b8-8d4a-22ab82346d7f"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Botones Pasillo:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="370" width="135" height="15" uuid="d9567ac8-ee47-4f5c-b053-50d48f117797"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Llave de bombero:}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="126" y="309" width="445" height="1" forecolor="#CCCCCC" uuid="ee69b63e-18be-4de7-8c27-910d7053e22a"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="75" width="124" height="15" uuid="5eb15c9a-b7b6-4210-a7c3-6254964e23a6"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acero Inox:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="227" width="145" height="15" uuid="b489d2df-466c-4547-b33a-1b8e97383997"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistel con Flecha Piso:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="257" width="220" height="15" uuid="b94c30e7-6a7a-4116-9cd7-09ae5b1e838c"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Display Piso:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="257" width="174" height="15" uuid="dd5efe42-804e-4436-b531-950da85bb89a"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Display Piso:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="422" y="227" width="150" height="15" uuid="4f262a54-8bad-484f-99d5-62eb504944e9"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistel con Flecha Piso:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="242" width="461" height="15" uuid="65410331-0cf2-45a0-be51-641f86817e0e"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Display Cabina:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="75" width="130" height="15" uuid="91655cb8-2dbf-4172-bf74-8dcd305ea574"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Martillado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="60" width="130" height="15" uuid="90b1f2a0-4e14-4042-985b-c11dc111261a"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Altura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="242" width="174" height="15" uuid="6bf72f1e-877e-4984-817d-7acaf5af6b56"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Display Cabina:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="60" width="192" height="15" uuid="2ce8bd36-ca3d-41ca-8e84-80ae738d2921"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Altura:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="152" width="174" height="15" uuid="030aa251-2e7c-437c-8922-4a93bd20508c"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Control Modelo:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="212" width="100" height="15" uuid="de096722-e38e-4ebf-96fe-7bf56632de73"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistel con Display PB:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="45" width="192" height="15" uuid="1a9f76e2-4775-48ad-876f-21b10a82b881"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de marco:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="197" width="150" height="15" uuid="1a6e9cf7-6a05-4df5-8829-2ed2a9cc118f"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de botonera de pasillo:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="370" width="163" height="15" uuid="b8289402-659c-41e9-bbfe-8838c34df59f"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Llave de bombero:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="30" width="186" height="15" uuid="d32ae2f6-116c-4bdc-9847-f84ce1549e6f"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Numero de puertas:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="45" width="124" height="15" uuid="4e36a0cc-df3a-4ca5-8001-ea453da67d91"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de puerta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="369" width="158" height="15" uuid="6ec39216-8347-42d6-a554-0b708dd8f999"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de acceso:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="90" width="192" height="15" uuid="d05f6c00-3fa8-4351-885e-8a6d81354550"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Desc Martillado:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="227" width="100" height="15" uuid="7a2f4e21-07ec-48b8-a826-da982721655e"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistel con Flecha PB:}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="71" y="407" width="493" height="15" uuid="4c8369db-bd2b-4519-a66a-66db14ee8a77"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+					<paragraph lineSpacing="Proportional"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comentarios:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="197" width="204" height="15" uuid="0e3f70e7-d4f8-4c62-adb8-b040b1cd7be4"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lugar Botonera:}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="102" y="136" width="469" height="1" forecolor="#CCCCCC" uuid="9147ad46-aa38-42d8-92b9-388db356ffd3"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="152" width="461" height="15" uuid="b3ba1983-1fb5-4fb5-853f-72fe3a0643e5"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de control:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="45" width="186" height="15" uuid="66a8010e-2213-427f-9f93-090d06363849"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistema de puerta:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="167" width="174" height="15" uuid="76e7896a-2b02-42c3-aa36-d1a954c122b4"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Botones de cabina:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="355" width="163" height="15" uuid="72f5cc9c-bbae-49fa-90a6-b8295e848ad1"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="126" width="158" height="20" uuid="1c4238de-e10e-43a1-b495-8d7350de454b"/>
+				<textElement>
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTROL]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="324" width="134" height="15" uuid="15138478-ab5f-40e3-8246-a683512edb0f"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cortina luminosa:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="197" width="174" height="15" uuid="65496a47-6a32-4963-aed2-ca9dcbe0e29e"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de botonera de pasillo:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="75" width="192" height="15" uuid="2b163d36-2cf1-4d0b-b72e-456ed0b38ce8"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Martillado:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="75" width="186" height="15" uuid="2c504d4e-8b53-4236-8450-7a84c85f0906"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Acero Inox:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="369" width="134" height="15" uuid="7958a89d-38bf-4396-8e3a-448acb1cd4df"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistema de acceso:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="324" width="158" height="15" uuid="66ecc3c2-e6d4-4d47-951b-c7e4251334a7"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cortina luminosa:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="325" width="135" height="15" uuid="4dee0562-3d85-4546-a52d-98d8bfe33468"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Limitador de carga:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="299" width="174" height="20" uuid="be46aafa-de15-4fc5-9e3b-2a341a3136be"/>
+				<textElement>
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADICIONALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="90" width="130" height="15" uuid="7aae2104-65b6-4cbc-8a33-d2661e891e85"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desc Martillado:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="60" width="186" height="15" uuid="f5dc988a-f0e7-4937-91c1-871ca2a4f8db"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Entrada libre:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="60" width="124" height="15" uuid="f94d246c-fba8-49dd-ba73-5f95c2991696"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entrada libre:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="182" width="461" height="15" uuid="af264798-7f0b-44e5-a1cc-c82b15178877"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Boton de pasillo:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="142" y="212" width="174" height="15" uuid="713ce1ba-927a-422a-947f-298d7f2b45a9"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistel con Display PB:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="340" width="135" height="15" uuid="c2c6d3bb-d085-4c69-bb38-b28103124ce0"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistema de GOM en Piso:}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="422" y="212" width="150" height="15" uuid="f336022a-624b-4425-8ba3-e78056da888b"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sistel con Display Piso:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="354" width="158" height="15" uuid="c060ee0e-45d7-49f7-b43f-32225fe66574"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intercomunicador:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="257" width="82" height="15" uuid="d79a2427-8dd0-4dfc-b49d-49ccd7ec2f86"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="354" width="134" height="15" uuid="c14c6328-2a55-4f44-a2d9-09de01efbb65"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Intercomunicador:}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="407" width="158" height="15" uuid="05a4ac9e-0f2d-414f-99d0-31284887f08a"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentarios:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="340" width="163" height="15" uuid="8f7dcd18-4e63-44bf-9a96-6a12dd5fc231"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de GOM en Piso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="339" width="158" height="15" uuid="3175c9b9-43cf-4af0-89cb-2e1b78919f3b"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sintetizador de voz:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

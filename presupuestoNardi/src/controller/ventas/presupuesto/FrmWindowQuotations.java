@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.database.BasicData;
 import model.database.Quotation;
+import model.service.ServiceBasicData;
 import model.service.ServiceQuotation;
 
 import org.zkoss.bind.BindUtils;
@@ -25,6 +27,8 @@ public class FrmWindowQuotations {
 
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@WireVariable
+	private ServiceBasicData serviceBasicData;
 
 	@Wire("#windowQuotations")
 	private Window windowQuotations;
@@ -70,8 +74,9 @@ public class FrmWindowQuotations {
 	}
 
 	public String getPrice(Quotation quotation) {
-		if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
-			return quotation.getTotalPrice()+ " Bs";
+		BasicData quotationType = serviceBasicData.findById(quotation.getBasicDataByQuotationType().getIdBasic());
+		if (quotationType.getName().equals("MONEDA NACIONAL"))
+			return quotation.getTotalPrice() + " Bs";
 		else
 			return quotation.getPriceImportedMaterial() + " $";
 	}

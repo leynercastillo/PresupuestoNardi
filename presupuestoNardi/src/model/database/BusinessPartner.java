@@ -1,9 +1,10 @@
 package model.database;
 
-// Generated 09-sep-2013 15:28:18 by Hibernate Tools 4.0.0
+// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,10 +37,8 @@ public class BusinessPartner implements java.io.Serializable {
 	public BusinessPartner() {
 	}
 
-	public BusinessPartner(int idBusinessPartner, BasicData basicData, String rif, String name, char status) {
+	public BusinessPartner(int idBusinessPartner, String name, char status) {
 		this.idBusinessPartner = idBusinessPartner;
-		this.basicData = basicData;
-		this.rif = rif;
 		this.name = name;
 		this.status = status;
 	}
