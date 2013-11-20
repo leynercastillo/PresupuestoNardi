@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.database.BasicData;
 import model.database.SaleSummary;
+import model.service.ServiceBasicData;
 import model.service.ServiceQuotation;
 
 import org.zkoss.bind.BindUtils;
@@ -25,6 +27,8 @@ public class FrmSaleSummaryList {
 
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@WireVariable
+	private ServiceBasicData serviceBasicData;
 
 	private List<SaleSummary> listSaleSummary;
 	private SaleSummary saleSummary;
@@ -65,7 +69,8 @@ public class FrmSaleSummaryList {
 	}
 
 	public String getTeam(SaleSummary saleSummary) {
-		return saleSummary.getElevatorQuantity() + " - " + saleSummary.getBasicDataByElevatorType().getName();
+		BasicData elevatorType = serviceBasicData.findById(saleSummary.getBasicDataByElevatorType().getIdBasic());
+		return saleSummary.getElevatorQuantity() + " - " + elevatorType.getName();
 	}
 
 	public String getDateFormat(Date date) {
