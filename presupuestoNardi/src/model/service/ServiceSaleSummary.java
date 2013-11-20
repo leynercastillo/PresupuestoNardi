@@ -37,9 +37,9 @@ public class ServiceSaleSummary {
 		String number;
 		if (saleSummary.getIdSaleSummary() == 0) {
 			int lastConstructionNumber = daoSaleSummary.getLastConstructionNumber();
-			number = (saleSummary.isSaleType() ? "1-" : "2-") + (lastConstructionNumber + 1) + (saleSummary.getElevatorQuantity() > 1 ? ("/" + (lastConstructionNumber + 1 + saleSummary.getElevatorQuantity())) : "") + "-1";
+			number = (saleSummary.isSaleType() ? "1-" : "2-") + (lastConstructionNumber + 1) + (saleSummary.getElevatorQuantity() > 1 ? ("/" + (lastConstructionNumber + saleSummary.getElevatorQuantity())) : "");
 			saleSummary.setNumber(number);
-			saleSummary.setLastConstructionNumber(lastConstructionNumber+1+saleSummary.getElevatorQuantity());
+			saleSummary.setLastConstructionNumber(lastConstructionNumber + saleSummary.getElevatorQuantity());
 		} else {
 			saleSummary.setIdSaleSummary(0);
 			saleSummary.setDate(new Date());

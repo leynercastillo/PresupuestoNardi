@@ -8,7 +8,7 @@
 	<parameter name="ID_SALE_SUMMARY" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT
-	T0.number AS "NUMERO",
+	T0.number || '-' ||T0.version AS "NUMERO",
 	CASE WHEN T1.type THEN '1-' || T1.new_number || '-' || T1.version_number ELSE '2-' || T1.modernization_number || '-' || T1.version_number END AS "Numero Presupuesto",
 	T1.approved_date AS "Fecha aprobacion",
 	T1.delivery_date AS "Fecha entrega",

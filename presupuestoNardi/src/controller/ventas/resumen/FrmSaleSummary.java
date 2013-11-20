@@ -559,76 +559,6 @@ public class FrmSaleSummary {
 		this.listBType = listBType;
 	}
 
-	@Init
-	public void init() {
-		restartForm();
-	}
-
-	@NotifyChange("*")
-	@Command
-	public void restartForm() {
-		seleccione = new String("--Seleccione--");
-		modalMessage = null;
-		saleSummary = new SaleSummary();
-		saleSummary.setPlaneC(false);
-		saleSummary.setPlaneP(false);
-		saleSummary.setStopSequenceContinuous(false);
-		saleSummary.setStopSequenceEven(false);
-		saleSummary.setStopSequenceOdd(false);
-		saleSummary.setDesignSpecial(false);
-		saleSummary.setDoorFrameStainless(false);
-		saleSummary.setSistelWarrowPb(false);
-		saleSummary.setSistelWdisplayPb(false);
-		saleSummary.setLightCurtain(true);
-		saleSummary.setLoadLimiter(false);
-		saleSummary.setSpeechSynthesizer(false);
-		saleSummary.setGomSystem(false);
-		saleSummary.setIntercom(false);
-		saleSummary.setPhone(false);
-		saleSummary.setAccessSytem(false);
-		saleSummary.setFirefighterKeychain(false);
-		searching = true;
-		editing = false;
-		disableSistelHall = true;
-		cabinModel = new BasicData();
-		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.user = serviceSecurityUser.findUser(auxUser.getUsername());
-		listDesign = new ArrayList<BasicData>();
-		listFan = new ArrayList<BasicData>();
-		listBoothDisplay = new ArrayList<BasicData>();
-		listFloorDisplay = new ArrayList<BasicData>();
-		listRoofType = new ArrayList<BasicData>();
-		listRifType = serviceBasicData.listRifType();
-		listBType = serviceBasicData.listBuildingType();
-		listElevatorType = serviceBasicData.listElevatorType();
-		listElevatorCapa = serviceBasicData.listElevatorCapacitance();
-		listMachineType = serviceBasicData.listMachineType();
-		listMachineBase = serviceBasicData.listMachineBase();
-		listBEmbarque = serviceBasicData.listAccess();
-		listElectricityType = serviceBasicData.listElectricityType();
-		listSpeed = serviceBasicData.listSpeed();
-		listFrequency = serviceBasicData.listFrequency();
-		listVoltageLighting = serviceBasicData.listVoltageLighting();
-		listHourMachine = serviceBasicData.listHourMachine();
-		listManeuverType = serviceBasicData.listManeuverType();
-		listButtonType = serviceBasicData.listButtonType();
-		listRailing = serviceBasicData.listRailing();
-		listMirror = serviceBasicData.listMirror();
-		listFloorType = serviceBasicData.listFloorType();
-		listDoorType = serviceBasicData.listDoorType();
-		listDoorSystem = serviceBasicData.listDoorSystem();
-		listDoorframeType = serviceBasicData.listDoorframeType();
-		listDoorframeHammered = serviceBasicData.listDoorframeHammered();
-		listHallButton = serviceBasicData.listHallButton();
-		listHallButtonType = serviceBasicData.listHallButtonType();
-		listFreeAdmission = serviceBasicData.listFreeAdmission();
-		listHeight = serviceBasicData.listHeight();
-		listControlType = serviceBasicData.listControlType();
-		listBoothButton = serviceBasicData.listBoothButton();
-		listMotorTraction = serviceBasicData.listMotorTraction();
-		listCabinModel = serviceBasicData.listCabinModel();
-	}
-
 	/**
 	 * Metodo que valida que un componente ZK no este vacio.
 	 * 
@@ -648,8 +578,8 @@ public class FrmSaleSummary {
 	}
 
 	/**
-	 * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si la solicitud de presupuesto es
-	 * Nueva. Solo aplica para componentes ZK
+	 * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si el resumen es
+	 * Nuevo. Solo aplica para componentes ZK
 	 * 
 	 * @return {@link Validator}
 	 */
@@ -763,6 +693,76 @@ public class FrmSaleSummary {
 		};
 	}
 
+	@Init
+	public void init() {
+		restartForm();
+	}
+
+	@NotifyChange("*")
+	@Command
+	public void restartForm() {
+		seleccione = new String("--Seleccione--");
+		modalMessage = null;
+		saleSummary = new SaleSummary();
+		saleSummary.setPlaneC(false);
+		saleSummary.setPlaneP(false);
+		saleSummary.setStopSequenceContinuous(false);
+		saleSummary.setStopSequenceEven(false);
+		saleSummary.setStopSequenceOdd(false);
+		saleSummary.setDesignSpecial(false);
+		saleSummary.setDoorFrameStainless(false);
+		saleSummary.setSistelWarrowPb(false);
+		saleSummary.setSistelWdisplayPb(false);
+		saleSummary.setLightCurtain(true);
+		saleSummary.setLoadLimiter(false);
+		saleSummary.setSpeechSynthesizer(false);
+		saleSummary.setGomSystem(false);
+		saleSummary.setIntercom(false);
+		saleSummary.setPhone(false);
+		saleSummary.setAccessSytem(false);
+		saleSummary.setFirefighterKeychain(false);
+		searching = true;
+		editing = false;
+		disableSistelHall = true;
+		cabinModel = new BasicData();
+		User auxUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		this.user = serviceSecurityUser.findUser(auxUser.getUsername());
+		listDesign = new ArrayList<BasicData>();
+		listFan = new ArrayList<BasicData>();
+		listBoothDisplay = new ArrayList<BasicData>();
+		listFloorDisplay = new ArrayList<BasicData>();
+		listRoofType = new ArrayList<BasicData>();
+		listRifType = serviceBasicData.listRifType();
+		listBType = serviceBasicData.listBuildingType();
+		listElevatorType = serviceBasicData.listElevatorType();
+		listElevatorCapa = serviceBasicData.listElevatorCapacitance();
+		listMachineType = serviceBasicData.listMachineType();
+		listMachineBase = serviceBasicData.listMachineBase();
+		listBEmbarque = serviceBasicData.listAccess();
+		listElectricityType = serviceBasicData.listElectricityType();
+		listSpeed = serviceBasicData.listSpeed();
+		listFrequency = serviceBasicData.listFrequency();
+		listVoltageLighting = serviceBasicData.listVoltageLighting();
+		listHourMachine = serviceBasicData.listHourMachine();
+		listManeuverType = serviceBasicData.listManeuverType();
+		listButtonType = serviceBasicData.listButtonType();
+		listRailing = serviceBasicData.listRailing();
+		listMirror = serviceBasicData.listMirror();
+		listFloorType = serviceBasicData.listFloorType();
+		listDoorType = serviceBasicData.listDoorType();
+		listDoorSystem = serviceBasicData.listDoorSystem();
+		listDoorframeType = serviceBasicData.listDoorframeType();
+		listDoorframeHammered = serviceBasicData.listDoorframeHammered();
+		listHallButton = serviceBasicData.listHallButton();
+		listHallButtonType = serviceBasicData.listHallButtonType();
+		listFreeAdmission = serviceBasicData.listFreeAdmission();
+		listHeight = serviceBasicData.listHeight();
+		listControlType = serviceBasicData.listControlType();
+		listBoothButton = serviceBasicData.listBoothButton();
+		listMotorTraction = serviceBasicData.listMotorTraction();
+		listCabinModel = serviceBasicData.listCabinModel();
+	}
+
 	public String mailMessage() {
 		String seller = new String(saleSummary.getQuotation().getSeller());
 		String message = new String();
@@ -799,7 +799,7 @@ public class FrmSaleSummary {
 			return;
 		}
 		sendMail();
-		Clients.showNotification("Solicitud enviado", "info", null, "bottom_center", 2000);
+		Clients.showNotification("Resumen de venta modificado", "info", null, "bottom_center", 2000);
 		restartForm();
 	}
 
@@ -987,14 +987,14 @@ public class FrmSaleSummary {
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
 		Long time = new Date().getTime();
 		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "Resumen_venta_" + time + ".pdf");
-		report.viewPdf("/resource/reports/ventas/resumen/Resumen_venta_" + time + ".pdf", "Solicitud de presupuesto");
+		report.viewPdf("/resource/reports/ventas/resumen/Resumen_venta_" + time + ".pdf", "Resumen Venta");
 	}
 
 	@NotifyChange({ "listDesign" })
 	@Command
 	public void loadCabinDesign() {
 		listDesign = serviceBasicData.listDesignByModel(cabinModel);
-		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
+		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto saleSummary
 		saleSummary.setBasicDataByCabinDesign(null);
 	}
 
@@ -1029,7 +1029,7 @@ public class FrmSaleSummary {
 			listFan = serviceBasicData.listFan2();
 		}
 		listRoofType = serviceBasicData.listRoofTypeByElevatorCapacitance(saleSummary.getBasicDataByElevatorCapacitance());
-		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto budget
+		// No asigno un nuevo OBJETO en lugar de "null" puesto que me da error al guardar el objeto saleSummary
 		saleSummary.setBasicDataByRoofType(null);
 		saleSummary.setBasicDataByFan(null);
 		BindUtils.postNotifyChange(null, null, saleSummary, "fan");
@@ -1099,7 +1099,7 @@ public class FrmSaleSummary {
 			floorType = saleSummary.getBasicDataByFloorType().getName();
 		if (cabinDesign.indexOf("FORMICA") != -1 || cabinDesign.indexOf("OTRO") != -1 || floorType.indexOf("OTROS") != -1)
 			saleSummary.setDesignSpecial(true);
-		// IMPORTANTE Solo actualizao una propiedad del objeto BUDGET, mas no todo el objeto
+		// IMPORTANTE Solo actualizao una propiedad del objeto saleSummary, mas no todo el objeto
 		BindUtils.postNotifyChange(null, null, saleSummary, "designSpecial");
 	}
 
