@@ -17,10 +17,12 @@ import model.database.BasicData;
 import model.database.Budget;
 import model.database.Quotation;
 import model.database.SaleSummary;
+import model.database.TransactionSummary;
 import model.service.ServiceBasicData;
 import model.service.ServiceBudget;
 import model.service.ServiceQuotation;
 import model.service.ServiceSaleSummary;
+import model.service.ServiceTransactionSummary;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
@@ -32,7 +34,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
@@ -54,6 +55,8 @@ public class FrmQuotation {
 	private ServiceBudget serviceBudget;
 	@WireVariable
 	private ServiceSaleSummary serviceSaleSummary;
+	@WireVariable
+	private ServiceTransactionSummary serviceTransactionSummary;
 	@WireVariable
 	private Emails emails;
 
@@ -394,10 +397,10 @@ public class FrmQuotation {
 		this.listElevatorType = listElevatorType;
 	}
 
-	public Validator getNoSelect(){
+	public Validator getNoSelect() {
 		return new ValidateZK().getNoSelect();
 	}
-	
+
 	public Validator getNoDash() {
 		return new ValidateZK().getNoDash();
 	}
@@ -872,39 +875,69 @@ public class FrmQuotation {
 		return (quotation.getElevatorQuantity() > 1 ? "ASCENSORES " : "ASCENSOR ") + str;
 	}
 
-	private List<File> mailAttach() {
+	private List<File> mainMailAttach(SaleSummary saleSummary) {
 		List<File> listAttach = new ArrayList<File>();
 		GenericReport report = new GenericReport();
+		// Creamos el pdf del resumen de ventas
+		listAttach.add(createSaleSummaryPdf(report, saleSummary));
 		String quotationNumber = new String();
 		if (quotation.isType())
 			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
 		else
 			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("REPORT_TITLE", "Resumen de Venta");
-		parameters.put("NUMBER", quotation.getBudgetNumber());
-		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
-		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/solicitud/");
-		report.createPdf("/resource/reports/ventas/solicitud", "budget.jasper", parameters, "ppto_" + quotationNumber + ".pdf");
-		File file = new File(Sessions.getCurrent().getWebApp().getRealPath("/resource/reports/ventas/solicitud/ppto_" + quotationNumber + ".pdf"));
-		listAttach.add(file);
+		// Creamos el pdf del presupuesto
+		createQuotationPdf("SI", quotationNumber, report);
+		listAttach.add(report.getFile());
+		// Creamos el pdf del resumen de negociacion
+		TransactionSummary ts = serviceTransactionSummary.findByQuotation(quotation);
+		if (ts != null) {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+			parameters.put("ID", ts.getIdTransactionSummary());
+			report.createPdf("/resource/reports/ventas/resumen_negociacion", "transaction_summary.jasper", parameters, "resumen_negociacion_" + ts.getIdTransactionSummary() + ".pdf");
+			listAttach.add(report.getFile());
+		}
 		return listAttach;
 	}
 
-	private String mailMessage() {
-		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String message = new String();
-		message = "Presupuesto aprobado el dia " + formatter.format(quotation.getApprovedDate()) + "\n\nPresupuesto nro:" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber() + "\n\nCliente: " + quotation.getPartnerName() + "\n\nCantidad ascensores: " + quotation.getElevatorQuantity() + "\n\nCiudad: " + quotation.getConstruction();
-		return message;
+	public List<File> logisticMailAttach(SaleSummary saleSummary) {
+		List<File> listAttach = new ArrayList<File>();
+		GenericReport report = new GenericReport();
+		listAttach.add(createSaleSummaryPdf(report, saleSummary));
+		return listAttach;
 	}
 
-	private void sendMail() {
+	private File createSaleSummaryPdf(GenericReport report, SaleSummary saleSummary) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("ID_SALE_SUMMARY", saleSummary.getIdSaleSummary());
+		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
+		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
+		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "Resumen_venta_" + saleSummary.getNumber() + ".pdf");
+		return report.getFile();
+	}
+
+	private String mainMailMessage() {
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return "Presupuesto aprobado el dia " + formatter.format(quotation.getApprovedDate()) + "\n\nPresupuesto nro:" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber() + "\n\nCliente: " + quotation.getPartnerName() + "\n\nCantidad ascensores: " + quotation.getElevatorQuantity() + "\n\nCiudad: " + quotation.getConstruction();
+	}
+
+	private String logisticMailMessage(SaleSummary saleSummary) {
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return "Obra aprobada el día " + formatter.format(quotation.getApprovedDate()) + "\n\nNro Obra: " + saleSummary.getNumber() + "\n\nCliente: " + saleSummary.getQuotation().getPartnerName() + "\n\nObra: " + saleSummary.getConstruction() + "\n\nDirección de la obra: " + saleSummary.getConstructionAddress() + "\n\nCiudad: " + saleSummary.getConstructionCity();
+	}
+
+	private void sendMail(SaleSummary saleSummary) {
 		List<String> listRecipient = new ArrayList<String>();
 		listRecipient.add("ventas@ascensoresnardi.com");
-		listRecipient.add("logistica@ascensoresnardi.com");
-		listRecipient.add(serviceBudget.findByNumber(quotation.getBudget().getNumber()).getSecurityUser().getEmail());
+		listRecipient.add("administracion@ascensoresnardi.com");
+		listRecipient.add("cobranzas@ascensoresnardi.com");
+		listRecipient.add(serviceBudget.findByNumber(saleSummary.getQuotation().getBudget().getNumber()).getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
-		emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro" + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mailMessage(), mailAttach());
+		emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro " + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mainMailMessage(), mainMailAttach(saleSummary));
+		listRecipient.clear();
+		listRecipient.add("logistica@ascensoresnardi.com");
+		listRecipient.add("sistemas@ascensoresnardi.com");
+		emails.sendMail("sistemas@ascensoresnardi.com", "Obra Nro " + saleSummary.getNumber() + "-" + saleSummary.getVersion(), listRecipient, logisticMailMessage(saleSummary), logisticMailAttach(saleSummary));
 	}
 
 	@NotifyChange("*")
@@ -915,12 +948,13 @@ public class FrmQuotation {
 			return;
 		}
 		if (quotation.getStatus() == 'A') {
-			/*sendMail();*/
 			SaleSummary saleSummary = quotationToSaleSummary(quotation);
 			if (!serviceSaleSummary.save(saleSummary)) {
 				Clients.showNotification("No se pudo guardar el presupuesto", "error", null, "bottom_center", 2000);
 				return;
 			}
+			saleSummary = serviceSaleSummary.findByQuotation(quotation);
+			sendMail(saleSummary);
 		}
 		Clients.showNotification("Presupuesto guardado", "info", null, "bottom_center", 2000);
 		selectPrintTemplate();
@@ -956,15 +990,15 @@ public class FrmQuotation {
 		disabledEdit = new Boolean(false);
 	}
 
-	@NotifyChange("*")
-	@Command
-	public void print(@BindingParam("template") String template) {
-		GenericReport report = new GenericReport();
-		String quotationNumber = new String();
-		if (quotation.isType())
-			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
-		else
-			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
+	/**
+	 * @param template
+	 *                If 'SI' the pdf will create print with head, else 'NO' the pdf will create
+	 * @param quotationNumber
+	 *                Quotations number.
+	 * @param report
+	 *                For to generate report.
+	 */
+	private void createQuotationPdf(String template, String quotationNumber, GenericReport report) {
 		if (template == null || template.compareTo("SI") == 0) {
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 				template = "quotation.jasper";
@@ -983,6 +1017,18 @@ public class FrmQuotation {
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
 		report.createPdf("/resource/reports/ventas/presupuesto", template, parameters, "ppto_" + quotationNumber + ".pdf");
+	}
+
+	@NotifyChange("*")
+	@Command
+	public void print(@BindingParam("template") String template) {
+		GenericReport report = new GenericReport();
+		String quotationNumber = new String();
+		if (quotation.isType())
+			quotationNumber = "1-" + quotation.getNewNumber() + "-" + quotation.getVersionNumber();
+		else
+			quotationNumber = "2-" + quotation.getModernizationNumber() + "-" + quotation.getVersionNumber();
+		createQuotationPdf(template, quotationNumber, report);
 		report.viewPdf("/resource/reports/ventas/presupuesto/ppto_" + quotationNumber + ".pdf", "Presupuesto");
 		restartForm();
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import model.dao.DaoSaleSummary;
+import model.database.Quotation;
 import model.database.SaleSummary;
 import model.database.SecurityGroup;
 import model.database.SecurityUser;
@@ -50,6 +51,11 @@ public class ServiceSaleSummary {
 	@Transactional(readOnly = true)
 	public SaleSummary findById(int id) {
 		return daoSaleSummary.findByField("idSaleSummary", id);
+	}
+	
+	@Transactional(readOnly = true)
+	public SaleSummary findByQuotation(Quotation quotation){
+		return daoSaleSummary.findByField("quotation", quotation);
 	}
 
 	/**

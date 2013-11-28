@@ -10,10 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import model.database.Quotation;
 import model.database.SaleSummary;
 import model.service.ServiceQuotation;
-import model.service.ServiceSaleSummary;
 
 public class SaleSummaryFilter {
-	private ServiceSaleSummary serviceSaleSummary;
 	private ServiceQuotation serviceQuotation;
 	private String number = "";
 	private String partnerName = "";
@@ -55,7 +53,6 @@ public class SaleSummaryFilter {
 
 	public SaleSummaryFilter(List<SaleSummary> list) {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		this.serviceSaleSummary = applicationContext.getBean(ServiceSaleSummary.class);
 		this.serviceQuotation = applicationContext.getBean(ServiceQuotation.class);
 		listSaleSummary = list;
 	}
