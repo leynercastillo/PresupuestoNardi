@@ -779,7 +779,7 @@
 			</grid>
 		</groupbox>
 		<groupbox mold="3d" closable="false">
-			<caption label="PUERTAS Y MARCOS" sclass="formLabel"></caption>
+			<caption label="MARCOS Y PUERTAS" sclass="formLabel"></caption>
 			<grid>
 				<columns>
 					<column width="17%"></column>

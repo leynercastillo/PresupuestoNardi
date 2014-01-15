@@ -676,7 +676,7 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("12");
 			quotation.setDeliveryEstimate("6");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio del equipo NO incluye montaje, el mismo sera calculado al momento de la instalacion.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio sera estimado al momento del comienzo de la instalación del (los) equipo(s).\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);

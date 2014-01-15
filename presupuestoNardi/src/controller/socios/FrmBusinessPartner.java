@@ -82,8 +82,8 @@ public class FrmBusinessPartner {
 				InputElement inputElement = (InputElement) ctx.getBindContext().getValidatorArg("component");
 				String string = inputElement.getText();
 				BusinessPartner auxBusinessPartner = serviceBusinessPartner.findByRif(string);
-				/*if (string.trim().isEmpty())
-					throw new WrongValueException(inputElement, "Ingrese un dato valido.");*/
+				if (string.trim().isEmpty())
+					throw new WrongValueException(inputElement, "Ingrese un dato valido.");
 				if (auxBusinessPartner != null)
 					throw new WrongValueException(inputElement, "Este rif ya se encuentra registrado en el sistema.");
 			}

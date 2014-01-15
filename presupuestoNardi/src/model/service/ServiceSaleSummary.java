@@ -52,9 +52,9 @@ public class ServiceSaleSummary {
 	public SaleSummary findById(int id) {
 		return daoSaleSummary.findByField("idSaleSummary", id);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public SaleSummary findByQuotation(Quotation quotation){
+	public SaleSummary findByQuotation(Quotation quotation) {
 		return daoSaleSummary.findByField("quotation", quotation);
 	}
 

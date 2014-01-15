@@ -1426,7 +1426,7 @@
 						</button>
 						<button
 							disabled="@load(not vm.searching ? vm.editing : 'true')"
-							if="${sec:isAnyGranted('ROLE_ITEM_MASTER')}"
+							if="${sec:isAnyGranted('ROLE_SALES_SUMMARY_EDIT')}"
 							image="/resource/images/icons/edit.png" label="Editar"
 							onClick="@command('edit', component = self)">
 						</button>
