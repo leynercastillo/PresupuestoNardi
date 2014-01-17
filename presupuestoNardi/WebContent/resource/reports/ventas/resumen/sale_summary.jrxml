@@ -140,7 +140,7 @@ WHERE
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"logo.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="202" y="78" width="168" height="20" uuid="59868443-f0e9-4b6a-b2d1-b3a583663ed4"/>
+				<reportElement x="159" y="78" width="259" height="20" uuid="59868443-f0e9-4b6a-b2d1-b3a583663ed4"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>

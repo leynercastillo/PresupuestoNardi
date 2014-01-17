@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import model.database.BasicData;
+import model.database.Quotation;
 import model.database.SaleSummary;
 import model.database.SecurityUser;
 import model.service.ServiceBasicData;
@@ -578,8 +579,8 @@ public class FrmSaleSummary {
 	}
 
 	/**
-	 * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si el resumen es
-	 * Nuevo. Solo aplica para componentes ZK
+	 * Metodo que valida que la cantidad de Ascensores sea por lo menos uno, si el resumen es Nuevo. Solo aplica
+	 * para componentes ZK
 	 * 
 	 * @return {@link Validator}
 	 */
@@ -766,7 +767,7 @@ public class FrmSaleSummary {
 	public String mailMessage() {
 		String seller = new String(saleSummary.getQuotation().getSeller());
 		String message = new String();
-		message = "Modificación de resumen de venta enviada por " + seller + "\n\nCliente: " + saleSummary.getQuotation().getPartnerName() + "\n\nCantidad ascensores: " + saleSummary.getElevatorQuantity() + "\n\nCiudad: " + saleSummary.getConstructionCity();
+		message = "Modificación de resumen de venta. Enviado por " + seller + "\n\nCliente: " + saleSummary.getQuotation().getPartnerName() + "\n\nCantidad ascensores: " + saleSummary.getElevatorQuantity() + "\n\nCiudad: " + saleSummary.getConstructionCity();
 		return message;
 	}
 
@@ -786,7 +787,9 @@ public class FrmSaleSummary {
 
 	public void sendMail() {
 		List<String> listRecipient = new ArrayList<String>();
-		/* listRecipient.add("logistica@ascensoresnardi.com"); */
+		Quotation auxQuotation = serviceQuotation.findById(saleSummary.getQuotation().getIdQuotation());
+		listRecipient.add("logistica@ascensoresnardi.com");
+		listRecipient.add(auxQuotation.getBudget().getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Modificacion resumen de venta obra " + saleSummary.getConstruction(), listRecipient, mailMessage(), mailAttach());
 	}

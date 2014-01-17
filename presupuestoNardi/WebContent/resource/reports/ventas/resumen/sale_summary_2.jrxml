@@ -11,7 +11,7 @@
 	T2.name AS "Sistema de puerta:",
 	T3.name AS "Tipo de marco:",
 	T0.doorframe_type_comment AS "Comentario Marco:",
-	T1.name AS "Entrada libre:",
+	T4.name AS "Entrada libre:",
 	T5.name AS "Altura:",
 	CASE WHEN T0.door_frame_stainless THEN T0.door_frame_stainless_descrip ELSE '' END AS "Acero Inox:",
 	T6.name AS "Martillado:",
