@@ -789,6 +789,9 @@ public class FrmSaleSummary {
 		List<String> listRecipient = new ArrayList<String>();
 		Quotation auxQuotation = serviceQuotation.findById(saleSummary.getQuotation().getIdQuotation());
 		listRecipient.add("logistica@ascensoresnardi.com");
+		listRecipient.add("administracion@ascensoresnardi.com");
+		listRecipient.add("cobranzas@ascensoresnardi.com");
+		listRecipient.add("importaciones@ascensoresnardi.com");
 		listRecipient.add(auxQuotation.getBudget().getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Modificacion resumen de venta obra " + saleSummary.getConstruction(), listRecipient, mailMessage(), mailAttach());

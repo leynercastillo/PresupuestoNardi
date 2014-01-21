@@ -23,8 +23,8 @@
 	T0.sistel_wdisplay_floor AS "Sistel con Display Piso:",
 	CASE WHEN T0.sistel_warrow_pb THEN 'SI' ELSE 'NO' END AS "Sistel con Flecha PB:",
 	T0.sistel_warrow_floor AS "Sistel con Flecha Piso:",
-	T0.hall_button_type AS "Tipo de botonera de pasillo:",
-	T10.name AS "Boton de pasillo:",
+	T10.name AS "Tipo de botonera de pasillo:",
+	T9.name AS "Boton de pasillo:",
 	T11.name AS "Display Cabina:",
 	T12.name AS "Display Piso:",
 	T0.display_place_floor AS "Lugar display piso:",
@@ -46,7 +46,7 @@ FROM
 	LEFT JOIN public.basic_data T6 ON T6.id_basic = T0.door_frame_hammered
 	LEFT JOIN public.basic_data T7 ON T7.id_basic = T0.control_type
 	LEFT JOIN public.basic_data T8 ON T8.id_basic = T0.booth_button
-	LEFT JOIN public.basic_data T9 ON T9.id_basic = T0.hall_button_type
+	LEFT JOIN public.basic_data T9 ON T9.id_basic = T0.hall_button
 	LEFT JOIN public.basic_data T10 ON T10.id_basic = T0.hall_button_type
 	LEFT JOIN public.basic_data T11 ON T11.id_basic = T0.booth_display
 	LEFT JOIN public.basic_data T12 ON T12.id_basic = T0.floor_display
@@ -70,7 +70,7 @@ WHERE
 	<field name="Sistel con Display Piso:" class="java.lang.Integer"/>
 	<field name="Sistel con Flecha PB:" class="java.lang.String"/>
 	<field name="Sistel con Flecha Piso:" class="java.lang.Integer"/>
-	<field name="Tipo de botonera de pasillo:" class="java.lang.Integer"/>
+	<field name="Tipo de botonera de pasillo:" class="java.lang.String"/>
 	<field name="Boton de pasillo:" class="java.lang.String"/>
 	<field name="Display Cabina:" class="java.lang.String"/>
 	<field name="Display Piso:" class="java.lang.String"/>
@@ -294,13 +294,6 @@ WHERE
 					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de marco:}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="197" width="150" height="15" uuid="1a6e9cf7-6a05-4df5-8829-2ed2a9cc118f"/>
-				<textElement>
-					<font fontName="Serif" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{Tipo de botonera de pasillo:}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="299" y="370" width="163" height="15" uuid="b8289402-659c-41e9-bbfe-8838c34df59f"/>
@@ -544,6 +537,13 @@ WHERE
 				</textElement>
 				<text><![CDATA[Sintetizador de voz:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="111" y="197" width="229" height="15" uuid="8ba5e0da-dbff-420f-bdda-8d2d9437667a"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de botonera de pasillo:}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
