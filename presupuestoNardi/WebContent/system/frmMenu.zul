@@ -1,6 +1,8 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+
 <zk>
+
 	<window apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('controller.FrmMenu')">
 		<tabbox mold="accordion" width="100%">
@@ -155,4 +157,5 @@
 			</tabpanels>
 		</tabbox>
 	</window>
+
 </zk>

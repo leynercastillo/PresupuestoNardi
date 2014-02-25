@@ -734,6 +734,7 @@ public class FrmSaleSummary {
 		listFloorDisplay = new ArrayList<BasicData>();
 		listRoofType = new ArrayList<BasicData>();
 		listRifType = serviceBasicData.listRifType();
+		
 		listBType = serviceBasicData.listBuildingType();
 		listElevatorType = serviceBasicData.listElevatorType();
 		listElevatorCapa = serviceBasicData.listElevatorCapacitance();
