@@ -28,8 +28,11 @@ public class ServiceSaleSummary {
 		SecurityGroup group = serviceSecurityGroup.findById(user.getSecurityGroup().getIdSecurityGroup());
 		if (group.getName().equals("SELLER"))
 			listUser.add(user);
-		else
-			listUser = serviceSecurityGroup.findGroupSeller().getSecurityUsers();
+		//else
+		//if (group.getName().equals("OWNER"))	
+		//	listUser = serviceSecurityGroup.findGroupOwnerCoordinator().getSecurityUsers();
+		else	
+		listUser = serviceSecurityGroup.findGroupSeller().getSecurityUsers();
 		return listUser;
 	}
 

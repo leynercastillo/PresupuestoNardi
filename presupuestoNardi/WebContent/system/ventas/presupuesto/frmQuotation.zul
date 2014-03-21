@@ -944,11 +944,12 @@
 				<rows>
 					<row>
 						<label sclass="formLabel"
-							value="Tipo precio:">
+							value="Tipo precio:" >
 						</label>
 						<combobox disabled="@load(vm.disabledEdit)"
 							model="@load(vm.listQuotationType)"
 							onChange="@command('loadPayment')"
+							onSelect="@command('viewByElevatorType')"
 							readonly="@load(not vm.disabledEdit)"
 							selectedItem="@bind(vm.quotation.basicDataByQuotationType)"
 							value="@save(vm.quotation.basicDataByQuotationType.name, before = 'confirmSave') @load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name) @validator(vm.noSelect, component = self)"
@@ -965,10 +966,11 @@
 						<space></space>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
-						<label sclass="formLabel" value="60%"></label>
+						visible="@load(vm.check2)">
+					<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')"> -->
+						<label  sclass="formLabel" value="60%" ></label>
 						<label sclass="formLabel"
-							value="Material Importado:">
+							value="Material Importado:" >
 						</label>
 						<doublebox disabled="true" format="#,##0.00"
 							style="text-align: right"
@@ -978,20 +980,22 @@
 						<space></space>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
+						visible="@load(vm.check2)">
+						<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')"> -->
 						<label sclass="formLabel" value="40%"></label>
 						<label sclass="formLabel"
-							value="Material Nacional y Mano de Obra de fabricacion:">
+							value="Material Nacional y Mano de Obra de fabricacion:" >
 						</label>
 						<doublebox disabled="true" format="#,##0.00"
 							style="text-align: right"
-							value="@bind(vm.quotation.priceNationalMaterial)" width="95%">
+							value="@bind(vm.quotation.priceNationalMaterial)" width="95%" >
 						</doublebox>
-						<label sclass="formLabel" value="Bs"></label>
+						<label sclass="formLabel" value="Bs" ></label>
 						<space></space>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
+						visible="@load(vm.check2)">
+						<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')"> -->
 						<label sclass="formLabel" value="100%"></label>
 						<label sclass="formLabel"
 							value="Precio Unitario Total:">
@@ -1007,7 +1011,8 @@
 						<space></space>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
+					visible="@load(vm.check2)">
+						<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')"> -->
 						<label sclass="formLabel"
 							value="@load(vm.quotation.elevatorQuantity)">
 						</label>
@@ -1026,7 +1031,62 @@
 						<label sclass="formLabel" value="Bs:"></label>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+						visible="@load(vm.check)">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario Bs"></column>
+									<column label="Subtotal Bs"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('priceUnit', val=self.value)"
+											style="text-align: right"
+											value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+					<row
+					visible="@load(vm.check3)">
+						<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')"> -->
 						<cell colspan="4">
 							<grid>
 								<auxhead>
@@ -1092,7 +1152,8 @@
 						<space></space>
 					</row>
 					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">
+					visible="@load(vm.check3)">
+						<!-- visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA')">-->
 						<cell colspan="4">
 							<grid>
 								<auxhead>
@@ -1158,7 +1219,7 @@
 							</grid>
 						</cell>
 						<space></space>
-					</row>
+						</row>
 				</rows>
 			</grid>
 		</groupbox>
@@ -1170,8 +1231,8 @@
 					<column></column>
 				</columns>
 				<rows>
-					<row
-						visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
+					<row 
+					visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL')">
 						<label value="Condiciones de pago:"
 							sclass="formLabel">
 						</label>

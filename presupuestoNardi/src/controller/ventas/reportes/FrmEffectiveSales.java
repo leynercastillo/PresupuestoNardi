@@ -3,6 +3,7 @@ package controller.ventas.reportes;
 import general.GenericReport;
 import general.ValidateZK;
 
+import java.awt.peer.SystemTrayPeer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,8 +36,27 @@ public class FrmEffectiveSales {
 	private Boolean newSales;
 	private Boolean modernization;
 	private ListModelList<SecurityUser> listUsers;
+	private ListModelList<SecurityUser> listUsers2;
 	private Set<SecurityUser> listSelectedUsers;
+	private ArrayList<SecurityUser> list;
+	
+	public ListModelList<SecurityUser> getListUsers2() {
+		return listUsers2;
+	}
 
+	public void setListUsers2(ListModelList<SecurityUser> listUsers2) {
+		this.listUsers2 = listUsers2;
+	}
+
+	public ArrayList<SecurityUser> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<SecurityUser> list) {
+		this.list = list;
+	}
+
+	
 	public Boolean getNewSales() {
 		return newSales;
 	}
@@ -84,6 +104,7 @@ public class FrmEffectiveSales {
 	public void setListUsers(ListModelList<SecurityUser> listUsers) {
 		this.listUsers = listUsers;
 	}
+	
 
 	public Validator getNoEmpty() {
 		return new ValidateZK().getNoEmpty();
@@ -105,9 +126,20 @@ public class FrmEffectiveSales {
 		endDate = null;
 		listSelectedUsers = new HashSet<SecurityUser>();
 		SecurityGroup group = serviceSecurityGroup.findGroupSeller();
+		SecurityGroup group2 = serviceSecurityGroup.findGroupOwner();
+		
 		listUsers = new ListModelList<SecurityUser>();
 		listUsers.setMultiple(true);
 		listUsers.addAll(serviceSecurityUser.listByGroup(group.getIdSecurityGroup()));
+                
+		listUsers2 = new ListModelList<SecurityUser>();
+		listUsers2.setMultiple(true);
+		listUsers2.addAll(serviceSecurityUser.listByGroup(group2.getIdSecurityGroup()));
+		
+		list = new ArrayList<SecurityUser>();
+		list.addAll(listUsers);
+		list.addAll(listUsers2);
+		
 		newSales = false;
 		modernization = false;
 	}
@@ -123,7 +155,9 @@ public class FrmEffectiveSales {
 		List<Integer> listIdUser = new ArrayList<Integer>();
 		for (SecurityUser user : listSelectedUsers) {
 			listIdUser.add(user.getIdSecurityUser());
+			System.out.println(user.getIdSecurityUser());
 		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("LIST_USER", listIdUser);
 		map.put("START_DATE", beginDate);

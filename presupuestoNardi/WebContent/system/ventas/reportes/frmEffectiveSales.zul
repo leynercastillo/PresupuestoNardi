@@ -37,7 +37,7 @@
 				</row>
 				<row spans="5">
 					<listbox checkmark="true"
-						model="@load(vm.listUsers)" mold="paging" multiple="true"
+						model="@load(vm.list)" mold="paging" multiple="true"
 						pageSize="10" pagingPosition="both"
 						selectedItems="@bind(vm.listSelectedUsers)">
 						<listhead>

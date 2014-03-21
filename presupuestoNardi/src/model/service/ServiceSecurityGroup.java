@@ -29,6 +29,13 @@ public class ServiceSecurityGroup {
 	public SecurityGroup findGroupSalesCoordinator() {
 		return daoSecurityGroup.findByField("name", "SALES COORDINATOR");
 	}
+	
+	//Prueba para que salga el Sr. Roberto Nardi
+	@Transactional(readOnly = true)
+	public SecurityGroup findGroupOwner() {
+		return daoSecurityGroup.findByField("name", "OWNER");
+	}
+	//
 
 	@Transactional(readOnly = true)
 	public List<SecurityGroup> listActive() {

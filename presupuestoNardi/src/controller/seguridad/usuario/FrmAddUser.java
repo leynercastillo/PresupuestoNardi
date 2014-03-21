@@ -25,7 +25,7 @@ import model.service.ServiceSecurityGroup;
 import model.service.ServiceSecurityUser;
 
 public class FrmAddUser {
-
+ 
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
 	@WireVariable
