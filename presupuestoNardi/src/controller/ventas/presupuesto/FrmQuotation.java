@@ -100,6 +100,34 @@ public class FrmQuotation {
 	private ListModel<Object> listPartnerName;
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
+	private boolean check;
+	private boolean check2;
+	private boolean check3;
+	
+
+	public boolean isCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean check) {
+		this.check = check;
+	}
+
+	public boolean isCheck2() {
+		return check2;
+	}
+
+	public void setCheck2(boolean check2) {
+		this.check2 = check2;
+	}
+
+	public boolean isCheck3() {
+		return check3;
+	}
+
+	public void setCheck3(boolean check3) {
+		this.check3 = check3;
+	}
 
 	public List<BasicData> getListQuotationType() {
 		return listQuotationType;
@@ -531,6 +559,9 @@ public class FrmQuotation {
 		listFloorDisplay = new ArrayList<BasicData>();
 		modalMessage = null;
 		printMessage = null;
+		check = new Boolean(false);
+		check2 = new Boolean(false);
+		check3 = new Boolean(false);
 	}
 
 	private void budgetToQuotation(Budget budget) {
@@ -1002,12 +1033,24 @@ public class FrmQuotation {
 	private void createQuotationPdf(String template, String quotationNumber, GenericReport report) {
 		if (template == null || template.compareTo("SI") == 0) {
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
-				template = "quotation.jasper";
+			{
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO"))
+					template = "quotation_resume.jasper";
+				else
+					template = "quotation.jasper";
+			}
 			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
-				template = "quotation_foreign.jasper";
+					template = "quotation_foreign.jasper";
+				
+			
 		} else if (template.contains("NO"))
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
-				template = "quotation_without.jasper";
+			{
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO"))
+					template = "quotation_resume_without.jasper";
+				else
+					template = "quotation_without.jasper";
+			}
 			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
 				template = "quotation_foreign_without.jasper";
 		Map<String, Object> parameters = new HashMap<String, Object>();
@@ -1018,6 +1061,34 @@ public class FrmQuotation {
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
 		report.createPdf("/resource/reports/ventas/presupuesto", template, parameters, "ppto_" + quotationNumber + ".pdf");
+	}
+	
+	@NotifyChange("*")
+	@Command
+	public void viewByElevatorType(){
+		if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+		{
+			if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO"))
+			{
+				check = true;
+				check2 = false;
+				check3 = false;
+			}
+			else 
+			{
+				check = false;
+				check2 = true;
+				check3 = false;
+			}
+			
+		}
+		
+		else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")){
+			check = false;
+			check2 = false;
+			check3 = true;
+		}
+		
 	}
 
 	@NotifyChange("*")
