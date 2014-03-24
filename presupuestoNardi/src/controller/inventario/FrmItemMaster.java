@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BasicData;
 import model.database.Item;
 import model.service.ServiceBasicData;
@@ -31,19 +34,25 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.impl.InputElement;
 
+@Entity
 public class FrmItemMaster {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceItem serviceItem;
+	@ManyToOne
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
 	private String minCombo;
 	private String seleccione;
 	private Boolean disableAll;
 	private Boolean disableBeforeSearch;
+	@ManyToOne
 	private Item item;
 	private Boolean update;
+	@ManyToOne
 	private BasicData elevatorComponent;
+	@OneToMany
 	private List<BasicData> listPriceType;
 	private ListModel<Object> listItemCode;
 	private ListModel<Object> listItemName;

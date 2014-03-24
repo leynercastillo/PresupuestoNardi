@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.SecurityGroup;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityGroup;
@@ -24,17 +27,22 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.ListModelList;
 
+@Entity
 public class FrmEffectiveSales {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityGroup serviceSecurityGroup;
 	private Date beginDate;
 	private Date endDate;
 	private Boolean newSales;
 	private Boolean modernization;
+	@OneToMany
 	private ListModelList<SecurityUser> listUsers;
+	@OneToMany
 	private Set<SecurityUser> listSelectedUsers;
 
 	public Boolean getNewSales() {

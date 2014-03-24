@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BasicData;
 import model.database.Quotation;
 import model.service.ServiceBasicData;
@@ -23,17 +26,22 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Window;
 
+@Entity
 public class FrmWindowQuotations {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@ManyToOne
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
 
 	@Wire("#windowQuotations")
 	private Window windowQuotations;
 
+	@OneToMany
 	private List<Quotation> listQuotations;
+	@ManyToOne
 	private Quotation selectedQuotation;
 
 	public Quotation getSelectedQuotation() {

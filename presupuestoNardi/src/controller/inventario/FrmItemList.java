@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.Item;
 
 import org.zkoss.bind.BindUtils;
@@ -19,13 +22,16 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 
 
+@Entity
 public class FrmItemList {
 
     @Wire("#window")
     private Window window;
 
-    private List<Item> listItems;
-    private Item selectedItem;
+    @OneToMany
+private List<Item> listItems;
+    @ManyToOne
+private Item selectedItem;
 
     public List<Item> getListItems() {
 	return listItems;

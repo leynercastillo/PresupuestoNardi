@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 
+import javax.persistence.Entity;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -10,6 +11,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 
+@Entity
 public class FrmReport {
 
 	private String report;

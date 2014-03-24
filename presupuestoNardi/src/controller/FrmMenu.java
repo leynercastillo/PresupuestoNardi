@@ -3,11 +3,13 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Entity;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
+@Entity
 public class FrmMenu {
 
     @NotifyChange()

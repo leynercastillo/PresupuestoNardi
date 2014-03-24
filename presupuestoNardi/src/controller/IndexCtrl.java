@@ -1,5 +1,7 @@
 package controller;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityUser;
 
@@ -11,12 +13,15 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
+@Entity
 public class IndexCtrl {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
 
 	private String page;
+	@ManyToOne
 	private SecurityUser user;
 
 	public SecurityUser getUser() {

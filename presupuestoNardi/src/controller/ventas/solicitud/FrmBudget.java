@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BasicData;
 import model.database.Budget;
 import model.database.BusinessPartner;
@@ -53,62 +56,104 @@ import springBean.Emails;
  * @author leyner.castillo
  * 
  */
+@Entity
 public class FrmBudget {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
+	@ManyToOne
 	@WireVariable
 	private ServiceBudget serviceBudget;
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
+	@ManyToOne
 	@WireVariable
 	private ServiceBusinessPartner serviceBusinessPartner;
+	@ManyToOne
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@ManyToOne
 	@WireVariable
 	private Emails emails;
 	private String seleccione;
 	private String modalMessage;
 	private final String dash = new String("--");
+	@OneToMany
 	private List<BasicData> listBType;
+	@OneToMany
 	private List<BasicData> listElevatorType;
+	@OneToMany
 	private List<BasicData> listElevatorCapa;
+	@OneToMany
 	private List<BasicData> listMachineType;
+	@OneToMany
 	private List<BasicData> listMachineBase;
+	@OneToMany
 	private List<BasicData> listBEmbarque;
+	@OneToMany
 	private List<BasicData> listElectricityType;
+	@OneToMany
 	private List<BasicData> listSpeed;
+	@OneToMany
 	private List<BasicData> listFrequency;
+	@OneToMany
 	private List<BasicData> listVoltageLighting;
+	@OneToMany
 	private List<BasicData> listHourMachine;
+	@OneToMany
 	private List<BasicData> listManeuverType;
+	@OneToMany
 	private List<BasicData> listDesign;
+	@OneToMany
 	private List<BasicData> listRoofType;
+	@OneToMany
 	private List<BasicData> listButtonType;
+	@OneToMany
 	private List<BasicData> listRailing;
+	@OneToMany
 	private List<BasicData> listMirror;
+	@OneToMany
 	private List<BasicData> listFloorType;
+	@OneToMany
 	private List<BasicData> listFan;
+	@OneToMany
 	private List<BasicData> listDoorType;
+	@OneToMany
 	private List<BasicData> listDoorSystem;
+	@OneToMany
 	private List<BasicData> listDoorframeType;
+	@OneToMany
 	private List<BasicData> listDoorframeHammered;
+	@OneToMany
 	private List<BasicData> listFreeAdmission;
+	@OneToMany
 	private List<BasicData> listHeight;
+	@OneToMany
 	private List<BasicData> listControlType;
+	@OneToMany
 	private List<BasicData> listBoothButton;
+	@OneToMany
 	private List<BasicData> listBoothDisplay;
+	@OneToMany
 	private List<BasicData> listFloorDisplay;
+	@OneToMany
 	private List<BasicData> listMotorTraction;
+	@OneToMany
 	private List<BasicData> listCabinModel;
+	@OneToMany
 	private List<BasicData> listHallButton;
+	@OneToMany
 	private List<BasicData> listHallButtonType;
+	@OneToMany
 	private List<BasicData> listRifType;
 	private ListModel<Object> listRifPartner;
 	private ListModel<Object> listNumber;
 	private ListModel<Object> listPartnerName;
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
+	@ManyToOne
 	private BasicData cabinModel;
 	private Boolean stainlessSteel;
 	private Boolean hammeredGray;
@@ -122,7 +167,9 @@ public class FrmBudget {
 	private Integer sistelWDisplayPB;
 	private Integer sistelWArrowFloor;
 	private Integer sistelWArrowPB;
+	@ManyToOne
 	private Budget budget;
+	@ManyToOne
 	private BusinessPartner businessPartner;
 
 	public String getModalMessage() {

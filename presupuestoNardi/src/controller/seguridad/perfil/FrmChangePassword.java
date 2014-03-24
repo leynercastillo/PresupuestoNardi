@@ -4,6 +4,8 @@ import general.ShaEncoding;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityUser;
 
@@ -20,11 +22,14 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+@Entity
 public class FrmChangePassword {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
 
+	@ManyToOne
 	private SecurityUser user;
 	private String newPassword;
 	private String confirmPassword;

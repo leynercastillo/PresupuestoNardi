@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,13 +14,19 @@ import model.database.Quotation;
 import model.database.SaleSummary;
 import model.service.ServiceQuotation;
 
+@Entity
 public class SaleSummaryFilter {
+	@ManyToOne
 	private ServiceQuotation serviceQuotation;
 	private String number = "";
 	private String partnerName = "";
 	private String construction = "";
 	private String seller = "";
+	@OneToMany
 	private List<SaleSummary> listSaleSummary;
+
+	protected SaleSummaryFilter() {
+	}
 
 	public String getNumber() {
 		return number;

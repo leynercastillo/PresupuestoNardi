@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import model.database.SecurityGroup;
 
 import org.hibernate.Criteria;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Entity
 @Repository
 public class DaoSecurityGroup {
 

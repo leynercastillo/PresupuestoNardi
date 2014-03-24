@@ -1,5 +1,7 @@
 package controller.seguridad.generic;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityUser;
 
@@ -10,11 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Entity
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	@ManyToOne
 	private Assembler assembler;
 
+	@ManyToOne
 	@Autowired
 	private ServiceSecurityUser serviceSecurityUser;
 

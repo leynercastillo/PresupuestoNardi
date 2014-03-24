@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.dao.DaoSecurityRole;
 import model.database.SecurityGroup;
 import model.database.SecurityRole;
@@ -15,17 +18,25 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
 
+@Entity
 public class FrmSecurityGroups {
 
-    @WireVariable
+    @ManyToOne
+@WireVariable
     private DaoSecurityRole daoSecurityRole;
     
-    private SecurityGroup group;
-    private List<SecurityGroup> listGroups;
-    private List<SecurityRole> listRoles;
-    private List<SecurityRole> listGroupRoles;
-    private Set<SecurityRole> listTempRoles;
-    private Set<SecurityRole> listTempGroupRoles;
+    @ManyToOne
+private SecurityGroup group;
+    @OneToMany
+private List<SecurityGroup> listGroups;
+    @OneToMany
+private List<SecurityRole> listRoles;
+    @OneToMany
+private List<SecurityRole> listGroupRoles;
+    @OneToMany
+private Set<SecurityRole> listTempRoles;
+    @OneToMany
+private Set<SecurityRole> listTempGroupRoles;
     private Boolean disabledAll;
 
     public Set<SecurityRole> getListTempGroupRoles() {

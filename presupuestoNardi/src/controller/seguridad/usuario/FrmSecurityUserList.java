@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityUser;
 
@@ -22,11 +25,14 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 
+@Entity
 public class FrmSecurityUserList {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
 
+	@OneToMany
 	private List<SecurityUserStatus> listUsers;
 
 	public List<SecurityUserStatus> getListUsers() {

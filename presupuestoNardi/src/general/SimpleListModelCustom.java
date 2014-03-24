@@ -3,12 +3,16 @@ package general;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.SimpleListModel;
 
+@Entity
 public class SimpleListModelCustom<E> extends SimpleListModel<Object> {
 
 	private static final long serialVersionUID = 1L;
+
+	
 
 	public SimpleListModelCustom(List<?> data) {
 		super(data);

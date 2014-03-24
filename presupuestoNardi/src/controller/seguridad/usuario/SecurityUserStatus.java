@@ -1,5 +1,7 @@
 package controller.seguridad.usuario;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.SecurityUser;
 
 /**
@@ -10,11 +12,16 @@ import model.database.SecurityUser;
  * @author Leyner Castillo
  *
  */
+@Entity
 public class SecurityUserStatus {
 
+	@ManyToOne
 	private SecurityUser user;
 	private Boolean editUser;
 	private Boolean modified;
+
+	protected SecurityUserStatus() {
+	}
 
 	public Boolean getModified() {
 		return modified;

@@ -1,20 +1,17 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 24-mar-2014 12:49:13 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "security_user", schema = "public")
 public class SecurityUser implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2384110049643640951L;
+	@GeneratedValue
 	private int idSecurityUser;
 	private SecurityGroup securityGroup;
 	private String name;
@@ -63,8 +60,6 @@ public class SecurityUser implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "security_user_seq")
-	@SequenceGenerator(name = "security_user_seq", sequenceName = "security_user_id_security_user_seq")
 	@Column(name = "id_security_user", unique = true, nullable = false)
 	public int getIdSecurityUser() {
 		return this.idSecurityUser;

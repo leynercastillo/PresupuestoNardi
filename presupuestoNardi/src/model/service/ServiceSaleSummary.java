@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.dao.DaoSaleSummary;
 import model.database.Quotation;
 import model.database.SaleSummary;
@@ -15,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Entity
 @Service
 public class ServiceSaleSummary {
 
+	@ManyToOne
 	@Autowired
 	private DaoSaleSummary daoSaleSummary;
+	@ManyToOne
 	@Autowired
 	private ServiceSecurityGroup serviceSecurityGroup;
 

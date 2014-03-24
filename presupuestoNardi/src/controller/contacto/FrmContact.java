@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.Contact;
 import model.database.SecurityGroup;
 import model.database.SecurityUser;
@@ -23,16 +26,22 @@ import org.zkoss.zk.ui.util.Clients;
 
 import springBean.Emails;
 
+@Entity
 public class FrmContact {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityGroup serviceSecurityGroup;
+	@ManyToOne
 	@WireVariable
 	private ServiceContact serviceContact;
+	@ManyToOne
 	@WireVariable
 	private Emails emails;
 
+	@OneToMany
 	private List<SecurityUser> listSecurityUsers;
+	@ManyToOne
 	private Contact contact;
 
 	public Contact getContact() {

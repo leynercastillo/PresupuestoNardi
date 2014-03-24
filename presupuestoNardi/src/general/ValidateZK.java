@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.persistence.Entity;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.validator.AbstractValidator;
@@ -15,6 +16,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.impl.InputElement;
 
+@Entity
 public class ValidateZK {
 
 	/**

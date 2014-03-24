@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import model.database.BusinessPartner;
 import model.service.ServiceBusinessPartner;
 
+@Entity
 public class BusinessPartnerFilter {
 
+	@ManyToOne
 	private ServiceBusinessPartner serviceBusinessPartner;
 	private String rif = "";
 	private String name = "";
+	@OneToMany
 	private List<BusinessPartner> listBusinessPartner;
 
 	public BusinessPartnerFilter() {

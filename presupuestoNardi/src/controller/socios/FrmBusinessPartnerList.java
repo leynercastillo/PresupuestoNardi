@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BusinessPartner;
 import model.service.ServiceBusinessPartner;
 
@@ -15,12 +18,17 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
+@Entity
 public class FrmBusinessPartnerList {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceBusinessPartner serviceBusinessPartner;
+	@OneToMany
 	private List<BusinessPartner> listBusinessPartner;
+	@ManyToOne
 	private BusinessPartner selectedBP;
+	@ManyToOne
 	private BusinessPartnerFilter partnerFilter;
 
 	public BusinessPartnerFilter getPartnerFilter() {

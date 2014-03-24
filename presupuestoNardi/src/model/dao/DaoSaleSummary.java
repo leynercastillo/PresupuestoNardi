@@ -3,6 +3,7 @@ package model.dao;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import model.database.SaleSummary;
 import model.database.SecurityUser;
 
@@ -16,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Entity
 @Repository
 public class DaoSaleSummary {
 

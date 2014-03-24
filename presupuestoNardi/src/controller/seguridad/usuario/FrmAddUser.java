@@ -2,6 +2,9 @@ package controller.seguridad.usuario;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -24,14 +27,19 @@ import model.database.SecurityUser;
 import model.service.ServiceSecurityGroup;
 import model.service.ServiceSecurityUser;
 
+@Entity
 public class FrmAddUser {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityGroup serviceSecurityGroup;
+	@ManyToOne
 	private SecurityUser securityUser;
 	private String repeatPassword;
+	@OneToMany
 	private List<SecurityGroup> listGroups;
 
 	public List<SecurityGroup> getListGroups() {

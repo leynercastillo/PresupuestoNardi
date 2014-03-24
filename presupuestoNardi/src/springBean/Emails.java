@@ -6,6 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import javax.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,12 +17,16 @@ import org.springframework.stereotype.Service;
  * @author Sistemas
  * 
  */
+@Entity
 @Service
 public class Emails {
 
     private JavaMailSender mailSender;
 
-    @Autowired
+    protected Emails() {
+}
+
+@Autowired
     public Emails(JavaMailSender mailSender) {
 	super();
 	this.mailSender = mailSender;

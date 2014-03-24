@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BasicData;
 import model.database.Budget;
 import model.database.Quotation;
@@ -45,25 +48,34 @@ import org.zkoss.zul.impl.InputElement;
 
 import springBean.Emails;
 
+@Entity
 public class FrmQuotation {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
+	@ManyToOne
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@ManyToOne
 	@WireVariable
 	private ServiceBudget serviceBudget;
+	@ManyToOne
 	@WireVariable
 	private ServiceSaleSummary serviceSaleSummary;
+	@ManyToOne
 	@WireVariable
 	private ServiceTransactionSummary serviceTransactionSummary;
+	@ManyToOne
 	@WireVariable
 	private Emails emails;
 
 	private final String seleccione = new String("--Seleccione--");
 	private final String dash = new String("-");
 
+	@ManyToOne
 	private Quotation quotation;
+	@ManyToOne
 	private Budget budget;
 	private Boolean disableBeforeSearch;
 	private Boolean disabledBudgetNumber;
@@ -71,28 +83,51 @@ public class FrmQuotation {
 	private Boolean disabledEdit;
 	private String modalMessage;
 	private String printMessage;
+	@ManyToOne
 	private BasicData cabinModel;
+	@OneToMany
 	private List<BasicData> listRifType;
+	@OneToMany
 	private List<BasicData> listElevatorType;
+	@OneToMany
 	private List<BasicData> listElevatorCapa;
+	@OneToMany
 	private List<BasicData> listSpeed;
+	@OneToMany
 	private List<BasicData> listManeuverType;
+	@OneToMany
 	private List<BasicData> listBoothDisplay;
+	@OneToMany
 	private List<BasicData> listFloorDisplay;
+	@OneToMany
 	private List<BasicData> listHallButtonType;
+	@OneToMany
 	private List<BasicData> listHallButton;
+	@OneToMany
 	private List<BasicData> listMachineType;
+	@OneToMany
 	private List<BasicData> listElectricityType;
+	@OneToMany
 	private List<BasicData> listCabinModel;
+	@OneToMany
 	private List<BasicData> listDesign;
+	@OneToMany
 	private List<BasicData> listRailing;
+	@OneToMany
 	private List<BasicData> listFloorType;
+	@OneToMany
 	private List<BasicData> listDoorType;
+	@OneToMany
 	private List<BasicData> listFreeAdmission;
+	@OneToMany
 	private List<BasicData> listHeight;
+	@OneToMany
 	private List<BasicData> listDoorframeHammered;
+	@OneToMany
 	private List<BasicData> listControlType;
+	@OneToMany
 	private List<BasicData> listRoofType;
+	@OneToMany
 	private List<BasicData> listQuotationType;
 	private ListModel<Object> listQuotationNumber;
 	private ListModel<Object> listRifPartner;

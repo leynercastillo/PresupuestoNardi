@@ -5,6 +5,8 @@ import general.ValidateZK;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.SecurityUser;
 import model.service.ServiceSecurityUser;
 
@@ -18,10 +20,13 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
 
+@Entity
 public class FrmSecurityProfile {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceSecurityUser serviceSecurityUser;
+	@ManyToOne
 	private SecurityUser user;
 
 	public SecurityUser getUser() {

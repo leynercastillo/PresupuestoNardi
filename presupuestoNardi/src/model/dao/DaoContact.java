@@ -1,5 +1,6 @@
 package model.dao;
 
+import javax.persistence.Entity;
 import model.database.Contact;
 
 import org.hibernate.HibernateException;
@@ -8,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Entity
 @Repository
 public class DaoContact {
 

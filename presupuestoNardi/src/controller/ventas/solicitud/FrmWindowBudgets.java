@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.Budget;
 
 import org.zkoss.bind.BindUtils;
@@ -20,12 +23,15 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 
 
+@Entity
 public class FrmWindowBudgets {
 	
 	@Wire("#windowBudgets")
 	private Window windowBudgets;
 	
+	@OneToMany
 	private List<Budget> listBudget;
+	@ManyToOne
 	private Budget selectedBudget;
 
 	public Budget getSelectedBudget() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import model.database.SecurityGroup;
 import model.database.SecurityRole;
 import model.database.SecurityUser;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Entity
 @Service("assembler")
 public class Assembler {
 

@@ -2,12 +2,17 @@ package general;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.persistence.Entity;
 
+@Entity
 public class ShaEncoding {
 
     private String password;
 
-    public ShaEncoding(String password) {
+    protected ShaEncoding() {
+}
+
+public ShaEncoding(String password) {
 	super();
 	this.password = password;
     }

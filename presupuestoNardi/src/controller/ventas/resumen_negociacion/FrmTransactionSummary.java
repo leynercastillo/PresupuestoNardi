@@ -8,6 +8,8 @@ import java.util.Map;
 import general.GenericReport;
 import general.SimpleListModelCustom;
 import general.ValidateZK;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import model.database.Quotation;
 import model.database.TransactionSummary;
 import model.service.ServiceQuotation;
@@ -26,12 +28,16 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 
+@Entity
 public class FrmTransactionSummary {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceQuotation serviceQuotation;
+	@ManyToOne
 	@WireVariable
 	private ServiceTransactionSummary serviceTransactionSummary;
+	@ManyToOne
 	private TransactionSummary transactionSummary;
 	private Boolean disableAll;
 	private ListModel<Object> listRif;

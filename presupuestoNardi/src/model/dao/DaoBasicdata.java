@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import model.database.BasicData;
 
 import org.hibernate.Criteria;
@@ -14,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Entity
 @Repository
 public class DaoBasicdata {
 

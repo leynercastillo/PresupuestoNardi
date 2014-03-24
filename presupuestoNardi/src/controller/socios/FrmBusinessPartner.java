@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import model.database.BasicData;
 import model.database.BusinessPartner;
 import model.service.ServiceBasicData;
@@ -30,17 +33,22 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+@Entity
 public class FrmBusinessPartner {
 
+	@ManyToOne
 	@WireVariable
 	private ServiceBusinessPartner serviceBusinessPartner;
+	@ManyToOne
 	@WireVariable
 	private ServiceBasicData serviceBasicData;
 	@Wire("#win")
 	private Window win;
 
 	private String minCombo = new String("-");
+	@ManyToOne
 	private BusinessPartner businessPartner;
+	@OneToMany
 	private List<BasicData> listRifType;
 
 	public String getMinCombo() {
