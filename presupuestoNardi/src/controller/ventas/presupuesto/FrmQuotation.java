@@ -662,12 +662,12 @@ public class FrmQuotation {
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
 		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
-			quotation.setPayment("60% de inicial al momento de la firma del contrato.\n" + "20% para el desarme  de los equipos en  la obra.\n" + "15% para el despacho de los equipos y comenzar el trabajo de armado.\n" + "5% para la entrega de los equipos funcionando.");
+			quotation.setPayment("75% de inicial al momento de la firma del contrato.\n" + "20% a los 30 días.\n" + "5% para la entrega de los equipos funcionando.");
 			quotation.setWarranty("3");
 			quotation.setExtendedWarranty("6");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa./n" + "- En caso de daño oculto será presupuestado el mismo al momento de ser detectado y por separado.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE y DESMONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa./n" + "- En caso de daño oculto será presupuestado el mismo al momento de ser detectado y por separado.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
@@ -1006,7 +1006,7 @@ public class FrmQuotation {
 		if (template == null || template.compareTo("SI") == 0) {
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 			{
-				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO"))
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || !quotation.isType())
 					template = "quotation_resume.jasper";
 				else
 					template = "quotation.jasper";
@@ -1018,7 +1018,7 @@ public class FrmQuotation {
 		} else if (template.contains("NO"))
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 			{
-				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO"))
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || !quotation.isType())
 					template = "quotation_resume_without.jasper";
 				else
 					template = "quotation_without.jasper";
