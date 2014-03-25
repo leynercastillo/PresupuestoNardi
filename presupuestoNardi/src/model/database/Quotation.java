@@ -25,6 +25,10 @@ import javax.persistence.TemporalType;
 @Table(name = "quotation", schema = "public")
 public class Quotation implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7182970287760684798L;
 	@GeneratedValue
 	private int idQuotation;
 	private BasicData basicDataByElectricityType;

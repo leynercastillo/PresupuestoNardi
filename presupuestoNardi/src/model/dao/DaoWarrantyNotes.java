@@ -29,7 +29,7 @@ public class DaoWarrantyNotes {
 	}
 
 	/**
-	 * @param model
+	 * @param warrantyNotes
 	 *                Object to save in database
 	 * @return true if saved / false if not saved
 	 */
@@ -45,7 +45,7 @@ public class DaoWarrantyNotes {
 	}
 
 	/**
-	 * @param model
+	 * @param warrantyNotes
 	 *                Object to update in database
 	 * @return true if updated / false if not updated
 	 */
@@ -61,7 +61,7 @@ public class DaoWarrantyNotes {
 	}
 
 	/**
-	 * @param model
+	 * @param warrantyNotes
 	 *                Object to delete in database
 	 * @return true if deleted / false if not deleted
 	 */
