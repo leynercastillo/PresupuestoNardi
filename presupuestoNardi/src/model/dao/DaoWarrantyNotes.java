@@ -3,6 +3,8 @@ package model.dao;
 import java.util.List;
 
 import javax.persistence.Entity;
+
+
 import model.database.WarrantyNotes;
 
 import org.hibernate.Criteria;
@@ -10,7 +12,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
+
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -74,61 +76,26 @@ public class DaoWarrantyNotes {
 		}
 	}
 
-	public WarrantyNotes findByField(String field, Object value) {
-		Session session = getCurrentSession();
-		Criteria criteria = session.createCriteria(WarrantyNotes.class);
-		criteria.add(Restrictions.eq(field, value));
-		Object obj = criteria.uniqueResult();
-		return obj == null ? null : (WarrantyNotes) obj;
-	}
-
-	public WarrantyNotes findByName(String table, String field, String name) {
-		Session session = getCurrentSession();
-		Criteria criteria = session.createCriteria(WarrantyNotes.class);
-		criteria.add(Restrictions.eq("status", 'A'));
-		criteria.add(Restrictions.eq("editable", false));
-		criteria.add(Restrictions.eq("field", field).ignoreCase());
-		criteria.add(Restrictions.eq("name", name).ignoreCase());
-		criteria.add(Restrictions.eq("dataBaseName", table));
-		Object obj = criteria.uniqueResult();
-		return obj == null ? null : (WarrantyNotes) obj;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<WarrantyNotes> listByFieldTable(String table, String field) {
+	
+	
+	public WarrantyNotes findByWarranty(String field){
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(WarrantyNotes.class);
 		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("field", field).ignoreCase());
-		criteria.add(Restrictions.eq("dataBaseName", table));
-		criteria.addOrder(Order.asc("priority"));
-		return criteria.list();
+		Object obj = criteria.uniqueResult();
+		return obj == null ? null : (WarrantyNotes) obj;
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<WarrantyNotes> listByParent(WarrantyNotes parent) {
+	public List<WarrantyNotes> listByFieldWarranty(String field) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(WarrantyNotes.class);
-		criteria.add(Restrictions.eq("warrabtyNotes", parent));
-		criteria.addOrder(Order.asc("priority"));
+		criteria.add(Restrictions.eq("field", field).ignoreCase());
+		criteria.addOrder(Order.asc("idWarranty"));
 		return criteria.list();
 	}
+	
 
-	@SuppressWarnings("unchecked")
-	public List<String> listFieldByDataBase(String field, String database) {
-		Session session = getCurrentSession();
-		Criteria criteria = session.createCriteria(WarrantyNotes.class);
-		criteria.setProjection(Projections.distinct(Projections.property(field)));
-		criteria.add(Restrictions.eq(database, field));
-		criteria.addOrder(Order.asc(field));
-		return criteria.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<WarrantyNotes> listByFieldValue(String field, Object value) {
-		Session session = getCurrentSession();
-		Criteria criteria = session.createCriteria(WarrantyNotes.class);
-		criteria.add(Restrictions.eq(field, value));
-		return criteria.list();
-	}
+	
 }

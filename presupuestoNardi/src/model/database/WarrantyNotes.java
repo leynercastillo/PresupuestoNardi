@@ -15,6 +15,10 @@ import javax.persistence.Table;
 @Table(name = "warranty_notes", schema = "public")
 public class WarrantyNotes implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5650798555961914105L;
 	@GeneratedValue
 	private int idWarranty;
 	private String name;
