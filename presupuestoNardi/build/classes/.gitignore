@@ -1,2 +1,5 @@
 /controller
 /model
+/general
+/springBean
+/hibernate.cfg.xml
