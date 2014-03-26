@@ -1,22 +1,19 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 26-mar-2014 9:38:30 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -26,7 +23,11 @@ import javax.persistence.Table;
 @Table(name = "item", schema = "public")
 public class Item implements java.io.Serializable {
 
-	private static final long serialVersionUID = 794900053845942242L;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2636611866914598892L;
 	private int idItem;
 	private Item item;
 	private BasicData basicData;
@@ -70,8 +71,6 @@ public class Item implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
-	@SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
 	@Column(name = "id_item", unique = true, nullable = false)
 	public int getIdItem() {
 		return this.idItem;

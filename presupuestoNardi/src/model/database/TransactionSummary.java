@@ -1,16 +1,14 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 26-mar-2014 9:38:30 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -20,7 +18,11 @@ import javax.persistence.Table;
 @Table(name = "transaction_summary", schema = "public")
 public class TransactionSummary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1006263363761202676L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -928787630417377608L;
+
 	private int idTransactionSummary;
 	private Quotation quotation;
 	private String paymentTerms;
@@ -47,8 +49,6 @@ public class TransactionSummary implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "id_transaction_summary_seq")
-	@SequenceGenerator(name = "id_transaction_summary_seq", sequenceName = "transaction_summary_id_transaction_summary_seq")
 	@Column(name = "id_transaction_summary", unique = true, nullable = false)
 	public int getIdTransactionSummary() {
 		return this.idTransactionSummary;

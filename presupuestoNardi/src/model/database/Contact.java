@@ -1,18 +1,15 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 26-mar-2014 9:38:30 by Hibernate Tools 4.0.0
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +21,11 @@ import javax.persistence.TemporalType;
 @Table(name = "contact", schema = "public")
 public class Contact implements java.io.Serializable {
 
-	private static final long serialVersionUID = 56106547336481543L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7032410861771343300L;
+
 	private int idContact;
 	private SecurityUser securityUser;
 	private String partnerName;
@@ -67,8 +68,6 @@ public class Contact implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "contact_seq")
-	@SequenceGenerator(name = "contact_seq", sequenceName = "contact_id_contact_seq")
 	@Column(name = "id_contact", unique = true, nullable = false)
 	public int getIdContact() {
 		return this.idContact;

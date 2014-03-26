@@ -1,20 +1,17 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 26-mar-2014 9:38:30 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +21,11 @@ import javax.persistence.Table;
 @Table(name = "business_partner", schema = "public")
 public class BusinessPartner implements java.io.Serializable {
 
-	private static final long serialVersionUID = -8226898077750640075L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4135105963238269984L;
+	
 	private int idBusinessPartner;
 	private BasicData basicData;
 	private String rif;
@@ -55,8 +56,6 @@ public class BusinessPartner implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "business_partner_seq")
-	@SequenceGenerator(name = "business_partner_seq", sequenceName = "business_partner_id_business_partner_seq")
 	@Column(name = "id_business_partner", unique = true, nullable = false)
 	public int getIdBusinessPartner() {
 		return this.idBusinessPartner;

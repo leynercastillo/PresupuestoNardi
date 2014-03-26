@@ -1,18 +1,15 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 26-mar-2014 9:38:30 by Hibernate Tools 4.0.0
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +22,11 @@ import javax.persistence.Version;
 @Table(name = "sale_summary", schema = "public")
 public class SaleSummary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 4152859691803286041L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2475160514681865487L;
+	
 	private int idSaleSummary;
 	private int version;
 	private BasicData basicDataByElectricityType;
@@ -245,8 +246,6 @@ public class SaleSummary implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "id_sale_summary_seq")
-	@SequenceGenerator(name = "id_sale_summary_seq", sequenceName = "sale_summary_id_sale_summary_seq")
 	@Column(name = "id_sale_summary", unique = true, nullable = false)
 	public int getIdSaleSummary() {
 		return this.idSaleSummary;

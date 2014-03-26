@@ -106,7 +106,25 @@ public class FrmQuotation {
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
 	private List<WarrantyNotes> listWarrantyNotes;
+	private List<WarrantyNotes> listWarrantyNotes2;
+	private List<WarrantyNotes> listWarrantyNotes3;
 	
+	public List<WarrantyNotes> getListWarrantyNotes2() {
+		return listWarrantyNotes2;
+	}
+
+	public void setListWarrantyNotes2(List<WarrantyNotes> listWarrantyNotes2) {
+		this.listWarrantyNotes2 = listWarrantyNotes2;
+	}
+
+	public List<WarrantyNotes> getListWarrantyNotes3() {
+		return listWarrantyNotes3;
+	}
+
+	public void setListWarrantyNotes3(List<WarrantyNotes> listWarrantyNotes3) {
+		this.listWarrantyNotes3 = listWarrantyNotes3;
+	}
+
 	public WarrantyNotes getWarrantyNotes() {
 		return warrantyNotes;
 	}
@@ -553,6 +571,9 @@ public class FrmQuotation {
 		listHallButtonType = serviceBasicData.listHallButtonType();
 		listControlType = serviceBasicData.listControlType();
 		listQuotationType = serviceBasicData.listQuotationTypeMoney();
+		listWarrantyNotes = serviceWarrantyNotes.listByFieldWarrantyNN();
+		listWarrantyNotes2 = serviceWarrantyNotes.listByFieldWarrantyNM();
+		listWarrantyNotes3 = serviceWarrantyNotes.listByFieldWarrantyEN();
 		listBoothDisplay = new ArrayList<BasicData>();
 		listFloorDisplay = new ArrayList<BasicData>();
 		modalMessage = null;
@@ -686,7 +707,14 @@ public class FrmQuotation {
 			listWarrantyNotes = serviceWarrantyNotes.listByFieldWarrantyNN();
 			String a ="";
 			String b ="";
-			for (int = 0; )
+			int numWarranty = listWarrantyNotes.size();
+			for (int i = 0; i < numWarranty; i++)
+			{
+			a = listWarrantyNotes.get(i).getName();
+			b= b + a + "\n";
+			}
+			quotation.setNotes(b);
+				
 			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
@@ -697,6 +725,16 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("6");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
+			listWarrantyNotes2 = serviceWarrantyNotes.listByFieldWarrantyNM();
+			int numWarranty = listWarrantyNotes2.size();
+			String a = "";
+			String b = "";
+			for (int i = 0; i < numWarranty; i++)
+			{
+			a = listWarrantyNotes2.get(i).getName();
+			b= b + a + "\n";
+			}
+			quotation.setNotes(b);
 			
 			
 			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE Y DESMONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa.\n" + "- En caso de daño oculto será presupuestado el mismo al momento de ser detectado y por separado.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "-El precio por instalación del equipo, sera ajustado al momento de la ejecución y culminación del montaje.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
@@ -710,6 +748,17 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("12");
 			quotation.setDeliveryEstimate("6");
 			quotation.setQuotationValidity("07");
+
+			listWarrantyNotes3 = serviceWarrantyNotes.listByFieldWarrantyEN();
+			int numWarranty = listWarrantyNotes3.size();
+			String a = "";
+			String b = "";
+			for (int i = 0; i < numWarranty; i++)
+			{
+			a = listWarrantyNotes3.get(i).getName();
+			b= b + a + "\n";
+			}
+			quotation.setNotes(b);
 			
 			
 			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio sera estimado al momento del comienzo de la instalación del (los) equipo(s).\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
