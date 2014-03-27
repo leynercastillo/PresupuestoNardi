@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" pageWidth="576" pageHeight="648" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="244"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -134,7 +134,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="346" y="518" width="165" height="1" uuid="41950f8a-efd0-42aa-8a39-4c42cb1ed751"/>
+				<reportElement x="346" y="548" width="165" height="1" uuid="41950f8a-efd0-42aa-8a39-4c42cb1ed751"/>
 			</line>
 			<textField>
 				<reportElement x="427" y="193" width="150" height="20" uuid="b684d346-6467-4eab-879b-84a9965af16e"/>
@@ -206,8 +206,8 @@ WHERE
 				<text><![CDATA[SUB-TOTAL Bs]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="197" y="555" width="165" height="20" uuid="8bccd0cf-30b1-4df0-9494-86037daf723f"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="235" y="566" width="93" height="20" uuid="8bccd0cf-30b1-4df0-9494-86037daf723f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[Aprobado por]]></text>
 			</staticText>
 			<staticText>
@@ -271,7 +271,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Garantia}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="480" width="165" height="15" uuid="56d50c19-9aa4-4bc8-a8b9-f4a1cdfc0297"/>
+				<reportElement x="346" y="517" width="165" height="15" uuid="56d50c19-9aa4-4bc8-a8b9-f4a1cdfc0297"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Recibido por]]></text>
 			</staticText>
@@ -410,7 +410,7 @@ WHERE
 				<text><![CDATA[GARANTIA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="346" y="520" width="165" height="15" uuid="33ce0b95-7d93-4e13-9f73-ebd7975384db"/>
+				<reportElement x="346" y="566" width="165" height="15" uuid="33ce0b95-7d93-4e13-9f73-ebd7975384db"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
@@ -429,7 +429,7 @@ WHERE
 				<text><![CDATA[CONDICIONES DE PAGO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="41" y="520" width="194" height="15" uuid="98fcc414-951e-4ba9-9f5d-bb99bf437ebd"/>
+				<reportElement x="41" y="551" width="194" height="15" uuid="98fcc414-951e-4ba9-9f5d-bb99bf437ebd"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
 			</textField>
@@ -447,7 +447,7 @@ WHERE
 				<text><![CDATA[EQUIPO]]></text>
 			</staticText>
 			<line>
-				<reportElement x="41" y="519" width="194" height="1" uuid="a08e5712-e3d4-4859-b434-3481edb43644"/>
+				<reportElement x="41" y="549" width="194" height="1" uuid="a08e5712-e3d4-4859-b434-3481edb43644"/>
 			</line>
 			<staticText>
 				<reportElement x="196" y="140" width="186" height="15" uuid="514f36f5-ad4b-4948-8bae-ca6423156f1d"/>
@@ -517,12 +517,12 @@ WHERE
 				<text><![CDATA[TOTAL $:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="534" width="194" height="15" uuid="79cb9f63-58f1-4acb-9d43-e28377819a84"/>
+				<reportElement x="41" y="566" width="194" height="15" uuid="79cb9f63-58f1-4acb-9d43-e28377819a84"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Representante de Ventas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="480" width="194" height="15" uuid="128469be-e54b-4636-945f-0c46fb7bd385"/>
+				<reportElement x="41" y="517" width="194" height="15" uuid="128469be-e54b-4636-945f-0c46fb7bd385"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Atentamente]]></text>
 			</staticText>
