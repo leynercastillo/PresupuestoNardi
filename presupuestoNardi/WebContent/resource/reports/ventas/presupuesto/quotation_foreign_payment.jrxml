@@ -256,7 +256,7 @@ WHERE
 				<text><![CDATA[GARANTIA EXTENDIDA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="196" y="600" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="196" y="602" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
 				<reportElement x="196" y="602" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
@@ -264,7 +264,7 @@ WHERE
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="196" y="555" width="165" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
+				<reportElement x="196" y="567" width="165" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Aprobado por]]></text>
 			</staticText>

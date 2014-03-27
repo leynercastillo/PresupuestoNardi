@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="31586bca-fe1e-4d29-8b2d-dd013c1e3579">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="279"/>
 	<parameter name="IMAGES_DIR" class="java.lang.String"/>
 	<parameter name="VERSION" class="java.lang.Short">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
@@ -162,21 +162,21 @@ WHERE
 				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="604" width="576" height="15" uuid="fdb18384-4782-49e4-9c17-45e7275f5764"/>
+				<reportElement x="0" y="598" width="576" height="15" uuid="fdb18384-4782-49e4-9c17-45e7275f5764"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Telefono}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="138" y="590" width="301" height="15" uuid="1475ff05-cedc-4bba-b6d0-3505802c5126"/>
+				<reportElement x="138" y="583" width="301" height="15" uuid="1475ff05-cedc-4bba-b6d0-3505802c5126"/>
 				<textElement textAlignment="Center">
 					<font fontName="Serif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BARQUISIMETO - EDO. LARA]]></text>
 			</staticText>
 			<break>
-				<reportElement x="0" y="618" width="576" height="1" uuid="18e41af0-c9a7-47fb-9251-176d51bbae54"/>
+				<reportElement x="0" y="615" width="576" height="1" uuid="18e41af0-c9a7-47fb-9251-176d51bbae54"/>
 			</break>
 			<subreport>
 				<reportElement stretchType="RelativeToTallestObject" x="1" y="620" width="575" height="0" uuid="acadc423-1944-4fb6-9b7b-0c2d580d3ef5"/>
@@ -196,7 +196,7 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_foreign_detail.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="622" width="576" height="1" uuid="18e41af0-c9a7-47fb-9251-176d51bbae54"/>
+				<reportElement x="0" y="613" width="576" height="1" uuid="18e41af0-c9a7-47fb-9251-176d51bbae54"/>
 			</break>
 			<subreport>
 				<reportElement stretchType="RelativeToTallestObject" x="1" y="624" width="576" height="0" uuid="b636592c-0daf-4a80-860d-edc647b67c74"/>
@@ -215,6 +215,17 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "quotation_foreign_payment.jasper"]]></subreportExpression>
 			</subreport>
+			<image hAlign="Center">
+				<reportElement x="20" y="0" width="537" height="40" uuid="3d610090-cc86-4154-9d6f-d7f3fd5bb80b"/>
+				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="90" y="366" width="179" height="20" uuid="2edd4ee4-94e3-4c1e-a930-6b9e09220bd4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[prueba 2]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
