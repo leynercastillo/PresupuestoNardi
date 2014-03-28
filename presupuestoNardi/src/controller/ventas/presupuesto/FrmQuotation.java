@@ -667,7 +667,7 @@ public class FrmQuotation {
 			quotation.setExtendedWarranty("6");
 			quotation.setDeliveryEstimate("8");
 			quotation.setQuotationValidity("07");
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectado y por separado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar el desmontaje y montaje y podrá variar en el transcurso de la ejecución.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectados y cancelados de contado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
@@ -683,7 +683,7 @@ public class FrmQuotation {
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
 		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
-			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectado y por separado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
+			quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar el desmontaje y montaje y podrá variar en el transcurso de la ejecución.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectados y cancelados de contado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
 
 		}
 	}

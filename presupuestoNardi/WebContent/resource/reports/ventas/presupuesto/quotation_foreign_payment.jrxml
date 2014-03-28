@@ -445,7 +445,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GASTOS DE IMPORTACIÓN Y MANEJO]]></text>
+				<text><![CDATA[GASTOS DE IMPORTACIÓN]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="116" y="195" width="460" height="15" uuid="51221a8d-22ca-44d5-95f3-41387ebc73b8"/>
@@ -468,7 +468,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Condiciones de pago Importado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="276" y="24" width="150" height="16" uuid="24904bcb-4f59-402b-896d-b164e05cc646"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
@@ -481,7 +481,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Material Importado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="276" y="150" width="150" height="16" uuid="e3aba72c-e7f0-4674-8581-766c3c8206eb"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
@@ -494,7 +494,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Material Nacional y Mano de Obra}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="426" y="24" width="150" height="16" uuid="3d5e631c-928d-4863-9822-6d2c2677c033"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
@@ -507,7 +507,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio Importado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="426" y="40" width="150" height="16" uuid="69780076-65df-4244-948a-34932ca63e67"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
@@ -520,7 +520,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio Importado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="426" y="150" width="150" height="16" uuid="6412a759-105a-401a-a7ce-8741332a127a"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
@@ -533,7 +533,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio Nacional}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="426" y="166" width="150" height="16" uuid="54e7a718-3aaf-42a6-9256-f9c4e4a08629"/>
 				<box rightPadding="5">
 					<topPen lineWidth="1.0"/>
