@@ -440,13 +440,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[TOTAL $:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="195" y="120" width="186" height="15" uuid="db453594-4866-4d12-a2c9-dc773d86d894"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" isBold="true"/>
-				</textElement>
-				<text><![CDATA[NACIONALIZACIÓN]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="116" y="195" width="460" height="15" uuid="51221a8d-22ca-44d5-95f3-41387ebc73b8"/>
 				<textElement>
@@ -546,6 +539,13 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Precio Nacional}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="165" y="120" width="229" height="15" uuid="abaa379a-09ae-48e7-9c6d-3eac1fd873c1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GASTOS DE IMPORTACIÓN]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>
