@@ -544,7 +544,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GASTOS DE IMPORTACIÓN]]></text>
+				<text><![CDATA[GASTOS DE IMPORTACIÓN Y MANEJO]]></text>
 			</staticText>
 		</band>
 	</detail>

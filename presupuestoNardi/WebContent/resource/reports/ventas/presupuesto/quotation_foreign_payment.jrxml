@@ -445,7 +445,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GASTOS DE IMPORTACIÓN]]></text>
+				<text><![CDATA[GASTOS DE IMPORTACIÓN Y MANEJO]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="116" y="195" width="460" height="15" uuid="51221a8d-22ca-44d5-95f3-41387ebc73b8"/>
