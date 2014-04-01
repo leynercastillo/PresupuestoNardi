@@ -21,7 +21,7 @@ public class WarrantyNotes implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5650798555961914105L;
-	private int idWarranty;
+	private int idWarrantyNotes;
 	private String name;
 	private String field;
 	private char status;
@@ -29,13 +29,13 @@ public class WarrantyNotes implements java.io.Serializable {
 	public WarrantyNotes() {
 	}
 
-	public WarrantyNotes(int idWarranty, char status) {
-		this.idWarranty = idWarranty;
+	public WarrantyNotes(int idWarrantyNotes, char status) {
+		this.idWarrantyNotes = idWarrantyNotes;
 		this.status = status;
 	}
 
-	public WarrantyNotes(int idWarranty, String name, String field, char status) {
-		this.idWarranty = idWarranty;
+	public WarrantyNotes(int idWarrantyNotes, String name, String field, char status) {
+		this.idWarrantyNotes = idWarrantyNotes;
 		this.name = name;
 		this.field = field;
 		this.status = status;
@@ -44,13 +44,13 @@ public class WarrantyNotes implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "id_warranty_notes_seq")
 	@SequenceGenerator(name = "id_warranty_notes_seq", sequenceName = "warranty_notes_id_warranty_notes_seq")
-	@Column(name = "id_warranty", unique = true, nullable = false)
+	@Column(name = "id_warranty_notes", unique = true, nullable = false)
 	public int getIdWarranty() {
-		return this.idWarranty;
+		return this.idWarrantyNotes;
 	}
 
-	public void setIdWarranty(int idWarranty) {
-		this.idWarranty = idWarranty;
+	public void setIdWarranty(int idWarrantyNotes) {
+		this.idWarrantyNotes = idWarrantyNotes;
 	}
 
 	@Column(name = "name", length = 1500)

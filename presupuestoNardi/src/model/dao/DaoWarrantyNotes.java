@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import model.database.WarrantyNotes;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
