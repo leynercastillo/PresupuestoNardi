@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,10 @@ import javax.persistence.Table;
 @Table(name = "business_partner", schema = "public")
 public class BusinessPartner implements java.io.Serializable {
 
-	private static final long serialVersionUID = -8226898077750640075L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4135105963238269984L;
 	private int idBusinessPartner;
 	private BasicData basicData;
 	private String rif;

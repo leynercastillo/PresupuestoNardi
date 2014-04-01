@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,10 @@ import javax.persistence.Table;
 @Table(name = "security_group", schema = "public")
 public class SecurityGroup implements java.io.Serializable {
 
-	private static final long serialVersionUID = 8859167423155062595L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1118337627195243121L;
 	private int idSecurityGroup;
 	private String name;
 	private char status;

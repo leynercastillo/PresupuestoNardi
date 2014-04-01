@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -25,7 +25,10 @@ import javax.persistence.Version;
 @Table(name = "sale_summary", schema = "public")
 public class SaleSummary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 4152859691803286041L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2475160514681865487L;
 	private int idSaleSummary;
 	private int version;
 	private BasicData basicDataByElectricityType;

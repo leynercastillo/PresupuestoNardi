@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,10 @@ import javax.persistence.Table;
 @Table(name = "transaction_summary", schema = "public")
 public class TransactionSummary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1006263363761202676L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -928787630417377608L;
 	private int idTransactionSummary;
 	private Quotation quotation;
 	private String paymentTerms;

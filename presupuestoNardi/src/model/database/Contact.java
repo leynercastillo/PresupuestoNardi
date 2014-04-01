@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -24,7 +24,10 @@ import javax.persistence.TemporalType;
 @Table(name = "contact", schema = "public")
 public class Contact implements java.io.Serializable {
 
-	private static final long serialVersionUID = 56106547336481543L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7032410861771343300L;
 	private int idContact;
 	private SecurityUser securityUser;
 	private String partnerName;

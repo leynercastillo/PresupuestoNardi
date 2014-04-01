@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,10 @@ import javax.persistence.Table;
 @Table(name = "security_user", schema = "public")
 public class SecurityUser implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2384110049643640951L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8229556027550909215L;
 	private int idSecurityUser;
 	private SecurityGroup securityGroup;
 	private String name;
@@ -63,8 +66,8 @@ public class SecurityUser implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "security_user_seq")
-	@SequenceGenerator(name = "security_user_seq", sequenceName = "security_user_id_security_user_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
+	@SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
 	@Column(name = "id_security_user", unique = true, nullable = false)
 	public int getIdSecurityUser() {
 		return this.idSecurityUser;

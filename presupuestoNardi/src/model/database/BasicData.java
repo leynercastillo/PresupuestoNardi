@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 18-nov-2013 9:06:52 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,10 @@ import javax.persistence.Table;
 @Table(name = "basic_data", schema = "public")
 public class BasicData implements java.io.Serializable {
 
-	private static final long serialVersionUID = 3967227781364828688L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6624933392548375965L;
 	private int idBasic;
 	private BasicData basicData;
 	private String dataBaseName;
@@ -68,6 +71,7 @@ public class BasicData implements java.io.Serializable {
 	private Set<Quotation> quotationsForCabinDesign = new HashSet<Quotation>(0);
 	private Set<Quotation> quotationsForQuotationType = new HashSet<Quotation>(0);
 	private Set<Budget> budgetsForFloorType = new HashSet<Budget>(0);
+	private Set<Quotation> quotationsForCondicionesPago = new HashSet<Quotation>(0);
 	private Set<Quotation> quotationsForMirror = new HashSet<Quotation>(0);
 	private Set<Budget> budgetsForDoorSystem = new HashSet<Budget>(0);
 	private Set<Quotation> quotationsForDoorFrameHammered = new HashSet<Quotation>(0);
@@ -137,7 +141,7 @@ public class BasicData implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public BasicData(int idBasic, BasicData basicData, String dataBaseName, String name, String field, boolean editable, int priority, String imageurl, char status, Set<SaleSummary> saleSummariesForDoorSystem, Set<SaleSummary> saleSummariesForDoorType, Set<SaleSummary> saleSummariesForFan, Set<SaleSummary> saleSummariesForRoofType, Set<SaleSummary> saleSummariesForCabinDesign, Set<SaleSummary> saleSummariesForManeuverType, Set<Quotation> quotationsForElectricityType, Set<SaleSummary> saleSummariesForFloorType, Set<Quotation> quotationsForRailing, Set<SaleSummary> saleSummariesForMirror, Set<Quotation> quotationsForRoofType, Set<SaleSummary> saleSummariesForRailing, Set<Quotation> quotationsForFloorType, Set<SaleSummary> saleSummariesForButtonType, Set<Quotation> quotationsForDoorType, Set<Budget> budgetsForHeight, Set<SaleSummary> saleSummariesForElevatorType, Set<Budget> budgetsForFreeAdmission, Set<SaleSummary> saleSummariesForMachineBase, Set<SaleSummary> saleSummariesForMachineType, Set<SaleSummary> saleSummariesForElectricityType, Set<SaleSummary> saleSummariesForAccess, Set<SaleSummary> saleSummariesForFrequency, Set<Quotation> quotationsForElevatorType, Set<SaleSummary> saleSummariesForSpeed, Set<SaleSummary> saleSummariesForHourMachine, Set<SaleSummary> saleSummariesForVoltageLighting, Set<Budget> budgetsForSpeed, Set<Item> items, Set<Item> items_1, Set<Quotation> quotationsForCabinDesign, Set<Quotation> quotationsForQuotationType, Set<Budget> budgetsForFloorType, Set<Quotation> quotationsForMirror, Set<Budget> budgetsForDoorSystem, Set<Quotation> quotationsForDoorFrameHammered, Set<Budget> budgetsForDoorframeType, Set<Quotation> quotationsForHeight, Set<Budget> budgetsForControlType, Set<Quotation> quotationsForFreeAdmission, Set<Budget> budgetsForBoothButton, Set<Budget> budgetsForBoothDisplay, Set<Budget> budgetsForFloorDisplay, Set<BusinessPartner> businessPartners, Set<Quotation> quotationsForDoorframeType, Set<Budget> budgetsForFan, Set<Budget> budgetsForDoorType, Set<Budget> budgetsForVoltageLighting, Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourMachine, Set<SaleSummary> saleSummariesForBuildingType, Set<SaleSummary> saleSummariesForElevatorCapacitance, Set<Budget> budgetsForMirror, Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtonType, Set<Budget> budgetsForRoofType, Set<Budget> budgetsForHallButtonType, Set<Budget> budgetsForCabinDesign, Set<Budget> budgetsForManeuverType, Set<Budget> budgetsForHallButton, Set<SaleSummary> saleSummariesForBoothButton, Set<SaleSummary> saleSummariesForBoothDisplay, Set<SaleSummary> saleSummariesForFloorDisplay, Set<SaleSummary> saleSummariesForDoorFrameHammered, Set<BasicData> basicDatas, Set<SaleSummary> saleSummariesForDoorframeType, Set<SaleSummary> saleSummariesForHeight, Set<SaleSummary> saleSummariesForFreeAdmission, Set<SaleSummary> saleSummariesForControlType, Set<SaleSummary> saleSummariesForHallButtonType, Set<SaleSummary> saleSummariesForHallButton, Set<Quotation> quotationsForHallButtonType, Set<Budget> budgetsForBuildingType, Set<Quotation> quotationsForFloorDisplay, Set<Budget> budgetsForElevatorType, Set<Quotation> quotationsForBoothDisplay, Set<Budget> budgetsForElevatorCapacitance, Set<Quotation> quotationsForControlType, Set<Budget> budgetsForDoorFrameHammered, Set<Budget> budgetsForMachineType, Set<Budget> budgetsForAccess, Set<Quotation> quotationsForMachineType, Set<Budget> budgetsForElectricityType, Set<Quotation> quotationsForHallButton, Set<Quotation> quotationsForManeuverType, Set<Budget> budgetsForMachineBase, Set<Quotation> quotationsForSpeed, Set<Quotation> quotationsForElevatorCapacitance) {
+	public BasicData(int idBasic, BasicData basicData, String dataBaseName, String name, String field, boolean editable, int priority, String imageurl, char status, Set<SaleSummary> saleSummariesForDoorSystem, Set<SaleSummary> saleSummariesForDoorType, Set<SaleSummary> saleSummariesForFan, Set<SaleSummary> saleSummariesForRoofType, Set<SaleSummary> saleSummariesForCabinDesign, Set<SaleSummary> saleSummariesForManeuverType, Set<Quotation> quotationsForElectricityType, Set<SaleSummary> saleSummariesForFloorType, Set<Quotation> quotationsForRailing, Set<SaleSummary> saleSummariesForMirror, Set<Quotation> quotationsForRoofType, Set<SaleSummary> saleSummariesForRailing, Set<Quotation> quotationsForFloorType, Set<SaleSummary> saleSummariesForButtonType, Set<Quotation> quotationsForDoorType, Set<Budget> budgetsForHeight, Set<SaleSummary> saleSummariesForElevatorType, Set<Budget> budgetsForFreeAdmission, Set<SaleSummary> saleSummariesForMachineBase, Set<SaleSummary> saleSummariesForMachineType, Set<SaleSummary> saleSummariesForElectricityType, Set<SaleSummary> saleSummariesForAccess, Set<SaleSummary> saleSummariesForFrequency, Set<Quotation> quotationsForElevatorType, Set<SaleSummary> saleSummariesForSpeed, Set<SaleSummary> saleSummariesForHourMachine, Set<SaleSummary> saleSummariesForVoltageLighting, Set<Budget> budgetsForSpeed, Set<Item> items, Set<Item> items_1, Set<Quotation> quotationsForCabinDesign, Set<Quotation> quotationsForQuotationType, Set<Budget> budgetsForFloorType, Set<Quotation> quotationsForCondicionesPago, Set<Quotation> quotationsForMirror, Set<Budget> budgetsForDoorSystem, Set<Quotation> quotationsForDoorFrameHammered, Set<Budget> budgetsForDoorframeType, Set<Quotation> quotationsForHeight, Set<Budget> budgetsForControlType, Set<Quotation> quotationsForFreeAdmission, Set<Budget> budgetsForBoothButton, Set<Budget> budgetsForBoothDisplay, Set<Budget> budgetsForFloorDisplay, Set<BusinessPartner> businessPartners, Set<Quotation> quotationsForDoorframeType, Set<Budget> budgetsForFan, Set<Budget> budgetsForDoorType, Set<Budget> budgetsForVoltageLighting, Set<Budget> budgetsForFrequency, Set<Budget> budgetsForHourMachine, Set<SaleSummary> saleSummariesForBuildingType, Set<SaleSummary> saleSummariesForElevatorCapacitance, Set<Budget> budgetsForMirror, Set<Budget> budgetsForRailing, Set<Budget> budgetsForButtonType, Set<Budget> budgetsForRoofType, Set<Budget> budgetsForHallButtonType, Set<Budget> budgetsForCabinDesign, Set<Budget> budgetsForManeuverType, Set<Budget> budgetsForHallButton, Set<SaleSummary> saleSummariesForBoothButton, Set<SaleSummary> saleSummariesForBoothDisplay, Set<SaleSummary> saleSummariesForFloorDisplay, Set<SaleSummary> saleSummariesForDoorFrameHammered, Set<BasicData> basicDatas, Set<SaleSummary> saleSummariesForDoorframeType, Set<SaleSummary> saleSummariesForHeight, Set<SaleSummary> saleSummariesForFreeAdmission, Set<SaleSummary> saleSummariesForControlType, Set<SaleSummary> saleSummariesForHallButtonType, Set<SaleSummary> saleSummariesForHallButton, Set<Quotation> quotationsForHallButtonType, Set<Budget> budgetsForBuildingType, Set<Quotation> quotationsForFloorDisplay, Set<Budget> budgetsForElevatorType, Set<Quotation> quotationsForBoothDisplay, Set<Budget> budgetsForElevatorCapacitance, Set<Quotation> quotationsForControlType, Set<Budget> budgetsForDoorFrameHammered, Set<Budget> budgetsForMachineType, Set<Budget> budgetsForAccess, Set<Quotation> quotationsForMachineType, Set<Budget> budgetsForElectricityType, Set<Quotation> quotationsForHallButton, Set<Quotation> quotationsForManeuverType, Set<Budget> budgetsForMachineBase, Set<Quotation> quotationsForSpeed, Set<Quotation> quotationsForElevatorCapacitance) {
 		this.idBasic = idBasic;
 		this.basicData = basicData;
 		this.dataBaseName = dataBaseName;
@@ -180,6 +184,7 @@ public class BasicData implements java.io.Serializable {
 		this.quotationsForCabinDesign = quotationsForCabinDesign;
 		this.quotationsForQuotationType = quotationsForQuotationType;
 		this.budgetsForFloorType = budgetsForFloorType;
+		this.quotationsForCondicionesPago = quotationsForCondicionesPago;
 		this.quotationsForMirror = quotationsForMirror;
 		this.budgetsForDoorSystem = budgetsForDoorSystem;
 		this.quotationsForDoorFrameHammered = quotationsForDoorFrameHammered;
@@ -617,6 +622,15 @@ public class BasicData implements java.io.Serializable {
 
 	public void setBudgetsForFloorType(Set<Budget> budgetsForFloorType) {
 		this.budgetsForFloorType = budgetsForFloorType;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByCondicionesPago")
+	public Set<Quotation> getQuotationsForCondicionesPago() {
+		return this.quotationsForCondicionesPago;
+	}
+
+	public void setQuotationsForCondicionesPago(Set<Quotation> quotationsForCondicionesPago) {
+		this.quotationsForCondicionesPago = quotationsForCondicionesPago;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByMirror")
