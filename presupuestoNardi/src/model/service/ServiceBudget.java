@@ -43,7 +43,7 @@ public class ServiceBudget {
 	public List<Budget> listByRifPartner(String rifPartner) {
 		return daoBudget.listByField("rifPartner", rifPartner);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Budget> listBySeller(String seller) {
 		return daoBudget.listByField("seller", seller);

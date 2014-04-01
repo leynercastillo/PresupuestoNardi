@@ -1,26 +1,2 @@
 Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: nardi
-Bundle-SymbolicName: nardi
-Bundle-Version: 1.0.0.qualifier
-Export-Package: configuration,
- controller,
- controller.ayuda,
- controller.contacto,
- controller.inventario,
- controller.mantenimiento.solicitud,
- controller.seguridad.generic,
- controller.seguridad.grupo,
- controller.seguridad.perfil,
- controller.seguridad.usuario,
- controller.socios,
- controller.ventas.presupuesto,
- controller.ventas.reportes,
- controller.ventas.resumen,
- controller.ventas.resumen_negociacion,
- controller.ventas.solicitud,
- general,
- model.dao,
- model.database,
- model.service,
- springBean
+Class-Path:
