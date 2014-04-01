@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 14:33:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,8 +66,8 @@ public class SecurityUser implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
-	@SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "security_user_seq")
+	@SequenceGenerator(name = "security_user_seq", sequenceName = "security_user_id_security_user_seq")
 	@Column(name = "id_security_user", unique = true, nullable = false)
 	public int getIdSecurityUser() {
 		return this.idSecurityUser;

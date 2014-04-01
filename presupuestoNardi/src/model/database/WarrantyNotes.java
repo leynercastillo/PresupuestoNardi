@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 14:33:04 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +43,7 @@ public class WarrantyNotes implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "id_warranty_notes_seq")
-	@SequenceGenerator(name = "id_warranty_notes_seq", sequenceName = "warranty_notes_id_warranty_notes")
+	@SequenceGenerator(name = "id_warranty_notes_seq", sequenceName = "warranty_notes_id_warranty_notes_seq")
 	@Column(name = "id_warranty", unique = true, nullable = false)
 	public int getIdWarranty() {
 		return this.idWarranty;
