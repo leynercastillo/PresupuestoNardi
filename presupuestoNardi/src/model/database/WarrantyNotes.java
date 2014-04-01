@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 14:33:04 by Hibernate Tools 4.0.0
+// Generated 01-abr-2014 16:25:24 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +20,8 @@ public class WarrantyNotes implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5650798555961914105L;
-	private int idWarrantyNotes;
+	private static final long serialVersionUID = -7697993273085249269L;
+	private int idWarranty;
 	private String name;
 	private String field;
 	private char status;
@@ -29,13 +29,13 @@ public class WarrantyNotes implements java.io.Serializable {
 	public WarrantyNotes() {
 	}
 
-	public WarrantyNotes(int idWarrantyNotes, char status) {
-		this.idWarrantyNotes = idWarrantyNotes;
+	public WarrantyNotes(int idWarranty, char status) {
+		this.idWarranty = idWarranty;
 		this.status = status;
 	}
 
-	public WarrantyNotes(int idWarrantyNotes, String name, String field, char status) {
-		this.idWarrantyNotes = idWarrantyNotes;
+	public WarrantyNotes(int idWarranty, String name, String field, char status) {
+		this.idWarranty = idWarranty;
 		this.name = name;
 		this.field = field;
 		this.status = status;
@@ -44,13 +44,13 @@ public class WarrantyNotes implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "id_warranty_notes_seq")
 	@SequenceGenerator(name = "id_warranty_notes_seq", sequenceName = "warranty_notes_id_warranty_notes_seq")
-	@Column(name = "id_warranty_notes", unique = true, nullable = false)
+	@Column(name = "id_warranty", unique = true, nullable = false)
 	public int getIdWarranty() {
-		return this.idWarrantyNotes;
+		return this.idWarranty;
 	}
 
-	public void setIdWarranty(int idWarrantyNotes) {
-		this.idWarrantyNotes = idWarrantyNotes;
+	public void setIdWarranty(int idWarranty) {
+		this.idWarranty = idWarranty;
 	}
 
 	@Column(name = "name", length = 1500)
