@@ -28,9 +28,6 @@ import javax.persistence.TemporalType;
 @Table(name = "quotation", schema = "public")
 public class Quotation implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7182970287760684798L;
 	private int idQuotation;
 	private BasicData basicDataByElectricityType;
@@ -48,7 +45,7 @@ public class Quotation implements java.io.Serializable {
 	private Budget budget;
 	private BasicData basicDataByCabinDesign;
 	private BasicData basicDataByMachineType;
-	private BasicData basicDataByCondicionesPago;
+
 	private BasicData basicDataByQuotationType;
 	private BasicData basicDataByManeuverType;
 	private BasicData basicDataByDoorFrameHammered;
@@ -117,7 +114,7 @@ public class Quotation implements java.io.Serializable {
 	private Date approvedDate;
 	private Date deliveryDate;
 	private char status;
-	private Integer view;
+	
 	private Set<SaleSummary> saleSummaries = new HashSet<SaleSummary>(0);
 	private Set<TransactionSummary> transactionSummaries = new HashSet<TransactionSummary>(0);
 	private Set<Item> items = new HashSet<Item>(0);
@@ -144,7 +141,7 @@ public class Quotation implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Quotation(int idQuotation, BasicData basicDataByElectricityType, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByRailing, BasicData basicDataByDoorframeType, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BusinessPartner businessPartner, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByHallButtonType, Budget budget, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByCondicionesPago, BasicData basicDataByQuotationType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, Integer newNumber, Integer modernizationNumber, int budgetNumber, short versionNumber, Date date, boolean type, Character rifType, String rifPartner, String partnerName, String construction, String contactName, String seller, Integer elevatorQuantity, Double tour, Integer stopNumber, Boolean stopSequenceOdd, Boolean stopSequenceEven, Integer stopSequenceOddNumber, String stopSequenceOddQ, String stopSequenceContinuousQ, Boolean stopSequenceContinuous, Integer stopSequenceContinuousNumber, Integer stopSequenceEvenNumber, String stopSequenceEvenQ, Double widthHole, Double bottomHole, Double onTour, Double fossa, String designSpecialComment, Boolean designSpecial, Double cabinWidth, Double cabinHeight, Double cabinBackground, Boolean doorFrameStainless, String doorFrameStainlessDescrip, String doorFrameHammeredDesc, String doorframeTypeComment, Boolean phone, Boolean gomSystem, Boolean accessSytem, Boolean speechSynthesizer, Boolean lightCurtain, Boolean intercom, Boolean loadLimiter, Boolean firefighterKeychain, String comment, double priceNationalMaterial, double priceImportedMaterial, double totalPrice, String payment, String paymentForeign, String extendedWarranty, String warranty, String deliveryEstimate, String quotationValidity, String notes, Date approvedDate, Date deliveryDate, char status, Integer view, Set<SaleSummary> saleSummaries, Set<TransactionSummary> transactionSummaries, Set<Item> items) {
+	public Quotation(int idQuotation, BasicData basicDataByElectricityType, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByRailing, BasicData basicDataByDoorframeType, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BusinessPartner businessPartner, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByHallButtonType, Budget budget, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByQuotationType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, Integer newNumber, Integer modernizationNumber, int budgetNumber, short versionNumber, Date date, boolean type, Character rifType, String rifPartner, String partnerName, String construction, String contactName, String seller, Integer elevatorQuantity, Double tour, Integer stopNumber, Boolean stopSequenceOdd, Boolean stopSequenceEven, Integer stopSequenceOddNumber, String stopSequenceOddQ, String stopSequenceContinuousQ, Boolean stopSequenceContinuous, Integer stopSequenceContinuousNumber, Integer stopSequenceEvenNumber, String stopSequenceEvenQ, Double widthHole, Double bottomHole, Double onTour, Double fossa, String designSpecialComment, Boolean designSpecial, Double cabinWidth, Double cabinHeight, Double cabinBackground, Boolean doorFrameStainless, String doorFrameStainlessDescrip, String doorFrameHammeredDesc, String doorframeTypeComment, Boolean phone, Boolean gomSystem, Boolean accessSytem, Boolean speechSynthesizer, Boolean lightCurtain, Boolean intercom, Boolean loadLimiter, Boolean firefighterKeychain, String comment, double priceNationalMaterial, double priceImportedMaterial, double totalPrice, String payment, String paymentForeign, String extendedWarranty, String warranty, String deliveryEstimate, String quotationValidity, String notes, Date approvedDate, Date deliveryDate, char status, Set<SaleSummary> saleSummaries, Set<TransactionSummary> transactionSummaries, Set<Item> items) {
 		this.idQuotation = idQuotation;
 		this.basicDataByElectricityType = basicDataByElectricityType;
 		this.basicDataByHallButton = basicDataByHallButton;
@@ -161,7 +158,7 @@ public class Quotation implements java.io.Serializable {
 		this.budget = budget;
 		this.basicDataByCabinDesign = basicDataByCabinDesign;
 		this.basicDataByMachineType = basicDataByMachineType;
-		this.basicDataByCondicionesPago = basicDataByCondicionesPago;
+		
 		this.basicDataByQuotationType = basicDataByQuotationType;
 		this.basicDataByManeuverType = basicDataByManeuverType;
 		this.basicDataByDoorFrameHammered = basicDataByDoorFrameHammered;
@@ -230,7 +227,7 @@ public class Quotation implements java.io.Serializable {
 		this.approvedDate = approvedDate;
 		this.deliveryDate = deliveryDate;
 		this.status = status;
-		this.view = view;
+		
 		this.saleSummaries = saleSummaries;
 		this.transactionSummaries = transactionSummaries;
 		this.items = items;
@@ -396,16 +393,6 @@ public class Quotation implements java.io.Serializable {
 
 	public void setBasicDataByMachineType(BasicData basicDataByMachineType) {
 		this.basicDataByMachineType = basicDataByMachineType;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "condiciones_pago")
-	public BasicData getBasicDataByCondicionesPago() {
-		return this.basicDataByCondicionesPago;
-	}
-
-	public void setBasicDataByCondicionesPago(BasicData basicDataByCondicionesPago) {
-		this.basicDataByCondicionesPago = basicDataByCondicionesPago;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -1030,15 +1017,6 @@ public class Quotation implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
-	}
-
-	@Column(name = "view")
-	public Integer getView() {
-		return this.view;
-	}
-
-	public void setView(Integer view) {
-		this.view = view;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quotation")

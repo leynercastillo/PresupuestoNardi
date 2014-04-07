@@ -1,6 +1,5 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
-
 <zk>
 
 	<window apply="org.zkoss.bind.BindComposer"
@@ -14,7 +13,7 @@
 					label="Clientes">
 				</tab>
 				<tab
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY')}"
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}"
 					label="Ventas">
 				</tab>
 				<tab
@@ -58,7 +57,7 @@
 					</tree>
 				</tabpanel>
 				<tabpanel
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY')}">
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}">
 					<tree>
 						<treechildren>
 							<treeitem
@@ -112,6 +111,14 @@
 										</treerow>
 									</treeitem>
 								</treechildren>
+							</treeitem>
+							<treeitem
+								if="${sec:isAllGranted('ROLE_UPDATE_DATA')}">
+								<treerow>
+									<treecell label="Actualización de Datos"
+										onClick="@command('optionSelected', optionSelected='system/ventas/actualizacion_datos/frmActualizacionDatos.zul')">
+									</treecell>
+								</treerow>
 							</treeitem>
 						</treechildren>
 					</tree>

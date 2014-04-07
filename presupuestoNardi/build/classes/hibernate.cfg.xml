@@ -25,6 +25,6 @@
         <mapping class="model.database.BusinessPartner" />
         <mapping class="model.database.BasicData" />
         <mapping class="model.database.Contact" />
-              <mapping class="model.database.WarrantyNotes" />
+   
     </session-factory>
 </hibernate-configuration>

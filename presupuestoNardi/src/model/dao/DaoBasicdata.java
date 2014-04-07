@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.database.BasicData;
 
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -29,6 +30,8 @@ public class DaoBasicdata {
 	 *                Object to save in database
 	 * @return true if saved / false if not saved
 	 */
+	
+	
 	public Boolean save(BasicData basicData) {
 		Session session = getCurrentSession();
 		try {
@@ -102,6 +105,16 @@ public class DaoBasicdata {
 		criteria.addOrder(Order.asc("priority"));
 		return criteria.list();
 	}
+	
+	public BasicData findByWarranty(String field, String table){
+		Session session = getCurrentSession();
+		Criteria criteria = session.createCriteria(BasicData.class);
+		criteria.add(Restrictions.eq("status", 'A'));
+		criteria.add(Restrictions.eq("field", field).ignoreCase());
+		criteria.add(Restrictions.eq("dataBaseName", table));
+		Object obj = criteria.uniqueResult();
+		return obj == null ? null : (BasicData) obj;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<BasicData> listByParent(BasicData parent) {
@@ -129,4 +142,6 @@ public class DaoBasicdata {
 		criteria.add(Restrictions.eq(field, value));
 		return criteria.list();
 	}
+	
+
 }

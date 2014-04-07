@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.dao.DaoBasicdata;
 import model.database.BasicData;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,16 @@ public class ServiceBasicData {
 
 	@Autowired
 	private DaoBasicdata daoBasicdata;
+	
+	@Transactional
+	public Boolean save(BasicData basicData) {
+		
+		if (basicData.getIdBasic() == 0)
+			return daoBasicdata.save(basicData);
+		else 
+			return daoBasicdata.update(basicData);
+		
+	}
 
 	public BasicData findById(int id){
 		return daoBasicdata.findByField("idBasic", id);
@@ -241,4 +250,136 @@ public class ServiceBasicData {
 	public List<BasicData> listQuotationTypeMoney() {
 		return daoBasicdata.listByFieldTable("QUOTATION", "QUOTATION TYPE MONEY");
 	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNN() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "QUOTATION");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNM() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "QUOTATION");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEN() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "QUOTATION");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEM() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "QUOTATION");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNNP() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "PAYMENT");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNMP() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION",  "PAYMENT");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENP() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "PAYMENT");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMP() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION",  "PAYMENT");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENPF() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "PAYMENT FOREIGN");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMPF() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION",  "PAYMENT FOREIGN");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNNW() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNMW() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENW() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMW() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNNEW() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "EXTENDED WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNMEW() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "EXTENDED WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENEW() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "EXTENDED WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMEW() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "EXTENDED WARRANTY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNNDE() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "DELIVERY ESTIMATE");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNMDE() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "DELIVERY ESTIMATE");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENDE() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "DELIVERY ESTIMATE");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMDE() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "DELIVERY ESTIMATE");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNNV() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y NUEVO", "VALIDITY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyNMV() {
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "VALIDITY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyENV() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y NUEVO", "VALIDITY");
+	}
+	
+	@Transactional(readOnly = true)
+	public BasicData findByWarrantyEMV() {
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "VALIDITY");
+	}
+	
+	
 }

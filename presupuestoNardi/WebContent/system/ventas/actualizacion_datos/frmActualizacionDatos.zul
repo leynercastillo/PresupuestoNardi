@@ -1,0 +1,221 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.actualizacion_datos.FrmActualizacionDatos')">
+		<caption label="ACTUALIZACIÓN DE DATOS" zclass="formTitleLabel"></caption>
+			<grid>
+				<columns>
+					<column align="center" width="15%"></column>
+					<column width="30%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+				<row>
+					<label sclass="formLabel"
+							value="Tipo presupuesto:">
+						</label>
+					<radiogroup selectedItem="@save(vm.tipoPresupuesto)">
+						<radio
+							checked="@load(vm.tipoPresupuesto ? 'true':'false')"
+							disabled="false" label="Nuevo" value="true">
+						</radio>
+						<radio
+							checked="@load(vm.tipoPresupuesto ? 'false':'true')"
+							disabled="false" label="Modernización" value="false">
+						</radio>
+					</radiogroup>
+				</row>	
+				<row>
+					<label sclass="formLabel"
+							value="Tipo precio:">
+					</label>
+					<combobox disabled="@load(vm.disabledEdit)"
+						model="@load(vm.listQuotationType)"
+						onChange="@command('loadPayment')"
+						readonly="@load(not vm.disabledEdit)"
+						selectedItem="@bind(vm.basicDataTipoPresupuesto)"
+						value="@save(vm.basicDataTipoPresupuesto.name, before = 'save') @load(vm.basicDataTipoPresupuesto eq null ? vm.seleccione : vm.basicDataTipoPresupuesto.name) @validator(vm.noSelect, component = self)"
+						width="99%">
+					<template name="model"
+						var="quotationType">
+						<comboitem
+							label="@load(quotationType.name)">
+						</comboitem>
+					</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>					
+					</rows>
+			</grid>
+		<groupbox closable="false" mold="3d">
+			<caption label="Datos a Modificar" sclass="formLabel"></caption>
+			<grid>
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell colspan="4">
+					<grid>
+					<auxhead>
+					</auxhead>
+					<columns>
+						<column width="25%"></column>
+	    			</columns>
+	    			<rows>
+	    				<row>
+							<label sclass="formLabel" value="Garantía:"></label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disabledEdit)" maxlength="1500"
+								value="@bind(vm.basicDataWarranty.name)">
+							</textbox>
+							<label
+								value="meses de garantía y mantenimiento gratuito.">
+							</label>
+						</div>
+						</row>
+						<row>
+							<label sclass="formLabel"
+								value="Garantía extendida:">
+							</label>
+						<div>
+							<textbox cols="2"
+								disabled="@load(vm.disabledEdit)" maxlength="1500"
+								value="@bind(vm.basicDataExtendedWarranty.name)">
+							</textbox>
+							<label
+								value="meses con la suscripcion de un contrato de mantenimiento conjuntamente con la firma del acta de entrega.">
+							</label>
+						</div>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Plazo de entrega:">
+						</label>
+					<div>
+						<textbox cols="2"
+							disabled="@load(vm.disabledEdit)" maxlength="1500"
+							value="@bind(vm.basicDataDeliveryEstimate.name)">
+						</textbox>
+						<label
+							value="meses aproximados despues de la firma del contrato y cancelacion de inicial.">
+						</label>
+					</div>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Válidez del presupuesto:">
+						</label>
+					<div>
+						<textbox cols="2"
+							disabled="@load(vm.disabledEdit)" maxlength="1500"
+							value="@bind(vm.basicDataValidity.name)">
+						</textbox>
+						<label
+							value="Días a partir de su presentación.">
+						</label>
+						</div>
+					</row>
+	    			<row>
+						<label value="Nota:" sclass="formLabel"></label>
+						<textbox disabled="@load(vm.disabledEdit)"
+							maxlength="1500" rows="8" value="@bind(vm.basicData.name)"
+							width="98%">
+						</textbox>
+					</row>
+					<row visible="@load(vm.basicDataTipoPresupuesto.name eq 'MONEDA NACIONAL')">	
+							<label
+								value="Condiciones de pago:" sclass="formLabel">
+							</label>
+							<textbox
+								disabled="@load(vm.disabledEdit)" maxlength="1500" rows="7"
+								value="@bind(vm.basicDataPayment.name)" width="98%">
+							</textbox>
+					</row>
+				</rows>
+				</grid>
+				</cell>
+			</row>
+			<row visible="@load(vm.basicDataTipoPresupuesto.name eq 'MONEDA EXTRANJERA')">
+			<cell colspan="4">
+				<grid>
+					<auxhead>
+						<auxheader colspan="4"
+						label="PARTE IMPORTADA" sclass="formLabel">
+					    </auxheader>
+					 </auxhead>
+					<columns>
+					</columns>
+					<rows>
+						<row>
+							<label
+								value="Condiciones de pago:" sclass="formLabel">
+							</label>
+								<cell colspan="3">
+									<textbox
+										disabled="@load(vm.disabledEdit)" maxlength="1500" rows="7"
+										value="@bind(vm.basicDataPaymentForeign.name)" width="98%">
+									</textbox>
+								</cell>
+						</row>
+					</rows>
+				</grid>
+			</cell>
+			</row>
+			<row visible="@load(vm.basicDataTipoPresupuesto.name eq 'MONEDA EXTRANJERA')">
+			<cell colspan="4">
+				<grid>
+					<auxhead>
+						<auxheader colspan="4"
+						label="PARTE NACIONAL" sclass="formLabel">
+					    </auxheader>
+					    </auxhead>
+						<columns>
+						</columns>
+						<rows>
+							<row>
+								<label
+									value="Condiciones de pago:" sclass="formLabel">
+								</label>
+									<cell colspan="3">
+										<textbox
+											disabled="@load(vm.disabledEdit)" maxlength="1500" rows="7"
+											value="@bind(vm.basicDataPayment.name)" width="98%">
+										</textbox>
+									</cell>
+							</row>
+						</rows>
+				</grid>
+			</cell>
+			</row>
+		</rows>
+		</grid>
+		</groupbox>
+		<grid>
+			<rows>
+				<row>
+					<hbox>
+						<button
+							disabled="@load(vm.disabledBudgetNumber ? vm.disabledEdit : 'false')"
+							image="/resource/images/icons/save.png" label="Guardar"
+							onClick="@command('save')">
+						</button>
+						<button
+							image="/resource/images/icons/cancel.png" label="Cancelar"
+							onClick="@command('restartForm')">
+						</button>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
+				
