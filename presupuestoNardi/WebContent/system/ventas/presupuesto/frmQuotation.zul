@@ -1022,7 +1022,59 @@
 						</doublebox>
 						<label sclass="formLabel" value="Bs:"></label>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL' and (vm.quotation.basicDataByElevatorType.name eq 'MONTA PLATO' or vm.quotation.type eq 'FALSE'))">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL' and vm.quotation.basicDataByElevatorType.name eq 'MONTA PLATO')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario Bs"></column>
+									<column label="Subtotal Bs"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('priceUnit', val=self.value)"
+											style="text-align: right"
+											value="@save(vm.quotation.totalPrice, before = 'confirmSave') @load(vm.quotation.totalPrice)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.totalPrice * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+										<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL' and !vm.quotation.type)">
 						<cell colspan="4">
 							<grid>
 								<auxhead>
