@@ -72,6 +72,13 @@ public class FrmQuotation {
 	
 	private Budget budget;
 	private BasicData basicData;
+	private BasicData basicDataPayment;
+	private BasicData basicDataPaymentForeign;
+	private BasicData basicDataWarranty;
+	private BasicData basicDataExtendedWarranty;
+	private BasicData basicDataDeliveryEstimate;
+	private BasicData basicDataValidity;
+	private BasicData basicDataTipoPresupuesto;
 	private Boolean disableBeforeSearch;
 	private Boolean disabledBudgetNumber;
 	private Boolean disabledPrint;
@@ -108,6 +115,62 @@ public class FrmQuotation {
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
 	
+	public BasicData getBasicDataPayment() {
+		return basicDataPayment;
+	}
+
+	public void setBasicDataPayment(BasicData basicDataPayment) {
+		this.basicDataPayment = basicDataPayment;
+	}
+
+	public BasicData getBasicDataPaymentForeign() {
+		return basicDataPaymentForeign;
+	}
+
+	public void setBasicDataPaymentForeign(BasicData basicDataPaymentForeign) {
+		this.basicDataPaymentForeign = basicDataPaymentForeign;
+	}
+
+	public BasicData getBasicDataWarranty() {
+		return basicDataWarranty;
+	}
+
+	public void setBasicDataWarranty(BasicData basicDataWarranty) {
+		this.basicDataWarranty = basicDataWarranty;
+	}
+
+	public BasicData getBasicDataExtendedWarranty() {
+		return basicDataExtendedWarranty;
+	}
+
+	public void setBasicDataExtendedWarranty(BasicData basicDataExtendedWarranty) {
+		this.basicDataExtendedWarranty = basicDataExtendedWarranty;
+	}
+
+	public BasicData getBasicDataDeliveryEstimate() {
+		return basicDataDeliveryEstimate;
+	}
+
+	public void setBasicDataDeliveryEstimate(BasicData basicDataDeliveryEstimate) {
+		this.basicDataDeliveryEstimate = basicDataDeliveryEstimate;
+	}
+
+	public BasicData getBasicDataValidity() {
+		return basicDataValidity;
+	}
+
+	public void setBasicDataValidity(BasicData basicDataValidity) {
+		this.basicDataValidity = basicDataValidity;
+	}
+
+	public BasicData getBasicDataTipoPresupuesto() {
+		return basicDataTipoPresupuesto;
+	}
+
+	public void setBasicDataTipoPresupuesto(BasicData basicDataTipoPresupuesto) {
+		this.basicDataTipoPresupuesto = basicDataTipoPresupuesto;
+	}
+
 	public BasicData getBasicData() {
 		return basicData;
 	}
@@ -512,6 +575,14 @@ public class FrmQuotation {
 		updateQuotationNumber(-1);
 		budget = new Budget();
 		cabinModel = new BasicData();
+		basicData = new BasicData();
+		basicDataPayment = new BasicData();
+		basicDataPaymentForeign = new BasicData();
+		basicDataWarranty = new BasicData();
+		basicDataExtendedWarranty = new BasicData();
+		basicDataDeliveryEstimate = new BasicData();
+		basicDataValidity = new BasicData();
+		basicDataTipoPresupuesto = new BasicData();
 		disableBeforeSearch = new Boolean(true);
 		disabledBudgetNumber = new Boolean(false);
 		disabledPrint = new Boolean(true);
@@ -669,53 +740,104 @@ public class FrmQuotation {
 	@Command
 	public void loadPayment() {
 		if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
-			quotation.setPayment("100% para la orden produccion y firma del contrato.");
-			quotation.setWarranty("3");
-			quotation.setExtendedWarranty("12");
-			quotation.setDeliveryEstimate("6");
-			quotation.setQuotationValidity("07");
-
+			
 			this.basicData = serviceBasicData.findByWarrantyNN();
 			quotation.setNotes(basicData.getName()); 
 			
-			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio será estimado al momento de comenzar la instalación del (los) equipo(s) y podrá variar en el transcurso  del mismo por causas ajenas a la empresa.\n" + "- El equipo se comenzará a fabricar luego de cancelado el 80% del precio de venta.\n" + "- Las cuotas del material importado han sido calculadas al tipo de cambio oficial del momento, por lo tanto, cualquier variación que exista en el tipo de cambio sera calculado al momento de efectuarse el pago.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			this.basicDataWarranty = serviceBasicData.findByWarrantyNNW();
+			quotation.setWarranty(basicDataWarranty.getName());
+			
+			this.basicDataExtendedWarranty = serviceBasicData.findByWarrantyNNEW();
+			quotation.setExtendedWarranty(basicDataExtendedWarranty.getName());
+			
+			this.basicDataDeliveryEstimate = serviceBasicData.findByWarrantyNNDE();
+			quotation.setDeliveryEstimate(basicDataDeliveryEstimate.getName());
+			
+			this.basicDataValidity = serviceBasicData.findByWarrantyNNV();
+			quotation.setQuotationValidity(basicDataValidity.getName());
+			
+			this.basicDataPayment = serviceBasicData.findByWarrantyNNP();
+			quotation.setPayment(basicDataPayment.getName());
+			
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
 		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
-			quotation.setPayment("100% para la orden produccion y firma del contrato.");
-			quotation.setWarranty("3");
-			quotation.setExtendedWarranty("6");
-			quotation.setDeliveryEstimate("8");
-			quotation.setQuotationValidity("07");
+		
+			this.basicDataWarranty = serviceBasicData.findByWarrantyNMW();
+			quotation.setWarranty(basicDataWarranty.getName());
+			
+			this.basicDataExtendedWarranty = serviceBasicData.findByWarrantyNMEW();
+			quotation.setExtendedWarranty(basicDataExtendedWarranty.getName());
+			
+			this.basicDataDeliveryEstimate = serviceBasicData.findByWarrantyNMDE();
+			quotation.setDeliveryEstimate(basicDataDeliveryEstimate.getName());
+			
+			this.basicDataValidity = serviceBasicData.findByWarrantyNMV();
+			quotation.setQuotationValidity(basicDataValidity.getName());
+			
+			this.basicDataPayment = serviceBasicData.findByWarrantyNMP();
+			quotation.setPayment(basicDataPayment.getName());
+			
 			this.basicData = serviceBasicData.findByWarrantyNM();
 			quotation.setNotes(basicData.getName()); 
 			
-			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar el desmontaje y montaje y podrá variar en el transcurso de la ejecución.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectados y cancelados de contado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
+			
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
 		} else if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
-			quotation.setPaymentForeign("100% para la orden produccion y firma del contrato.");
-			quotation.setPayment("100% para la orden produccion y firma del contrato.");
-			quotation.setWarranty("3");
-			quotation.setExtendedWarranty("12");
-			quotation.setDeliveryEstimate("6");
-			quotation.setQuotationValidity("07");
-		
+			
+			this.basicDataWarranty = serviceBasicData.findByWarrantyENW();
+			quotation.setWarranty(basicDataWarranty.getName());
+			
+			this.basicDataExtendedWarranty = serviceBasicData.findByWarrantyENEW();
+			quotation.setExtendedWarranty(basicDataExtendedWarranty.getName());
+			
+			this.basicDataDeliveryEstimate = serviceBasicData.findByWarrantyENDE();
+			quotation.setDeliveryEstimate(basicDataDeliveryEstimate.getName());
+			
+			this.basicDataValidity = serviceBasicData.findByWarrantyENV();
+			quotation.setQuotationValidity(basicDataValidity.getName());
+			
+			this.basicDataPayment = serviceBasicData.findByWarrantyENP();
+			quotation.setPayment(basicDataPayment.getName());
+			
+			this.basicDataPaymentForeign = serviceBasicData.findByWarrantyENPF();
+			quotation.setPaymentForeign(basicDataPaymentForeign.getName());
+			
 			this.basicData = serviceBasicData.findByWarrantyEN();
 			quotation.setNotes(basicData.getName()); 
-			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de MONTAJE. Este precio sera estimado al momento del comienzo de la instalación del (los) equipo(s).\n" + "- La empresa no se hace responsable de la contribucion o pagos al sindicato de la construccion, ni a ningun otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna indole.");
+			
+			
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
 		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
-			quotation.setPaymentForeign("100% para la orden produccion y firma del contrato.");
-			quotation.setPayment("100% para la orden produccion y firma del contrato.");
+			
+
+			this.basicDataWarranty = serviceBasicData.findByWarrantyEMW();
+			quotation.setWarranty(basicDataWarranty.getName());
+			
+			this.basicDataExtendedWarranty = serviceBasicData.findByWarrantyEMEW();
+			quotation.setExtendedWarranty(basicDataExtendedWarranty.getName());
+			
+			this.basicDataDeliveryEstimate = serviceBasicData.findByWarrantyEMDE();
+			quotation.setDeliveryEstimate(basicDataDeliveryEstimate.getName());
+			
+			this.basicDataValidity = serviceBasicData.findByWarrantyEMV();
+			quotation.setQuotationValidity(basicDataValidity.getName());
+			
+			this.basicDataPayment = serviceBasicData.findByWarrantyEMP();
+			quotation.setPayment(basicDataPayment.getName());
+			
+			this.basicDataPaymentForeign = serviceBasicData.findByWarrantyEMPF();
+			quotation.setPaymentForeign(basicDataPaymentForeign.getName());
+			
 			this.basicData = serviceBasicData.findByWarrantyEM();
 			quotation.setNotes(basicData.getName()); 
 			
-			//quotation.setNotes("- Los precios señalados no incluyen el IVA.\n" + "- El precio de (los) equipo(s) NO INCLUYE el valor por concepto de mano de obra de DESMONTAJE y MONTAJE. Este precio será estimado al momento de comenzar el desmontaje y montaje y podrá variar en el transcurso de la ejecución.\n" + "- En caso de daño oculto será presupuestado al momento de ser detectados y cancelados de contado.\n" + "- El incumplimiento en el pago de las cuotas genera intereses de mora.\n" + "- La empresa no se hace responsable de la contribución o pagos al sindicato de la construcción, ni a ningún otro sindicato.\n" + "- Este presupuesto no contempla gastos de fianzas de ninguna índole.\n");
+			
 
 		}
 	}

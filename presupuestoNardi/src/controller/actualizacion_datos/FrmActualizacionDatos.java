@@ -219,7 +219,7 @@ public class FrmActualizacionDatos {
 	@Command
 	public void restartForm() {
 		
-		basicDataTipoPresupuesto = new BasicData();
+		
 		basicData  = new BasicData();
 		basicDataPayment = new BasicData();
 		basicDataPaymentForeign = new BasicData();
@@ -227,7 +227,7 @@ public class FrmActualizacionDatos {
 		basicDataExtendedWarranty = new BasicData();
 		basicDataDeliveryEstimate = new BasicData();
 		basicDataValidity = new BasicData();
-		
+		basicDataTipoPresupuesto = new BasicData();
 		disableBeforeSearch = new Boolean(true);
 		disabledPrint = new Boolean(true);
 		disabledEdit = new Boolean(false);
