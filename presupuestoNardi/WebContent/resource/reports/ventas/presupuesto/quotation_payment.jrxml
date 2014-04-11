@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" pageWidth="576" pageHeight="648" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="165"/>
+	<property name="ireport.y" value="124"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -105,7 +105,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="598" splitType="Stretch">
+		<band height="560" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="1" width="90" height="15" uuid="4667b41e-9b6b-42b2-b217-3417934fec34"/>
 				<textElement>
@@ -397,23 +397,23 @@ WHERE
 				<text><![CDATA[Recibido por]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="40" y="501" width="194" height="15" uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29"/>
+				<reportElement x="40" y="487" width="194" height="15" uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="40" y="500" width="194" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="40" y="487" width="194" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="40" y="515" width="194" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="40" y="502" width="194" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Representante de Ventas]]></text>
 			</staticText>
 			<line>
-				<reportElement x="345" y="499" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="345" y="488" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="345" y="501" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="345" y="489" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
@@ -425,15 +425,15 @@ WHERE
 				<text><![CDATA[GARANTIA EXTENDIDA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="196" y="581" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="196" y="545" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="196" y="583" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="196" y="545" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="196" y="536" width="165" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
+				<reportElement x="196" y="517" width="165" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Aprobado por]]></text>
 			</staticText>
