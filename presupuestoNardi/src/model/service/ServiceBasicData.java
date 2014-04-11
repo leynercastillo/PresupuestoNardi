@@ -23,7 +23,7 @@ public class ServiceBasicData {
 			return daoBasicdata.update(basicData);
 		
 	}
-
+	
 	public BasicData findById(int id){
 		return daoBasicdata.findByField("idBasic", id);
 	}
@@ -278,7 +278,7 @@ public class ServiceBasicData {
 	
 	@Transactional(readOnly = true)
 	public BasicData findByWarrantyNMP() {
-		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION",  "PAYMENT");
+		return daoBasicdata.findByWarranty("MONEDA NACIONAL Y MODERNIZACION", "PAYMENT");
 	}
 	
 	@Transactional(readOnly = true)
@@ -288,7 +288,7 @@ public class ServiceBasicData {
 	
 	@Transactional(readOnly = true)
 	public BasicData findByWarrantyEMP() {
-		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION",  "PAYMENT");
+		return daoBasicdata.findByWarranty("MONEDA EXTRANJERA Y MODERNIZACION", "PAYMENT");
 	}
 	
 	@Transactional(readOnly = true)

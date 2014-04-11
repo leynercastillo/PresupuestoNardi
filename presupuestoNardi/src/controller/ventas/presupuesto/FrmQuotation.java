@@ -777,6 +777,7 @@ public class FrmQuotation {
 			quotation.setQuotationValidity(basicDataValidity.getName());
 			
 			this.basicDataPayment = serviceBasicData.findByWarrantyNMP();
+			System.out.println(basicDataPayment.getName());
 			quotation.setPayment(basicDataPayment.getName());
 			
 			this.basicData = serviceBasicData.findByWarrantyNM();

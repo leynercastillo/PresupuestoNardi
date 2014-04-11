@@ -346,7 +346,7 @@ public class FrmActualizacionDatos {
 	public void save() {
 		if (basicDataTipoPresupuesto.getName().contains("MONEDA NACIONAL")) 
 		{
-			System.out.println("nacional");
+			
 			if (!(serviceBasicData.save(basicData) && serviceBasicData.save(basicDataPayment) && serviceBasicData.save(basicDataWarranty) && serviceBasicData.save(basicDataExtendedWarranty) && serviceBasicData.save(basicDataDeliveryEstimate) && serviceBasicData.save(basicDataValidity))) {
 			Clients.showNotification("No se pudo guardar los cambios", "error", null, "bottom_center", 2000);
 			return;			
