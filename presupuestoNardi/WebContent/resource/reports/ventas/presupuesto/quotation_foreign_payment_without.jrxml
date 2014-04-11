@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" pageWidth="576" pageHeight="648" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="124"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -104,7 +104,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="617">
+		<band height="560">
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="24" width="80" height="16" uuid="3c02007c-8443-4456-90f7-3e4ad9d34452"/>
 				<box>
@@ -211,41 +211,41 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Nota}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="40" y="518" width="194" height="15" uuid="8c2520c3-5e5f-425f-b7b8-b73f191e6b00"/>
+				<reportElement x="40" y="446" width="194" height="15" uuid="8c2520c3-5e5f-425f-b7b8-b73f191e6b00"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Atentamente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="347" y="518" width="165" height="15" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
+				<reportElement x="347" y="446" width="165" height="15" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Recibido por]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="40" y="552" width="194" height="15" uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29"/>
+				<reportElement x="40" y="481" width="194" height="15" uuid="68cf20a5-c463-4510-95e6-f205fb7c1d29"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="40" y="550" width="194" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="40" y="480" width="194" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="40" y="567" width="194" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="40" y="496" width="194" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Representante de Ventas]]></text>
 			</staticText>
 			<line>
-				<reportElement x="347" y="549" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="347" y="480" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="347" y="567" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="347" y="481" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -259,17 +259,17 @@ WHERE
 				<text><![CDATA[GARANTIA EXTENDIDA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="196" y="600" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
+				<reportElement x="196" y="545" width="165" height="1" uuid="cebf1b86-ab17-4bf9-ab47-81356d08b929"/>
 			</line>
 			<staticText>
-				<reportElement x="196" y="602" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
+				<reportElement x="196" y="545" width="165" height="15" uuid="017a9284-be30-49a8-adf6-1230d1a6feff"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Firma y sello]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="234" y="566" width="89" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
+				<reportElement x="234" y="511" width="89" height="20" uuid="4b04c1fc-8015-497c-ab62-bc737162bc75"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
