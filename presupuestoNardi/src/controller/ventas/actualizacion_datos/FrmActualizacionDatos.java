@@ -1,4 +1,4 @@
-package controller.actualizacion_datos;
+package controller.ventas.actualizacion_datos;
 
 import general.ValidateZK;
 

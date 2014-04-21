@@ -3,7 +3,7 @@
 	<style src="resource/style/styleZK.css"></style>
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
 		closable="true" onClose="@command('close')"
-		viewModel="@id('vm') @init('controller.actualizacion_datos.FrmActualizacionDatos')">
+		viewModel="@id('vm') @init('controller.ventas.actualizacion_datos.FrmActualizacionDatos')">
 		<caption label="ACTUALIZACIÓN DE DATOS" zclass="formTitleLabel"></caption>
 			<grid>
 				<columns>

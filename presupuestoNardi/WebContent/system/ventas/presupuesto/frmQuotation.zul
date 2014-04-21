@@ -613,18 +613,18 @@
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel" value="Ancho (m):">
+						<label sclass="formLabel" value="Ancho (mts):">
 						</label>
 						<doublebox disabled="true"
 							value="@bind(vm.quotation.cabinWidth)" width="96%">
 						</doublebox>
-						<label sclass="formLabel" value="Altura (m):">
+						<label sclass="formLabel" value="Altura (mts):">
 						</label>
 						<doublebox disabled="true"
 							value="@bind(vm.quotation.cabinHeight)" width="96%">
 						</doublebox>
 						<div width="100%">
-							<label sclass="formLabel" value="Fondo (m):"
+							<label sclass="formLabel" value="Fondo (mts):"
 								width="50%">
 							</label>
 							<space></space>

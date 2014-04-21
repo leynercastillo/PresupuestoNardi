@@ -111,7 +111,7 @@
 	     WHEN T0.cabin_height = 0 THEN ''
 	     WHEN T0.cabin_background IS NULL THEN ''
 	     WHEN T0.cabin_background = 0 THEN ''
-	     ELSE 'Ancho: '|| round(cast(T0.cabin_width as numeric),2) || ' mm X Profundidad: ' || round(cast(T0.cabin_background as numeric),2) || ' mm X Alto: ' || round(cast(T0.cabin_height as numeric),2) || ' mm' END "Dimensiones",
+	     ELSE 'Ancho: '|| round(cast(T0.cabin_width as numeric),2) || ' mts X Profundidad: ' || round(cast(T0.cabin_background as numeric),2) || ' mts X Alto: ' || round(cast(T0.cabin_height as numeric),2) || ' mts' END "Dimensiones",
 	(SELECT
 			T10.name
 		FROM
@@ -319,7 +319,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="144" y="171" width="432" height="15" uuid="9340c61c-7a08-4b77-8311-caf8a3d25dc1"/>
 				<textElement>
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Control}]]></textFieldExpression>
 			</textField>

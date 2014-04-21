@@ -751,14 +751,14 @@
 						<space></space>
 					</row>
 					<row>
-						<label sclass="formLabel" value="Ancho (mm):"></label>
+						<label sclass="formLabel" value="Ancho (mts):"></label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
 								value="@save(vm.budget.cabinWidth) @load(vm.budget.cabinWidth) @validator(vm.noEmpty, component = self)">
 							</doublebox>
 						</div>
-						<label sclass="formLabel" value="Fondo (mm):"></label>
+						<label sclass="formLabel" value="Fondo (mts):"></label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
@@ -766,7 +766,7 @@
 							</doublebox>
 						</div>
 						<label sclass="formLabel"
-							value="Altura (mm):">
+							value="Altura (mts):">
 						</label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
