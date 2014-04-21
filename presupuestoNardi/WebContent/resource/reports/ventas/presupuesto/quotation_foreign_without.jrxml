@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" pageWidth="612" pageHeight="792" columnWidth="576" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" uuid="31586bca-fe1e-4d29-8b2d-dd013c1e3579">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="286"/>
 	<parameter name="VERSION" class="java.lang.Short">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
@@ -155,7 +155,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="604" width="576" height="15" uuid="fdb18384-4782-49e4-9c17-45e7275f5764"/>
 				<textElement textAlignment="Center">
-					<font fontName="Serif" size="10" isBold="false"/>
+					<font fontName="Serif" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Telefono}]]></textFieldExpression>
 			</textField>
