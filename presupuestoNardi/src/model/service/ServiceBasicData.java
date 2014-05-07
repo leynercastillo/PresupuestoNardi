@@ -162,6 +162,16 @@ public class ServiceBasicData {
 	public List<BasicData> listFloorDisplayCF() {
 		return daoBasicdata.listByFieldTable("BUDGET", "FLOOR DISPLAY CF");
 	}
+	
+	@Transactional(readOnly = true)
+	public List<BasicData> listBoothDisplayRelematico() {
+		return daoBasicdata.listByFieldTable("BUDGET", "BOOTH DISPLAY RELEMATICO");
+	}
+
+	@Transactional(readOnly = true)
+	public List<BasicData> listFloorDisplayRelematico() {
+		return daoBasicdata.listByFieldTable("BUDGET", "FLOOR DISPLAY RELEMATICO");
+	}
 
 	@Transactional(readOnly = true)
 	public List<BasicData> listBuildingType() {

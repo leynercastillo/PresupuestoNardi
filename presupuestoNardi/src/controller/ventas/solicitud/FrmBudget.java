@@ -950,9 +950,13 @@ public class FrmBudget {
 			if (budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
 				listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
 				listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
-			} else {
+			} else if (this.budget.getBasicDataByBoothDisplay().getName().contains("CF")) {
 				listBoothDisplay = serviceBasicData.listBoothDisplayCF();
-				listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+				listFloorDisplay = serviceBasicData.listFloorDisplayCF();	
+			}
+			else if (this.budget.getBasicDataByBoothDisplay().getName().contains("RELEMATICO")){
+				listBoothDisplay = serviceBasicData.listBoothDisplayRelematico();
+				listFloorDisplay = serviceBasicData.listFloorDisplayRelematico();
 			}
 			if (budget.getBasicDataByCabinDesign() != null) {
 				cabinModel = budget.getBasicDataByCabinDesign().getBasicData();
@@ -980,9 +984,12 @@ public class FrmBudget {
 		if (this.budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
 			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
 			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
-		} else {
+		} else if (this.budget.getBasicDataByBoothDisplay().getName().contains("CF")){
 			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
 			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+		} else if (this.budget.getBasicDataByBoothDisplay().getName().contains("RELEMATICO")){
+			listBoothDisplay = serviceBasicData.listBoothDisplayRelematico();
+			listFloorDisplay = serviceBasicData.listFloorDisplayRelematico();
 		}
 		if (this.budget.getBasicDataByCabinDesign() != null) {
 			cabinModel = this.budget.getBasicDataByCabinDesign().getBasicData();
@@ -1119,7 +1126,12 @@ public class FrmBudget {
 		} else if (controlType.indexOf("CF CONTROL") != -1) {
 			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
 			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
-		} else {
+		} 
+		else if (controlType.indexOf("RELEMATICO") != -1) {
+			listBoothDisplay = serviceBasicData.listBoothDisplayRelematico();
+			listFloorDisplay = serviceBasicData.listFloorDisplayRelematico();
+		}
+		else {
 			listBoothDisplay = new ArrayList<BasicData>();
 			listFloorDisplay = new ArrayList<BasicData>();
 		}
@@ -1263,7 +1275,11 @@ public class FrmBudget {
 		} else if (controlType.indexOf("CF CONTROL") != -1) {
 			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
 			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
-		} else {
+		} else if (controlType.indexOf("RELEMATICO") != -1) {
+			listBoothDisplay = serviceBasicData.listBoothDisplayRelematico();
+			listFloorDisplay = serviceBasicData.listFloorDisplayRelematico();
+		} 
+		  else {
 			listBoothDisplay = new ArrayList<BasicData>();
 			listFloorDisplay = new ArrayList<BasicData>();
 		}
