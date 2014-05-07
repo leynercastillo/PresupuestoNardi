@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" pageWidth="576" pageHeight="648" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="124"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -319,7 +319,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PRECIO UNITARIO $]]></text>
+				<text><![CDATA[PRECIO UNITARIO Bs]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="426" y="9" width="150" height="15" uuid="781ce720-7460-4459-a012-15aa9a9ae852"/>
@@ -332,7 +332,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SUB-TOTAL $]]></text>
+				<text><![CDATA[SUB-TOTAL Bs]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="80" y="150" width="196" height="16" uuid="2917fbcc-1c91-4a5f-9205-4d3fc559fde6"/>
@@ -438,7 +438,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL $:]]></text>
+				<text><![CDATA[TOTAL Bs:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="116" y="195" width="460" height="15" uuid="51221a8d-22ca-44d5-95f3-41387ebc73b8"/>

@@ -1086,8 +1086,8 @@
 								<columns>
 									<column label="Cantidad"></column>
 									<column label="Equipo"></column>
-									<column label="Precio unitario $"></column>
-									<column label="Subtotal $"></column>
+									<column label="Precio unitario Bs"></column>
+									<column label="Subtotal Bs"></column>
 								</columns>
 								<rows>
 									<row>

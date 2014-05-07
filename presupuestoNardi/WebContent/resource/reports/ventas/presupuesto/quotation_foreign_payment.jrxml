@@ -319,7 +319,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PRECIO UNITARIO $]]></text>
+				<text><![CDATA[PRECIO UNITARIO Bs]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="426" y="9" width="150" height="15" uuid="781ce720-7460-4459-a012-15aa9a9ae852"/>
@@ -332,7 +332,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SUB-TOTAL $]]></text>
+				<text><![CDATA[SUB-TOTAL Bs]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="80" y="150" width="196" height="16" uuid="2917fbcc-1c91-4a5f-9205-4d3fc559fde6"/>
@@ -438,7 +438,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL $:]]></text>
+				<text><![CDATA[TOTAL Bs:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="175" y="120" width="229" height="15" uuid="db453594-4866-4d12-a2c9-dc773d86d894"/>
