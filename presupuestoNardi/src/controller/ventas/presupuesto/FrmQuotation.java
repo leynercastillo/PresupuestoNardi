@@ -1162,7 +1162,7 @@ public class FrmQuotation {
 		if (template == null || template.compareTo("SI") == 0) {
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 			{
-				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || !quotation.isType())
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || quotation.getBudget().getBasicDataByElevatorType().getName().contains("CARGA") || !quotation.isType())
 					template = "quotation_resume.jasper";
 				else
 					template = "quotation.jasper";
@@ -1174,7 +1174,7 @@ public class FrmQuotation {
 		} else if (template.contains("NO"))
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 			{
-				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || !quotation.isType())
+				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || quotation.getBudget().getBasicDataByElevatorType().getName().contains("CARGA") || !quotation.isType())
 					template = "quotation_resume_without.jasper";
 				else
 					template = "quotation_without.jasper";

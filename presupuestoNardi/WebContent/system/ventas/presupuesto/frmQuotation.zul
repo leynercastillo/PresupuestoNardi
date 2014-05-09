@@ -965,7 +965,7 @@
 						<space></space>
 						<space></space>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO')">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO' and vm.quotation.basicDataByElevatorType.name ne 'CARGA')">
 						<label sclass="formLabel" value="60%"></label>
 						<label sclass="formLabel"
 							value="Material Importado:">
@@ -977,7 +977,7 @@
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO')">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO' and vm.quotation.basicDataByElevatorType.name ne 'CARGA')">
 						<label sclass="formLabel" value="40%"></label>
 						<label sclass="formLabel"
 							value="Material Nacional y Mano de Obra de fabricacion:">
@@ -989,7 +989,7 @@
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO')">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO' and vm.quotation.basicDataByElevatorType.name ne 'CARGA')">
 						<label sclass="formLabel" value="100%"></label>
 						<label sclass="formLabel"
 							value="Precio Unitario Total:">
@@ -1004,7 +1004,7 @@
 						<label sclass="formLabel" value="Bs"></label>
 						<space></space>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO')">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL'  and vm.quotation.type and vm.quotation.basicDataByElevatorType.name ne 'MONTA PLATO' and vm.quotation.basicDataByElevatorType.name ne 'CARGA')">
 						<label sclass="formLabel"
 							value="@load(vm.quotation.elevatorQuantity)">
 						</label>
@@ -1022,7 +1022,7 @@
 						</doublebox>
 						<label sclass="formLabel" value="Bs:"></label>
 					</row>
-					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL' and (vm.quotation.basicDataByElevatorType.name eq 'MONTA PLATO' or !vm.quotation.type))">
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA NACIONAL' and (vm.quotation.basicDataByElevatorType.name eq 'MONTA PLATO' or vm.quotation.basicDataByElevatorType.name eq 'CARGA' or !vm.quotation.type))">
 						<cell colspan="4">
 							<grid>
 								<auxhead>
