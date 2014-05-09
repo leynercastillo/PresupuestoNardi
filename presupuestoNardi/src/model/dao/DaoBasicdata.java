@@ -120,6 +120,7 @@ public class DaoBasicdata {
 	public List<BasicData> listByParent(BasicData parent) {
 		Session session = getCurrentSession();
 		Criteria criteria = session.createCriteria(BasicData.class);
+		criteria.add(Restrictions.eq("status", 'A'));
 		criteria.add(Restrictions.eq("basicData", parent));
 		criteria.addOrder(Order.asc("priority"));
 		return criteria.list();
