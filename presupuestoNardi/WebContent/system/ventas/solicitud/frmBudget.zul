@@ -750,19 +750,21 @@
 						</combobox>
 						<space></space>
 					</row>
-					<row>
+					<!-- se cambio para que no se mostrara y se quito  @validator(vm.noEmpty, component = self) -->
+					<row visible="false">
 						<label sclass="formLabel" value="Ancho (mts):"></label>
 						<div width="100%">
+						
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
-								value="@save(vm.budget.cabinWidth) @load(vm.budget.cabinWidth) @validator(vm.noEmpty, component = self)">
+								value="@save(vm.budget.cabinWidth) @load(vm.budget.cabinWidth)">
 							</doublebox>
 						</div>
 						<label sclass="formLabel" value="Fondo (mts):"></label>
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
-								value="@save(vm.budget.cabinBackground) @load(vm.budget.cabinBackground) @validator(vm.noEmpty, component = self)">
+								value="@save(vm.budget.cabinBackground) @load(vm.budget.cabinBackground)">
 							</doublebox>
 						</div>
 						<label sclass="formLabel"
@@ -771,7 +773,7 @@
 						<div width="100%">
 							<doublebox disabled="@load(vm.disabledAll)"
 								hflex="1"
-								value="@save(vm.budget.cabinHeight) @load(vm.budget.cabinHeight) @validator(vm.noEmpty, component = self)">
+								value="@save(vm.budget.cabinHeight) @load(vm.budget.cabinHeight)">
 							</doublebox>
 						</div>
 					</row>

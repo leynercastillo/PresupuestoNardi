@@ -610,20 +610,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipos}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="215" y="363" width="355" height="15" uuid="63ed33ca-ed92-486f-85fd-0a3ecdca0a54"/>
-				<textElement>
-					<font fontName="Serif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{Dimensiones}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="144" y="363" width="170" height="15" uuid="484acfa2-5065-4167-93e4-724aca465295"/>
-				<textElement>
-					<font fontName="Serif" size="9" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{DIMENSIONES}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 </jasperReport>

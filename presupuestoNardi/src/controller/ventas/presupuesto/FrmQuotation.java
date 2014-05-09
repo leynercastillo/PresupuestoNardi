@@ -18,12 +18,12 @@ import model.database.Budget;
 import model.database.Quotation;
 import model.database.SaleSummary;
 import model.database.TransactionSummary;
-
 import model.service.ServiceBasicData;
 import model.service.ServiceBudget;
 import model.service.ServiceQuotation;
 import model.service.ServiceSaleSummary;
 import model.service.ServiceTransactionSummary;
+
 
 
 import org.zkoss.bind.BindUtils;
@@ -1167,10 +1167,14 @@ public class FrmQuotation {
 				else
 					template = "quotation.jasper";
 			}
-			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
+			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA"))
+				{System.out.println("1");
 					template = "quotation_foreign.jasper";
-				
-			
+				}
+			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA PRESENTADO EN $"))
+				{System.out.println("2");
+				template = "quotation_foreign$.jasper";	
+				}
 		} else if (template.contains("NO"))
 			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
 			{
@@ -1181,6 +1185,9 @@ public class FrmQuotation {
 			}
 			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
 				template = "quotation_foreign_without.jasper";
+			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA PRESENTADO EN $"))
+				template = "quotation_foreign$_without.jasper";
+		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("TYPE", quotation.isType());
 		parameters.put("NEW", quotation.getNewNumber());

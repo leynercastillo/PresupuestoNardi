@@ -1207,6 +1207,138 @@
 						</cell>
 						<space></space>
 					</row>
+					<row  visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA PRESENTADO EN $')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE IMPORTADA" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column label="Precio unitario $"></column>
+									<column label="Subtotal $"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('setPrice', price = self.value, type = 'foreign')"
+											style="text-align: right"
+											value="@save(vm.quotation.priceImportedMaterial, before = 'confirmSave') @load(vm.quotation.priceImportedMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceImportedMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceImportedMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disabledEdit)" maxlength="700" rows="7"
+												value="@bind(vm.quotation.paymentForeign)" width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
+					<row visible="@load(vm.quotation.basicDataByQuotationType.name eq 'MONEDA EXTRANJERA PRESENTADO EN $')">
+						<cell colspan="4">
+							<grid>
+								<auxhead>
+									<auxheader colspan="4"
+										label="PARTE NACIONAL" sclass="formLabel">
+									</auxheader>
+								</auxhead>
+								<columns>
+									<column label="Cantidad"></column>
+									<column label="Equipo"></column>
+									<column
+										label="Precio unitario Bs">
+									</column>
+									<column label="Subtotal Bs"></column>
+								</columns>
+								<rows>
+									<row>
+										<label
+											value="@load(vm.quotation.elevatorQuantity)">
+										</label>
+										<label
+											value="@load(vm.quotation.basicDataByElevatorType eq null ? '' : vm.getElevatorType(vm.quotation.basicDataByElevatorType.name))">
+										</label>
+										<doublebox
+											disabled="@load(vm.disabledEdit)" format="#,##0.00"
+											onChange="@command('setPrice', price = self.value, type = 'national')"
+											style="text-align: right"
+											value="@save(vm.quotation.priceNationalMaterial, before = 'confirmSave') @load(vm.quotation.priceNationalMaterial)"
+											width="95%">
+										</doublebox>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceNationalMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<space></space>
+										<space></space>
+										<cell align="right">
+											<label sclass="formLabel"
+												value="Total:">
+											</label>
+										</cell>
+										<doublebox disabled="true"
+											format="#,##0.00" style="text-align: right"
+											value="@load(vm.quotation.priceNationalMaterial * vm.quotation.elevatorQuantity)"
+											width="95%">
+										</doublebox>
+									</row>
+									<row>
+										<label
+											value="Condiciones de pago:" sclass="formLabel">
+										</label>
+										<cell colspan="3">
+											<textbox
+												disabled="@load(vm.disabledEdit)" maxlength="700" rows="7"
+												value="@bind(vm.quotation.payment)" width="98%">
+											</textbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+						<space></space>
+					</row>
 				</rows>
 			</grid>
 		</groupbox>
