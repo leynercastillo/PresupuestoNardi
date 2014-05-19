@@ -1196,6 +1196,7 @@ public class FrmQuotation {
 		parameters.put("IMAGES_DIR", "../../resource/images/system/reports/");
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/presupuesto/");
 		report.createPdf("/resource/reports/ventas/presupuesto", template, parameters, "ppto_" + quotationNumber + ".pdf");
+		
 	}
 	
 	

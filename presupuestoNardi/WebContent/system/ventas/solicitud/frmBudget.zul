@@ -1108,8 +1108,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listBoothDisplay)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByBoothDisplay)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByBoothDisplay eq null ? vm.seleccione : vm.budget.basicDataByBoothDisplay.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByBoothDisplay, before = 'confirmSave') @load(vm.budget.basicDataByBoothDisplay) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByBoothDisplay eq null ? vm.seleccione : vm.budget.basicDataByBoothDisplay.name)"
 							width="100%">
 							<template name="model" var="BoothDisplay">
 								<comboitem
@@ -1128,8 +1128,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listFloorDisplay)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByFloorDisplay)"
-							value="@save(vm.seleccione) @load(vm.budget.basicDataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicDataByFloorDisplay.name)"
+							selectedItem="@save(vm.budget.basicDataByFloorDisplay, before ='confirmSave') @load(vm.budget.basicDataByFloorDisplay)"
+							value="@load(vm.budget.basicDataByFloorDisplay eq null ? vm.seleccione : vm.budget.basicDataByFloorDisplay.name)"
 							width="100%">
 							<template name="model" var="FloorDisplay">
 								<comboitem

@@ -983,12 +983,23 @@ public class FrmBudget {
 		listFan.addAll(serviceBasicData.listFan2());
 		if (this.budget.getBasicDataByBoothDisplay().getName().contains("SISTEL")) {
 			listBoothDisplay = serviceBasicData.listBoothDisplaySistel();
-			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
+			
 		} else if (this.budget.getBasicDataByBoothDisplay().getName().contains("CF")){
 			listBoothDisplay = serviceBasicData.listBoothDisplayCF();
-			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+			
 		} else if (this.budget.getBasicDataByBoothDisplay().getName().contains("RELEMATICO")){
 			listBoothDisplay = serviceBasicData.listBoothDisplayRelematico();
+			
+		}
+		
+		if (this.budget.getBasicDataByFloorDisplay().getName().contains("SISTEL")) {
+			
+			listFloorDisplay = serviceBasicData.listFloorDisplaySistel();
+		} else if (this.budget.getBasicDataByFloorDisplay().getName().contains("CF")){
+			
+			listFloorDisplay = serviceBasicData.listFloorDisplayCF();
+		} else if (this.budget.getBasicDataByFloorDisplay().getName().contains("RELEMATICO")){
+			
 			listFloorDisplay = serviceBasicData.listFloorDisplayRelematico();
 		}
 		if (this.budget.getBasicDataByCabinDesign() != null) {
