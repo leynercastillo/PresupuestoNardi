@@ -1168,7 +1168,7 @@
 											disabled="@load(vm.disabledEdit)" format="#,##0.00"
 											onChange="@command('setPrice', price = self.value, type = 'national')"
 											style="text-align: right"
-											value="@save(vm.quotation.priceNationalMaterial, before = 'confirmSave') @load(vm.quotation.priceNationalMaterial)"
+											value="@save(vm.quotation.priceNationalMaterial, before = 'confirmSave') @load(vm.quotation.priceNationalMaterial) @validator(vm.noEmpty, component = self)"
 											width="95%">
 										</doublebox>
 										<doublebox disabled="true"
