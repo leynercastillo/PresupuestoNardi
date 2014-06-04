@@ -35,6 +35,25 @@
 						label="Modernizacion">
 					</checkbox>
 				</row>
+			<row>
+						<label sclass="formLabel"
+							value="Tipo precio:">
+						</label>
+						<combobox 
+							model="@load(vm.listQuotationType)"
+							selectedItem="@bind(vm.basicData)" 
+							width="99%">
+							<template name="model"
+								var="quotationType">
+								<comboitem
+									label="@load(quotationType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						<space></space>
+						<space></space>
+						<space></space>
+					</row>
 				<row spans="5">
 					<listbox checkmark="true"
 						model="@load(vm.listUsers)" mold="paging" multiple="true"

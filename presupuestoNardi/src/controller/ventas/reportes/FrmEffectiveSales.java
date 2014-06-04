@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.database.BasicData;
 import model.database.SecurityGroup;
 import model.database.SecurityUser;
+import model.service.ServiceBasicData;
 import model.service.ServiceSecurityGroup;
 import model.service.ServiceSecurityUser;
 
@@ -30,12 +32,52 @@ public class FrmEffectiveSales {
 	private ServiceSecurityUser serviceSecurityUser;
 	@WireVariable
 	private ServiceSecurityGroup serviceSecurityGroup;
+	@WireVariable
+	private ServiceBasicData serviceBasicData;
 	private Date beginDate;
 	private Date endDate;
 	private Boolean newSales;
 	private Boolean modernization;
+	private Boolean monedaNacional;
+	private Boolean monedaExtranjera;
 	private ListModelList<SecurityUser> listUsers;
 	private Set<SecurityUser> listSelectedUsers;
+	private List<BasicData> listQuotationType;
+	private BasicData basicData;
+	
+	
+
+	public BasicData getBasicData() {
+		return basicData;
+	}
+
+	public void setBasicData(BasicData basicData) {
+		this.basicData = basicData;
+	}
+
+	public List<BasicData> getListQuotationType() {
+		return listQuotationType;
+	}
+
+	public void setListQuotationType(List<BasicData> listQuotationType) {
+		this.listQuotationType = listQuotationType;
+	}
+
+	public Boolean getMonedaNacional() {
+		return monedaNacional;
+	}
+
+	public void setMonedaNacional(Boolean monedaNacional) {
+		this.monedaNacional = monedaNacional;
+	}
+
+	public Boolean getMonedaExtranjera() {
+		return monedaExtranjera;
+	}
+
+	public void setMonedaExtranjera(Boolean monedaExtranjera) {
+		this.monedaExtranjera = monedaExtranjera;
+	}
 
 	public Boolean getNewSales() {
 		return newSales;
@@ -110,15 +152,21 @@ public class FrmEffectiveSales {
 		listUsers.addAll(serviceSecurityUser.listByGroup(group.getIdSecurityGroup()));
 		newSales = false;
 		modernization = false;
+		monedaNacional = false;
+		monedaExtranjera= false;
+		listQuotationType = serviceBasicData.listQuotationTypeMoney();
+		
 	}
 
 	@Command
 	public void generateReport() {
 		List<Boolean> listQuotationTypes = new ArrayList<Boolean>();
+		//List<Integer> listQuotationTypesMoney = new ArrayList<Integer>();
 		if (newSales)
 			listQuotationTypes.add(true);
 		if (modernization)
 			listQuotationTypes.add(false);
+		
 		GenericReport report = new GenericReport();
 		List<Integer> listIdUser = new ArrayList<Integer>();
 		for (SecurityUser user : listSelectedUsers) {
@@ -129,8 +177,13 @@ public class FrmEffectiveSales {
 		map.put("START_DATE", beginDate);
 		map.put("END_DATE", endDate);
 		map.put("LIST_TYPE", listQuotationTypes);
+		map.put("LIST_TYPE_MONEY", basicData.getIdBasic());
 		map.put("IMAGES_DIR", "../../resource/images/system/reports/");
+		
+		if (basicData.getName().contains("MONEDA NACIONAL"))
 		report.createPdf("/resource/reports/ventas/reportes", "effective_sales.jasper", map, "ventas-efectivas.pdf");
+		else
+		report.createPdf("/resource/reports/ventas/reportes", "effective_sales$.jasper", map, "ventas-efectivas.pdf");	
 		report.viewPdf("/resource/reports/ventas/reportes/ventas-efectivas.pdf", "Ventas efectivas");
 	}
 

@@ -100,4 +100,18 @@ public class DaoSecurityUser {
 		query.setParameter("idGroup", idGroup);
 		return query.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SecurityUser> listByGroupQuotation(int idGroup, int quotationType) {
+		/*
+		 * Aca se hace uso de HQL para poder hacer unos de los inner join, que ahorran mucha memoria al momento
+		 * de realizar consultas complejas
+		 */
+		Session session = getCurrentSession();
+		String hql = "select distinct user from SecurityGroup securityGroup inner join securityGroup.securityUsers user where securityGroup.id = :idGroup order by user.name";
+		Query query = session.createQuery(hql);
+		query.setParameter("idGroup", idGroup);
+		query.setParameter("quotationType",quotationType);
+		return query.list();
+	}
 }

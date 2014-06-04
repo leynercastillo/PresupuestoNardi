@@ -340,7 +340,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="144" y="203" width="432" height="15" uuid="d7858550-6f00-4ab8-85c0-9d6ce58d9539"/>
 				<textElement>
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="9" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Display piso}]]></textFieldExpression>
 			</textField>

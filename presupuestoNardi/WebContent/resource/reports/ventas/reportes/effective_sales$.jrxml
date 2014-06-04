@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="effective_sales" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2292d79-df22-472a-a245-c86586c5f6af">
-	<property name="ireport.zoom" value="2.8531167061100033"/>
-	<property name="ireport.x" value="1115"/>
-	<property name="ireport.y" value="464"/>
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="IMAGES_DIR" class="java.lang.String"/>
 	<parameter name="LIST_USER" class="java.util.List"/>
 	<parameter name="START_DATE" class="java.util.Date"/>
@@ -34,22 +34,23 @@
 			"T10".id_basic = "T0".free_admission) AS "ENTRADA",
 
 	"T0".elevator_quantity AS "CANTIDAD ASCENSORES",
-	"T0".total_price AS "PRECIO UNITARIO",
-	"T0".total_price * "T0".elevator_quantity AS "PRECIO TOTAL",
+    "T0".price_national_material AS "PRECIO UNITARIO",
+	"T0".price_national_material * "T0".elevator_quantity AS "PRECIO TOTAL",
+    "T0".price_imported_material AS "PRECIO UNITARIO E",
+	"T0".price_imported_material * "T0".elevator_quantity AS "PRECIO TOTAL E",
 	"T2".id_security_user AS "id User"
-
 FROM
 	quotation "T0" INNER JOIN budget "T1" ON "T0".id_budget = "T1".id_budget
 	INNER JOIN security_user "T2" ON "T2".id_security_user = "T1".id_security_user
-    INNER JOIN basic_data "T10" ON "T10".id_basic = "T0".quotation_type
+  INNER JOIN basic_data "T10" ON "T10".id_basic = "T0".quotation_type
 WHERE
 	$X{IN,"T2".id_security_user,LIST_USER}
 	AND "T0".approved_date::DATE BETWEEN $P{START_DATE} AND $P{END_DATE}
 	AND "T0".status = 'A'
-    AND "T0".quotation_type = $P{LIST_TYPE_MONEY}
+     AND "T0".quotation_type = $P{LIST_TYPE_MONEY}
 	AND $X{IN,"T0".type,LIST_TYPE}
 
-GROUP BY "T0".id_quotation, "T2"."name", "T0"."date", "T0"."type", "T0".new_number, "T0".version_number, "T0".modernization_number, "T0".partner_name, "T0".construction, "T0".elevator_capacitance, "T0".elevator_quantity, "T0".total_price, "T0".free_admission, "T0".stop_sequence_continuous_number, "T0".stop_sequence_even_number, "T0".stop_sequence_odd_number, "T2".id_security_user, "T0".stop_number, "T0".type, "T0".quotation_type, "T0".price_imported_material
+GROUP BY "T0".id_quotation, "T2"."name", "T0"."date", "T0"."type", "T0".new_number, "T0".version_number, "T0".modernization_number, "T0".partner_name, "T0".construction, "T0".elevator_capacitance, "T0".elevator_quantity, "T0".free_admission, "T0".stop_sequence_continuous_number, "T0".stop_sequence_even_number, "T0".stop_sequence_odd_number, "T2".id_security_user, "T0".stop_number, "T0".type, "T0".quotation_type ,"T0".price_imported_material, "T0".price_national_material
 ORDER BY "T2"."name", "T0"."date"]]>
 	</queryString>
 	<field name="VENDEDOR" class="java.lang.String"/>
@@ -64,15 +65,23 @@ ORDER BY "T2"."name", "T0"."date"]]>
 	<field name="CANTIDAD ASCENSORES" class="java.lang.Integer"/>
 	<field name="PRECIO UNITARIO" class="java.lang.Double"/>
 	<field name="PRECIO TOTAL" class="java.lang.Double"/>
+	<field name="PRECIO UNITARIO E" class="java.lang.Double"/>
+	<field name="PRECIO TOTAL E" class="java.lang.Double"/>
 	<field name="id User" class="java.lang.Integer"/>
 	<variable name="TOTAL_SELLER_BSF" class="java.lang.Double" resetType="Group" resetGroup="vendedor" calculation="Sum">
 		<variableExpression><![CDATA[$F{PRECIO TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_SELLER_USD" class="java.lang.Double" resetType="Group" resetGroup="vendedor" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRECIO TOTAL E}]]></variableExpression>
 	</variable>
 	<variable name="CANTIDAD_SELLER" class="java.lang.Integer" resetType="Group" resetGroup="vendedor" calculation="Sum">
 		<variableExpression><![CDATA[$F{CANTIDAD ASCENSORES}]]></variableExpression>
 	</variable>
 	<variable name="TOTAL" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{PRECIO TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_USD" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRECIO TOTAL E}]]></variableExpression>
 	</variable>
 	<variable name="CANTIDAD_TOTAL" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{CANTIDAD ASCENSORES}]]></variableExpression>
@@ -82,7 +91,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 		<groupHeader>
 			<band height="45">
 				<staticText>
-					<reportElement x="0" y="30" width="45" height="15" uuid="255f37b2-2723-4076-b6a6-c5ebdfac669e"/>
+					<reportElement x="0" y="30" width="29" height="15" uuid="255f37b2-2723-4076-b6a6-c5ebdfac669e"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -91,12 +100,12 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PPTO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="45" y="30" width="184" height="15" uuid="8180314e-d5b1-45bd-8dba-ab912c7ff92f"/>
+					<reportElement x="29" y="30" width="144" height="15" uuid="8180314e-d5b1-45bd-8dba-ab912c7ff92f"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -105,12 +114,12 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CLIENTE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="30" width="170" height="15" uuid="ef5fb260-5ac2-4fbf-91fc-8d6219d4b338"/>
+					<reportElement x="173" y="30" width="157" height="15" uuid="ef5fb260-5ac2-4fbf-91fc-8d6219d4b338"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -119,12 +128,12 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[OBRA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="399" y="30" width="88" height="15" uuid="f77d91c7-a30b-44ea-a059-505a9bd825d6"/>
+					<reportElement x="330" y="30" width="65" height="15" uuid="f77d91c7-a30b-44ea-a059-505a9bd825d6"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -133,12 +142,12 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement>
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CAPACIDAD]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="487" y="30" width="50" height="15" uuid="a4eb4604-4b7b-43fe-8091-e4697f36df01"/>
+					<reportElement x="395" y="30" width="40" height="15" uuid="a4eb4604-4b7b-43fe-8091-e4697f36df01"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -147,12 +156,12 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Right">
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ENTRADA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="602" y="30" width="30" height="15" uuid="4afed98d-2a98-4716-8236-8624e703539d"/>
+					<reportElement x="480" y="30" width="30" height="15" uuid="4afed98d-2a98-4716-8236-8624e703539d"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0"/>
@@ -175,9 +184,9 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Right">
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[PRECIO U]]></text>
+					<text><![CDATA[PRECIO U $]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="692" y="30" width="60" height="15" uuid="64784c3c-a9f8-4d58-9796-2b65b7c2e3be"/>
@@ -189,9 +198,9 @@ ORDER BY "T2"."name", "T0"."date"]]>
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Right">
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TOTAL Bs]]></text>
+					<text><![CDATA[TOTAL $]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="92" y="0" width="263" height="15" uuid="c23448e7-1919-4793-b749-08617eb7305f"/>
@@ -208,7 +217,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 					<text><![CDATA[VENDEDOR:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="572" y="30" width="30" height="15" uuid="307c5aca-2617-4428-af54-77fe099b2d59"/>
+					<reportElement x="460" y="30" width="20" height="15" uuid="307c5aca-2617-4428-af54-77fe099b2d59"/>
 					<box>
 						<bottomPen lineWidth="1.0"/>
 					</box>
@@ -246,14 +255,42 @@ ORDER BY "T2"."name", "T0"."date"]]>
 					<textFieldExpression><![CDATA[$P{END_DATE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="537" y="30" width="35" height="15" uuid="4e88b2b4-d49c-47dc-90e1-a4e0dbd42e8c"/>
+					<reportElement x="435" y="30" width="25" height="15" uuid="4e88b2b4-d49c-47dc-90e1-a4e0dbd42e8c"/>
 					<box>
 						<bottomPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Right">
-						<font fontName="Serif" size="9" isBold="true"/>
+						<font fontName="Serif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PISOS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="512" y="30" width="60" height="15" uuid="55816d89-e2a4-4683-a09c-e6caab1f56b4"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Serif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRECIO U Bs]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="572" y="30" width="60" height="15" uuid="1513ba95-f2ea-40ec-8846-e67a9e4d0dc2"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Serif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL Bs]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -263,7 +300,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 					<reportElement x="0" y="15" width="100" height="1" uuid="4f188bcb-e266-4b1a-b903-28e3100cdcad"/>
 				</break>
 				<textField>
-					<reportElement x="602" y="0" width="30" height="15" uuid="56c60a82-7783-471a-ac1e-0322a6e51b8c"/>
+					<reportElement x="480" y="0" width="30" height="15" uuid="56c60a82-7783-471a-ac1e-0322a6e51b8c"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -273,7 +310,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 					<textFieldExpression><![CDATA[$V{CANTIDAD_SELLER}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="602" height="15" uuid="b1299752-729a-4d9c-b88d-c7a45224de0a"/>
+					<reportElement x="-113" y="0" width="593" height="15" uuid="b1299752-729a-4d9c-b88d-c7a45224de0a"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -283,17 +320,37 @@ ORDER BY "T2"."name", "T0"."date"]]>
 					<text><![CDATA[TOTAL:]]></text>
 				</staticText>
 				<textField pattern="#,##0.00">
-					<reportElement x="632" y="1" width="108" height="15" uuid="974b7c7b-f2ca-4a09-9965-f4d0ecc0695d"/>
+					<reportElement x="635" y="0" width="108" height="15" uuid="974b7c7b-f2ca-4a09-9965-f4d0ecc0695d"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Serif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTAL_SELLER_USD}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="514" y="0" width="109" height="15" uuid="084cd179-4b25-42d6-8670-1c4205c1097a"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Serif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTAL_SELLER_BSF}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="740" y="0" width="12" height="15" uuid="919c5e46-a998-495c-92de-e48b96e8a84b"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Serif" size="9" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{TOTAL_SELLER_BSF}]]></textFieldExpression>
-				</textField>
+					<text><![CDATA[$]]></text>
+				</staticText>
 				<staticText>
-					<reportElement x="740" y="1" width="12" height="15" uuid="5559cd07-0c63-4147-a062-b467a9fe70c1"/>
+					<reportElement x="623" y="0" width="12" height="15" uuid="e6e05c08-3a2b-4d02-be12-fb49d5512bd0"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -351,42 +408,42 @@ ORDER BY "T2"."name", "T0"."date"]]>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="45" height="15" uuid="0454c854-fad6-42e9-ac70-df8235718e56"/>
+				<reportElement x="0" y="0" width="29" height="15" uuid="0454c854-fad6-42e9-ac70-df8235718e56"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NUMERO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="45" y="0" width="184" height="15" uuid="47a756c8-9c80-4ebb-9691-c15d667d9626"/>
+				<reportElement x="30" y="0" width="143" height="15" uuid="47a756c8-9c80-4ebb-9691-c15d667d9626"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CLIENTE}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="229" y="0" width="166" height="15" uuid="7caafb3b-11a6-4b21-94e9-5ecf19a646da"/>
+				<reportElement x="173" y="0" width="157" height="15" uuid="7caafb3b-11a6-4b21-94e9-5ecf19a646da"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OBRA}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="399" y="0" width="88" height="15" uuid="73adf249-0b56-44f5-9c68-1f3ab759edae"/>
+				<reportElement x="330" y="0" width="65" height="15" uuid="73adf249-0b56-44f5-9c68-1f3ab759edae"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CAPACIDAD}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="487" y="0" width="50" height="15" uuid="8e67e070-ac88-4e21-88b1-8f68827f0663"/>
+				<reportElement x="395" y="0" width="40" height="15" uuid="8e67e070-ac88-4e21-88b1-8f68827f0663"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ENTRADA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="602" y="0" width="30" height="15" uuid="064b3f2f-a72b-41c0-a281-4d46bdb670b7"/>
+				<reportElement x="480" y="0" width="30" height="15" uuid="064b3f2f-a72b-41c0-a281-4d46bdb670b7"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -395,19 +452,19 @@ ORDER BY "T2"."name", "T0"."date"]]>
 			<textField pattern="###0.00">
 				<reportElement x="632" y="0" width="60" height="15" uuid="90c999fb-18fe-4775-82d1-319befdb19f5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PRECIO UNITARIO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PRECIO UNITARIO E}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="572" y="0" width="30" height="15" uuid="3ebb0ba0-5118-48ca-bcdd-31145c1bfa6d"/>
+				<reportElement x="460" y="0" width="20" height="15" uuid="3ebb0ba0-5118-48ca-bcdd-31145c1bfa6d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCESOS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="537" y="0" width="35" height="15" uuid="2e8fbfd5-a14e-46f3-81a3-adbcfcb24479"/>
+				<reportElement x="435" y="0" width="25" height="15" uuid="2e8fbfd5-a14e-46f3-81a3-adbcfcb24479"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="9"/>
 				</textElement>
@@ -416,28 +473,52 @@ ORDER BY "T2"."name", "T0"."date"]]>
 			<textField pattern="###0.00">
 				<reportElement x="692" y="0" width="60" height="15" uuid="dfc95b83-5197-4beb-b06e-e5928f1acc6f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECIO TOTAL E}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="572" y="0" width="60" height="15" uuid="7463ecac-a84e-4ff2-a6be-f8f7d869e219"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRECIO TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="512" y="0" width="60" height="15" uuid="f5d86b9e-6013-4070-885f-89aace24b600"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECIO UNITARIO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="61">
+		<band height="60">
 			<image hAlign="Center">
-				<reportElement x="0" y="15" width="752" height="46" uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9"/>
+				<reportElement x="0" y="14" width="752" height="46" uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="61">
+			<textField pattern="#,##0.00">
+				<reportElement x="635" y="0" width="105" height="15" uuid="a68eebc5-0a83-481d-a5cc-bae6aef70bbc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_USD}]]></textFieldExpression>
+			</textField>
 			<image hAlign="Center">
 				<reportElement x="0" y="15" width="752" height="46" uuid="2249fa04-e4c0-49be-a2f1-dd55f5d686e9"/>
 				<imageExpression><![CDATA[$P{IMAGES_DIR}+"pie.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="9" y="0" width="593" height="15" uuid="c182c2b9-0a96-49de-a577-8f2b9edd5971"/>
+				<reportElement x="-113" y="0" width="593" height="15" uuid="c182c2b9-0a96-49de-a577-8f2b9edd5971"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>
@@ -447,7 +528,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
 			<textField pattern="###0">
-				<reportElement x="602" y="0" width="30" height="15" uuid="a324a505-2b8f-459c-944f-fde88b8ca21f"/>
+				<reportElement x="482" y="0" width="30" height="15" uuid="a324a505-2b8f-459c-944f-fde88b8ca21f"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>
@@ -456,8 +537,18 @@ ORDER BY "T2"."name", "T0"."date"]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{CANTIDAD_TOTAL}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="740" y="0" width="12" height="15" uuid="0973f120-85cc-4f87-8236-7782f1eb7adc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="632" y="0" width="109" height="15" uuid="a68eebc5-0a83-481d-a5cc-bae6aef70bbc"/>
+				<reportElement x="514" y="0" width="109" height="15" uuid="07f8a216-7d08-4b54-9ae3-e5e534dd274d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>
@@ -467,7 +558,7 @@ ORDER BY "T2"."name", "T0"."date"]]>
 				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="741" y="0" width="12" height="15" uuid="c1cacf8c-80d6-4b25-b536-787d5889b4b0"/>
+				<reportElement x="623" y="0" width="12" height="15" uuid="5a1d763e-10a6-4f3c-9aff-7ca4fd9a0bef"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>

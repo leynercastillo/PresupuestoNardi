@@ -37,4 +37,9 @@ public class ServiceSecurityUser {
 	public List<SecurityUser> listByGroup(int idGroup) {
 		return daoSecurityUser.listByGroup(idGroup);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<SecurityUser> listByGroupQuotation(int idGroup, int quotationType) {
+		return daoSecurityUser.listByGroupQuotation(idGroup, quotationType);
+	}
 }

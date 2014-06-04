@@ -739,8 +739,9 @@ public class FrmQuotation {
 	@NotifyChange({ "quotation" })
 	@Command
 	public void loadPayment() {
-		if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
-			
+		System.out.println("entró");
+		if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL")) {
+			System.out.println("nacional");
 			this.basicData = serviceBasicData.findByWarrantyNN();
 			quotation.setNotes(basicData.getName()); 
 			
@@ -762,8 +763,8 @@ public class FrmQuotation {
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
-		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL")) {
-		
+		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL")) {
+			System.out.println("nacional modenizacion");
 			this.basicDataWarranty = serviceBasicData.findByWarrantyNMW();
 			quotation.setWarranty(basicDataWarranty.getName());
 			
@@ -777,7 +778,6 @@ public class FrmQuotation {
 			quotation.setQuotationValidity(basicDataValidity.getName());
 			
 			this.basicDataPayment = serviceBasicData.findByWarrantyNMP();
-			System.out.println(basicDataPayment.getName());
 			quotation.setPayment(basicDataPayment.getName());
 			
 			this.basicData = serviceBasicData.findByWarrantyNM();
@@ -787,8 +787,8 @@ public class FrmQuotation {
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
-		} else if (quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
-			
+		} else if (quotation.isType() && (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA"))) {
+			System.out.println("extranjero");
 			this.basicDataWarranty = serviceBasicData.findByWarrantyENW();
 			quotation.setWarranty(basicDataWarranty.getName());
 			
@@ -814,9 +814,9 @@ public class FrmQuotation {
 			quotation.setPriceImportedMaterial(0);
 			quotation.setPriceNationalMaterial(0);
 			quotation.setTotalPrice(0);
-		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA")) {
+		} else if (!quotation.isType() && quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA")) {
 			
-
+			System.out.println("extranjero modernizacion");
 			this.basicDataWarranty = serviceBasicData.findByWarrantyEMW();
 			quotation.setWarranty(basicDataWarranty.getName());
 			
@@ -838,9 +838,8 @@ public class FrmQuotation {
 			this.basicData = serviceBasicData.findByWarrantyEM();
 			quotation.setNotes(basicData.getName()); 
 			
-			
-
-		}
+		} 
+		
 	}
 
 	@NotifyChange({ "listRifPartner", "listBudgetNumber", "listPartnerName", "listQuotationNumber", "listSeller", "listConstruction" })
@@ -1160,7 +1159,7 @@ public class FrmQuotation {
 	 */
 	private void createQuotationPdf(String template, String quotationNumber, GenericReport report) {
 		if (template == null || template.compareTo("SI") == 0) {
-			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+			if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL"))
 			{
 				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || quotation.getBudget().getBasicDataByElevatorType().getName().contains("CARGA") || !quotation.isType())
 					template = "quotation_resume.jasper";
@@ -1168,25 +1167,25 @@ public class FrmQuotation {
 					template = "quotation.jasper";
 			}
 			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA"))
-				{System.out.println("1");
-					template = "quotation_foreign.jasper";
+				{
+					template = "quotation_foreign$.jasper";
 				}
-			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA PRESENTADO EN $"))
-				{System.out.println("2");
-				template = "quotation_foreign$.jasper";	
+			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL AL CAMBIO EN $"))
+				{
+				template = "quotation_resume.jasper";	
 				}
 		} else if (template.contains("NO"))
-			if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA NACIONAL"))
+			if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL"))
 			{
 				if (quotation.getBudget().getBasicDataByElevatorType().getName().contains("MONTA PLATO") || quotation.getBudget().getBasicDataByElevatorType().getName().contains("CARGA") || !quotation.isType())
 					template = "quotation_resume_without.jasper";
 				else
 					template = "quotation_without.jasper";
 			}
-			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA"))
-				template = "quotation_foreign_without.jasper";
-			else if (quotation.getBasicDataByQuotationType().getName().contains("MONEDA EXTRANJERA PRESENTADO EN $"))
+			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA EXTRANJERA"))
 				template = "quotation_foreign$_without.jasper";
+			else if (quotation.getBasicDataByQuotationType().getName().equals("MONEDA NACIONAL AL CAMBIO EN $"))
+				template = "quotation_resume_without.jasper";
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("TYPE", quotation.isType());
@@ -1198,7 +1197,6 @@ public class FrmQuotation {
 		report.createPdf("/resource/reports/ventas/presupuesto", template, parameters, "ppto_" + quotationNumber + ".pdf");
 		
 	}
-	
 	
 
 	@NotifyChange("*")

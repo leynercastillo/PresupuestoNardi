@@ -75,7 +75,7 @@ public class FrmWindowQuotations {
 
 	public String getPrice(Quotation quotation) {
 		BasicData quotationType = serviceBasicData.findById(quotation.getBasicDataByQuotationType().getIdBasic());
-		if (quotationType.getName().equals("MONEDA NACIONAL"))
+		if (quotationType.getName().contains("MONEDA NACIONAL"))
 			return quotation.getTotalPrice() + " Bs";
 		else
 			return quotation.getPriceImportedMaterial() + " $";

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation_payment" pageWidth="576" pageHeight="648" columnWidth="576" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9256ef25-5c64-4d41-831c-3abfa56428a2">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="124"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -113,20 +113,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[PRECIO]]></text>
 			</staticText>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="470" y="51" width="106" height="15" uuid="bbf542be-045b-4c09-8b08-bebb9d9f364e"/>
-				<box rightPadding="5">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Serif"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{Precio unitario total}]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="51" width="90" height="15" uuid="3c02007c-8443-4456-90f7-3e4ad9d34452"/>
 				<box>
@@ -390,6 +376,20 @@ WHERE
 				</textElement>
 				<text><![CDATA[CANTIDAD]]></text>
 			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="471" y="51" width="106" height="15" uuid="60772251-2e78-4f40-abda-7c5118f3b9ab"/>
+				<box rightPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalPrice}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

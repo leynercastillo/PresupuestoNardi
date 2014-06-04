@@ -211,8 +211,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listBType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByBuildingType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByBuildingType eq null ? vm.seleccione : vm.budget.basicDataByBuildingType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByBuildingType, before = 'confirmSave') @load(vm.budget.basicDataByBuildingType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByBuildingType eq null ? vm.seleccione : vm.budget.basicDataByBuildingType.name) "
 							width="100%">
 							<template name="model" var="bType">
 								<comboitem label="@load(bType.name)"></comboitem>
@@ -236,8 +236,8 @@
 							model="@load(vm.listElevatorType)"
 							onChange="@command('selectElevatorType')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByElevatorType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByElevatorType eq null ? vm.seleccione: vm.budget.basicDataByElevatorType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByElevatorType, before = 'confirmSave') @load(vm.budget.basicDataByElevatorType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByElevatorType eq null ? vm.seleccione: vm.budget.basicDataByElevatorType.name)"
 							width="100%">
 							<template name="model" var="elevatorType">
 								<comboitem
@@ -295,8 +295,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listMachineType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByMachineType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByMachineType eq null ? vm.seleccione : vm.budget.basicDataByMachineType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByMachineType, before = 'confirmSave') @load(vm.budget.basicDataByMachineType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByMachineType eq null ? vm.seleccione : vm.budget.basicDataByMachineType.name)"
 							width="100%">
 							<template name="model" var="MachineType">
 								<comboitem
@@ -308,8 +308,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listBEmbarque)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByAccess)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByAccess eq null ? vm.seleccione : vm.budget.basicDataByAccess.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByAccess, before = 'confirmSave') @load(vm.budget.basicDataByAccess) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByAccess eq null ? vm.seleccione : vm.budget.basicDataByAccess.name)"
 							width="100%">
 							<template name="model" var="Access">
 								<comboitem label="@load(Access.name)">
@@ -340,8 +340,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listSpeed)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataBySpeed)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataBySpeed eq null ? vm.seleccione : vm.budget.basicDataBySpeed.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataBySpeed, before = 'confirmSave') @load(vm.budget.basicDataBySpeed) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataBySpeed eq null ? vm.seleccione : vm.budget.basicDataBySpeed.name)"
 							width="100%">
 							<template name="model" var="Speed">
 								<comboitem label="@load(Speed.name)">
@@ -357,8 +357,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listElectricityType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByElectricityType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByElectricityType eq null ? vm.seleccione : vm.budget.basicDataByElectricityType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByElectricityType, before = 'confirmSave') @load(vm.budget.basicDataByElectricityType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByElectricityType eq null ? vm.seleccione : vm.budget.basicDataByElectricityType.name)"
 							width="100%">
 							<template name="model"
 								var="ElectricityType">
@@ -512,8 +512,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listManeuverType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByManeuverType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByManeuverType eq null ? vm.seleccione : vm.budget.basicDataByManeuverType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByManeuverType, before = 'confirmSave') @load(vm.budget.basicDataByManeuverType)  @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByManeuverType eq null ? vm.seleccione : vm.budget.basicDataByManeuverType.name)"
 							width="100%">
 							<template name="model" var="ManeuverType">
 								<comboitem
@@ -617,8 +617,8 @@
 							model="@load(vm.listCabinModel)"
 							onChange="@command('loadCabinDesign')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.cabinModel)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.cabinModel, before = 'confirmSave') @load(vm.cabinModel)  @validator(vm.noSelect, component = self)"
+							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name)"
 							width="100%">
 							<template name="model" var="cabinModel">
 								<comboitem
@@ -631,8 +631,8 @@
 							model="@load(vm.listDesign)"
 							onChange="@command('activeDesignComment')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByCabinDesign)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByCabinDesign eq null ? vm.seleccione : vm.budget.basicDataByCabinDesign.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByCabinDesign) @load(vm.budget.basicDataByCabinDesign) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByCabinDesign eq null ? vm.seleccione : vm.budget.basicDataByCabinDesign.name) "
 							width="100%">
 							<template name="model" var="Design">
 								<comboitem label="@load(Design.name)">
@@ -655,8 +655,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listRoofType)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByRoofType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByRoofType eq null ? vm.seleccione : vm.budget.basicDataByRoofType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByRoofType, before = 'confirmSave') @load(vm.budget.basicDataByRoofType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByRoofType eq null ? vm.seleccione : vm.budget.basicDataByRoofType.name) "
 							width="100%">
 							<template name="model" var="RoofType">
 								<comboitem
@@ -696,8 +696,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listRailing)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByRailing)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByRailing eq null ? vm.seleccione : vm.budget.basicDataByRailing.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByRailing, before = 'confirmSave') @load(vm.budget.basicDataByRailing) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByRailing eq null ? vm.seleccione : vm.budget.basicDataByRailing.name)"
 							width="100%">
 							<template name="model" var="Railing">
 								<comboitem
@@ -727,8 +727,8 @@
 							model="@load(vm.listFloorType)"
 							onChange="@command('activeDesignComment')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByFloorType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByFloorType eq null ? vm.seleccione : vm.budget.basicDataByFloorType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByFloorType, before = 'confirmSave') @load(vm.budget.basicDataByFloorType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByFloorType eq null ? vm.seleccione : vm.budget.basicDataByFloorType.name)"
 							width="100%">
 							<template name="model" var="FloorType">
 								<comboitem
@@ -806,8 +806,8 @@
 							model="@load(vm.listDoorType)"
 							onChange="@command('selectDoorType', doorType = self.value)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByDoorType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByDoorType eq null ? vm.seleccione : vm.budget.basicDataByDoorType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByDoorType, before = 'confirmSave') @load(vm.budget.basicDataByDoorType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByDoorType eq null ? vm.seleccione : vm.budget.basicDataByDoorType.name)"
 							width="100%">
 							<template name="model" var="DoorType">
 								<comboitem
@@ -866,8 +866,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listFreeAdmission)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByFreeAdmission)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByFreeAdmission eq null ? vm.seleccione : vm.budget.basicDataByFreeAdmission.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByFreeAdmission, before = 'confirmSave') @load(vm.budget.basicDataByFreeAdmission) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByFreeAdmission eq null ? vm.seleccione : vm.budget.basicDataByFreeAdmission.name) "
 							width="100%">
 							<template name="model"
 								var="FreeAdmission">
@@ -880,8 +880,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listHeight)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByHeight)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByHeight eq null ? vm.seleccione : vm.budget.basicDataByHeight.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByHeight, before = 'confirmSave') @load(vm.budget.basicDataByHeight) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByHeight eq null ? vm.seleccione : vm.budget.basicDataByHeight.name)"
 							width="100%">
 							<template name="model" var="Height">
 								<comboitem label="@load(Height.name)">
@@ -946,8 +946,8 @@
 							model="@load(vm.listControlType)"
 							onChange="@command('loadBoothFloorDisplay')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByControlType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByControlType, before = 'confirmSave') @load(vm.budget.basicDataByControlType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name)"
 							width="100%">
 							<template name="model" var="ControlType">
 								<comboitem
@@ -986,8 +986,8 @@
 						<combobox disabled="@load(vm.disabledAll)"
 							model="@load(vm.listHallButton)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByHallButton)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByHallButton eq null ? vm.seleccione : vm.budget.basicDataByHallButton.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByHallButton, before = 'confirmSave') @load(vm.budget.basicDataByHallButton) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByHallButton eq null ? vm.seleccione : vm.budget.basicDataByHallButton.name)"
 							width="100%">
 							<template name="model" var="HallButton">
 								<comboitem
@@ -1007,8 +1007,8 @@
 							model="@load(vm.listHallButtonType)"
 							onChange="@command('disabledSistelsHall')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@bind(vm.budget.basicDataByHallButtonType)"
-							value="@save(vm.seleccione, before = 'confirmSave') @load(vm.budget.basicDataByHallButtonType eq null ? vm.seleccione : vm.budget.basicDataByHallButtonType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@save(vm.budget.basicDataByHallButtonType, before = 'confirmSave') @load(vm.budget.basicDataByHallButtonType) @validator(vm.noSelect, component = self)"
+							value="@load(vm.budget.basicDataByHallButtonType eq null ? vm.seleccione : vm.budget.basicDataByHallButtonType.name)"
 							width="100%">
 							<template name="model"
 								var="hallButtonType">
