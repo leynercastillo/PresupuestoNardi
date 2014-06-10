@@ -612,7 +612,8 @@
 						</textbox>
 						<space></space>
 					</row>
-					<row>
+						<!-- se cambio para que no se mostrara y se quito  @validator(vm.noEmpty, component = self) -->
+					<row visible="false">
 						<label sclass="formLabel" value="Ancho (mts):">
 						</label>
 						<doublebox disabled="true"
@@ -768,6 +769,19 @@
 						</combobox>
 						<textbox disabled="true" maxlength="100"
 							value="@bind(vm.quotation.doorFrameHammeredDesc)" width="98%">
+						</textbox>
+					</row>
+						<row>
+					<checkbox
+							checked="@bind(vm.quotation.doorFrameGlass)"
+							disabled="true" sclass="formLabel"
+							label="Vidrio">
+						</checkbox>
+						<textbox
+							disabled="true"
+							maxlength="100"
+							value="@load(vm.quotation.doorFrameGlass ? vm.quotation.doorFrameGlassDescrip : '') @save(vm.quotation.doorFrameGlassDescrip)"
+							width="97%">
 						</textbox>
 					</row>
 				</rows>
@@ -949,10 +963,10 @@
 						<combobox disabled="@load(vm.disabledEdit)"
 							model="@load(vm.listQuotationType)"
 							onChange="@command('loadPayment')"
-							
 							readonly="@load(not vm.disabledEdit)"
-							selectedItem="@save(vm.quotation.basicDataByQuotationType, before = 'confirmSave') @load(vm.quotation.basicDataByQuotationType) @validator(vm.noSelect, component = self)" 
-							value="@load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name) @validator(vm.noSelect, component = self)"
+							selectedItem="@bind(vm.quotation.basicDataByQuotationType) "
+							value="@load(vm.quotation.basicDataByQuotationType eq null ? vm.seleccione : vm.quotation.basicDataByQuotationType.name) @save(vm.quotation.basicDataByQuotationType.name, before = 'confirmSave') @validator(vm.noSelect, component = self)"
+							
 							width="99%">
 							<template name="model"
 								var="quotationType">

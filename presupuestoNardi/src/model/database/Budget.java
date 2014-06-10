@@ -124,6 +124,8 @@ public class Budget implements java.io.Serializable {
 	private Integer sistelWarrowFloor;
 	private String comment;
 	private char status;
+	private Boolean doorFrameGlass;
+	private String doorFrameGlassDescrip;
 	private Set<Quotation> quotations = new HashSet<Quotation>(0);
 
 	public Budget() {
@@ -146,7 +148,7 @@ public class Budget implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Budget(int idBudget, BasicData basicDataByElectricityType, BasicData basicDataByHourMachine, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByVoltageLighting, BasicData basicDataByDoorframeType, BasicData basicDataByRailing, BasicData basicDataByBoothButton, SecurityUser securityUser, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BusinessPartner businessPartner, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByDoorSystem, BasicData basicDataByFrequency, BasicData basicDataByHallButtonType, BasicData basicDataByFan, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByBuildingType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByMachineBase, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByButtonType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, BasicData basicDataByAccess, int number, Date date, Character rifType, String rifPartner, String partnerName, String construction, String seller, String constructionAddress, String constructionCity, String contactPhone, String email, String contactName, Boolean planeP, Boolean planeC, boolean type, Integer elevatorQuantity, Integer motorQuantity, String motorTraction, Integer stopNumber, Double tour, Double onTour, Double widthHole, Double fossa, Double bottomHole, Boolean designSpecial, String designSpecialComment, Double cabinWidth, Double cabinBackground, Double cabinHeight, Integer doorOfNumber, String doorframeTypeComment, String hallButtonPlace, Boolean lightCurtain, Boolean loadLimiter, Boolean speechSynthesizer, Boolean gomSystem, Boolean intercom, Boolean phone, Boolean accessSytem, Boolean firefighterKeychain, String displayPlaceFloor, Boolean stopSequenceContinuous, String stopSequenceContinuousQ, Integer stopSequenceContinuousNumber, Boolean stopSequenceEven, String stopSequenceEvenQ, Integer stopSequenceEvenNumber, Boolean stopSequenceOdd, String stopSequenceOddQ, Integer stopSequenceOddNumber, String doorFrameHammeredDesc, Boolean doorFrameStainless, String doorFrameStainlessDescrip, Boolean sistelWdisplayPb, Integer sistelWdisplayFloor, Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment, char status, Set<Quotation> quotations) {
+	public Budget(int idBudget, BasicData basicDataByElectricityType, BasicData basicDataByHourMachine, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByVoltageLighting, BasicData basicDataByDoorframeType, BasicData basicDataByRailing, BasicData basicDataByBoothButton, SecurityUser securityUser, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BusinessPartner businessPartner, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByDoorSystem, BasicData basicDataByFrequency, BasicData basicDataByHallButtonType, BasicData basicDataByFan, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByBuildingType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByMachineBase, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByButtonType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, BasicData basicDataByAccess, int number, Date date, Character rifType, String rifPartner, String partnerName, String construction, String seller, String constructionAddress, String constructionCity, String contactPhone, String email, String contactName, Boolean planeP, Boolean planeC, boolean type, Integer elevatorQuantity, Integer motorQuantity, String motorTraction, Integer stopNumber, Double tour, Double onTour, Double widthHole, Double fossa, Double bottomHole, Boolean designSpecial, String designSpecialComment, Double cabinWidth, Double cabinBackground, Double cabinHeight, Integer doorOfNumber, String doorframeTypeComment, String hallButtonPlace, Boolean lightCurtain, Boolean loadLimiter, Boolean speechSynthesizer, Boolean gomSystem, Boolean intercom, Boolean phone, Boolean accessSytem, Boolean firefighterKeychain, String displayPlaceFloor, Boolean stopSequenceContinuous, String stopSequenceContinuousQ, Integer stopSequenceContinuousNumber, Boolean stopSequenceEven, String stopSequenceEvenQ, Integer stopSequenceEvenNumber, Boolean stopSequenceOdd, String stopSequenceOddQ, Integer stopSequenceOddNumber, String doorFrameHammeredDesc, Boolean doorFrameStainless, String doorFrameStainlessDescrip, Boolean sistelWdisplayPb, Integer sistelWdisplayFloor, Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment, char status, Boolean doorFrameGlass, String doorFrameGlassDescrip, Set<Quotation> quotations) {
 		this.idBudget = idBudget;
 		this.basicDataByElectricityType = basicDataByElectricityType;
 		this.basicDataByHourMachine = basicDataByHourMachine;
@@ -240,7 +242,10 @@ public class Budget implements java.io.Serializable {
 		this.sistelWarrowFloor = sistelWarrowFloor;
 		this.comment = comment;
 		this.status = status;
+		this.doorFrameGlass = doorFrameGlass;
+		this.doorFrameGlassDescrip = doorFrameGlassDescrip;
 		this.quotations = quotations;
+		
 	}
 
 	@Id
@@ -1115,6 +1120,24 @@ public class Budget implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	
+	@Column(name = "door_frame_glass")
+	public Boolean getDoorFrameGlass() {
+		return this.doorFrameGlass;
+	}
+
+	public void setDoorFrameGlass(Boolean doorFrameGlass) {
+		this.doorFrameGlass = doorFrameGlass;
+	}
+
+	@Column(name = "door_frame_glass_descrip", length = 100)
+	public String getDoorFrameGlassDescrip() {
+		return this.doorFrameGlassDescrip;
+	}
+
+	public void setDoorFrameGlassDescrip(String doorFrameGlassDescrip) {
+		this.doorFrameGlassDescrip = doorFrameGlassDescrip;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "budget")

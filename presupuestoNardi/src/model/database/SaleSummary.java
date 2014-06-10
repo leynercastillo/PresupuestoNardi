@@ -120,6 +120,8 @@ public class SaleSummary implements java.io.Serializable {
 	private Integer sistelWarrowFloor;
 	private String comment;
 	private char status;
+	private Boolean doorFrameGlass;
+	private String doorFrameGlassDescrip;
 
 	public SaleSummary() {
 	}
@@ -154,7 +156,7 @@ public class SaleSummary implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public SaleSummary(int idSaleSummary, BasicData basicDataByElectricityType, BasicData basicDataByHourMachine, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByVoltageLighting, BasicData basicDataByDoorframeType, BasicData basicDataByRailing, BasicData basicDataByBoothButton, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByDoorSystem, BasicData basicDataByFrequency, BasicData basicDataByHallButtonType, BasicData basicDataByFan, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByBuildingType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByMachineBase, Quotation quotation, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByButtonType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, BasicData basicDataByAccess, int lastConstructionNumber, String number, Date date, Date deliveryDate, String construction, String constructionCity, String constructionAddress, String contactName, String contactPhone, String email, Boolean planeC, Boolean planeP, boolean saleType, Integer elevatorQuantity, Integer motorQuantity, String motorTraction, Integer stopNumber, Double tour, Double onTour, Double widthHole, Double fossa, Double bottomHole, Boolean designSpecial, String designSpecialComment, Double cabinWidth, Double cabinBackground, Double cabinHeight, Integer doorOfNumber, String doorframeTypeComment, String hallButtonPlace, boolean lightCurtain, boolean loadLimiter, boolean speechSynthesizer, boolean gomSystem, boolean intercom, boolean phone, boolean accessSytem, boolean firefighterKeychain, String displayPlaceFloor, Boolean stopSequenceContinuous, String stopSequenceContinuousQ, Integer stopSequenceContinuousNumber, Boolean stopSequenceEven, String stopSequenceEvenQ, Integer stopSequenceEvenNumber, Boolean stopSequenceOdd, String stopSequenceOddQ, Integer stopSequenceOddNumber, String doorFrameHammeredDesc, Boolean doorFrameStainless, String doorFrameStainlessDescrip, Boolean sistelWdisplayPb, Integer sistelWdisplayFloor, Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment, char status) {
+	public SaleSummary(int idSaleSummary, BasicData basicDataByElectricityType, BasicData basicDataByHourMachine, BasicData basicDataByHallButton, BasicData basicDataByRoofType, BasicData basicDataBySpeed, BasicData basicDataByVoltageLighting, BasicData basicDataByDoorframeType, BasicData basicDataByRailing, BasicData basicDataByBoothButton, BasicData basicDataByMirror, BasicData basicDataByElevatorCapacitance, BasicData basicDataByBoothDisplay, BasicData basicDataByElevatorType, BasicData basicDataByDoorSystem, BasicData basicDataByFrequency, BasicData basicDataByHallButtonType, BasicData basicDataByFan, BasicData basicDataByCabinDesign, BasicData basicDataByMachineType, BasicData basicDataByBuildingType, BasicData basicDataByManeuverType, BasicData basicDataByDoorFrameHammered, BasicData basicDataByFloorType, BasicData basicDataByMachineBase, Quotation quotation, BasicData basicDataByHeight, BasicData basicDataByDoorType, BasicData basicDataByButtonType, BasicData basicDataByControlType, BasicData basicDataByFreeAdmission, BasicData basicDataByFloorDisplay, BasicData basicDataByAccess, int lastConstructionNumber, String number, Date date, Date deliveryDate, String construction, String constructionCity, String constructionAddress, String contactName, String contactPhone, String email, Boolean planeC, Boolean planeP, boolean saleType, Integer elevatorQuantity, Integer motorQuantity, String motorTraction, Integer stopNumber, Double tour, Double onTour, Double widthHole, Double fossa, Double bottomHole, Boolean designSpecial, String designSpecialComment, Double cabinWidth, Double cabinBackground, Double cabinHeight, Integer doorOfNumber, String doorframeTypeComment, String hallButtonPlace, boolean lightCurtain, boolean loadLimiter, boolean speechSynthesizer, boolean gomSystem, boolean intercom, boolean phone, boolean accessSytem, boolean firefighterKeychain, String displayPlaceFloor, Boolean stopSequenceContinuous, String stopSequenceContinuousQ, Integer stopSequenceContinuousNumber, Boolean stopSequenceEven, String stopSequenceEvenQ, Integer stopSequenceEvenNumber, Boolean stopSequenceOdd, String stopSequenceOddQ, Integer stopSequenceOddNumber, String doorFrameHammeredDesc, Boolean doorFrameStainless, String doorFrameStainlessDescrip, Boolean sistelWdisplayPb, Integer sistelWdisplayFloor, Boolean sistelWarrowPb, Integer sistelWarrowFloor, String comment, char status, Boolean doorFrameGlass, String doorFrameGlassDescrip) {
 		this.idSaleSummary = idSaleSummary;
 		this.basicDataByElectricityType = basicDataByElectricityType;
 		this.basicDataByHourMachine = basicDataByHourMachine;
@@ -245,6 +247,8 @@ public class SaleSummary implements java.io.Serializable {
 		this.sistelWarrowFloor = sistelWarrowFloor;
 		this.comment = comment;
 		this.status = status;
+		this.doorFrameGlass = doorFrameGlass;
+		this.doorFrameGlassDescrip = doorFrameGlassDescrip;
 	}
 
 	@Id
@@ -1102,6 +1106,23 @@ public class SaleSummary implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	@Column(name = "door_frame_glass")
+	public Boolean getDoorFrameGlass() {
+		return this.doorFrameGlass;
+	}
+
+	public void setDoorFrameGlass(Boolean doorFrameGlass) {
+		this.doorFrameGlass = doorFrameGlass;
+	}
+
+	@Column(name = "door_frame_glass_descrip", length = 100)
+	public String getDoorFrameGlassDescrip() {
+		return this.doorFrameGlassDescrip;
+	}
+
+	public void setDoorFrameGlassDescrip(String doorFrameGlassDescrip) {
+		this.doorFrameGlassDescrip = doorFrameGlassDescrip;
 	}
 
 }

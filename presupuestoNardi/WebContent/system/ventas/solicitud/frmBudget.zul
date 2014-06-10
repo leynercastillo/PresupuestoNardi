@@ -617,8 +617,8 @@
 							model="@load(vm.listCabinModel)"
 							onChange="@command('loadCabinDesign')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@save(vm.cabinModel, before = 'confirmSave') @load(vm.cabinModel)  @validator(vm.noSelect, component = self)"
-							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name)"
+							selectedItem="@bind(vm.cabinModel)"
+							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name) @save(vm.cabinModel.name, befor='confirmSave') @validator(vm.noSelect, component = self)"
 							width="100%">
 							<template name="model" var="cabinModel">
 								<comboitem
@@ -924,6 +924,19 @@
 							</textbox>
 						</cell>
 					</row>
+					<row>
+					<checkbox
+							checked="@bind(vm.budget.doorFrameGlass)"
+							disabled="@load(vm.disabledAll)" sclass="formLabel"
+							label="Vidrio">
+						</checkbox>
+						<textbox
+							disabled="@load(vm.disabledAll ? 'true' : vm.budget.doorFrameGlass ? 'false': 'true')"
+							maxlength="100"
+							value="@load(vm.budget.doorFrameGlass ? vm.budget.doorFrameGlassDescrip : '') @save(vm.budget.doorFrameGlassDescrip)"
+							width="97%">
+						</textbox>
+					</row>
 				</rows>
 			</grid>
 		</groupbox>
@@ -946,8 +959,8 @@
 							model="@load(vm.listControlType)"
 							onChange="@command('loadBoothFloorDisplay')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@save(vm.budget.basicDataByControlType, before = 'confirmSave') @load(vm.budget.basicDataByControlType) @validator(vm.noSelect, component = self)"
-							value="@load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name)"
+							selectedItem="@bind(vm.budget.basicDataByControlType) "
+							value="@load(vm.budget.basicDataByControlType eq null ? vm.seleccione : vm.budget.basicDataByControlType.name) @save(vm.budget.basicDataByControlType.name, before = 'confirmSave') @validator(vm.noSelect, component = self)"
 							width="100%">
 							<template name="model" var="ControlType">
 								<comboitem
@@ -1007,8 +1020,8 @@
 							model="@load(vm.listHallButtonType)"
 							onChange="@command('disabledSistelsHall')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@save(vm.budget.basicDataByHallButtonType, before = 'confirmSave') @load(vm.budget.basicDataByHallButtonType) @validator(vm.noSelect, component = self)"
-							value="@load(vm.budget.basicDataByHallButtonType eq null ? vm.seleccione : vm.budget.basicDataByHallButtonType.name)"
+							selectedItem="@bind(vm.budget.basicDataByHallButtonType)"
+							value="@load(vm.budget.basicDataByHallButtonType eq null ? vm.seleccione : vm.budget.basicDataByHallButtonType.name) @save(vm.budget.basicDataByHallButtonType.name, before = 'confirmSave')   @validator(vm.noSelect, component = self)"
 							width="100%">
 							<template name="model"
 								var="hallButtonType">

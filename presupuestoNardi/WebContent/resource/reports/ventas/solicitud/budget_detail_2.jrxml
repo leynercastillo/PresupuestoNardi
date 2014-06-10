@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budget_page_1" pageWidth="572" pageHeight="640" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="98c940fb-7fc9-4f80-b668-b909d476ab5c">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="NUMBER" class="java.lang.Integer">
@@ -41,6 +41,7 @@
 		WHERE
 			height = id_basic) AS "Altura:",
 	CASE WHEN door_frame_stainless THEN door_frame_stainless_descrip ELSE '' END AS "Acero Inox:",
+    CASE WHEN door_frame_glass THEN door_frame_glass_descrip ELSE '' END AS "Vidrio:",
 	(SELECT
 			name
 		FROM
@@ -112,6 +113,7 @@ WHERE
 	<field name="Entrada libre:" class="java.lang.String"/>
 	<field name="Altura:" class="java.lang.String"/>
 	<field name="Acero Inox:" class="java.lang.String"/>
+	<field name="Vidrio:" class="java.lang.String"/>
 	<field name="Martillado:" class="java.lang.String"/>
 	<field name="Desc Martillado:" class="java.lang.String"/>
 	<field name="Tipo de control:" class="java.lang.String"/>
@@ -157,7 +159,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="55" width="186" height="15" uuid="cbf2d88a-2c44-4692-820f-611079d55a77"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Numero de puertas:}]]></textFieldExpression>
 			</textField>
@@ -171,7 +173,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="70" width="186" height="15" uuid="72642730-2aee-407f-b6de-06e1df02ddba"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistema de puerta:}]]></textFieldExpression>
 			</textField>
@@ -185,7 +187,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="85" width="186" height="15" uuid="68a9bf64-6cca-45cc-8c10-4e2ebdb7fc86"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Entrada libre:}]]></textFieldExpression>
 			</textField>
@@ -199,7 +201,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="100" width="186" height="15" uuid="7ab8d795-66c8-4bf9-a16e-b2ab1d92e903"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Acero Inox:}]]></textFieldExpression>
 			</textField>
@@ -213,7 +215,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="381" y="55" width="184" height="15" uuid="152ea7cf-e6b5-4725-8798-229709f774e2"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de puerta:}]]></textFieldExpression>
 			</textField>
@@ -227,7 +229,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="381" y="70" width="184" height="15" uuid="b8dca8de-bd8a-445f-9d39-f0f2de64bd72"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de marco:}]]></textFieldExpression>
 			</textField>
@@ -241,7 +243,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="381" y="85" width="184" height="15" uuid="5314cce8-a0fe-48bb-83bc-4b0b7246bf0b"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Altura:}]]></textFieldExpression>
 			</textField>
@@ -255,7 +257,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="381" y="100" width="184" height="15" uuid="e146f721-bb1e-48a0-8b9a-f064e02f0fcc"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Martillado:}]]></textFieldExpression>
 			</textField>
@@ -269,7 +271,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="381" y="115" width="184" height="15" uuid="d7fd0977-e662-4358-973e-35a61568bcfc"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Desc Martillado:}]]></textFieldExpression>
 			</textField>
@@ -290,7 +292,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="177" width="422" height="15" uuid="16909244-3288-4d4c-91f1-67152a01bab8"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de control:}]]></textFieldExpression>
 			</textField>
@@ -304,7 +306,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="192" width="422" height="15" uuid="64412b49-b81b-45d7-b800-6f7b211b1f86"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Botones de cabina:}]]></textFieldExpression>
 			</textField>
@@ -332,7 +334,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="241" y="237" width="100" height="15" uuid="6b32dbbc-7617-4ee9-b770-51eefac9a6ca"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Display PB:}]]></textFieldExpression>
 			</textField>
@@ -346,7 +348,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="423" y="237" width="147" height="15" uuid="7610bd66-9559-4973-bf7e-310cc4d6a726"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Display Piso:}]]></textFieldExpression>
 			</textField>
@@ -360,7 +362,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="241" y="252" width="100" height="15" uuid="6c9662f0-a6a8-43be-8aed-bf81717efd9c"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Flecha PB:}]]></textFieldExpression>
 			</textField>
@@ -374,7 +376,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="423" y="252" width="147" height="15" uuid="7dcc1b17-30b6-4575-9444-87215dc017d1"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistel con Flecha Piso:}]]></textFieldExpression>
 			</textField>
@@ -388,14 +390,14 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="222" width="150" height="15" uuid="08f072bf-b23d-4fd8-a1cb-5d5752b3284f"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Tipo de botonera de pasillo:}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="207" width="422" height="15" uuid="df6f7e97-ba53-44b4-b16e-a5cb44e50dbf"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Boton de pasillo:}]]></textFieldExpression>
 			</textField>
@@ -409,7 +411,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="267" width="422" height="15" uuid="12789668-2599-4c5f-9d09-5330dc8c36aa"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Display Cabina:}]]></textFieldExpression>
 			</textField>
@@ -423,14 +425,14 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="112" y="282" width="220" height="15" uuid="782e6194-93b1-4075-90db-f0e1f158078e"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Display Piso:}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="369" y="282" width="196" height="15" uuid="116e6afc-a967-4a28-a533-990ec4f48a3b"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Lugar display piso:}]]></textFieldExpression>
 			</textField>
@@ -444,7 +446,7 @@ WHERE
 			<staticText>
 				<reportElement x="332" y="222" width="145" height="15" uuid="925638cf-e8d6-4a50-a1f4-bf06f87e2d62"/>
 				<textElement>
-					<font fontName="Serif" size="8" isBold="true"/>
+					<font fontName="Serif" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar:]]></text>
 			</staticText>
@@ -465,7 +467,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="349" width="134" height="15" uuid="d44db258-e2e3-47dd-bb79-827e88f62dce"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Cortina luminosa:}]]></textFieldExpression>
 			</textField>
@@ -479,7 +481,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="364" width="134" height="15" uuid="58329748-2701-480f-843b-c12b30b1ee87"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sintetizador de voz:}]]></textFieldExpression>
 			</textField>
@@ -493,7 +495,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="379" width="134" height="15" uuid="e21affdb-e2e6-401e-a634-773803fa7d4a"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Intercomunicador:}]]></textFieldExpression>
 			</textField>
@@ -507,7 +509,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="394" width="134" height="15" uuid="c5020ae8-84f0-4229-9df2-2c7295c31799"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistema de acceso:}]]></textFieldExpression>
 			</textField>
@@ -521,7 +523,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="399" y="350" width="135" height="15" uuid="aeabcc7c-2726-4665-a66c-872dca0ff644"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Limitador de carga:}]]></textFieldExpression>
 			</textField>
@@ -535,7 +537,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="399" y="365" width="135" height="15" uuid="36c16ad7-c6d7-4639-bf82-02e6eaf23f72"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Sistema de GOM en Piso:}]]></textFieldExpression>
 			</textField>
@@ -549,7 +551,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="399" y="380" width="135" height="15" uuid="a54155bd-fd15-4b1c-8a37-8a85faaedab2"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Teléfono:}]]></textFieldExpression>
 			</textField>
@@ -563,7 +565,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="399" y="395" width="135" height="15" uuid="2b31b090-f717-4193-9d28-fc10a09dba66"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Llave de bombero:}]]></textFieldExpression>
 			</textField>
@@ -577,7 +579,7 @@ WHERE
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="72" y="449" width="493" height="15" uuid="9831dc96-7a7a-43d7-840a-a723945eec1f"/>
 				<textElement>
-					<font fontName="Serif" size="8"/>
+					<font fontName="Serif" size="6"/>
 					<paragraph lineSpacing="Proportional"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Comentarios:}]]></textFieldExpression>
@@ -598,6 +600,20 @@ WHERE
 				</textElement>
 				<text><![CDATA[Botones de pasillo:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="3" y="115" width="124" height="15" uuid="0daff38e-f66e-4ce2-8bd5-239fc82acd8a"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vidrio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="115" width="186" height="15" uuid="5b83f4eb-ce16-4c65-bbdb-e0855dc0c309"/>
+				<textElement>
+					<font fontName="Serif" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Vidrio:}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

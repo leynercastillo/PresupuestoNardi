@@ -50,7 +50,7 @@ public class ServiceBasicData {
 
 	@Transactional(readOnly = true)
 	public List<String> listNamesByBudgetComponent() {
-		return daoBasicdata.listFieldByDataBase("BUDGET", "dataBaseName");
+		return daoBasicdata.listFieldByDataBase("BUDGET", "BUDGET");
 	}
 
 	@Transactional(readOnly = true)

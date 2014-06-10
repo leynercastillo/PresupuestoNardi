@@ -111,6 +111,7 @@ public class FrmBudget {
 	private ListModel<Object> listSeller;
 	private BasicData cabinModel;
 	private Boolean stainlessSteel;
+	private Boolean Glass;
 	private Boolean hammeredGray;
 	private Boolean hammeredBrown;
 	private Boolean disabledAll;
@@ -124,6 +125,14 @@ public class FrmBudget {
 	private Integer sistelWArrowPB;
 	private Budget budget;
 	private BusinessPartner businessPartner;
+
+	public Boolean getGlass() {
+		return Glass;
+	}
+
+	public void setGlass(Boolean glass) {
+		Glass = glass;
+	}
 
 	public String getModalMessage() {
 		return modalMessage;
@@ -617,6 +626,7 @@ public class FrmBudget {
 		budget.setStopSequenceEven(false);
 		budget.setStopSequenceOdd(false);
 		budget.setDoorFrameStainless(false);
+		budget.setDoorFrameGlass(false);
 		budget.setSistelWarrowFloor(0);
 		budget.setElevatorQuantity(0);
 		budget.setMotorQuantity(0);
@@ -828,7 +838,7 @@ public class FrmBudget {
 
 	public void sendMail() {
 		List<String> listRecipient = new ArrayList<String>();
-		listRecipient.add("ventas@ascensoresnardi.com");
+		//listRecipient.add("ventas@ascensoresnardi.com");
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Solicitud de presupuesto nro" + budget.getNumber(), listRecipient, mailMessage(), mailAttach());
 	}
