@@ -146,7 +146,11 @@
 		FROM
 			basic_data T10
 		WHERE
-			T10.id_basic = T0.height) || '. ' || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip ELSE '' END "Puertas",
+			T10.id_basic = T0.height) || '. ' ||
+CASE
+WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip
+WHEN T0.door_frame_glass THEN 'VIDRIO EN: ' || T0.door_frame_glass_descrip
+ELSE '' END "Puertas",
 	'MARTILLADO ' || (SELECT
 			T10.name
 		FROM
@@ -159,7 +163,11 @@
 		FROM
 			basic_data T10
 		WHERE
-			T10.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END || CASE WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '.' ELSE '' END || ' ' ||
+			T10.id_basic = T0.doorframe_type) || ' ' END || CASE WHEN T0.doorframe_type_comment IS NULL THEN '' ELSE T0.doorframe_type_comment || ' ' END ||
+CASE
+WHEN T0.door_frame_stainless THEN 'ACERO INOX EN: ' || T0.door_frame_stainless_descrip || '.'
+WHEN T0.door_frame_glass THEN 'ACERO INOX EN: ' || T0.door_frame_glass_descrip || '.'
+ELSE '' END || ' ' ||
 		CASE WHEN T0.door_frame_hammered IS NULL THEN '' ELSE 'MARTILLADO '||(SELECT
 			T10.name
 		FROM

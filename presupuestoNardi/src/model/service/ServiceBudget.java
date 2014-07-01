@@ -53,7 +53,8 @@ public class ServiceBudget {
 	public List<Budget> listAll() {
 		return daoBudget.listAll();
 	}
-
+	
+	
 	@Transactional(readOnly = true)
 	public List<String> listSeller() {
 		return daoBudget.listStringByFields("seller");

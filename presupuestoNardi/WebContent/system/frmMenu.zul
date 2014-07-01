@@ -13,7 +13,7 @@
 					label="Clientes">
 				</tab>
 				<tab
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}"
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_BUDGET_OTHER,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}"
 					label="Ventas">
 				</tab>
 				<tab
@@ -21,7 +21,7 @@
 					label="Usuarios">
 				</tab>
 				<tab
-					if="${sec:isAnyGranted('ROLE_ITEM_MASTER,ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS,ROLE_GENERIC_HELP')}"
+					if="${sec:isAnyGranted('ROLE_ITEM_MASTER,ROLE_BUDGET,ROLE_BUDGET_OTHER,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_SECURITY_PROFILE,ROLE_SECURITY_USERS_MASTER,ROLE_SECURITY_GROUPS,ROLE_GENERIC_HELP')}"
 					label="Ayuda">
 				</tab>
 			</tabs>
@@ -57,7 +57,7 @@
 					</tree>
 				</tabpanel>
 				<tabpanel
-					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}">
+					if="${sec:isAnyGranted('ROLE_BUDGET,ROLE_BUDGET_OTHER,ROLE_QUOTATION,ROLE_SALES_SUMMARY,ROLE_TRANSACTION_SUMMARY,ROLE_UPDATE_DATA')}">
 					<tree>
 						<treechildren>
 							<treeitem
@@ -69,6 +69,17 @@
 									</treecell>
 								</treerow>
 							</treeitem>
+							
+							<treeitem
+								if="${sec:isAllGranted('ROLE_BUDGET_OTHER')}">
+								<treerow>
+									<treecell
+										label="Solicitud de Presupuesto a Terceros"
+										onClick="@command('optionSelected', optionSelected='system/ventas/solicitud/frmBudgetOtherCostumers.zul')">
+									</treecell>
+								</treerow>
+							</treeitem>
+							 
 							<treeitem
 								if="${sec:isAllGranted('ROLE_QUOTATION')}">
 								<treerow>

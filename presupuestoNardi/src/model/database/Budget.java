@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class Budget implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6541752248367341189L;
+	private static final long serialVersionUID = -6173935637933896090L;
 	private int idBudget;
 	private BasicData basicDataByElectricityType;
 	private BasicData basicDataByHourMachine;
@@ -245,7 +245,6 @@ public class Budget implements java.io.Serializable {
 		this.doorFrameGlass = doorFrameGlass;
 		this.doorFrameGlassDescrip = doorFrameGlassDescrip;
 		this.quotations = quotations;
-		
 	}
 
 	@Id
@@ -1121,7 +1120,7 @@ public class Budget implements java.io.Serializable {
 	public void setStatus(char status) {
 		this.status = status;
 	}
-	
+
 	@Column(name = "door_frame_glass")
 	public Boolean getDoorFrameGlass() {
 		return this.doorFrameGlass;

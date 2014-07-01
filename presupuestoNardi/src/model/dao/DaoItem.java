@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import model.database.Budget;
 import model.database.Item;
 
 import org.hibernate.Criteria;
@@ -94,6 +95,14 @@ public class DaoItem {
 		Criteria criteria = session.createCriteria(Item.class);
 		criteria.setProjection(Projections.distinct(Projections.property(field)));
 		criteria.addOrder(Order.asc(field));
+		return criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Item> listAll() {
+		Session session = getCurrentSession();
+		Criteria criteria = session.createCriteria(Item.class);
+		criteria.addOrder(Order.asc("idItem"));
 		return criteria.list();
 	}
 }

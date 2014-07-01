@@ -96,6 +96,8 @@ public class DaoBudget {
 		criteria.addOrder(Order.asc("number"));
 		return criteria.list();
 	}
+	
+
 
 	@SuppressWarnings("unchecked")
 	public List<Integer> listIntegerByFields(String field) {

@@ -618,7 +618,7 @@
 							onChange="@command('loadCabinDesign')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.cabinModel)"
-							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name) @save(vm.cabinModel.name, befor='confirmSave') @validator(vm.noSelect, component = self)"
+							value="@load(vm.cabinModel.name eq null ? vm.seleccione : vm.cabinModel.name) @save(vm.cabinModel.name, before='confirmSave') @validator(vm.noSelect, component = self)"
 							width="100%">
 							<template name="model" var="cabinModel">
 								<comboitem
@@ -631,8 +631,8 @@
 							model="@load(vm.listDesign)"
 							onChange="@command('activeDesignComment')"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
-							selectedItem="@save(vm.budget.basicDataByCabinDesign) @load(vm.budget.basicDataByCabinDesign) @validator(vm.noSelect, component = self)"
-							value="@load(vm.budget.basicDataByCabinDesign eq null ? vm.seleccione : vm.budget.basicDataByCabinDesign.name) "
+							selectedItem="@bind(vm.budget.basicDataByCabinDesign)"
+							value="@save(vm.budget.basicDataByCabinDesign.name, before='confirmSave')@load(vm.budget.basicDataByCabinDesign eq null ? vm.seleccione : vm.budget.basicDataByCabinDesign.name) @validator(vm.noSelect, component = self)"
 							width="100%">
 							<template name="model" var="Design">
 								<comboitem label="@load(Design.name)">
@@ -893,7 +893,7 @@
 					<row>
 						<checkbox
 							checked="@bind(vm.budget.doorFrameStainless)"
-							disabled="@load(vm.disabledAll)" sclass="formLabel"
+							disabled="@load(vm.disabledAll ? 'true' : vm.budget.doorFrameGlass ? 'true':'false')" sclass="formLabel"
 							label="Acero Inox.">
 						</checkbox>
 						<textbox
@@ -903,7 +903,7 @@
 							width="97%">
 						</textbox>
 						<label sclass="formLabel" value="Martillado:"></label>
-						<combobox disabled="@load(vm.disabledAll)"
+						<combobox disabled="@load(vm.disabledAll ? 'false' : vm.budget.doorFrameStainless ? 'false':'true')"
 							model="@load(vm.listDoorframeHammered)"
 							readonly="@load(vm.disabledAll ? 'false' : 'true')"
 							selectedItem="@bind(vm.budget.basicDataByDoorFrameHammered)"
@@ -927,7 +927,7 @@
 					<row>
 					<checkbox
 							checked="@bind(vm.budget.doorFrameGlass)"
-							disabled="@load(vm.disabledAll)" sclass="formLabel"
+							disabled="@load(vm.disabledAll ? 'true' : vm.budget.doorFrameStainless ? 'true':'false')" sclass="formLabel"
 							label="Vidrio">
 						</checkbox>
 						<textbox

@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 

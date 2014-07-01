@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class SecurityUser implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8229556027550909215L;
+	private static final long serialVersionUID = -6373939259436221444L;
 	private int idSecurityUser;
 	private SecurityGroup securityGroup;
 	private String name;
@@ -37,6 +37,7 @@ public class SecurityUser implements java.io.Serializable {
 	private Boolean newFeature;
 	private char status;
 	private Set<Budget> budgets = new HashSet<Budget>(0);
+	private Set<BudgetOtherCostumers> budgetOtherCostumerses = new HashSet<BudgetOtherCostumers>(0);
 	private Set<Contact> contacts = new HashSet<Contact>(0);
 
 	public SecurityUser() {
@@ -52,7 +53,7 @@ public class SecurityUser implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public SecurityUser(int idSecurityUser, SecurityGroup securityGroup, String name, String email, String password, String phone, Boolean newFeature, char status, Set<Budget> budgets, Set<Contact> contacts) {
+	public SecurityUser(int idSecurityUser, SecurityGroup securityGroup, String name, String email, String password, String phone, Boolean newFeature, char status, Set<Budget> budgets, Set<BudgetOtherCostumers> budgetOtherCostumerses, Set<Contact> contacts) {
 		this.idSecurityUser = idSecurityUser;
 		this.securityGroup = securityGroup;
 		this.name = name;
@@ -62,12 +63,13 @@ public class SecurityUser implements java.io.Serializable {
 		this.newFeature = newFeature;
 		this.status = status;
 		this.budgets = budgets;
+		this.budgetOtherCostumerses = budgetOtherCostumerses;
 		this.contacts = contacts;
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
-	@SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_item_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "security_user_id_seq")
+	@SequenceGenerator(name = "security_user_id_seq", sequenceName = "security_user_id_security_user_seq")
 	@Column(name = "id_security_user", unique = true, nullable = false)
 	public int getIdSecurityUser() {
 		return this.idSecurityUser;
@@ -148,6 +150,15 @@ public class SecurityUser implements java.io.Serializable {
 
 	public void setBudgets(Set<Budget> budgets) {
 		this.budgets = budgets;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "securityUser")
+	public Set<BudgetOtherCostumers> getBudgetOtherCostumerses() {
+		return this.budgetOtherCostumerses;
+	}
+
+	public void setBudgetOtherCostumerses(Set<BudgetOtherCostumers> budgetOtherCostumerses) {
+		this.budgetOtherCostumerses = budgetOtherCostumerses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "securityUser")

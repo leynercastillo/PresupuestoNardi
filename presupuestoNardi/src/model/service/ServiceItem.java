@@ -3,6 +3,7 @@ package model.service;
 import java.util.List;
 
 import model.dao.DaoItem;
+import model.database.Budget;
 import model.database.Item;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,11 @@ public class ServiceItem {
 	public List<String> listNames() {
 		return daoItem.listStringByFields("name");
 	}
+	
+
+	@Transactional(readOnly = true)
+	public List<Item> listAll() {
+		return daoItem.listAll();
+	}
+	
 }

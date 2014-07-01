@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,13 +27,14 @@ public class BusinessPartner implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4135105963238269984L;
+	private static final long serialVersionUID = -3972838889827582679L;
 	private int idBusinessPartner;
 	private BasicData basicData;
 	private String rif;
 	private String name;
 	private String address;
 	private char status;
+	private Set<BudgetOtherCostumers> budgetOtherCostumerses = new HashSet<BudgetOtherCostumers>(0);
 	private Set<Budget> budgets = new HashSet<Budget>(0);
 	private Set<Quotation> quotations = new HashSet<Quotation>(0);
 
@@ -46,13 +47,14 @@ public class BusinessPartner implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public BusinessPartner(int idBusinessPartner, BasicData basicData, String rif, String name, String address, char status, Set<Budget> budgets, Set<Quotation> quotations) {
+	public BusinessPartner(int idBusinessPartner, BasicData basicData, String rif, String name, String address, char status, Set<BudgetOtherCostumers> budgetOtherCostumerses, Set<Budget> budgets, Set<Quotation> quotations) {
 		this.idBusinessPartner = idBusinessPartner;
 		this.basicData = basicData;
 		this.rif = rif;
 		this.name = name;
 		this.address = address;
 		this.status = status;
+		this.budgetOtherCostumerses = budgetOtherCostumerses;
 		this.budgets = budgets;
 		this.quotations = quotations;
 	}
@@ -113,6 +115,15 @@ public class BusinessPartner implements java.io.Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessPartner")
+	public Set<BudgetOtherCostumers> getBudgetOtherCostumerses() {
+		return this.budgetOtherCostumerses;
+	}
+
+	public void setBudgetOtherCostumerses(Set<BudgetOtherCostumers> budgetOtherCostumerses) {
+		this.budgetOtherCostumerses = budgetOtherCostumerses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessPartner")

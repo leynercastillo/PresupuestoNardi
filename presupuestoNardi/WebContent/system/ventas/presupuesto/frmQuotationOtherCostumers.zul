@@ -3,7 +3,7 @@
 	<style src="resource/style/styleZK.css"></style>
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
 		closable="true" onClose="@command('close')"
-		viewModel="@id('vm') @init('controller.ventas.presupuesto.FrmBudgetOtherCostumers')">
+		viewModel="@id('vm') @init('controller.ventas.presupuesto.FrmQuotationOtherCostumers')">
 
 		
 </window>

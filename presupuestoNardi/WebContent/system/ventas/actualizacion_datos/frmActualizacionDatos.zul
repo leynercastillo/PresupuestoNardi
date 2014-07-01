@@ -131,7 +131,7 @@
 							width="98%">
 						</textbox>
 					</row>
-					<row visible="@load(vm.basicDataTipoPresupuesto.name eq 'MONEDA NACIONAL')">	
+					<row visible="@load(vm.basicDataTipoPresupuesto.name eq 'MONEDA NACIONAL' or vm.basicDataTipoPresupuesto.name eq 'MONEDA NACIONAL AL CAMBIO EN $'  )">	
 							<label
 								value="Condiciones de pago:" sclass="formLabel">
 							</label>

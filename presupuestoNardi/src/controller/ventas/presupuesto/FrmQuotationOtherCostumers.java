@@ -1,6 +1,6 @@
 package controller.ventas.presupuesto;
 
 
-public class FrmBudgetOtherCostumers {
+public class FrmQuotationOtherCostumers {
 
 }

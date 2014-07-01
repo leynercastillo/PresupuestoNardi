@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class BasicData implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6624933392548375965L;
+	private static final long serialVersionUID = -4764450734512724995L;
 	private int idBasic;
 	private BasicData basicData;
 	private String dataBaseName;
@@ -71,7 +71,6 @@ public class BasicData implements java.io.Serializable {
 	private Set<Quotation> quotationsForCabinDesign = new HashSet<Quotation>(0);
 	private Set<Quotation> quotationsForQuotationType = new HashSet<Quotation>(0);
 	private Set<Budget> budgetsForFloorType = new HashSet<Budget>(0);
-	
 	private Set<Quotation> quotationsForMirror = new HashSet<Quotation>(0);
 	private Set<Budget> budgetsForDoorSystem = new HashSet<Budget>(0);
 	private Set<Quotation> quotationsForDoorFrameHammered = new HashSet<Quotation>(0);
@@ -184,7 +183,6 @@ public class BasicData implements java.io.Serializable {
 		this.quotationsForCabinDesign = quotationsForCabinDesign;
 		this.quotationsForQuotationType = quotationsForQuotationType;
 		this.budgetsForFloorType = budgetsForFloorType;
-
 		this.quotationsForMirror = quotationsForMirror;
 		this.budgetsForDoorSystem = budgetsForDoorSystem;
 		this.quotationsForDoorFrameHammered = quotationsForDoorFrameHammered;
@@ -624,7 +622,6 @@ public class BasicData implements java.io.Serializable {
 		this.budgetsForFloorType = budgetsForFloorType;
 	}
 
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basicDataByMirror")
 	public Set<Quotation> getQuotationsForMirror() {
 		return this.quotationsForMirror;

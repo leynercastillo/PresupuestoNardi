@@ -1,0 +1,257 @@
+<?variable-resolver class="org.zkoss.spring.DelegatingVariableResolver"?>
+<zk>
+	<style src="resource/style/styleZK.css"></style>
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		closable="true" onClose="@command('close')"
+		viewModel="@id('vm') @init('controller.ventas.solicitud.FrmBudgetOtherCostumers')">
+
+		<groupbox closable="false" mold="3d">
+			<caption label="SOLICITUD DE PRESUPUESTO A TERCEROS" sclass="formLabel"></caption>
+	
+	
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column width="30%"></column>
+					<column width="15%"></column>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<label sclass="formLabel" value="Rif:"></label>
+						<div>
+							<combobox disabled="true"
+								model="@load(vm.listRifType)" style="float: left"
+								value="@save(vm.budgetOtherCostumers.rifType, before = 'confirmSave') @load(vm.budgetOtherCostumers.rifType eq null ? vm.dash : vm.budgetOtherCostumers.rifType)"
+								width="25%">
+								<template name="model" var="rifType">
+									<comboitem
+										label="@load(rifType.name)">
+									</comboitem>
+								</template>
+							</combobox>
+							<combobox autocomplete="true"
+								autodrop="true" buttonVisible="false"
+								disabled="@load(vm.disableAfterSearch)" maxlength="15"
+								model="@load(vm.listRifPartner)"
+								onChange="@command(vm.disabledAll ? 'searchBudget' : 'searchBusinessPartner', field='rif', val=self.value)"
+								onFocus="@command(vm.disabledAll ? 'loadBudgetByField' : 'loadBusinessPartnerByField', field='rifPartner')"
+								style="float: right"
+								value="@save(vm.budgetOtherCostumers.rifPartner, before = 'confirmSave') @load(vm.budgetOtherCostumers.rifPartner)"
+								width="75%">
+							</combobox>
+						</div>
+						<label sclass="formLabel"
+							value="Nro Solicitud:">
+						</label>
+						<combobox autocomplete="true"
+							autodrop="@load(vm.disabledAll)" buttonVisible="false"
+							disabled="@load(vm.disabledNumber)" hflex="1"
+							model="@load(vm.listNumber)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='number', val=self.value)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='number')"
+							value="@load(vm.budgetOtherCostumers.number)">
+						</combobox>
+						<div align="right">
+							<button
+								image="/resource/images/icons/search.png" label="Buscar"
+								onClick="@command('search')">
+							</button>
+						</div>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Cliente:"></label>
+						<combobox autocomplete="true" autodrop="true"
+							buttonVisible="false" disabled="@load(vm.disableAfterSearch)"
+							maxlength="100" model="@load(vm.listPartnerName)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'searchBusinessPartner', field='partnerName', val=self.value)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'loadBusinessPartnerByField', field='partnerName')"
+							value="@save(vm.budgetOtherCostumers.partnerName, before = 'confirmSave') @load(vm.budgetOtherCostumers.partnerName) @validator(vm.noEmpty, component = self)"
+							width="100%">
+						</combobox>
+						<label sclass="formLabel" value="Fecha:">
+						</label>
+						<datebox disabled="true" format="dd/MM/yyyy"
+							hflex="1" value="@load(vm.budgetOtherCostumers.date)">
+						</datebox>
+						<space></space>
+					</row>
+					
+					<row>
+						<label sclass="formLabel" value="Dirección:"></label>
+						<textbox disabled="@load(vm.disabledAll)"
+							maxlength="200"
+							value="@save(vm.budgetOtherCostumers.constructionAddress, before = 'confirmSave') @load(vm.budgetOtherCostumers.constructionAddress) @validator(vm.noEmpty, component = self)"
+							width="98%">
+						</textbox>
+						<label sclass="formLabel" value="Vendedor:">
+						</label>
+						<combobox autocomplete="true"
+							autodrop="@load(vm.disabledAll)" buttonVisible="false"
+							disabled="@load(vm.disableSeller ? 'true': vm.disableAfterSearch)"
+							maxlength="100" model="@load(vm.listSeller)"
+							onChange="@command(vm.disabledAll ? 'searchBudget':'', field='seller', val=self.value)"
+							onFocus="@command(vm.disabledAll ? 'loadBudgetByField':'', field='seller')"
+							value="@save(vm.budgetOtherCostumers.seller, before = 'confirmSave') @load(vm.budgetOtherCostumers.seller) @validator(vm.noEmpty, component = self)"
+							width="100%">
+						</combobox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel" value="Ciudad:"></label>
+						<textbox disabled="@load(vm.disabledAll)"
+							maxlength="100"
+							value="@save(vm.budgetOtherCostumers.constructionCity, before = 'confirmSave') @load(vm.budgetOtherCostumers.constructionCity) @validator(vm.noEmpty, component = self)"
+							width="98%">
+						</textbox>
+						<label sclass="formLabel"
+							value="Teléfono contacto:">
+						</label>
+						<textbox disabled="@load(vm.disabledAll)"
+							maxlength="30"
+							value="@save(vm.budgetOtherCostumers.contactPhone, before = 'confirmSave') @load(vm.budgetOtherCostumers.contactPhone) @validator(vm.noEmpty, component = self)"
+							width="97%">
+						</textbox>
+						<space></space>
+					</row>
+					<row>
+						<label sclass="formLabel"
+							value="Persona contacto:">
+						</label>
+						<textbox disabled="@load(vm.disabledAll)"
+							maxlength="100"
+							value="@save(vm.budgetOtherCostumers.contactName, before = 'confirmSave') @load(vm.budgetOtherCostumers.contactName) @validator(vm.noEmpty, component = self)"
+							width="98%">
+						</textbox>
+						<label sclass="formLabel" value="Correo:"></label>
+						<textbox disabled="@load(vm.disabledAll)"
+							maxlength="100"
+							value="@save(vm.budgetOtherCostumers.email, before = 'confirmSave') @load(vm.budgetOtherCostumers.email) @validator(vm.noEmail, component = self)"
+							width="97%">
+						</textbox>
+						<space></space>
+					</row>
+					
+				</rows>
+			</grid>
+	
+		
+		<groupbox closable="false" mold="3d">
+			<caption label="PRODUCTOS" sclass="formLabel"></caption>
+		<hlayout height="280px" style="padding:10px">
+		
+	   	<listbox model="@load(vm.listItems)" onSelect="@command('sendItem')" selectedItem="@bind(vm.selectedItem)" width="30%"  hflex="1" vflex="true" multiple="true" rows="5">
+	   	<auxhead>
+            <auxheader colspan="1">
+                <image src="/resource/images/icons/filter.png" />
+                <textbox instant="true" onChange="@command('dataFilter')"  value="@bind(vm.itemFilter.code)"
+                    />
+            </auxheader>
+            <auxheader colspan="1">
+                <image src="/resource/images/icons/filter.png"/>
+                <textbox instant="true" onChange="@command('dataFilter')"  value="@bind(vm.itemFilter.name)"
+                  />
+            </auxheader>
+     
+           
+        </auxhead>
+			<listhead>
+				<listheader label="Codigo" width="20%"></listheader>
+				<listheader label="Descripcion" width="55%"></listheader>
+				<listheader label="Precio" width="25%"></listheader>
+				
+				
+			</listhead>
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.code)"></listcell>
+					<listcell label="@load(item.name)"></listcell>
+					<listcell label="@load(item.price)"></listcell>
+				
+				</listitem>
+			</template> </listbox>
+   				 
+   				 <vbox spacing="10px" width="24px">
+   	
+		<image src="/resource/images/icons/rightrightarrow_g.png"
+		onClick="@command('chooseAllBtn')" />
+        	
+		<image src="/resource/images/icons/rightarrow_g.png"
+		onClick="@command('chooseBtn')"/>
+        
+        <image onClick="@command('removeBtn')" src="/resource/images/icons/leftarrow_g.png" />
+        <image  onClick="@command('removeAllBtn')"  src="/resource/images/icons/leftleftarrow_g.png" />
+    </vbox>																							
+    <listbox model="@load(vm.listDetail)" onSelect="@command('sendDetail')" selectedItem="@bind(vm.selectedDetail)" hflex="1" vflex="true" multiple="true" rows="5">
+			<listhead>
+				<listheader label="Codigo" width="15%"></listheader>
+				<listheader label="Nombre" width="35%"></listheader>
+				<listheader label="Precio" width="20%"></listheader>
+				<listheader label="Cantidad" width="15%"></listheader>
+				<listheader label="Sub-Total" width="15%"></listheader>
+			</listhead>
+			<template name="model" var="Detail">
+				<listitem>
+					<listcell label="@load(Detail.code)"></listcell>
+					<listcell label="@load(Detail.name)"></listcell>
+					<listcell><textbox width="90%" value="@bind(Detail.price)" onChange="@command('Total')"/></listcell>
+					<listcell><textbox width="90%" value="@bind(Detail.cantidad)" onChange="@command('Total')"/></listcell>
+					<listcell label="@load(Detail.price * Detail.cantidad)"></listcell>
+				</listitem>
+			</template> 
+	</listbox>
+	
+ 
+</hlayout>
+<div style="text-align: right;">
+<label sclass="formLabel" value="Total: "  ></label>
+<textbox value="@load(vm.total)"></textbox>
+<space></space>
+</div>
+</groupbox>
+
+		<grid>
+			<rows>
+				<row>
+					<div>
+						<button disabled="@load(vm.disabledAll)"
+							image="/resource/images/icons/email.png" label="Enviar"
+							onClick="@command('confirmSave')">
+						</button>
+						<button
+							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
+							image="/resource/images/icons/print.png" label="Imprimir"
+							onClick="@command('print')">
+						</button>
+						<button
+							disabled="@load(vm.disableAfterSearch ? vm.disabledAll ? 'false':'true':'true')"
+							image="/resource/images/icons/copy.png" label="Copiar"
+							onClick="@command('copy')">
+						</button>
+						<button
+							image="/resource/images/icons/cancel.png" label="Cancelar"
+							onClick="@command('restartForm')">
+						</button>
+					</div>
+				</row>
+			</rows>
+		</grid>
+		
+		<window border="normal" mode="modal" title="Atencion"
+			visible="@load(not empty vm.modalMessage)" width="25%">
+			<vbox hflex="true">
+				<hbox height="35%">
+					<image src="~./zul/img/msgbox/question-btn.png" />
+					<label value="@load(vm.modalMessage)" />
+				</hbox>
+				<hbox hflex="true" pack="center">
+					<button label="Si" onClick="@command('save')" />
+					<button label="No"
+						onClick="@command('cancelModal')" />
+				</hbox>
+			</vbox>
+		</window>
+			</groupbox>
+</window>
+</zk>

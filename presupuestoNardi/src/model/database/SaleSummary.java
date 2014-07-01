@@ -1,6 +1,6 @@
 package model.database;
 
-// Generated 01-abr-2014 10:16:16 by Hibernate Tools 4.0.0
+// Generated 20-jun-2014 9:51:18 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -28,7 +28,7 @@ public class SaleSummary implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2475160514681865487L;
+	private static final long serialVersionUID = -3184327721484674040L;
 	private int idSaleSummary;
 	private int version;
 	private BasicData basicDataByElectricityType;
@@ -1107,6 +1107,7 @@ public class SaleSummary implements java.io.Serializable {
 	public void setStatus(char status) {
 		this.status = status;
 	}
+
 	@Column(name = "door_frame_glass")
 	public Boolean getDoorFrameGlass() {
 		return this.doorFrameGlass;

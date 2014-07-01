@@ -19,6 +19,8 @@ public class FrmBusinessPartnerList {
 
 	@WireVariable
 	private ServiceBusinessPartner serviceBusinessPartner;
+	
+	
 	private List<BusinessPartner> listBusinessPartner;
 	private BusinessPartner selectedBP;
 	private BusinessPartnerFilter partnerFilter;
