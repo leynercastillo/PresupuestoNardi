@@ -105,6 +105,7 @@ public class FrmQuotation {
 	private List<BasicData> listRailing;
 	private List<BasicData> listFloorType;
 	private List<BasicData> listDoorType;
+	private List<BasicData> listDoorframeType;
 	private List<BasicData> listFreeAdmission;
 	private List<BasicData> listHeight;
 	private List<BasicData> listDoorframeHammered;
@@ -118,6 +119,14 @@ public class FrmQuotation {
 	private ListModel<Object> listConstruction;
 	private ListModel<Object> listSeller;
 	
+	public List<BasicData> getListDoorframeType() {
+		return listDoorframeType;
+	}
+
+	public void setListDoorframeType(List<BasicData> listDoorframeType) {
+		this.listDoorframeType = listDoorframeType;
+	}
+
 	public BasicData getBasicDataPayment() {
 		return basicDataPayment;
 	}
@@ -596,6 +605,7 @@ public class FrmQuotation {
 		disabledEdit = new Boolean(true);
 		listQuotationNumber = new ListModelList<Object>();
 		listRifPartner = new ListModelList<Object>();
+		listDoorframeType = serviceBasicData.listDoorframeType();
 		listBudgetNumber = new ListModelList<Object>();
 		listPartnerName = new ListModelList<Object>();
 		listConstruction = new ListModelList<Object>();
@@ -672,6 +682,7 @@ public class FrmQuotation {
 		quotation.setBasicDataByRoofType(budget.getBasicDataByRoofType());
 		quotation.setBasicDataByRailing(budget.getBasicDataByRailing());
 		quotation.setBasicDataByFloorType(budget.getBasicDataByFloorType());
+		quotation.setBasicDataByDoorframeType(budget.getBasicDataByDoorframeType());
 		quotation.setCabinWidth(budget.getCabinWidth());
 		quotation.setCabinHeight(budget.getCabinHeight());
 		quotation.setCabinBackground(budget.getCabinBackground());
@@ -699,7 +710,7 @@ public class FrmQuotation {
 	}
 
 	private SaleSummary quotationToSaleSummary(Quotation auxQuotation) {
-		return new SaleSummary(0, auxQuotation.getBasicDataByElectricityType(), auxQuotation.getBudget().getBasicDataByHourMachine(), auxQuotation.getBasicDataByHallButton(), auxQuotation.getBasicDataByRoofType(), auxQuotation.getBasicDataBySpeed(), auxQuotation.getBudget().getBasicDataByVoltageLighting(), auxQuotation.getBasicDataByDoorframeType(), auxQuotation.getBasicDataByRailing(), auxQuotation.getBudget().getBasicDataByBoothButton(), auxQuotation.getBasicDataByMirror(), auxQuotation.getBasicDataByElevatorCapacitance(), auxQuotation.getBasicDataByBoothDisplay(), auxQuotation.getBasicDataByElevatorType(), auxQuotation.getBudget().getBasicDataByDoorSystem(), auxQuotation.getBudget().getBasicDataByFrequency(), auxQuotation.getBasicDataByHallButtonType(), auxQuotation.getBudget().getBasicDataByFan(), auxQuotation.getBasicDataByCabinDesign(), auxQuotation.getBasicDataByMachineType(), auxQuotation.getBudget().getBasicDataByBuildingType(), auxQuotation.getBasicDataByManeuverType(), auxQuotation.getBasicDataByDoorFrameHammered(), auxQuotation.getBasicDataByFloorType(), auxQuotation.getBudget().getBasicDataByMachineBase(), auxQuotation, auxQuotation.getBasicDataByHeight(), auxQuotation.getBasicDataByDoorType(), auxQuotation.getBudget().getBasicDataByButtonType(), auxQuotation.getBasicDataByControlType(), auxQuotation.getBasicDataByFreeAdmission(), auxQuotation.getBasicDataByFloorDisplay(), auxQuotation.getBudget().getBasicDataByAccess(), 0, null, new Date(), auxQuotation.getDeliveryDate(), auxQuotation.getConstruction(), auxQuotation.getBudget().getConstructionCity(), auxQuotation.getBudget().getConstructionAddress(), auxQuotation.getContactName(), auxQuotation.getBudget().getContactPhone(), auxQuotation.getBudget().getEmail(), auxQuotation.getBudget().getPlaneC(), auxQuotation.getBudget().getPlaneP(), auxQuotation.isType(), auxQuotation.getElevatorQuantity(), auxQuotation.getBudget().getMotorQuantity(), auxQuotation.getBudget().getMotorTraction(), auxQuotation.getStopNumber(), auxQuotation.getTour(), auxQuotation.getOnTour(), auxQuotation.getWidthHole(), auxQuotation.getFossa(), auxQuotation.getBottomHole(), auxQuotation.getDesignSpecial(), auxQuotation.getDesignSpecialComment(), auxQuotation.getCabinWidth(), auxQuotation.getCabinBackground(), auxQuotation.getCabinHeight(), auxQuotation.getBudget().getDoorOfNumber(), auxQuotation.getDoorframeTypeComment(), auxQuotation.getBudget().getHallButtonPlace(), auxQuotation.getLightCurtain(), auxQuotation.getLoadLimiter(), auxQuotation.getSpeechSynthesizer(), auxQuotation.getGomSystem(), auxQuotation.getIntercom(), auxQuotation.getPhone(), auxQuotation.getAccessSytem(), auxQuotation.getFirefighterKeychain(), auxQuotation.getBudget().getDisplayPlaceFloor(), auxQuotation.getStopSequenceContinuous(), auxQuotation.getStopSequenceContinuousQ(), auxQuotation.getStopSequenceContinuousNumber(), auxQuotation.getStopSequenceEven(), auxQuotation.getStopSequenceEvenQ(), auxQuotation.getStopSequenceEvenNumber(), auxQuotation.getStopSequenceOdd(), auxQuotation.getStopSequenceOddQ(), auxQuotation.getStopSequenceOddNumber(), auxQuotation.getDoorFrameHammeredDesc(), auxQuotation.getDoorFrameStainless(), auxQuotation.getDoorFrameStainlessDescrip(), auxQuotation.getBudget().getSistelWdisplayPb(), auxQuotation.getBudget().getSistelWdisplayFloor(), auxQuotation.getBudget().getSistelWarrowPb(), auxQuotation.getBudget().getSistelWarrowFloor(), auxQuotation.getComment(), auxQuotation.getStatus(), auxQuotation.getDoorFrameGlass(), auxQuotation.getDoorFrameGlassDescrip());
+		return new SaleSummary(0, auxQuotation.getBasicDataByElectricityType(), auxQuotation.getBudget().getBasicDataByHourMachine(), auxQuotation.getBasicDataByHallButton(), auxQuotation.getBasicDataByRoofType(), auxQuotation.getBasicDataBySpeed(), auxQuotation.getBudget().getBasicDataByVoltageLighting(), auxQuotation.getBudget().getBasicDataByDoorframeType(), auxQuotation.getBasicDataByRailing(), auxQuotation.getBudget().getBasicDataByBoothButton(), auxQuotation.getBasicDataByMirror(), auxQuotation.getBasicDataByElevatorCapacitance(), auxQuotation.getBasicDataByBoothDisplay(), auxQuotation.getBasicDataByElevatorType(), auxQuotation.getBudget().getBasicDataByDoorSystem(), auxQuotation.getBudget().getBasicDataByFrequency(), auxQuotation.getBasicDataByHallButtonType(), auxQuotation.getBudget().getBasicDataByFan(), auxQuotation.getBasicDataByCabinDesign(), auxQuotation.getBasicDataByMachineType(), auxQuotation.getBudget().getBasicDataByBuildingType(), auxQuotation.getBasicDataByManeuverType(), auxQuotation.getBasicDataByDoorFrameHammered(), auxQuotation.getBasicDataByFloorType(), auxQuotation.getBudget().getBasicDataByMachineBase(), auxQuotation, auxQuotation.getBasicDataByHeight(), auxQuotation.getBasicDataByDoorType(), auxQuotation.getBudget().getBasicDataByButtonType(), auxQuotation.getBasicDataByControlType(), auxQuotation.getBasicDataByFreeAdmission(), auxQuotation.getBasicDataByFloorDisplay(), auxQuotation.getBudget().getBasicDataByAccess(), 0, null, new Date(), auxQuotation.getDeliveryDate(), auxQuotation.getConstruction(), auxQuotation.getBudget().getConstructionCity(), auxQuotation.getBudget().getConstructionAddress(), auxQuotation.getContactName(), auxQuotation.getBudget().getContactPhone(), auxQuotation.getBudget().getEmail(), auxQuotation.getBudget().getPlaneC(), auxQuotation.getBudget().getPlaneP(), auxQuotation.isType(), auxQuotation.getElevatorQuantity(), auxQuotation.getBudget().getMotorQuantity(), auxQuotation.getBudget().getMotorTraction(), auxQuotation.getStopNumber(), auxQuotation.getTour(), auxQuotation.getOnTour(), auxQuotation.getWidthHole(), auxQuotation.getFossa(), auxQuotation.getBottomHole(), auxQuotation.getDesignSpecial(), auxQuotation.getDesignSpecialComment(), auxQuotation.getCabinWidth(), auxQuotation.getCabinBackground(), auxQuotation.getCabinHeight(), auxQuotation.getBudget().getDoorOfNumber(), auxQuotation.getDoorframeTypeComment(), auxQuotation.getBudget().getHallButtonPlace(), auxQuotation.getLightCurtain(), auxQuotation.getLoadLimiter(), auxQuotation.getSpeechSynthesizer(), auxQuotation.getGomSystem(), auxQuotation.getIntercom(), auxQuotation.getPhone(), auxQuotation.getAccessSytem(), auxQuotation.getFirefighterKeychain(), auxQuotation.getBudget().getDisplayPlaceFloor(), auxQuotation.getStopSequenceContinuous(), auxQuotation.getStopSequenceContinuousQ(), auxQuotation.getStopSequenceContinuousNumber(), auxQuotation.getStopSequenceEven(), auxQuotation.getStopSequenceEvenQ(), auxQuotation.getStopSequenceEvenNumber(), auxQuotation.getStopSequenceOdd(), auxQuotation.getStopSequenceOddQ(), auxQuotation.getStopSequenceOddNumber(), auxQuotation.getDoorFrameHammeredDesc(), auxQuotation.getDoorFrameStainless(), auxQuotation.getDoorFrameStainlessDescrip(), auxQuotation.getBudget().getSistelWdisplayPb(), auxQuotation.getBudget().getSistelWdisplayFloor(), auxQuotation.getBudget().getSistelWarrowPb(), auxQuotation.getBudget().getSistelWarrowFloor(), auxQuotation.getComment(), auxQuotation.getStatus(), auxQuotation.getDoorFrameGlass(), auxQuotation.getDoorFrameGlassDescrip());
 	}
 
 	@Command
@@ -1096,15 +1107,15 @@ public class FrmQuotation {
 
 	private void sendMail(SaleSummary saleSummary) {
 		List<String> listRecipient = new ArrayList<String>();
-		listRecipient.add("ventas@ascensoresnardi.com");
-		listRecipient.add("administracion@ascensoresnardi.com");
-		listRecipient.add("cobranzas@ascensoresnardi.com");
-		listRecipient.add("importaciones@ascensoresnardi.com");
-		listRecipient.add(serviceBudget.findByNumber(saleSummary.getQuotation().getBudget().getNumber()).getSecurityUser().getEmail());
+		//listRecipient.add("ventas@ascensoresnardi.com");
+		//listRecipient.add("administracion@ascensoresnardi.com");
+		//listRecipient.add("cobranzas@ascensoresnardi.com");
+		//listRecipient.add("importaciones@ascensoresnardi.com");
+		//listRecipient.add(serviceBudget.findByNumber(saleSummary.getQuotation().getBudget().getNumber()).getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro " + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mainMailMessage(), mainMailAttach(saleSummary));
 		listRecipient.clear();
-		listRecipient.add("logistica@ascensoresnardi.com");
+		//listRecipient.add("logistica@ascensoresnardi.com");
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Obra Nro " + saleSummary.getNumber() + "-" + saleSummary.getVersion(), listRecipient, logisticMailMessage(saleSummary), logisticMailAttach(saleSummary));
 	}

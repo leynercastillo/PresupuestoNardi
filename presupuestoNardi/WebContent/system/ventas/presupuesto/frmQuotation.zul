@@ -25,7 +25,8 @@
 								width="24%">
 								<template name="model" var="rifType">
 									<comboitem
-										label="@load(rifType.name)">
+										label="@lo
+										ad(rifType.name)">
 									</comboitem>
 								</template>
 							</combobox>
@@ -712,8 +713,23 @@
 								</comboitem>
 							</template>
 						</combobox>
-						<space></space>
-						<space></space>
+						<label sclass="formLabel"
+							value="Tipo de Marcos:">
+						</label>
+						<combobox disabled="true"
+							id="cmbBDoorframeType" model="@load(vm.listDoorframeType)"
+							readonly="false"
+							selectedItem="@bind(vm.quotation.basicDataByDoorframeType)"
+							value="@load(vm.quotation.basicDataByDoorframeType eq null ? vm.seleccione : vm.quotation.basicDataByDoorframeType.name) @save(vm.seleccione, before = 'confirmSave') @validator(vm.validateDoorframeType, component = self)"
+							width="100%">
+							<template name="model"
+								var="DoorframeType">
+								<comboitem
+									label="@load(DoorframeType.name)">
+								</comboitem>
+							</template>
+						</combobox>
+						
 						<space></space>
 					</row>
 					<row>
