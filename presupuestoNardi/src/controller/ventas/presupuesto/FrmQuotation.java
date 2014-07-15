@@ -1096,15 +1096,15 @@ public class FrmQuotation {
 
 	private void sendMail(SaleSummary saleSummary) {
 		List<String> listRecipient = new ArrayList<String>();
-		/*listRecipient.add("ventas@ascensoresnardi.com");
+		listRecipient.add("ventas@ascensoresnardi.com");
 		listRecipient.add("administracion@ascensoresnardi.com");
 		listRecipient.add("cobranzas@ascensoresnardi.com");
-		listRecipient.add("importaciones@ascensoresnardi.com");*/
+		listRecipient.add("importaciones@ascensoresnardi.com");
 		listRecipient.add(serviceBudget.findByNumber(saleSummary.getQuotation().getBudget().getNumber()).getSecurityUser().getEmail());
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Presupuesto nro " + (quotation.isType() ? "1" : "2") + "-" + (quotation.isType() ? quotation.getNewNumber() : quotation.getModernizationNumber()) + "-" + quotation.getVersionNumber(), listRecipient, mainMailMessage(), mainMailAttach(saleSummary));
 		listRecipient.clear();
-		//listRecipient.add("logistica@ascensoresnardi.com");
+		listRecipient.add("logistica@ascensoresnardi.com");
 		listRecipient.add("sistemas@ascensoresnardi.com");
 		emails.sendMail("sistemas@ascensoresnardi.com", "Obra Nro " + saleSummary.getNumber() + "-" + saleSummary.getVersion(), listRecipient, logisticMailMessage(saleSummary), logisticMailAttach(saleSummary));
 	}

@@ -69,7 +69,7 @@
 									</treecell>
 								</treerow>
 							</treeitem>
-							
+							<!-- 
 							<treeitem
 								if="${sec:isAllGranted('ROLE_BUDGET_OTHER')}">
 								<treerow>
@@ -79,7 +79,7 @@
 									</treecell>
 								</treerow>
 							</treeitem>
-							 
+							  -->
 							<treeitem
 								if="${sec:isAllGranted('ROLE_QUOTATION')}">
 								<treerow>
