@@ -28,6 +28,7 @@ import model.service.ServiceTransactionSummary;
 
 
 
+
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
@@ -1093,6 +1094,7 @@ public class FrmQuotation {
 		parameters.put("SUBREPORT_DIR", "../../resource/reports/ventas/resumen/");
 		report.createPdf("/resource/reports/ventas/resumen", "sale_summary.jasper", parameters, "Resumen_venta_" + saleSummary.getNumber() + ".pdf");
 		return report.getFile();
+		
 	}
 
 	private String mainMailMessage() {
